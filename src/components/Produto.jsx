@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // Biblioteca para fazer solicitações HTTP
-import './components/Produto.module.css'
-function ListaProdutos() {
+import style from './Produto.module.scss'
+function Produto() {
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
     // Fazer uma solicitação HTTP para o servidor back-end
-    axios.get('/api/produtos').then((response) => {
+    axios.get('/api/produto').then((response) => {
       setProdutos(response.data);
     });
   }, []);
 
+  
+
   return (
-    <div className="lista-produtos">
+    <div className={style.listaProdutos}>
       <h2>Produtos Disponíveis</h2>
       <ul>
         {produtos.map((produto) => (
-          <li key={produto._id} className="produto">
+          <li key={produto._id} className={style.produto}>
             <h3>{produto.nome}</h3>
-            <p className="descricao-produto">{produto.descricao}</p>
             <p className="preco-produto">${produto.preco.toFixed(2)}</p>
           </li>
         ))}
@@ -27,4 +28,4 @@ function ListaProdutos() {
   );
 }
 
-export default ListaProdutos;
+export default Produto;

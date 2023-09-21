@@ -1,13 +1,10 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './scss/style.scss'
-
+import Produto from './components/Produto'
 function App() {
 
   return (
     <>
-    <ListaProdutos/>
+    <Produto/>
     
       
     </>
