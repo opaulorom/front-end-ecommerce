@@ -14,7 +14,7 @@ const Header = () => {
       </div>
       <div className="right-content">
         <div className="user-info">Login / Cadastro</div>
-        <div className="cart-icon">&#128722;</div>
+        <div className="cart-icon"><i><img src="https://i.ibb.co/mNRCr2j/bag-1.png" alt="" /></i></div>
       </div>
     </header>
     </Fragment>
