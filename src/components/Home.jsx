@@ -1,7 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 import "../components/Home.css";
+import MetaData from "../components/Layout/MetaData"
 const Home = () => {
   return (
+    <Fragment>
+      <MetaData title={"Melhores vairiedades de Roupas"}></MetaData>
     <div className="clothes-card">
       <i className="imageContainer">
         {" "}
@@ -17,6 +20,7 @@ const Home = () => {
         <button className="btn-saiba-mais">Saiba Mais</button>
       </div>
     </div>
+    </Fragment>
   );
 };
 
