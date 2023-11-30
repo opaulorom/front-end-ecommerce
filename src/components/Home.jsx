@@ -12,7 +12,7 @@ const Home = () => {
         />
       </i>
       <div className="card-details">
-        <h3 className="card-title"></h3>
+        <h3 className="card-title">Vestido Floral</h3>
         <p className="card-price">Preço:R$56.99</p>
         <button className="btn-saiba-mais">Saiba Mais</button>
       </div>
