@@ -4,10 +4,13 @@ import '../../components/Layout/Header.css'; // Importa o arquivo CSS para estil
 const Header = () => {
   return (
     <Fragment>
-        <header className="header">
+    <header className="header">
       <div className="logo">Logo</div>
       <div className="center-content">
-        <input type="text" placeholder="Pesquisar" />
+        <div className="search-container">
+          <input type="text" placeholder="Pesquisar" />
+        <i className="search-button"><img className='button' src="https://i.ibb.co/fGYcrqs/loupe-3.png" alt="" /></i>
+        </div>
       </div>
       <div className="right-content">
         <div className="user-info">Login / Cadastro</div>
