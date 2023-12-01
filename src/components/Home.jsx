@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import "../components/Home.css";
 import MetaData from "../components/Layout/MetaData";
-
+import Loader from "../components/Layout/Loader"
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productActions";
 
@@ -19,7 +19,7 @@ const Home = () => {
 
   return (
     <Fragment>
-      {loading ? <h1>Carregando... </h1> : (
+      {loading ? <Loader/> : (
         <Fragment>
           <MetaData title={"Melhores variedades de Roupas"}></MetaData>
         {products &&
