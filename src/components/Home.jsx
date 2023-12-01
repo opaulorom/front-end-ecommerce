@@ -1,25 +1,34 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import "../components/Home.css";
-import MetaData from "../components/Layout/MetaData"
+import MetaData from "../components/Layout/MetaData";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../actions/productActions";
+
+import Product  from "../components/product/Product"
+
 const Home = () => {
+  const dispatch = useDispatch();
+  const { loading, products, error, productsCount } = useSelector(
+    (state) => state.products
+  );
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
+
   return (
     <Fragment>
-      <MetaData title={"Melhores vairiedades de Roupas"}></MetaData>
-    <div className="clothes-card">
-      <i className="imageContainer">
-        {" "}
-        <img
-          src="https://i.ibb.co/sbsVxrN/pietra-schwarzler-l-SLq-x-Qd-FNI-unsplash.jpg"
-          alt=""
-          className="card-image"
-        />
-      </i>
-      <div className="card-details">
-        <h3 className="card-title">Vestido Floral</h3>
-        <p className="card-price">Preço:R$56.99</p>
-        <button className="btn-saiba-mais">Saiba Mais</button>
-      </div>
-    </div>
+      {loading ? <h1>Carregando... </h1> : (
+        <Fragment>
+          <MetaData title={"Melhores variedades de Roupas"}></MetaData>
+        {products &&
+          products.map((product) => (
+           <Product key={product._id} product={product}></Product>
+          ))}
+        </Fragment>
+      )}
+      
     </Fragment>
   );
 };
