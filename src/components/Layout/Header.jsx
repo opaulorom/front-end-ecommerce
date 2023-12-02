@@ -9,7 +9,7 @@ const Header = () => {
       <div className="center-content">
         <div className="search-container">
           <input type="text" placeholder="Pesquisar" />
-        <i className="search-button"><img className='button' src="https://i.ibb.co/fGYcrqs/loupe-3.png" alt="" /></i>
+        <i className="search-button"><img className='button' src="https://i.ibb.co/9sxjvyM/loupe-3.png" alt="" /></i>
         </div>
       </div>
       <div className="right-content">
