@@ -1,12 +1,28 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import "../product/productDetails.css"
+import { useEffect } from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import { getProductDetails } from '../../actions/productActions';
+import Loader from '../Layout/Loader';
+import MetaData from '../Layout/MetaData';
+const ProductDetails = ({match}) => {
+    const dispatch = useDispatch();
 
-const ProductDetails = ({ product }) => {
+
+    const {loading, product} = useSelector(state => state.productDetails)
+
+    useEffect(() => {
+      dispatch(getProductDetails(match.params.id))
+    }, [dispatch, match.params.id])
+
     if(!product){
         return "nenhum produto encontrado"
     }
     return (
-      <div className="product-details">
+      <Fragment>
+      {loading ? <Loader/> : (
+        <Fragment>
+        <div className="product-details">
         <div className="product-image">
           <img src={product.image} alt={product.name} />
         </div>
@@ -16,6 +32,10 @@ const ProductDetails = ({ product }) => {
           <button className="btn-buy">Comprar</button>
         </div>
       </div>
+        </Fragment>
+      )}
+      </Fragment>
+      
     );
   };
   

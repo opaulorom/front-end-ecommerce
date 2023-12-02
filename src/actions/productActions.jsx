@@ -47,7 +47,7 @@ export const getProductDetails = (id) => async (dispatch) => {
         console.log("detalhes dos produtos", data)
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
-            payload: data.product
+            payload: data
         });
     } catch (error) {
         dispatch({
