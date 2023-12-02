@@ -28,7 +28,7 @@ const ProductDetails = ({match}) => {
         <Fragment>
         <div className="product-details">
         <div className="product-image">
-          <img src={product.image} alt={product.name} />
+          <img src={product.images} alt={product.name} />
         </div>
         <div className="product-info">
           <h2 className="product-name">{product.name}</h2>

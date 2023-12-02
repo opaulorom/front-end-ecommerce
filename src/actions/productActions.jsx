@@ -22,7 +22,11 @@ export const getProducts = () => async (dispatch) => {
             payload: data
         });
     } catch (error) {
+        console.error('Error in getProducts:', error);
+
+
         dispatch({
+            
             type: ALL_PRODUCTS_FAIL,
             payload: error.response ? error.response.data.message : "Erro ao obter produtos da API"
         });
@@ -42,7 +46,7 @@ export const getProductDetails = (id) => async (dispatch) => {
           type: DETAILS_REQUEST
       });
 
-      const { data } = await axios.get(`http://localhost:3001/api/product/${id}`);
+      const { data } = await axios.get(`http://localhost:3001/api/admin/product/${id}`);
       console.log("Data from API:", data);
 
       dispatch({
