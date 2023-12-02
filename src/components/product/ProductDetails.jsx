@@ -12,8 +12,11 @@ const ProductDetails = ({match}) => {
     const {loading, product} = useSelector(state => state.productDetails)
 
     useEffect(() => {
-      dispatch(getProductDetails(match.params.id))
-    }, [dispatch, match.params.id])
+      if(match){
+        dispatch(getProductDetails(match.params.id))
+
+      }
+    }, [dispatch, match])
 
     if(!product){
         return "nenhum produto encontrado"
