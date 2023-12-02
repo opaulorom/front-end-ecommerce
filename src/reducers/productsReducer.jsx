@@ -15,7 +15,7 @@ const initialState = {
   error: null,
 };
 
-export const productsReducer = (state = initialState, action) => {
+export const productReducer = (state = initialState, action) => {
   switch (action.type) {
     case ALL_PRODUCTS_REQUEST:
       return {
