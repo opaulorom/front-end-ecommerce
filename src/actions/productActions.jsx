@@ -46,7 +46,7 @@ export const getProductDetails = (id) => async (dispatch) => {
           type: DETAILS_REQUEST
       });
 
-      const { data } = await axios.get(`http://localhost:3001/api/admin/product/${id}`);
+      const { data } = await axios.get(`http://localhost:3001/api/product/${id}`);
       console.log("Data from API:", data);
 
       dispatch({
