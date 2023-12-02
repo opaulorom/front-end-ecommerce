@@ -39,20 +39,20 @@ export const cleanErrors = () => async (dispatch) => {
 export const getProductDetails = (id) => async (dispatch) => {
   try {
       dispatch({
-          type: PRODUCT_DETAILS_REQUEST
+          type: DETAILS_REQUEST
       });
 
       const { data } = await axios.get(`http://localhost:3001/api/product/${id}`);
       console.log("Data from API:", data);
 
       dispatch({
-          type: PRODUCT_DETAILS_SUCCESS,
+          type: DETAILS_SUCCESS,
           payload: data.product,
       });
       
   } catch (error) {
       dispatch({
-          type: PRODUCT_DETAILS_FAIL,
+          type: DETAILS_FAIL,
           payload: error.response ? error.response.data.message : "Erro ao obter produtos da API"
       });
   }
