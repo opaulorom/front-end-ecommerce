@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productActions";
 
 import Product  from "../components/product/Product"
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Home = () => {
 
   return (
     <Fragment>
+
       {loading ? <Loader/> : (
         <Fragment>
           <MetaData title={"Melhores variedades de Roupas"}></MetaData>
@@ -28,7 +30,6 @@ const Home = () => {
           ))}
         </Fragment>
       )}
-      
     </Fragment>
   );
 };
