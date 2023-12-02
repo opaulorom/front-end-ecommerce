@@ -9,7 +9,8 @@ const ProductDetails = ({match}) => {
     const dispatch = useDispatch();
 
 
-    const {loading, product} = useSelector(state => state.productDetails)
+    const { loading, product } = useSelector(state => state.productDetails);
+
 
     useEffect(() => {
       if(match){
