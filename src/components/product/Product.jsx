@@ -10,11 +10,11 @@ const Product = ({ product }) => {
               <img src={product.images[0].url} alt="" className="card-image" />
             </i>
             <div className="card-details">
-              <Link to={`/products/${product._id}`} className="card-title">
+              <Link to={`/product/${product._id}`} className="card-title">
                 {product.name}
               </Link>
               <p className="card-price">Preço: R${product.price}</p>
-              <Link  to={`/products/${product._id}`} className="btn-saiba-mais">
+              <Link  to={`/product/${product._id}`} className="btn-saiba-mais">
                 Saiba Mais
               </Link>
             </div>
