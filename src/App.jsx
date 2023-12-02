@@ -12,8 +12,7 @@ function App() {
         <Routes>
       
         <Route path="/" element={<Home />} />
-        <Route path="/footer" element={<Footer />} />
-        <Route path="/header" element={<Header />} />
+     
 
         </Routes>
       </Router>
