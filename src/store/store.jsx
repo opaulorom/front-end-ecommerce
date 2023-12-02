@@ -1,7 +1,7 @@
 // store.jsx
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
-import * as reducers from "../reducers/productsReducer";
+import { productsReducer } from "../reducers/productsReducer";  // Importe o reducer diretamente
 import { composeWithDevTools } from "redux-devtools-extension";
 
 const middleware = [thunk];
@@ -14,7 +14,7 @@ const composeEnhancers = composeWithDevTools({
 
 const store = configureStore({
   reducer: {
-    products: reducers.productsReducer,
+    products: productsReducer,  // Use o reducer diretamente
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(middleware),

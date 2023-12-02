@@ -3,7 +3,7 @@ import "./App.css";
 import Footer from "./components/Layout/Footer";
 import Home from "./components/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import ProductDetails from "./components/product/ProductDetails";
 function App() {
   return (
     <>
@@ -12,6 +12,7 @@ function App() {
         <Routes>
       
         <Route path="/" element={<Home />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
      
 
         </Routes>
