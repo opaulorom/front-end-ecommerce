@@ -3,8 +3,7 @@ import "../product/product.css";
 import { Link } from "react-router-dom";
 const Product = ({ product }) => {
   return (
-
-        <div className="cardContainer">
+        <div className="cardContainer r">
           <div className="clothes-card">
             <i className="imageContainer">
               {" "}
