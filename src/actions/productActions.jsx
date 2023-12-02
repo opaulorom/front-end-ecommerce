@@ -36,26 +36,24 @@ export const cleanErrors = () => async (dispatch) => {
     });
 };
 
-
 export const getProductDetails = (id) => async (dispatch) => {
-    try {
-        dispatch({
-            type: PRODUCT_DETAILS_REQUEST
-        });
+  try {
+      dispatch({
+          type: PRODUCT_DETAILS_REQUEST
+      });
 
-        const { data } = await axios.get(`http://localhost:3001/api/product/${id}`);
-        console.log("Response from API:", data); // Adicione esta linha
+      const { data } = await axios.get(`http://localhost:3001/api/product/${id}`);
+      console.log("Data from API:", data);
 
-        dispatch({
-            type: PRODUCT_DETAILS_SUCCESS,
-            payload: data.product,
-            
-          });
-          
-    } catch (error) {
-        dispatch({
-            type: PRODUCT_DETAILS_FAIL,
-            payload: error.response ? error.response.data.message : "Erro ao obter produtos da API"
-        });
-    }
+      dispatch({
+          type: PRODUCT_DETAILS_SUCCESS,
+          payload: data.product,
+      });
+      
+  } catch (error) {
+      dispatch({
+          type: PRODUCT_DETAILS_FAIL,
+          payload: error.response ? error.response.data.message : "Erro ao obter produtos da API"
+      });
+  }
 };

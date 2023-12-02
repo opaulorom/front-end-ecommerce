@@ -42,6 +42,8 @@ export const productReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+
 export const productDetailsReducer = (state = { product: {} }, action) => {
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
@@ -59,7 +61,7 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
         ...state,
         error: action.payload,
       };
-    case CLEAR_ERRORS:
+      case CLEAR_ERRORS:
       return {
         ...state,
         error: null,
