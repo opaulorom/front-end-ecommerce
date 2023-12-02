@@ -5,9 +5,9 @@ import {
     ALL_PRODUCTS_SUCCESS,
     ALL_PRODUCTS_FAIL,
     CLEAR_ERRORS,
-  PRODUCT_DETAILS_REQUEST,
-  PRODUCT_DETAILS_SUCCESS,
-  PRODUCT_DETAILS_FAIL,
+ DETAILS_REQUEST,
+DETAILS_SUCCESS,
+DETAILS_FAIL,
 } from "../constants/productContants";
 
 export const getProducts = () => async (dispatch) => {

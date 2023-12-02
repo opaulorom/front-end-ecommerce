@@ -4,9 +4,9 @@ import {
   ALL_PRODUCTS_SUCCESS,
   ALL_PRODUCTS_FAIL,
   CLEAR_ERRORS,
-  PRODUCT_DETAILS_REQUEST,
-  PRODUCT_DETAILS_SUCCESS,
-  PRODUCT_DETAILS_FAIL,
+  DETAILS_REQUEST,
+  DETAILS_SUCCESS,
+  DETAILS_FAIL,
 } from "../constants/productContants";
 
 const initialState = {
@@ -46,17 +46,17 @@ export const productReducer = (state = initialState, action) => {
 
 export const productDetailsReducer = (state = { product: {} }, action) => {
   switch (action.type) {
-    case PRODUCT_DETAILS_REQUEST:
+    case DETAILS_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case PRODUCT_DETAILS_SUCCESS:
+    case DETAILS_SUCCESS:
       return {
         loading: false,
         product: action.payload,
       };
-    case PRODUCT_DETAILS_FAIL:
+    case DETAILS_FAIL:
       return {
         ...state,
         error: action.payload,
