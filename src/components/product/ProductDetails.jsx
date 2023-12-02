@@ -2,6 +2,9 @@ import React from 'react'
 import "../product/productDetails.css"
 
 const ProductDetails = ({ product }) => {
+    if(!product){
+        return "nenhum produto encontrado"
+    }
     return (
       <div className="product-details">
         <div className="product-image">
