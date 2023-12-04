@@ -1,13 +1,12 @@
 import React, { Fragment, useState, useEffect } from "react";
-import "../components/Home.css";
+import { useSearchParams } from "react-router-dom";
 import MetaData from "../components/Layout/MetaData";
 import Loader from "../components/Layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productActions";
 import Pagination from "react-js-pagination";
 import Product from "../components/product/Product";
-import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
-
+import "../components/Home.css"
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
@@ -20,9 +19,13 @@ const Home = () => {
   const keyword = searchParams.get("keyword") || "";
 
   useEffect(() => {
+    console.log("Keyword:", keyword);
+    console.log("Current Page:", currentPage);
+    dispatch(getProducts(keyword, currentPage));
     // Se necessário, você pode passar a palavra-chave para a sua ação getProducts
     dispatch(getProducts(keyword, currentPage));
-  }, [dispatch, keyword, currentPage]);
+  }, [dispatch, keyword, currentPage])
+
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
   }
