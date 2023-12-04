@@ -10,29 +10,27 @@ PRODUCT_DETAILS_SUCCESS,
 PRODUCT_DETAILS_FAIL,
 } from "../constants/productContants";
 
-export const getProducts = (keyword = '', currentPage = 1) => async (dispatch) => {
+
+export const getProducts = (params) => async (dispatch) => {
     try {
-        dispatch({
-            type: ALL_PRODUCTS_REQUEST
-        });
-
-        const { data } = await axios.get(`http://localhost:3001/api/products?keyword=${keyword}&page=${currentPage}`);
-        dispatch({
-            type: ALL_PRODUCTS_SUCCESS,
-            payload: data
-        });
+      dispatch({ type: ALL_PRODUCTS_REQUEST });
+  
+      const { data } = await axios.get("/api/products", { params });
+  
+      dispatch({
+        type: ALL_PRODUCTS_SUCCESS,
+        payload: data,
+      });
     } catch (error) {
-        console.error('Error in getProducts:', error);
-
-
-        dispatch({
-            
-            type: ALL_PRODUCTS_FAIL,
-            payload: error.response ? error.response.data.message : "Erro ao obter produtos da API"
-        });
+      dispatch({
+        type: ALL_PRODUCTS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
     }
-};
-// ...
+  };
 // Action para buscar um produto por ID
 export const getProductById = (id) => async (dispatch) => {
   try {
