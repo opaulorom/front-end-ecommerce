@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productActions";
 import Pagination from "react-js-pagination";
 import Product from "../components/product/Product";
-import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
