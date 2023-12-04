@@ -10,13 +10,16 @@ PRODUCT_DETAILS_SUCCESS,
 PRODUCT_DETAILS_FAIL,
 } from "../constants/productContants";
 
-export const getProducts = (keyword = '', currentPage = 1) => async (dispatch) => {
+export const getProducts = (keyword = '', currentPage = 1, price) => async (dispatch) => {
     try {
         dispatch({
             type: ALL_PRODUCTS_REQUEST
+
         });
 
-        const { data } = await axios.get(`http://localhost:3001/api/products?keyword=${keyword}&page=${currentPage}`);
+        let link = `http://localhost:3001/api/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`
+
+        const { data } = await axios.get(link);
         dispatch({
             type: ALL_PRODUCTS_SUCCESS,
             payload: data

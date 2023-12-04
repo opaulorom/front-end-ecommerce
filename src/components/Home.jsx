@@ -6,10 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productActions";
 import Pagination from "react-js-pagination";
 import Product from "../components/product/Product";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+
 import { useSearchParams } from "react-router-dom";
+
+const { createSliderWithTooltip } = Slider;
+
+const Range = createSliderWithTooltip(Slider.Range);
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [price, setPrice] = useState([1, 1000]);
   const dispatch = useDispatch();
   const { loading, products, error, productsCount, resPerPage } = useSelector(
     (state) => state.products
@@ -21,8 +29,8 @@ const Home = () => {
 
   useEffect(() => {
     // Se necessário, você pode passar a palavra-chave para a sua ação getProducts
-    dispatch(getProducts(keyword, currentPage));
-  }, [dispatch, keyword, currentPage]);
+    dispatch(getProducts(keyword, currentPage, price));
+  }, [dispatch, keyword, currentPage, price]);
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
   }
@@ -35,7 +43,37 @@ const Home = () => {
         <Fragment>
           <MetaData title={"Melhores variedades de Roupas"}></MetaData>
           <div className="row">
-            {products && products.length > 0 ? (
+            {keyword ? (
+              <Fragment>
+                <div className="colPrice">
+                  <div className="pxPrice">
+                    <Range
+                      marks={{
+                        1: `R$1`,
+                        1000: `R$1000`,
+                      }}
+                      min={1}
+                      max={1000}
+                      defaultValue={[1, 100]}
+                      tipFormmeter={(value) => `R$${value}`}
+                      tipProps={{
+                        placement: "top",
+                        visible: true,
+                      }}
+                      value={price}
+                      onChange={(price) => setPrice(price)}
+                    />
+                  </div>
+                </div>
+                <div className="SencondColumn">
+                  <div className="row">
+                    {products.map((product) => (
+                      <Product key={product._id} product={product} />
+                    ))}
+                  </div>
+                </div>
+              </Fragment>
+            ) : products && products.length > 0 ? (
               products.map((product) => (
                 <Product key={product._id} product={product} />
               ))
