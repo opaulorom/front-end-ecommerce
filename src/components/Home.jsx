@@ -18,11 +18,19 @@ const Home = () => {
   // Usando useSearchParams para acessar os parâmetros da URL
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get("keyword") || "";
+  const minPrice = searchParams.get("price[gte]") || "";
+  const maxPrice = searchParams.get("price[lte]") || "";
 
   useEffect(() => {
-    // Se necessário, você pode passar a palavra-chave para a sua ação getProducts
-    dispatch(getProducts(keyword, currentPage));
-  }, [dispatch, keyword, currentPage]);
+    console.log("Keyword:", keyword);
+    console.log("Current Page:", currentPage);
+    console.log("Min Price:", minPrice);
+    console.log("Max Price:", maxPrice);
+
+    // Dispatch da ação getProducts com os parâmetros necessários
+    dispatch(getProducts({ keyword, currentPage, minPrice, maxPrice }));
+  }, [dispatch, keyword, currentPage, minPrice, maxPrice]);
+
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
   }
@@ -33,27 +41,29 @@ const Home = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={"Melhores variedades de Roupas"}></MetaData>
+          <MetaData title={"Melhores variedades de Roupas"} />
           <div className="row">
             {products && products.length > 0 ? (
               products.map((product) => (
                 <Product key={product._id} product={product} />
               ))
             ) : (
-              <div>No products available</div>
+              <div className="col-12 text-center mt-5">
+                <h2>Nenhum produto disponível</h2>
+              </div>
             )}
           </div>
           {resPerPage <= productsCount && (
-            <div className="flex">
+            <div className="d-flex justify-content-center mt-4">
               <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={resPerPage}
                 totalItemsCount={productsCount}
                 onChange={setCurrentPageNo}
-                nextPageText={"Proximo"}
+                nextPageText={"Próximo"}
                 prevPageText={"Anterior"}
                 firstPageText={"Primeiro"}
-                lastPageText={"último"}
+                lastPageText={"Último"}
                 itemClass="page-item"
                 linkClass="page-link"
                 activeLinkClass="active-page"
@@ -61,7 +71,11 @@ const Home = () => {
               />
             </div>
           )}
-          {error && <div>Error: {error}</div>}
+          {error && (
+            <div className="col-12 text-center mt-5">
+              <h2>Error: {error}</h2>
+            </div>
+          )}
         </Fragment>
       )}
     </Fragment>
