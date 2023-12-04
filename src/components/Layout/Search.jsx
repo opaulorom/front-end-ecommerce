@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Search = () => {
@@ -7,6 +7,7 @@ const Search = () => {
 
   const searchHandler = (e) => {
     e.preventDefault();
+    console.log(keyword, "keyword")
 
     if (keyword.trim()) {
       navigate(`/search?keyword=${encodeURIComponent(keyword)}`);
@@ -15,6 +16,13 @@ const Search = () => {
     }
   };
 
+  useEffect(() => {
+    if (keyword.trim()) {
+      // Realize a ação de pesquisa aqui, por exemplo, redirecione para a página de resultados
+      navigate(`/search?keyword=${encodeURIComponent(keyword)}`);
+    }
+  }, [keyword, navigate]);
+  
   return (
     <form onSubmit={searchHandler}>
       <input
