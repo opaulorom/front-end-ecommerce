@@ -2,10 +2,10 @@ import React, { Fragment } from 'react'
 import "../product/productDetails.css"
 import { useEffect } from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import { getProductDetails } from '../../actions/productActions';
+import { productDetails } from '../../actions/productActions';
 import Loader from '../Layout/Loader';
 import MetaData from '../Layout/MetaData';
-const ProductDetails = ({match}) => {
+const ProductDetails = ({match ,}) => {
     const dispatch = useDispatch();
 
 
@@ -14,7 +14,7 @@ const ProductDetails = ({match}) => {
 
     useEffect(() => {
       if(match){
-        dispatch(getProductDetails(match.params.id))
+        dispatch(productDetails(match.params.id))
 
       }
     }, [dispatch, match])
@@ -26,6 +26,8 @@ const ProductDetails = ({match}) => {
       <Fragment>
       {loading ? <Loader/> : (
         <Fragment>
+          <MetaData title={product.name}></MetaData>
+
         <div className="product-details">
         <div className="product-image">
           <img src={product.images} alt={product.name} />

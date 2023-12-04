@@ -1,24 +1,29 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from 'react';
 import '../../components/Layout/Header.css'; // Importa o arquivo CSS para estilização
+import Search from './Search';
+import { Link, BrowserRouter as Router } from 'react-router-dom';
 
 const Header = () => {
   return (
     <Fragment>
-    <header className="header">
-      <div className="logo">Logo</div>
-      <div className="center-content">
-        <div className="search-container">
-          <input type="text" placeholder="Pesquisar" />
-        <i className="search-button"><img className='button' src="https://i.ibb.co/9sxjvyM/loupe-3.png" alt="" /></i>
-        </div>
-      </div>
-      <div className="right-content">
-        <div className="user-info">Login / Cadastro</div>
-        <div className="cart-icon"><i><img src="https://i.ibb.co/mNRCr2j/bag-1.png" alt="" /></i></div>
-      </div>
-    </header>
+      <Router>
+        <header className="header">
+          
+          <Link className="logo" to={"/"} >Logo</Link>
+          <Link to="/">Home</Link> {/* Exemplo de link para a rota '/' */}
+          
+          <Search />
+          
+          <div className="right-content">
+            <div className="user-info">Login / Cadastro</div>
+            <div className="cart-icon">
+              <i><img src="https://i.ibb.co/mNRCr2j/bag-1.png" alt="" /></i>
+            </div>
+          </div>
+        </header>
+      </Router>
     </Fragment>
-  )
+  );
 }
 
-export default Header
+export default Header;
