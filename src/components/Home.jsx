@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productActions";
 import Pagination from "react-js-pagination";
 import Product from "../components/product/Product";
-import Slider from "rc-slider";
+
 import "rc-slider/assets/index.css"; // Certifique-se de importar o CSS do rc-slider
 
 import { useSearchParams } from "react-router-dom";
@@ -61,7 +61,12 @@ const Home = () => {
                     <button
                       onClick={() => {
                         // Realiza o filtro quando o botão é clicado
-                        dispatch(getProducts(keyword, currentPage, [minPrice, maxPrice]));
+                        dispatch(
+                          getProducts(keyword, currentPage, [
+                            minPrice,
+                            maxPrice,
+                          ])
+                        );
                       }}
                     >
                       Filtrar
@@ -69,16 +74,17 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="SencondColumn">
-                <div className="row">
-  {products && Array.isArray(products) && products.length > 0 ? (
-    products.map((product) => (
-      <Product key={product._id} product={product} />
-    ))
-  ) : (
-    <div>No products available</div>
-  )}
-</div>
-
+                  <div className="row">
+                    {products &&
+                    Array.isArray(products) &&
+                    products.length > 0 ? (
+                      products.map((product) => (
+                        <Product key={product._id} product={product} />
+                      ))
+                    ) : (
+                      <div>No products available</div>
+                    )}
+                  </div>
                 </div>
               </Fragment>
             ) : products && products.length > 0 ? (
@@ -115,5 +121,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
