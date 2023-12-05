@@ -6,14 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productActions";
 import Pagination from "react-js-pagination";
 import Product from "../components/product/Product";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
+import Slider from "react-slider"; // Removendo a importação do arquivo CSS
+// Não é mais necessário importar "react-slider/assets/index.css"
 
 import { useSearchParams } from "react-router-dom";
-
-const { createSliderWithTooltip } = Slider;
-
-const Range = createSliderWithTooltip(Slider.Range);
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +27,7 @@ const Home = () => {
     // Se necessário, você pode passar a palavra-chave para a sua ação getProducts
     dispatch(getProducts(keyword, currentPage, price));
   }, [dispatch, keyword, currentPage, price]);
+
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
   }
@@ -47,20 +44,10 @@ const Home = () => {
               <Fragment>
                 <div className="colPrice">
                   <div className="pxPrice">
-                    <Range
-                      marks={{
-                        1: `R$1`,
-                        1000: `R$1000`,
-                      }}
+                    <Slider
                       min={1}
                       max={1000}
-                      defaultValue={[1, 100]}
-                      tipFormmeter={(value) => `R$${value}`}
-                      tipProps={{
-                        placement: "top",
-                        visible: true,
-                      }}
-                      value={price}
+                      defaultValue={price}
                       onChange={(price) => setPrice(price)}
                     />
                   </div>
