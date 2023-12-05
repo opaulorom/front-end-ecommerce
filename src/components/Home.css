@@ -47,3 +47,51 @@
     border: 1px solid #007bff;
   }
   
+/* Home.css */
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.colPrice {
+  width: 30%;
+}
+
+.pxPrice {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.pxPrice label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.pxPrice input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.pxPrice button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pxPrice button:hover {
+  background-color: #45a049;
+}
+
+.pagination-container {
+  margin-top: 20px;
+}
+
+/* Add more styles as needed */
