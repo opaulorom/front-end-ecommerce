@@ -7,31 +7,34 @@ import { getProducts } from "../actions/productActions";
 import Pagination from "react-js-pagination";
 import Product from "../components/product/Product";
 
-import "rc-slider/assets/index.css"; // Certifique-se de importar o CSS do rc-slider
-
 import { useSearchParams } from "react-router-dom";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [minPrice, setMinPrice] = useState(1); // Estado para o preço mínimo
-  const [maxPrice, setMaxPrice] = useState(1000); // Estado para o preço máximo
+  const [minPrice, setMinPrice] = useState(1);
+  const [maxPrice, setMaxPrice] = useState(1000);
   const dispatch = useDispatch();
   const { loading, products, error, productsCount, resPerPage } = useSelector(
     (state) => state.products
   );
 
-  // Usando useSearchParams para acessar os parâmetros da URL
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get("keyword") || "";
 
   useEffect(() => {
-    // Se necessário, você pode passar a palavra-chave para a sua ação getProducts
     dispatch(getProducts(keyword, currentPage, [minPrice, maxPrice]));
   }, [dispatch, keyword, currentPage, minPrice, maxPrice]);
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
   }
+
+  // Verifica se products é uma array válida antes de aplicar o filtro
+  const filteredProducts = Array.isArray(products)
+    ? products.filter(
+        (product) => product.price >= minPrice && product.price <= maxPrice
+      )
+    : [];
 
   return (
     <Fragment>
@@ -41,58 +44,30 @@ const Home = () => {
         <Fragment>
           <MetaData title={"Melhores variedades de Roupas"}></MetaData>
           <div className="row">
-            {keyword ? (
-              <Fragment>
-                <div className="colPrice">
-                  <div className="pxPrice">
-                    {/* Adicionando campos de entrada para preço mínimo e máximo */}
-                    <input
-                      type="number"
-                      placeholder="Preço Mínimo"
-                      value={minPrice}
-                      onChange={(e) => setMinPrice(e.target.value)}
-                    />
-                    <input
-                      type="number"
-                      placeholder="Preço Máximo"
-                      value={maxPrice}
-                      onChange={(e) => setMaxPrice(e.target.value)}
-                    />
-                    <button
-                      onClick={() => {
-                        // Realiza o filtro quando o botão é clicado
-                        dispatch(
-                          getProducts(keyword, currentPage, [
-                            minPrice,
-                            maxPrice,
-                          ])
-                        );
-                      }}
-                    >
-                      Filtrar
-                    </button>
-                  </div>
-                </div>
-                <div className="SencondColumn">
-                  <div className="row">
-                    {products &&
-                    Array.isArray(products) &&
-                    products.length > 0 ? (
-                      products.map((product) => (
-                        <Product key={product._id} product={product} />
-                      ))
-                    ) : (
-                      <div>No products available</div>
-                    )}
-                  </div>
-                </div>
-              </Fragment>
-            ) : products && products.length > 0 ? (
-              products.map((product) => (
-                <Product key={product._id} product={product} />
-              ))
+            <div className="colPrice">
+              <div className="pxPrice">
+                <label>Preço Mínimo:</label>
+                <input
+                  type="number"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(Number(e.target.value))}
+                />
+                <label>Preço Máximo:</label>
+                <input
+                  type="number"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(Number(e.target.value))}
+                />
+              </div>
+            </div>
+            {filteredProducts.length > 0 ? (
+              <div className="row">
+                {filteredProducts.map((product) => (
+                  <Product key={product._id} product={product} />
+                ))}
+              </div>
             ) : (
-              <div>No products available</div>
+              <div>No products available in the selected price range</div>
             )}
           </div>
           {resPerPage <= productsCount && (

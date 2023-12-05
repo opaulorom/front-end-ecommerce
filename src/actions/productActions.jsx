@@ -9,15 +9,18 @@ import {
 PRODUCT_DETAILS_SUCCESS,
 PRODUCT_DETAILS_FAIL,
 } from "../constants/productContants";
-
 export const getProducts = (keyword = '', currentPage = 1, price) => async (dispatch) => {
     try {
         dispatch({
             type: ALL_PRODUCTS_REQUEST
-
         });
 
-        let link = `http://localhost:3001/api/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`
+        const minPrice = price && price[0] ? price[0] : 0;
+        const maxPrice = price && price[1] ? price[1] : 0;
+
+        let link = `http://localhost:3001/api/products?keyword=${keyword}&page=${currentPage}&price[lte]=${maxPrice}&price[gte]=${minPrice}`;
+
+        console.log("API Request URL:", link);
 
         const { data } = await axios.get(link);
         dispatch({
@@ -27,14 +30,13 @@ export const getProducts = (keyword = '', currentPage = 1, price) => async (disp
     } catch (error) {
         console.error('Error in getProducts:', error);
 
-
         dispatch({
-            
             type: ALL_PRODUCTS_FAIL,
             payload: error.response ? error.response.data.message : "Erro ao obter produtos da API"
         });
     }
 };
+
 // ...
 // Action para buscar um produto por ID
 export const getProductById = (id) => async (dispatch) => {
