@@ -15,10 +15,17 @@ export const getProducts = (keyword = '', currentPage = 1, price) => async (disp
             type: ALL_PRODUCTS_REQUEST
         });
 
-        const minPrice = price && price[0] ? price[0] : 0;
-        const maxPrice = price && price[1] ? price[1] : 0;
+        // Adicione verificação se o preço é fornecido
+        const minPrice = price && price[0] !== undefined ? price[0] : '';
+        const maxPrice = price && price[1] !== undefined ? price[1] : '';
 
-        let link = `http://localhost:3001/api/products?keyword=${keyword}&page=${currentPage}&price[lte]=${maxPrice}&price[gte]=${minPrice}`;
+        // Construa a URL baseando-se na presença ou ausência de valores de preço
+        let link = `http://localhost:3001/api/products?keyword=${keyword}&page=${currentPage}`;
+        
+        // Adicione os parâmetros de preço se eles existirem
+        if (minPrice !== '' && maxPrice !== '') {
+            link += `&price[lte]=${maxPrice}&price[gte]=${minPrice}`;
+        }
 
         console.log("API Request URL:", link);
 

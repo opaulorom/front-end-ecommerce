@@ -11,8 +11,8 @@ import { useSearchParams } from "react-router-dom";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [minPrice, setMinPrice] = useState(1);
-  const [maxPrice, setMaxPrice] = useState(1000);
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
   const dispatch = useDispatch();
   const { loading, products, error, productsCount, resPerPage } = useSelector(
     (state) => state.products
@@ -32,14 +32,20 @@ const Home = () => {
 
   // Função para buscar produtos com base na faixa de preço
   const applyPriceFilter = () => {
+    // Se minPrice ou maxPrice não foram especificados, define como null
+    const min = minPrice !== "" ? parseFloat(minPrice) : null;
+    const max = maxPrice !== "" ? parseFloat(maxPrice) : null;
+
     // Dispara a ação para buscar os produtos
-    dispatch(getProducts(keyword, currentPage, [minPrice, maxPrice]));
+    dispatch(getProducts(keyword, currentPage, [min, max]));
   };
 
   // Verifica se products é uma array válida antes de aplicar o filtro
   const filteredProducts = Array.isArray(products)
     ? products.filter(
-        (product) => product.price >= minPrice && product.price <= maxPrice
+        (product) =>
+          (minPrice === "" || product.price >= parseFloat(minPrice)) &&
+          (maxPrice === "" || product.price <= parseFloat(maxPrice))
       )
     : [];
 
