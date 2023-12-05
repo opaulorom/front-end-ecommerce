@@ -6,14 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productActions";
 import Pagination from "react-js-pagination";
 import Product from "../components/product/Product";
-import Slider from "react-slider"; // Removendo a importação do arquivo CSS
-// Não é mais necessário importar "react-slider/assets/index.css"
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css"; // Certifique-se de importar o CSS do rc-slider
 
 import { useSearchParams } from "react-router-dom";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([1, 1000]);
+  const [minPrice, setMinPrice] = useState(1); // Estado para o preço mínimo
+  const [maxPrice, setMaxPrice] = useState(1000); // Estado para o preço máximo
   const dispatch = useDispatch();
   const { loading, products, error, productsCount, resPerPage } = useSelector(
     (state) => state.products
@@ -25,8 +26,8 @@ const Home = () => {
 
   useEffect(() => {
     // Se necessário, você pode passar a palavra-chave para a sua ação getProducts
-    dispatch(getProducts(keyword, currentPage, price));
-  }, [dispatch, keyword, currentPage, price]);
+    dispatch(getProducts(keyword, currentPage, [minPrice, maxPrice]));
+  }, [dispatch, keyword, currentPage, minPrice, maxPrice]);
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
@@ -44,20 +45,40 @@ const Home = () => {
               <Fragment>
                 <div className="colPrice">
                   <div className="pxPrice">
-                    <Slider
-                      min={1}
-                      max={1000}
-                      defaultValue={price}
-                      onChange={(price) => setPrice(price)}
+                    {/* Adicionando campos de entrada para preço mínimo e máximo */}
+                    <input
+                      type="number"
+                      placeholder="Preço Mínimo"
+                      value={minPrice}
+                      onChange={(e) => setMinPrice(e.target.value)}
                     />
+                    <input
+                      type="number"
+                      placeholder="Preço Máximo"
+                      value={maxPrice}
+                      onChange={(e) => setMaxPrice(e.target.value)}
+                    />
+                    <button
+                      onClick={() => {
+                        // Realiza o filtro quando o botão é clicado
+                        dispatch(getProducts(keyword, currentPage, [minPrice, maxPrice]));
+                      }}
+                    >
+                      Filtrar
+                    </button>
                   </div>
                 </div>
                 <div className="SencondColumn">
-                  <div className="row">
-                    {products.map((product) => (
-                      <Product key={product._id} product={product} />
-                    ))}
-                  </div>
+                <div className="row">
+  {products && Array.isArray(products) && products.length > 0 ? (
+    products.map((product) => (
+      <Product key={product._id} product={product} />
+    ))
+  ) : (
+    <div>No products available</div>
+  )}
+</div>
+
                 </div>
               </Fragment>
             ) : products && products.length > 0 ? (
@@ -94,3 +115,5 @@ const Home = () => {
 };
 
 export default Home;
+
+
