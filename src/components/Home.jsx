@@ -31,7 +31,8 @@ const Home = () => {
   }
 
   // Função para buscar produtos com base na faixa de preço
-  const applyPriceFilter = () => {
+  const applyPriceFilter = (e) => {
+    e.preventDefault()
     // Se minPrice ou maxPrice não foram especificados, define como null
     const min = minPrice !== "" ? parseFloat(minPrice) : null;
     const max = maxPrice !== "" ? parseFloat(maxPrice) : null;
