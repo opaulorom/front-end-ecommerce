@@ -22,12 +22,19 @@ const Home = () => {
   const keyword = searchParams.get("keyword") || "";
 
   useEffect(() => {
+    // Atualiza os produtos quando minPrice ou maxPrice mudam
     dispatch(getProducts(keyword, currentPage, [minPrice, maxPrice]));
   }, [dispatch, keyword, currentPage, minPrice, maxPrice]);
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
   }
+
+  // Função para buscar produtos com base na faixa de preço
+  const applyPriceFilter = () => {
+    // Dispara a ação para buscar os produtos
+    dispatch(getProducts(keyword, currentPage, [minPrice, maxPrice]));
+  };
 
   // Verifica se products é uma array válida antes de aplicar o filtro
   const filteredProducts = Array.isArray(products)
@@ -58,6 +65,7 @@ const Home = () => {
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(Number(e.target.value))}
                 />
+                <button onClick={applyPriceFilter}>OK</button>
               </div>
             </div>
             {filteredProducts.length > 0 ? (
