@@ -3,7 +3,7 @@ import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/
 import thunk from "redux-thunk";
 import { productReducer, productDetailsReducer } from "../reducers/productsReducer";  // Importe o reducer diretamente
 import { composeWithDevTools } from "redux-devtools-extension";
-
+import {authReducer} from "../reducers/userReducers"
 const middleware = [thunk];
 
 const preloadedState = {}; // Adicione o estado inicial desejado aqui
@@ -14,7 +14,8 @@ const composeEnhancers = composeWithDevTools({
 
 const rootReducer = combineReducers({
   products: productReducer,
-  productDetails:productDetailsReducer
+  productDetails:productDetailsReducer,
+  userAuth:authReducer
   // outros reducers aqui, se houver
 });
 
