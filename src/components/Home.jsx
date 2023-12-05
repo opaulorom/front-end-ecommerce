@@ -53,19 +53,23 @@ const Home = () => {
           <div className="row">
             <div className="colPrice">
               <div className="pxPrice">
-                <label>Preço Mínimo:</label>
-                <input
-                  type="number"
-                  value={minPrice}
-                  onChange={(e) => setMinPrice(Number(e.target.value))}
-                />
-                <label>Preço Máximo:</label>
-                <input
-                  type="number"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(Number(e.target.value))}
-                />
-                <button onClick={applyPriceFilter}>OK</button>
+                <form onSubmit={(e) => e.preventDefault()}>
+                  <label>Preço Mínimo:</label>
+                  <input
+                    type="number"
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
+                  />
+                  <label>Preço Máximo:</label>
+                  <input
+                    type="number"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
+                  />
+                  <button type="button" onClick={applyPriceFilter}>
+                    OK
+                  </button>
+                </form>
               </div>
             </div>
             {filteredProducts.length > 0 ? (
