@@ -1,74 +1,97 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import MetaData from "../Layout/MetaData";
 import { register } from "../../actions/userActions";
-import { CLEAR_ERRORS } from "../../constants/userContants";
-const Register = () => {
-  const dispatch = useDispatch();
-  const { isAuthenticated, loading, error } = useSelector((state) => state.auth);
+import MetaData from "../Layout/MetaData";
 
+const Register = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
   });
+  const { name, email, password } = user;
 
-  const handleInputChange = (e) => {
+  const dispatch = useDispatch();
+  const { isAuthenticated, loading } = useSelector((state) => state.userAuth);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(`/`);
+    }
+  }, [dispatch, isAuthenticated, navigate]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(register({ name, email, password }));
+  };
+
+  const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch({ type: CLEAR_ERRORS });
-    dispatch(register(user));
-  };
-
 
   return (
     <Fragment>
       <MetaData title={"register"} />
       <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={user.name}
-            onChange={handleInputChange}
-          />
+        <div className="container container-fluid">
+          <div className="row wrapper">
+            <div className="col-10 col-lg-5">
+              <form onSubmit={submitHandler} className="shadow-lg">
+                <h1 className="mb-3">Register</h1>
+
+                <div className="form-group">
+                  <label htmlFor="name_field">Name</label>
+                  <input
+                    type="text"
+                    id="name_field"
+                    className="form-control"
+                    name="name"
+                    value={name}
+                    onChange={onChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="email_field">Email</label>
+                  <input
+                    type="email"
+                    id="email_field"
+                    className="form-control"
+                    name="email"
+                    autoComplete="username"
+                    value={email}
+                    onChange={onChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="password_field">Password</label>
+                  <input
+                    type="password"
+                    id="password_field"
+                    className="form-control"
+                    name="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={onChange}
+                  />
+                </div>
+
+                <button
+                  id="register_button"
+                  type="submit"
+                  className="btn btn-block py-3"
+                  disabled={loading ? true : false}
+                >
+                  REGISTER
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={user.email}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={user.password}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <button type="submit" disabled={loading}>
-            Register
-          </button>
-        </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </form>
-    </div>
+      </div>
     </Fragment>
   );
 };
