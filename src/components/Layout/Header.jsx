@@ -15,7 +15,9 @@ const Header = () => {
           <Search />
           
           <div className="right-content">
-            <div className="user-info">Login / Cadastro</div>
+            <Link to="/login" className="user-info">Login</Link>
+            <Link className="user-info">Cadastro</Link>
+
             <div className="cart-icon">
               <i><img src="https://i.ibb.co/mNRCr2j/bag-1.png" alt="" /></i>
             </div>

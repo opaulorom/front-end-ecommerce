@@ -5,7 +5,7 @@ import {
     CLEAR_ERRORS
 } from "../constants/userContants"
 
-export const authReducer = (state = {user: {}, action}) => {
+export const authReducer = (state = {user: {} },action) => {
     switch(action.type){
         case LOGIN_REQUEST:
             return {

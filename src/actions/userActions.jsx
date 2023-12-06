@@ -10,7 +10,7 @@ import {
 export const login = (email, password) => async (dispatch) => {
     try{
         dispatch({
-            LOGIN_REQUEST
+            type:LOGIN_REQUEST
         })
 
         const config = {
@@ -22,12 +22,12 @@ export const login = (email, password) => async (dispatch) => {
         const { data} = await axios.post("http://localhost:3001/api/login", email, password, config) 
 
         dispatch({
-            LOGIN_SUCCESS,
+            type:LOGIN_SUCCESS,
             payload:data.user
         })
     } catch (error) {
         dispatch({
-            TYPE:LOGIN_FAIL,
+            type:LOGIN_FAIL,
             payload:error.response.data.message
         })
     }
