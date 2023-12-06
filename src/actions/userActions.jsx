@@ -19,8 +19,7 @@ export const login = (email, password) => async (dispatch) => {
             }
         }
 
-        const { data} = await axios.post("http://localhost:3001/api/login",{ email, password}, config) 
-        console.log("dados", data)
+        const { data} = await axios.post("http://localhost:3001/api/login",{ email, password}, config)
         dispatch({
             type:LOGIN_SUCCESS,
             payload:data.user
