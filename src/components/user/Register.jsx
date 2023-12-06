@@ -17,7 +17,7 @@ const Register = () => {
   const { name, email, password } = user;
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState(
-    "/images/default_avatar.png"
+    "https://i.ibb.co/dpx8MDY/user.png"
   );
 
   const dispatch = useDispatch();

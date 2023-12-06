@@ -17,7 +17,7 @@ function App() {
           <Route path="/search/*" element={<Home key="search" />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="login" element={<Login/>}/>
-          <Route path="login" element={<Register/>}/>
+          <Route path="register" element={<Register/>}/>
         </Routes>
       </Router>
       <Footer />
