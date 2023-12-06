@@ -84,7 +84,7 @@ const Login = ({}) => {
                       LOGIN
                     </button>
 
-                    <Link href="/register" className="new-user-link">
+                    <Link to="/register" className="new-user-link">
                       New User?
                     </Link>
                   </form>
