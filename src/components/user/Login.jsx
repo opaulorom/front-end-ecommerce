@@ -24,10 +24,7 @@ const Login = ({}) => {
       navigate(`/`);
     }
 
-    if (error) {
-      alert.error(error);
-      dispatch(cleanErrors());
-    }
+   
   }, [dispatch, isAuthenticated, error, navigate]);
 
   const submitHandler = (e) => {
