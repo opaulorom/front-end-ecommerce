@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Layout/Header";
 import Footer from "./components/Layout/Footer";
@@ -6,8 +6,15 @@ import Home from "./components/Home";
 import ProductDetails from "./components/product/ProductDetails";
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
-Register
+import { loadUser } from "./actions/userActions";
+import store from "./store/store"
+
 function App() {
+
+  useEffect(() => {
+    store.dispatch(loadUser())
+  }, [])
+
   return (
     <>
       <Header />
