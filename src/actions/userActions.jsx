@@ -11,7 +11,11 @@ import {
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
   LOGOUT_SUCCESS,
-  LOGOUT_FAIL
+  LOGOUT_FAIL,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_RESET,
+  UPDATE_PASSWORD_FAIL
 } from "../constants/userContants";
 
 // login
@@ -132,6 +136,43 @@ export const logoutUser = () => async (dispatch) => {
 
     dispatch({
       type: LOGOUT_FAIL,
+      payload: error.response
+        ? error.response.data.message
+        : "Unknown error",
+    });
+  }
+};
+
+
+// load user
+export const updatePasswordUser = (password) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_PASSWORD_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:3001/api/users",
+      // Use userData.name, userData.email, userData.password here
+      password,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_PASSWORD_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    console.error('Registration error:', error);
+
+    dispatch({
+      type: UPDATE_PASSWORD_FAIL,
       payload: error.response
         ? error.response.data.message
         : "Unknown error",

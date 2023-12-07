@@ -10,7 +10,11 @@ import {
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
   LOGOUT_SUCCESS,
-  LOGOUT_FAIL
+  LOGOUT_FAIL,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_RESET,
+  UPDATE_PASSWORD_FAIL
 } from "../constants/userContants";
 
 export const authReducer = (state = { user: {} }, action) => {
@@ -71,3 +75,42 @@ export const authReducer = (state = { user: {} }, action) => {
       return state;
   }
 };
+
+
+export const updatePasswordReducer = (state = {}, action) => {
+  switch(action.type){
+
+    case UPDATE_PASSWORD_REQUEST:
+      return {
+        ...state,
+        loading:true,
+        isUpdated:action.payload
+      }
+
+
+    case UPDATE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading:false,
+        isUpdated:action.payload,
+
+      }
+   
+      case UPDATE_PASSWORD_RESET:
+        return {
+          ...state,
+          loading:false,
+          isUpdated:false,
+  
+        }
+    case UPDATE_PASSWORD_FAIL:
+      return {
+        ...state,
+        error:action.payload
+
+      }
+
+    default:
+      return state
+  }
+}
