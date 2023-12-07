@@ -3,10 +3,15 @@ import "../../components/Layout/Header.css"; // Importa o arquivo CSS para estil
 import Search from "./Search";
 import { Link, BrowserRouter as Router } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../actions/userActions";
 const Header = () => {
   const dispatch = useDispatch();
 
   const { user, loading } = useSelector((state) => state.userAuth);
+
+  const logoutHandler = () => {
+    dispatch(logoutUser());
+  }
   return (
     <Fragment>
       <Router>
@@ -29,7 +34,7 @@ const Header = () => {
                 <div className="dropdownMenu" id="dropdownMenuBtn">
                 <Link to={"/users/getAll"} >Pedidos</Link>
 
-                  <Link className=" dropdownItem textDanger" to="/">
+                  <Link className=" dropdownItem textDanger" to="/" onClick={logoutHandler}>
                     Deslogar
                   </Link>
                 </div>

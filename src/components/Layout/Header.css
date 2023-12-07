@@ -75,7 +75,7 @@
     border: none;
     background: none;
     color: white; /* Cor do texto do botão */
-   
+
   }
   
   .dropdownMenu {
@@ -87,8 +87,7 @@
     background-color: #fff; /* Cor de fundo do menu dropdown */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: .5rem;
-    display: flex;
-    flex-direction: column;
+   
   }
   
   .dropDown:hover .dropdownMenu {
