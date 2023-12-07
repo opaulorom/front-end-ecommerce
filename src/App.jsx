@@ -28,6 +28,7 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route path="/profile" element={<Profile/>}/>
 
+
         </Routes>
       </Router>
       <Footer />
