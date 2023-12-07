@@ -32,8 +32,8 @@ const Header = () => {
                 </button>
 
                 <div className="dropdownMenu" id="dropdownMenuBtn">
-                <Link to={"/users/getAll"} >Pedidos</Link>
-
+                <Link to={"/orders"} >Pedidos</Link>
+                <Link to={"/profile"} >Profile</Link>
                   <Link className=" dropdownItem textDanger" to="/" onClick={logoutHandler}>
                     Deslogar
                   </Link>

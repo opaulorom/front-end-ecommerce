@@ -8,6 +8,7 @@ import Login from "./components/user/Login";
 import Register from "./components/user/Register";
 import { loadUser } from "./actions/userActions";
 import store from "./store/store"
+import Profile from "./components/user/Profile";
 
 function App() {
 
@@ -23,8 +24,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search/*" element={<Home key="search" />} />
           <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="login" element={<Login/>}/>
-          <Route path="register" element={<Register/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/profile" element={<Profile/>}/>
+
         </Routes>
       </Router>
       <Footer />
