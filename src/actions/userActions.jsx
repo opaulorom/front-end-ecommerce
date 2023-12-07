@@ -96,7 +96,7 @@ export const loadUser = (userData) => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      "http://localhost:3001/api/userDetails",
+      "http://localhost:3001/api/users",
       // Use userData.name, userData.email, userData.password here
       { email: userData.email, password: userData.password },
       config
@@ -119,21 +119,16 @@ export const loadUser = (userData) => async (dispatch) => {
 };
 
 // logout user
-export const logoutUser = (userData) => async (dispatch) => {
+// logout user
+export const logoutUser = () => async (dispatch) => {
   try {
-    
-
-     await axios.get(
-      "http://localhost:3001/api/logout"
-  
-    );
+    await axios.get("http://localhost:3001/api/logout");
 
     dispatch({
       type: LOGOUT_SUCCESS,
-    
     });
   } catch (error) {
-    console.error('Registration error:', error);
+    console.error('Logout error:', error);
 
     dispatch({
       type: LOGOUT_FAIL,
@@ -143,7 +138,6 @@ export const logoutUser = (userData) => async (dispatch) => {
     });
   }
 };
-
 
 // limpar errors
 export const cleanErrors = () => async (dispatch) => {
