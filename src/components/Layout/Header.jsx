@@ -1,31 +1,62 @@
-import React, { Fragment } from 'react';
-import '../../components/Layout/Header.css'; // Importa o arquivo CSS para estilização
-import Search from './Search';
-import { Link, BrowserRouter as Router } from 'react-router-dom';
-
+import React, { Fragment } from "react";
+import "../../components/Layout/Header.css"; // Importa o arquivo CSS para estilização
+import Search from "./Search";
+import { Link, BrowserRouter as Router } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const { user, loading } = useSelector((state) => state.userAuth);
   return (
     <Fragment>
       <Router>
         <header className="header">
-          
-          <Link className="logo" to={"/"} >Logo</Link>
-          <Link to="/">Home</Link> {/* Exemplo de link para a rota '/' */}
-          
+          <Link className="logo link" to={"/"}>
+            Logo
+          </Link>
+          <Link className="link" to="/">
+            Home
+          </Link>{" "}
+          {/* Exemplo de link para a rota '/' */}
           <Search />
-          
           <div className="right-content">
-            <Link to="/login" className="user-info">Login</Link>
-            <Link className="user-info">Cadastro</Link>
+            {user ? (
+              <div className="dropDown">
+                <button className="link" type="button" id="dropDownButton">
+                  Minha conta
+                </button>
 
-            <div className="cart-icon">
-              <i><img src="https://i.ibb.co/mNRCr2j/bag-1.png" alt="" /></i>
-            </div>
+                <div className="dropdownMenu" id="dropdownMenuBtn">
+                <Link to={"/users/getAll"} >Pedidos</Link>
+
+                  <Link className=" dropdownItem textDanger" to="/">
+                    Deslogar
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              !loading && (
+                <>
+                
+                <Link to="/login" className="user-info link">
+                  Login
+                </Link>
+                </>
+              )
+            )}
+
+            <Link to={"/cart"} className="link cart">
+              <div className="cart-icon">
+                <i>
+                  <img src="https://i.ibb.co/mNRCr2j/bag-1.png" alt="" />
+                </i>
+              </div>
+            </Link>
           </div>
         </header>
       </Router>
     </Fragment>
   );
-}
+};
 
 export default Header;

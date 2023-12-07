@@ -63,3 +63,43 @@
     top: 50%;
     transform: translateY(-50%)
   }
+
+
+  .dropDown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  #dropDownButton {
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: white; /* Cor do texto do botão */
+   
+  }
+  
+  .dropdownMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    background-color: #fff; /* Cor de fundo do menu dropdown */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dropDown:hover .dropdownMenu {
+    display: block;
+  }
+  
+  
+  
+  .textDanger {
+    color: #f00; /* Cor do texto do item do menu dropdown */
+    text-decoration: none;
+
+  }
+  

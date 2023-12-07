@@ -4,3 +4,11 @@
   box-sizing: border-box;
 }
 
+.link {
+  color: white; /* ou qualquer cor desejada */
+  text-decoration: none; /* para remover o sublinhado padrão */
+}
+
+.cart{
+  text-decoration: none;
+}

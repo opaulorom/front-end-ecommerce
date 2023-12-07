@@ -81,7 +81,7 @@ export const register = (userData) => async (dispatch) => {
   
 
 // load user
-export const loadUser = () => async (dispatch) => {
+export const loadUser = (userData) => async (dispatch) => {
   try {
     dispatch({
       type: LOAD_USER_REQUEST,
@@ -96,7 +96,7 @@ export const loadUser = () => async (dispatch) => {
     const { data } = await axios.get(
       "http://localhost:3001/api/userDetails",
       // Use userData.name, userData.email, userData.password here
-      { name: userData.name, email: userData.email, password: userData.password },
+      { email: userData.email, password: userData.password },
       config
     );
 
