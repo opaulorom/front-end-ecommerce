@@ -8,7 +8,7 @@ const UpdataPassword = () => {
     const {newPassword, setNewPassword} = useState('')
     const dispatch = useDispatch()
 
-    const {isUpdated, loading } = useSelector(state => state.userAuth)
+    const {isUpdated, loading } = useSelector(state => state.user)
 
   return (
     <div>UpdataPassword</div>
