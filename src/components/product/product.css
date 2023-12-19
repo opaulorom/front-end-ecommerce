@@ -1,0 +1,50 @@
+/* ClothesCard.css */
+
+.clothes-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px;
+    width: 300px;     /* nao e o width*/
+
+ 
+
+  }
+  
+  .card-image {
+    width: 100%;
+    height: 35vh;
+    object-fit: cover;
+  }
+
+  
+  .card-details {
+    padding: 20px;
+    text-align: left;
+
+  }
+
+
+  
+  .card-title {
+    margin: 0;
+  }
+  
+  .card-price {
+    margin: 5px 0;
+  }
+  
+  .btn-saiba-mais {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }

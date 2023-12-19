@@ -1,0 +1,25 @@
+/* Adicione seus estilos personalizados aqui */
+
+.container {
+    margin-top: 20px;
+  }
+  
+  .avatar {
+    text-align: center;
+  }
+  
+  .avatar img {
+    width: 100%;
+  }
+  
+  .user-info {
+    margin-top: 20px;
+  }
+  
+  .btn-block {
+    display: block;
+    width: 100%;
+  }
+  
+  /* Adicione mais estilos conforme necessário */
+  

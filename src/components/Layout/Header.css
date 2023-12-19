@@ -1,0 +1,104 @@
+/* Header.css */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .center-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  input {
+    width: 50dvw;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+  }
+  
+  .right-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info {
+    margin-right: 10px;
+  }
+  
+  .cart-icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+  }
+
+  .button {
+    padding: 8px;
+
+
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    position: absolute;
+    right:5px;
+    top: 50%;
+    transform: translateY(-50%)
+  }
+
+
+  .dropDown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  #dropDownButton {
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: white; /* Cor do texto do botão */
+
+  }
+  
+  .dropdownMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    background-color: #fff; /* Cor de fundo do menu dropdown */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: .5rem;
+   
+  }
+  
+  .dropDown:hover .dropdownMenu {
+    display: block;
+  }
+  
+  
+  
+  .textDanger {
+    color: #f00; /* Cor do texto do item do menu dropdown */
+    text-decoration: none;
+
+  }
+  
