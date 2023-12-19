@@ -1,14 +1,16 @@
-import './scss/style.scss'
-import Produto from './components/Produto'
+import Home from "./components/Home";
+import "./index.css"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
-
   return (
     <>
-    <Produto/>
-    
-      
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </Router>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
