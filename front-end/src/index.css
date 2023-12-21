@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+}
+
+
+:root{
+    --spanish-gray:hsl(0, 0%, 60%);
+    --sonic-silver:hsl(0, 0%, 47%);
+    --eerie-black:hsl(0, 0%, 13%);
+    --salmon-pink:hsl(353, 100%, 78%);
+    --sandy-broan:hsl(29, 98%, 65%);
+    --bittersweet:hsl(0, 100%, 70%);
+    --ocean-green:hsl(152, 51%, 52%);
+    --gray:hsl(0, 0%, 33%);
+    --cultured:hsl(0, 0, 93%);
+    --white:hsl(0, 100%, 100%);
+    --onyx:hsl(0, 0%, 27%);
+    
+}
