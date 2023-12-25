@@ -1,4 +1,4 @@
-*{
+*, *::before, *::after{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -22,4 +22,70 @@ body{
     --white:hsl(0, 100%, 100%);
     --onyx:hsl(0, 0%, 27%);
     
+
+    --border-radius-md:10px;
+    --border-radius-sm:5px;
+
+    --transition-timing: 0.2s ease;
+}
+
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+}
+button{
+    background: none;
+    font: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+
+img, ion-icon, button, a{
+    display: block;
+}
+
+span{
+    display: inline-block;
+}
+
+html{
+    font-family: "poppins", sans-serif;
+    overscroll-behavior: contain;
+}
+
+input{
+    display: block;
+    width: 100%;
+    font: inherit;
+}
+
+input::placeholder{
+    font: inherit;
+}
+body{
+    background-color: var(--white);
+}
+
+body::-webkit-scrollbar{
+    width: 15px;
+}
+
+body::-webkit-scrollbar-track{
+    background-color: var(--white);
+    border: 1px solid var(--cultured);
+}
+
+body::-webkit-scrollbar-thumb{
+    background: hsl(0, 0%, 80%);
+    border: 2px solid var(--white);
+    border-radius: 10px;
+}
+
+
+body::-webkit-scrollbar-thumb:hover{
+    background: hsl(0, 0%, 70%);
 }
