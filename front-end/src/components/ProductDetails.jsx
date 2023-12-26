@@ -49,7 +49,17 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <img src={product.images[0].url} alt={product.name} />
+      {/* Exibe a imagem principal ou a imagem da cor clicada */}
+      <img
+        src={
+          selectedColor
+            ? product.images
+                .flatMap((image) => image.colors)
+                .find((c) => c.color === selectedColor)?.url
+            : product.images[0].url
+        }
+        alt={product.name}
+      />
 
       <h1>{product.name}</h1>
       <p>{product.price}</p>
@@ -62,20 +72,6 @@ const ProductDetails = () => {
           onClick={() => handleColorClick(colorObj.color)}
         />
       ))}
-
-      <p></p>
-
-      {/* Exibe a imagem correspondente à cor selecionada */}
-      {selectedColor && (
-        <img
-          src={
-            product.images
-              .flatMap((image) => image.colors)
-              .find((c) => c.color === selectedColor)?.url
-          }
-          alt={`${product.name} - ${selectedColor}`}
-        />
-      )}
     </div>
   );
 };
