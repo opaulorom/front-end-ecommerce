@@ -11,11 +11,13 @@ const ColorDot = ({ color }) => {
         borderRadius: "50%",
         backgroundColor: color,
         display: "inline-block",
-        marginRight: "5px"
+        marginRight: "5px",
+        opacity: 1, // Certifique-se de que a opacidade está definida como 1
       }}
     />
   );
 };
+
 
 const ProductDetails = () => {
   const { productId } = useParams();
