@@ -56,7 +56,7 @@ const ProductDetails = () => {
             ? product.images
                 .flatMap((image) => image.colors)
                 .find((c) => c.color === selectedColor)?.url
-            : product.images[0].url
+            : product.images[0].colors[0].url
         }
         alt={product.name}
       />
