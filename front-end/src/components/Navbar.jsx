@@ -1,6 +1,6 @@
 // Navbar.js
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaHome, FaList, FaShoppingCart, FaUser } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
@@ -12,17 +12,6 @@ const Navbar = () => {
     setActiveLink(index);
     // Lógica adicional, se necessário
   };
-
-  useEffect(() => {
-    // Força a re-renderização do componente após a atualização do estado
-    const forceRerender = () => {
-      setTimeout(() => {
-        setActiveLink(null);
-      }, 0);
-    };
-
-    forceRerender();
-  }, [activeLink]);
 
   return (
     <div className="navbar">
