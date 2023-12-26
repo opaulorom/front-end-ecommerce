@@ -5,17 +5,24 @@ import App from "./App";
 import Home from "./components/Home";
 import Products from "./components/Products";
 import Pay from "./components/Pay";
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
+import Categories from "./components/Categories";
+import Profile from "./components/Profile";
+import Cart from "./components/Cart";
 
 const Root = () => (
   <Routes>
-    <Route path="/" element={<Home />} />
+    <Route path="/" element={<App />} />
+    <Route path="/home" element={<Home />} />
+    <Route path="/categorias" element={<Categories />} />
+    <Route path="/carrinho" element={<Cart />} />
+    <Route path="/perfil" element={<Profile />} />
+
     <Route path="/products/:productId" element={<Products />} />
     <Route path="/pay/:payId" element={<Pay />} />
-    <Route path="/app" element={<App />} />
   </Routes>
 );
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Root />
