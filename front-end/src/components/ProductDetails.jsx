@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-const ColorDot = ({ color }) => {
+const ColorDot = ({ color, onClick }) => {
   return (
     <div
       style={{
@@ -12,16 +12,17 @@ const ColorDot = ({ color }) => {
         backgroundColor: color,
         display: "inline-block",
         marginRight: "5px",
-        opacity: 1, // Certifique-se de que a opacidade está definida como 1
+        cursor: "pointer",
       }}
+      onClick={onClick}
     />
   );
 };
 
-
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -38,25 +39,44 @@ const ProductDetails = () => {
     fetchProduct();
   }, [productId]);
 
+  const handleColorClick = (color) => {
+    setSelectedColor(color);
+  };
+
   if (!product) {
     return <p>Carregando...</p>;
   }
 
   return (
     <div>
-    <img src={product.images[0].url} alt={product.name} />
+      <img src={product.images[0].url} alt={product.name} />
 
-    <h1>{product.name}</h1>
-    <p>{product.price}</p>
-    
-    {/* Exibe uma bolinha com a cor do produto */}
-    {product.images[0].colors.map((color, index) => (
-  <ColorDot key={index} color={color.color} />
-))}
+      <h1>{product.name}</h1>
+      <p>{product.price}</p>
 
-    
-    <p></p>
-  </div>
+      {/* Exibe uma bolinha com a cor do produto */}
+      {product.images[0].colors.map((colorObj, index) => (
+        <ColorDot
+          key={index}
+          color={colorObj.color}
+          onClick={() => handleColorClick(colorObj.color)}
+        />
+      ))}
+
+      <p></p>
+
+      {/* Exibe a imagem correspondente à cor selecionada */}
+      {selectedColor && (
+        <img
+          src={
+            product.images
+              .flatMap((image) => image.colors)
+              .find((c) => c.color === selectedColor)?.url
+          }
+          alt={`${product.name} - ${selectedColor}`}
+        />
+      )}
+    </div>
   );
 };
 
