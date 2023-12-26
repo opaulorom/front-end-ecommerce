@@ -2,43 +2,42 @@
 
 import React, { useState } from "react";
 import { FaHome, FaList, FaShoppingCart, FaUser } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [activeLink, setActiveLink] = useState(null);
-
-  const handleItemClick = (index) => {
-    setActiveLink(index);
-    // Lógica adicional, se necessário
-  };
-
+    const [activeLink, setActiveLink] = useState(null)
+    const handleItemClick = (index) => {
+        setActiveLink(index);
+        // Aqui você pode adicionar a lógica para lidar com o clique no link, se necessário
+      };
   return (
     <div className="navbar">
-      <NavLink to="/home" activeClassName="active" onClick={() => handleItemClick(0)}>
-        <div className={`nav-item ${activeLink === 0 ? 'active' : ''}`}>
+      <Link to={"/home"}>
+        <div className="nav-item">
           <FaHome />
           <span>Home</span>
         </div>
-      </NavLink>
-      <NavLink to="/categorias" activeClassName="active" onClick={() => handleItemClick(1)}>
-        <div className={`nav-item ${activeLink === 1 ? 'active' : ''}`}>
+      </Link>
+      <Link to={"/categorias"}>
+        <div className="nav-item">
           <FaList />
           <span>Categorias</span>
         </div>
-      </NavLink>
-      <NavLink to="/carrinho" activeClassName="active" onClick={() => handleItemClick(2)}>
-        <div className={`nav-item ${activeLink === 2 ? 'active' : ''}`}>
+      </Link>
+      <Link to={"/carrinho"}>
+        <div className="nav-item">
           <FaShoppingCart />
           <span>Carrinho</span>
         </div>
-      </NavLink>
-      <NavLink to="/perfil" activeClassName="active" onClick={() => handleItemClick(3)}>
-        <div className={`nav-item ${activeLink === 3 ? 'active' : ''}`}>
+      </Link>
+
+      <Link to={"/perfil"}>
+        <div className="nav-item">
           <FaUser />
           <span>Perfil</span>
         </div>
-      </NavLink>
+      </Link>
     </div>
   );
 };
