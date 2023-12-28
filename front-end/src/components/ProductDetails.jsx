@@ -53,10 +53,8 @@ const ProductDetails = () => {
       <img
         src={
           selectedColor
-            ? product.images
-                .flatMap((image) => image.colors)
-                .find((c) => c.color === selectedColor)?.url
-            : product.images[0].colors[0].url
+            ? product.images?.flatMap((image) => image.colors)?.find((c) => c.color === selectedColor)?.url
+            : product.images?.[0]?.colors?.[0]?.url
         }
         alt={product.name}
       />
@@ -64,8 +62,8 @@ const ProductDetails = () => {
       <h1>{product.name}</h1>
       <p>{product.price}</p>
 
-      {/* Exibe uma bolinha com a cor do produto */}
-      {product.images[0].colors.map((colorObj, index) => (
+      {/* Exibe uma bolinha com a cor do produto se houver imagens e cores */}
+      {product.images?.[0]?.colors?.map((colorObj, index) => (
         <ColorDot
           key={index}
           color={colorObj.color}
