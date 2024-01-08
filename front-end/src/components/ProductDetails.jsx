@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const ColorDot = ({ color, onClick }) => {
   return (
@@ -70,6 +71,8 @@ const ProductDetails = () => {
           onClick={() => handleColorClick(colorObj.color)}
         />
       ))}
+          <Navbar></Navbar>
+
     </div>
   );
 };

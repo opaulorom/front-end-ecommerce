@@ -17,31 +17,28 @@ const Navbar = () => {
   };
 
   return (
+    <div className="hide">
     <div className="navbar">
-      <Link to={"/home"} >
-        <div onClick={() => handleItemClick(0)} className={`nav-item ${isActive(0)}`}>
-          <FaHome />
-          <span>Home</span>
-        </div>
-      </Link>
-      <Link to={"/categorias"}>
-        <div  onClick={() => handleItemClick(1)} className={`nav-item ${isActive(1)}`}>
-          <FaList />
-          <span>Categorias</span>
-        </div>
-      </Link>
-      <Link to={"/carrinho"} >
-        <div onClick={() => handleItemClick(2)} className={`nav-item ${isActive(2)}`}>
-          <FaShoppingCart/>
-          <span>Carrinho</span>
-        </div>
-      </Link>
-      <Link to={"/perfil"} >
-        <div  onClick={() => handleItemClick(3)} className={`nav-item ${isActive(3)}`}>
-          <FaUser />
-          <span>Perfil</span>
-        </div>
-      </Link>
+    <Link to={"/home"} className={`nav-item ${isActive(0)}`}>
+  <img src="https://i.ibb.co/FxJBxZS/home-2.png" />
+  <span  className="span">Home</span>
+</Link>
+
+<Link to={"/categorias"} className={`nav-item ${isActive(1)}`}>
+  <img src="https://i.ibb.co/NtST8zC/menu-1.png" />
+  <span  className="span">Categorias</span>
+</Link>
+
+<Link to={"/carrinho"} className={`nav-item ${isActive(2)}`}>
+  <img src="https://i.ibb.co/924BXKd/add-to-cart.png"/>
+  <span  className="span">Carrinho</span>
+</Link>
+
+<Link to={"/perfil"} className={`nav-item ${isActive(3)}`}>
+  <img src="https://i.ibb.co/pyMDQbH/account.png" />
+  <span className="span">Perfil</span>
+</Link>
+    </div>
     </div>
   );
 };
