@@ -3,12 +3,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./ProductDetails.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-import Slider from "react-slick";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -34,43 +28,21 @@ const ProductDetails = () => {
     return <p>Carregando...</p>;
   }
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    prevArrow: <ArrowBackIosIcon />,
-    nextArrow: <ArrowForwardIosIcon />,
+  const handleThumbnailClick = (index) => {
+    setCurrentImageIndex(index);
   };
-  const handleThumbnailClick = (color) => {
-    const index = product.variations.findIndex(
-      (variation) => variation.color === color
-    );
-
-    if (index !== -1) {
-      setCurrentImageIndex(index);
-    }
-  };
-
-  console.log("Current Image Index:", currentImageIndex);
 
   return (
     <div>
-      {/* Main Image Slider */}
       <div>
         <h2>Single Item</h2>
-        <Slider {...settings}>
-          {product.variations?.map((variation, index) => (
-            <div key={index}>
-              <img
-                src={variation.urls[0]}
-                alt={variation.color}
-                style={{ width: "50%", margin: "0 auto" }}
-              />
-            </div>
-          ))}
-        </Slider>
+        <div key={currentImageIndex}>
+          <img
+            src={product.variations[currentImageIndex].urls[0]}
+            alt={product.variations[currentImageIndex].color}
+            style={{ width: "50%", margin: "0 auto" }}
+          />
+        </div>
       </div>
 
       {/* Thumbnails */}
@@ -80,10 +52,8 @@ const ProductDetails = () => {
             key={index}
             src={variation.urls[0]}
             alt={variation.color}
-            className={`thumbnail ${
-              index === currentImageIndex ? "active" : ""
-            }`}
-            onClick={() => handleThumbnailClick(variation.color)}
+            className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
+            onClick={() => handleThumbnailClick(index)}
           />
         ))}
       </div>

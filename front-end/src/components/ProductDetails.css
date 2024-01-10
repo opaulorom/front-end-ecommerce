@@ -119,3 +119,16 @@ button {
 .thumbnail.active {
   border: 2px solid #000;
 }
+
+
+/* Adicione no seu arquivo ProductDetails.css */
+.bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #000; /* Cor da bolinha */
+  display: inline-block;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
