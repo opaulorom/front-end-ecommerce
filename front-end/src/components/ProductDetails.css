@@ -69,3 +69,14 @@
   display: flex;
   flex-direction: column;
 }
+
+/* Add this to your existing ProductDetails.css file */
+
+.preview-thumbnail {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+/* ... (existing styles) */
