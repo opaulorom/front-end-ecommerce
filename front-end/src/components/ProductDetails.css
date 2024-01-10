@@ -1,24 +1,121 @@
 /* ProductDetails.css */
-.product-image {
-  max-width: 100%;
-}
 
+
+  
 .color-dots-container {
   display: flex;
-  gap: 8px;
-  margin-top: 10px; /* Add margin to separate from the main image */
+  gap: 5px;
+  margin-top: 10px;
 }
 
-.color-thumbnail {
-  width: 30px;
-  height: 30px;
+.color-dot {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid transparent; /* Add a border or any other style to indicate selection */
 }
 
-.color-thumbnail.selected {
-  border-color: #000; /* Border color for the selected thumbnail */
+.color-dot.selected {
+  border: 2px solid #333; /* Adicione um contorno à cor selecionada */
 }
 
-/* Rest of your existing styles */
+button {
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.color-dot.selected {
+  border: 2px solid white; /* ou qualquer estilo desejado para indicar a seleção */
+}
+
+
+/* Add this CSS to your ProductDetails.css or your preferred styling file */
+
+/* Main Image Slider */
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+}
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.slick-track {
+  display: flex;
+}
+
+.slick-slide {
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Thumbnails */
+.thumbnail-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.thumbnail {
+  width: 50px;
+  height: 50px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  transition: border 0.3s ease-in-out;
+}
+
+.thumbnail.active {
+  border: 2px solid #000;
+}
+
+
+/* Add this CSS to your ProductDetails.css or your preferred styling file */
+
+/* Main Image Slider */
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+}
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.slick-track {
+  display: flex;
+}
+
+.slick-slide {
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Thumbnails */
+.thumbnail-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.thumbnail {
+  width: 50px;
+  height: 50px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  transition: border 0.3s ease-in-out;
+}
+
+.thumbnail.active {
+  border: 2px solid #000;
+}

@@ -10,22 +10,9 @@ import Slider from "react-slick";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-const ColorThumbnail = ({ color, onClick, isSelected }) => {
-  return (
-    <div
-      className={`color-thumbnail ${isSelected ? 'selected' : ''}`}
-      style={{
-        backgroundColor: color,
-      }}
-      onClick={onClick}
-    />
-  );
-};
-
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  const [selectedColor, setSelectedColor] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -43,23 +30,6 @@ const ProductDetails = () => {
     fetchProduct();
   }, [productId]);
 
-  const handleColorClick = (color) => {
-    setSelectedColor(color);
-    setCurrentImageIndex(0); // Reset to the first image when changing color
-  };
-
-  const getImageSource = () => {
-    if (selectedColor !== null) {
-      const selectedVariation = product.variations.find(
-        (variation) => variation.color === selectedColor
-      );
-
-      return selectedVariation?.urls[currentImageIndex];
-    }
-
-    return product.variations?.[0]?.urls[currentImageIndex];
-  };
-
   if (!product) {
     return <p>Carregando...</p>;
   }
@@ -73,44 +43,54 @@ const ProductDetails = () => {
     prevArrow: <ArrowBackIosIcon />,
     nextArrow: <ArrowForwardIosIcon />,
   };
+  const handleThumbnailClick = (color) => {
+    const index = product.variations.findIndex(
+      (variation) => variation.color === color
+    );
+
+    if (index !== -1) {
+      setCurrentImageIndex(index);
+    }
+  };
+
+  console.log("Current Image Index:", currentImageIndex);
 
   return (
     <div>
-      <img
-        className="product-image"
-        style={{ width: "20vw" }}
-        src={getImageSource()}
-        alt={product.name}
-      />
-
-      <h1>{product.name}</h1>
-      <p>{product.price}</p>
-
-      <div className="color-dots-container">
-        {product.variations?.map((variation, index) => (
-          <ColorThumbnail
-            key={index}
-            color={variation.color}
-            isSelected={variation.color === selectedColor}
-            onClick={() => handleColorClick(variation.color)}
-          />
-        ))}
-      </div>
-
+      {/* Main Image Slider */}
       <div>
         <h2>Single Item</h2>
         <Slider {...settings}>
           {product.variations?.map((variation, index) => (
             <div key={index}>
               <img
-                src={variation.urls[currentImageIndex]}
+                src={variation.urls[0]}
                 alt={variation.color}
-                style={{ width: "50%", margin:"0 auto" }}
+                style={{ width: "50%", margin: "0 auto" }}
               />
             </div>
           ))}
         </Slider>
       </div>
+
+      {/* Thumbnails */}
+      <div className="thumbnail-container">
+        {product.variations?.map((variation, index) => (
+          <img
+            key={index}
+            src={variation.urls[0]}
+            alt={variation.color}
+            className={`thumbnail ${
+              index === currentImageIndex ? "active" : ""
+            }`}
+            onClick={() => handleThumbnailClick(variation.color)}
+          />
+        ))}
+      </div>
+
+      <h1>{product.name}</h1>
+      <p>{product.price}</p>
+
       <Navbar />
     </div>
   );
