@@ -131,34 +131,10 @@ const ProductDetails = () => {
 
 
 
-
-      
-      <div className="thumbnail-container">
-        {product.variations
-          ?.map((variation, index) => (
-            <div key={index} className="thumbnail-wrapper">
-              <span className="color-name">{variation.color}</span>
-              <img
-                src={variation.urls[0]}
-                alt={variation.color}
-                className={`thumbnail ${
-                  index === currentImageIndex ? "active" : ""
-                }`}
-                onClick={() => handleThumbnailClick(index)}
-              />
-              {variation.urls.slice(1, 4).map((url, i) => (
-                <img
-                  key={i}
-                  src={url}
-                  alt={variation.color}
-                  className="preview-thumbnail"
-                  onClick={() => handleThumbnailClick(i + 1)}
-                />
-              ))}
-            </div>
-          ))}
-      </div>
       <Navbar />
+     
+
+
     </div>
   );
 };
