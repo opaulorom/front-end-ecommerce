@@ -32,6 +32,10 @@ const ProductDetails = () => {
     setCurrentImageIndex(index);
   };
 
+  const handleDotClick = (index) => {
+    setCurrentImageIndex(index);
+  };
+
   return (
     <div>
       <div>
@@ -54,6 +58,17 @@ const ProductDetails = () => {
             alt={variation.color}
             className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
             onClick={() => handleThumbnailClick(index)}
+          />
+        ))}
+      </div>
+
+      {/* Dots */}
+      <div className="dot-container">
+        {product.variations?.map((variation, index) => (
+          <span
+            key={index}
+            className={`dot ${index === currentImageIndex ? "active" : ""}`}
+            onClick={() => handleDotClick(index)}
           />
         ))}
       </div>
