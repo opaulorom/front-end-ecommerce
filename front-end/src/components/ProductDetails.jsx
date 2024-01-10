@@ -28,9 +28,32 @@ const ProductDetails = () => {
     return <p>Carregando...</p>;
   }
 
-  const handleThumbnailClick = (index) => {
-    setCurrentImageIndex(index);
+  const handleThumbnailClick = (color, index) => {
+    const colorVariations = product.variations.filter(
+      (variation) => variation.color === color
+    );
+    const currentIndexInColor = colorVariations.findIndex(
+      (variation) => variation.urls[0] === product.variations[currentImageIndex].urls[0]
+    );
+  
+    if (currentIndexInColor !== -1) {
+      const newIndex = (currentIndexInColor + 1) % colorVariations.length;
+      setCurrentImageIndex(
+        product.variations.findIndex(
+          (variation) => variation.color === colorVariations[newIndex].color
+        )
+      );
+    } else {
+      // If the current variation is not found in the selected color, go to the first image of that color.
+      setCurrentImageIndex(
+        product.variations.findIndex(
+          (variation) => variation.color === color && variation.urls[0] === colorVariations[0].urls[0]
+        )
+      );
+    }
   };
+  
+  
 
   const handleDotClick = (index) => {
     setCurrentImageIndex(index);
@@ -97,14 +120,19 @@ const ProductDetails = () => {
                 className={`thumbnail ${
                   index === currentImageIndex ? "active" : ""
                 }`}
-                onClick={() => handleThumbnailClick(index)}
-              />
+                onClick={() => handleThumbnailClick(variation.color, index)}
+                />
             </div>
           ))}
       </div>
 
       <h1>{product.name}</h1>
       <p>{product.price}</p>
+
+
+
+
+      
       <div className="thumbnail-container">
         {product.variations
           ?.map((variation, index) => (
