@@ -13,14 +13,6 @@ const Slider = ({ imageUrls }) => {
     setCurrentImage(nextImage);
   };
 
-  useEffect(() => {
-    const timer = setInterval(autoChangeImage, 5000);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, [currentImage]);
-
   // Variáveis para rastrear o movimento de toque
   let touchStartX = 0;
   let touchEndX = 0;
