@@ -1,68 +1,28 @@
-/* Estilos do Slider */
-.image-container {
+/* Slider.css */
+
+.slider {
   position: relative;
-  text-align: center;
-  margin-top: 3%;
+  width: 100%;
+  overflow: hidden; /* Garante que apenas uma imagem seja visível */
 }
 
-.dots {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+.slider-image {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease-in-out; /* Adiciona uma transição suave entre as imagens */
 }
 
-.dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background: #ffffff;
-  border-radius: 50%;
-  margin: 0 5px;
-  cursor: pointer;
-  transition: transform 0.2s, opacity 0.3s;
-  border: 1px solid white;
-}
-
-.dot.active {
-  background-color: black;
-  transform: scale(1.5);
-  opacity: 0.7;
-}
-
-/* Adicionando estilos para setas */
-.arrows {
+.slider-button {
   position: absolute;
   top: 50%;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
   transform: translateY(-50%);
-}
-
-.arrow {
-  color: black;
+  background-color: transparent;
+  border: none;
+  color: #333;
   font-size: 24px;
   cursor: pointer;
-  transition: 0.3s;
-  background-color: #fff7f7;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  opacity: 0.5;
 }
 
-.arrow:hover {
-  color: lightgrey;
-}
-
-.arrow:first-child {
-  position: absolute;
-  left: 0;
-  padding-left: 0.8rem;
-}
-
-.arrow:last-child {
-  position: absolute;
-  right: 0;
+.slider-button:focus {
+  outline: none;
 }

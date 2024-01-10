@@ -97,3 +97,34 @@
   border: 2px solid #007bff;
    /* Adapte a cor e a espessura da borda ao passar o mouse conforme necessário */
 }
+
+
+/* Styles for the carousel container */
+.slick-slider {
+  width: 80%;
+  margin: auto;
+}
+
+/* Styles for individual slides */
+.slick-slide {
+  padding: 10px;
+}
+
+/* Styles for arrows */
+.slick-prev,
+.slick-next {
+  font-size: 24px;
+  color: #000; /* Arrow color */
+}
+
+/* Styles for dots (if used) */
+.slick-dots {
+  bottom: 10px;
+}
+
+.slick-dots li button {
+  font-size: 12px;
+  color: #000; /* Dot color */
+}
+
+/* Custom styles for other components as needed */

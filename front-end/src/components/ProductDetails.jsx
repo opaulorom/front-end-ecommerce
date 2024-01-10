@@ -2,33 +2,31 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
-import Slider from "./Slider";
 import "./ProductDetails.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-const ColorDot = ({ color, onClick, selected, thumbnailUrl, name }) => {
+import Slider from "react-slick";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
+const ColorDot = ({ color, onClick, isSelected }) => {
   return (
     <div
-      className={`color-dot ${selected ? "selected" : ""}`}
+      className={`color-dot ${isSelected ? "selected" : ""}`}
       style={{
         backgroundColor: color,
       }}
-      onClick={() => onClick(color)}
-    >
-      <img
-        src={thumbnailUrl}
-        alt={`Thumbnail for ${color}`}
-        className="thumbnail-image"
-      />
-      <span className="color-name">{name}</span>
-    </div>
+      onClick={onClick}
+    />
   );
 };
+
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
-  const [currentImage, setCurrentImage] = useState(0);
-  const [images, setImages] = useState([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -45,57 +43,69 @@ const ProductDetails = () => {
     fetchProduct();
   }, [productId]);
 
-  const getUniqueColors = () => {
-    const uniqueColors = Array.from(
-      new Set(product.variations.map((variation) => variation.color))
-    );
-    return uniqueColors;
-  };
-
-  const getImagesByColor = (color) => {
-    const variationsWithColor = product.variations.filter(
-      (variation) => variation.color === color
-    );
-
-    const images = variationsWithColor.reduce((accumulator, variation) => {
-      return accumulator.concat(variation.urls);
-    }, []);
-
-    return images;
-  };
-
-  const handleColorSelection = (color) => {
-    setCurrentImage(0);
+  const handleColorClick = (color) => {
     setSelectedColor(color);
-    setImages(getImagesByColor(color));
+    setCurrentImageIndex(0); // Reset to the first image when changing color
+  };
+
+  const getImageSource = () => {
+    if (selectedColor !== null) {
+      const selectedVariation = product.variations.find(
+        (variation) => variation.color === selectedColor
+      );
+
+      return selectedVariation?.urls[currentImageIndex];
+    }
+
+    return product.variations?.[0]?.urls[currentImageIndex];
   };
 
   if (!product) {
     return <p>Carregando...</p>;
   }
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    prevArrow: <ArrowBackIosIcon />,
+    nextArrow: <ArrowForwardIosIcon />,
+  };
+
   return (
     <div>
+    
+      {/* Exibe bolinhas com a cor do produto se houver imagens e cores */}
       <div className="color-dots-container">
-        {getUniqueColors().map((color, index) => {
-          const variation = product.variations.find(
-            (v) => v.color === color
-          );
-          return (
-            <ColorDot
-              key={index}
-              color={variation.color}
-              selected={variation.color === selectedColor}
-              onClick={handleColorSelection}
-              thumbnailUrl={variation.urls[0]} // Assuming the first URL is the thumbnail
-              name={variation.color}
-            />
-          );
-        })}
+        {product.variations?.map((variation, index) => (
+          <ColorDot
+            key={index}
+            color={variation.color}
+            isSelected={variation.color === selectedColor}
+            onClick={() => handleColorClick(variation.color)}
+          />
+        ))}
       </div>
 
-      {selectedColor && <Slider imageUrls={images} />}
-
+      <div>
+        <div>
+          <h2>Single Item</h2>
+          <Slider {...settings} style={{marginBotton:"5rem"}}>
+            {product.variations?.map((variation, index) => (
+              <div key={index}>
+                <img
+                  src={variation.urls[currentImageIndex]}
+                  alt={variation.color}
+                  style={{ width: "40%" }}
+                />
+              </div>
+            ))}
+          </Slider>
+        </div>
+      </div>
+        
       <h1>{product.name}</h1>
       <p>{product.price}</p>
 
