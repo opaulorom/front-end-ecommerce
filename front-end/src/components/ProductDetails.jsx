@@ -10,10 +10,10 @@ import Slider from "react-slick";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-const ColorDot = ({ color, onClick, isSelected }) => {
+const ColorThumbnail = ({ color, onClick, isSelected }) => {
   return (
     <div
-      className={`color-dot ${isSelected ? "selected" : ""}`}
+      className={`color-thumbnail ${isSelected ? 'selected' : ''}`}
       style={{
         backgroundColor: color,
       }}
@@ -76,11 +76,19 @@ const ProductDetails = () => {
 
   return (
     <div>
-    
-      {/* Exibe bolinhas com a cor do produto se houver imagens e cores */}
+      <img
+        className="product-image"
+        style={{ width: "20vw" }}
+        src={getImageSource()}
+        alt={product.name}
+      />
+
+      <h1>{product.name}</h1>
+      <p>{product.price}</p>
+
       <div className="color-dots-container">
         {product.variations?.map((variation, index) => (
-          <ColorDot
+          <ColorThumbnail
             key={index}
             color={variation.color}
             isSelected={variation.color === selectedColor}
@@ -90,25 +98,19 @@ const ProductDetails = () => {
       </div>
 
       <div>
-        <div>
-          <h2>Single Item</h2>
-          <Slider {...settings} style={{marginBotton:"5rem"}}>
-            {product.variations?.map((variation, index) => (
-              <div key={index}>
-                <img
-                  src={variation.urls[currentImageIndex]}
-                  alt={variation.color}
-                  style={{ width: "40%" }}
-                />
-              </div>
-            ))}
-          </Slider>
-        </div>
+        <h2>Single Item</h2>
+        <Slider {...settings}>
+          {product.variations?.map((variation, index) => (
+            <div key={index}>
+              <img
+                src={variation.urls[currentImageIndex]}
+                alt={variation.color}
+                style={{ width: "50%", margin:"0 auto" }}
+              />
+            </div>
+          ))}
+        </Slider>
       </div>
-        
-      <h1>{product.name}</h1>
-      <p>{product.price}</p>
-
       <Navbar />
     </div>
   );

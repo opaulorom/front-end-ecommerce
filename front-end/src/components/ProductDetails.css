@@ -1,130 +1,24 @@
 /* ProductDetails.css */
-
 .product-image {
   max-width: 100%;
-  height: auto;
-  border: 1px solid #ccc;
-  margin-bottom: 20px;
 }
 
 .color-dots-container {
   display: flex;
-  margin-bottom: 20px;
+  gap: 8px;
+  margin-top: 10px; /* Add margin to separate from the main image */
 }
 
-.color-dot {
-  width: 20px;
-  height: 20px;
+.color-thumbnail {
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  margin-right: 10px;
   cursor: pointer;
+  border: 2px solid transparent; /* Add a border or any other style to indicate selection */
 }
 
-.thumbnail-slider {
-  display: flex;
-  overflow-x: auto;
+.color-thumbnail.selected {
+  border-color: #000; /* Border color for the selected thumbnail */
 }
 
-.thumbnail-slider img {
-  width: 60px;
-  height: 60px;
-  margin-right: 10px;
-  cursor: pointer;
-  border: 2px solid transparent;
-}
-
-.thumbnail-slider img.active-thumbnail {
-  border-color: #007bff; /* Cor de destaque para a miniatura ativa */
-}
-
-
-.slider-container {
-  height: 300px; /* Ajuste conforme necessário */
-}
-
-
-/* Adicione este estilo ao seu arquivo ProductDetails.css */
-
-.color-dot {
-  width: 50px; /* Ajuste a largura conforme necessário */
-  height: 50px; /* Ajuste a altura conforme necessário */
-  border-radius: 50%; /* Torna o div circular */
-  margin: 5px; /* Adicione margens conforme necessário */
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.thumbnail-image {
-  width: 100%; /* Ajuste a largura conforme necessário */
-  height: 100%; /* Ajuste a altura conforme necessário */
-  border-radius: 50%; /* Torna a imagem da miniatura circular */
-}
-
-
-/* Adicione estas regras ao seu arquivo CSS (ProductDetails.css) */
-
-.color-variations {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px; /* Adapte o espaçamento conforme necessário */
-}
-
-.color-variation {
-  border: 1px solid #ccc; /* Adapte a cor e a espessura da borda conforme necessário */
-  padding: 10px; /* Adapte o preenchimento conforme necessário */
-  border-radius: 8px; /* Adapte o raio da borda conforme necessário */
-}
-
-.color-variation p {
-  font-weight: bold;
-}
-
-.image-thumbnails {
-  display: flex;
-  gap: 10px; /* Adapte o espaçamento entre as miniaturas conforme necessário */
-}
-
-.image-thumbnails img {
-  max-width: 80px; /* Adapte a largura máxima das miniaturas conforme necessário */
-  max-height: 80px; /* Adapte a altura máxima das miniaturas conforme necessário */
-  border-radius: 4px; /* Adapte o raio da borda das miniaturas conforme necessário */
-  cursor: pointer;
-}
-
-.image-thumbnails img:hover {
-  border: 2px solid #007bff;
-   /* Adapte a cor e a espessura da borda ao passar o mouse conforme necessário */
-}
-
-
-/* Styles for the carousel container */
-.slick-slider {
-  width: 80%;
-  margin: auto;
-}
-
-/* Styles for individual slides */
-.slick-slide {
-  padding: 10px;
-}
-
-/* Styles for arrows */
-.slick-prev,
-.slick-next {
-  font-size: 24px;
-  color: #000; /* Arrow color */
-}
-
-/* Styles for dots (if used) */
-.slick-dots {
-  bottom: 10px;
-}
-
-.slick-dots li button {
-  font-size: 12px;
-  color: #000; /* Dot color */
-}
-
-/* Custom styles for other components as needed */
+/* Rest of your existing styles */
