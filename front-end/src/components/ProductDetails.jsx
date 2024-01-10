@@ -5,24 +5,34 @@ import Navbar from "./Navbar";
 import Slider from "./Slider";
 import "./ProductDetails.css";
 
-const ColorDot = ({ color, onClick, selected }) => {
+
+const ColorDot = ({ color, onClick, selected, thumbnails }) => {
   return (
     <div
       className={`color-dot ${selected ? "selected" : ""}`}
       style={{
         backgroundColor: color,
       }}
-      onClick={() => onClick(color)}
-    />
+      onClick={() => onClick(color, thumbnails)}
+    >
+      {thumbnails.map((thumbnail, index) => (
+        <img
+          key={index}
+          src={thumbnail}
+          alt={`Thumbnail for ${color}`}
+          className="thumbnail-image"
+        />
+      ))}
+    </div>
   );
 };
-
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
   const [images, setImages] = useState([]);
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -38,9 +48,6 @@ const ProductDetails = () => {
     fetchProduct();
   }, [productId]);
 
-  if (!product) {
-    return <p>Carregando...</p>;
-  }
   const getImagesByColor = (color) => {
     const variationsWithColor = product.variations.filter(
       (variation) => variation.color === color
@@ -53,47 +60,33 @@ const ProductDetails = () => {
     return images;
   };
 
-  console.log("Selected Color (before):", selectedColor);
-  console.log(
-    "Images (before):",
-    getImagesByColor(selectedColor, product.variations)
-  );
-
-  const handleColorSelection = (color) => {
-    setCurrentImage(0); // Reinicia para a primeira imagem ao selecionar uma nova cor
+  const handleColorSelection = (color, thumbnails) => {
+    setCurrentImage(0);
     setSelectedColor(color);
     setImages(getImagesByColor(color));
   };
 
+  if (!product) {
+    return <p>Carregando...</p>;
+  }
+
   return (
     <div>
-     
-      
-     <div className="color-variations">
-        {product.variations.map((variation, index) => (
-          <div key={index}>
-            <p>Color: {variation.color}</p>
-            <div className="image-thumbnails">
-              {variation.urls.map((url, idx) => (
-                <img key={idx} src={url} alt={`Thumbnail ${idx}`} />
-              ))}
-            </div>
-          </div>
+      <div className="color-dots-container">
+        {product.variations?.map((variation, index) => (
+          <ColorDot
+            key={index}
+            color={variation.color}
+            selected={variation.color === selectedColor}
+            onClick={handleColorSelection}
+            thumbnails={variation.urls}
+          />
         ))}
       </div>
 
-      {/* Exibe o slide de imagens para a cor selecionada */}
-      {selectedColor && <Slider imageUrls={getImagesByColor(selectedColor)} />}
-      {product.variations.map((variation) => (
-        <button
-          key={variation._id}
-          onClick={() => handleColorSelection(variation.color)}
-        >
-          {variation.color}
-        </button>
-      ))}
+      {selectedColor && <Slider imageUrls={images} />}
 
-       <h1>{product.name}</h1>
+      <h1>{product.name}</h1>
       <p>{product.price}</p>
 
       <Navbar />

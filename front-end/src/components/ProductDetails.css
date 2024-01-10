@@ -94,5 +94,6 @@
 }
 
 .image-thumbnails img:hover {
-  border: 2px solid #007bff; /* Adapte a cor e a espessura da borda ao passar o mouse conforme necessário */
+  border: 2px solid #007bff;
+   /* Adapte a cor e a espessura da borda ao passar o mouse conforme necessário */
 }
