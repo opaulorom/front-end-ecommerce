@@ -51,15 +51,17 @@ const ProductDetails = () => {
 
       {/* Thumbnails */}
       <div className="thumbnail-container">
-        {product.variations?.map((variation, index) => (
-          <img
-            key={index}
-            src={variation.urls[0]}
-            alt={variation.color}
-            className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
-            onClick={() => handleThumbnailClick(index)}
-          />
-        ))}
+        {product.variations
+          ?.filter((variation, index, self) => self.findIndex(v => v.color === variation.color) === index)
+          .map((variation, index) => (
+            <img
+              key={index}
+              src={variation.urls[0]}
+              alt={variation.color}
+              className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
+              onClick={() => handleThumbnailClick(index)}
+            />
+          ))}
       </div>
 
       {/* Dots */}
