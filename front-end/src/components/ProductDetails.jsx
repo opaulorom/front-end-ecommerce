@@ -5,24 +5,21 @@ import Navbar from "./Navbar";
 import Slider from "./Slider";
 import "./ProductDetails.css";
 
-
-const ColorDot = ({ color, onClick, selected, thumbnails }) => {
+const ColorDot = ({ color, onClick, selected, thumbnailUrl, name }) => {
   return (
     <div
       className={`color-dot ${selected ? "selected" : ""}`}
       style={{
         backgroundColor: color,
       }}
-      onClick={() => onClick(color, thumbnails)}
+      onClick={() => onClick(color)}
     >
-      {thumbnails.map((thumbnail, index) => (
-        <img
-          key={index}
-          src={thumbnail}
-          alt={`Thumbnail for ${color}`}
-          className="thumbnail-image"
-        />
-      ))}
+      <img
+        src={thumbnailUrl}
+        alt={`Thumbnail for ${color}`}
+        className="thumbnail-image"
+      />
+      <span className="color-name">{name}</span>
     </div>
   );
 };
@@ -48,6 +45,13 @@ const ProductDetails = () => {
     fetchProduct();
   }, [productId]);
 
+  const getUniqueColors = () => {
+    const uniqueColors = Array.from(
+      new Set(product.variations.map((variation) => variation.color))
+    );
+    return uniqueColors;
+  };
+
   const getImagesByColor = (color) => {
     const variationsWithColor = product.variations.filter(
       (variation) => variation.color === color
@@ -60,7 +64,7 @@ const ProductDetails = () => {
     return images;
   };
 
-  const handleColorSelection = (color, thumbnails) => {
+  const handleColorSelection = (color) => {
     setCurrentImage(0);
     setSelectedColor(color);
     setImages(getImagesByColor(color));
@@ -73,15 +77,21 @@ const ProductDetails = () => {
   return (
     <div>
       <div className="color-dots-container">
-        {product.variations?.map((variation, index) => (
-          <ColorDot
-            key={index}
-            color={variation.color}
-            selected={variation.color === selectedColor}
-            onClick={handleColorSelection}
-            thumbnails={variation.urls}
-          />
-        ))}
+        {getUniqueColors().map((color, index) => {
+          const variation = product.variations.find(
+            (v) => v.color === color
+          );
+          return (
+            <ColorDot
+              key={index}
+              color={variation.color}
+              selected={variation.color === selectedColor}
+              onClick={handleColorSelection}
+              thumbnailUrl={variation.urls[0]} // Assuming the first URL is the thumbnail
+              name={variation.color}
+            />
+          );
+        })}
       </div>
 
       {selectedColor && <Slider imageUrls={images} />}
