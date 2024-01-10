@@ -63,3 +63,9 @@
 .dot.active {
   background-color: #007bff;
 }
+
+
+.thumbnail-wrapper{
+  display: flex;
+  flex-direction: column;
+}

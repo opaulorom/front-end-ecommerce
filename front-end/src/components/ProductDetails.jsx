@@ -56,7 +56,7 @@ const ProductDetails = () => {
           <img
             src={product.variations[currentImageIndex].urls[0]}
             alt={product.variations[currentImageIndex].color}
-            style={{ width: "100%" }}
+            style={{ width: "30%" }}
           />
           <div className="navigation-arrows">
             <div className="arrow" onClick={() => handleArrowClick("prev")}>
@@ -69,26 +69,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Thumbnails */}
-      <div className="thumbnail-container">
-        {product.variations
-          ?.filter(
-            (variation, index, self) =>
-              self.findIndex((v) => v.color === variation.color) === index
-          )
-          .map((variation, index) => (
-            <img
-              key={index}
-              src={variation.urls[0]}
-              alt={variation.color}
-              className={`thumbnail ${
-                index === currentImageIndex ? "active" : ""
-              }`}
-              onClick={() => handleThumbnailClick(index)}
-            />
-          ))}
-      </div>
-
+    
       {/* Dots */}
       <div className="dot-container">
         {product.variations?.map((variation, index) => (
@@ -98,6 +79,28 @@ const ProductDetails = () => {
             onClick={() => handleDotClick(index)}
           />
         ))}
+      </div>
+  {/* Thumbnails */}
+      
+  <div className="thumbnail-container">
+        {product.variations
+          ?.filter(
+            (variation, index, self) =>
+              self.findIndex((v) => v.color === variation.color) === index
+          )
+          .map((variation, index) => (
+            <div key={index} className="thumbnail-wrapper">
+              <span className="color-name">{`Cor: ${variation.color}`}</span>
+              <img
+                src={variation.urls[0]}
+                alt={variation.color}
+                className={`thumbnail ${
+                  index === currentImageIndex ? "active" : ""
+                }`}
+                onClick={() => handleThumbnailClick(index)}
+              />
+            </div>
+          ))}
       </div>
 
       <h1>{product.name}</h1>
