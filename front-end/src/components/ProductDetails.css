@@ -1,123 +1,26 @@
-/* ProductDetails.css */
-
-
-  
-.color-dots-container {
-  display: flex;
-  gap: 5px;
-  margin-top: 10px;
+/* Add this to your existing ProductDetails.css file */
+.image-container {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
 }
 
-.color-dot {
-  width: 20px;
-  height: 20px;
+.navigation-arrows {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.arrow {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
   border-radius: 50%;
-  cursor: pointer;
-}
-
-.color-dot.selected {
-  border: 2px solid #333; /* Adicione um contorno à cor selecionada */
-}
-
-button {
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-.color-dot.selected {
-  border: 2px solid white; /* ou qualquer estilo desejado para indicar a seleção */
-}
-
-
-/* Add this CSS to your ProductDetails.css or your preferred styling file */
-
-/* Main Image Slider */
-.slick-slider {
-  position: relative;
-  display: block;
-  box-sizing: border-box;
-}
-
-.slick-list {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
-
-.slick-track {
-  display: flex;
-}
-
-.slick-slide {
-  transition: transform 0.5s ease-in-out;
-}
-
-/* Thumbnails */
-.thumbnail-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.thumbnail {
-  width: 50px;
-  height: 50px;
-  margin: 0 5px;
-  cursor: pointer;
-  border: 2px solid #fff;
-  transition: border 0.3s ease-in-out;
-}
-
-.thumbnail.active {
-  border: 2px solid #000;
-}
-
-
-/* Add this CSS to your ProductDetails.css or your preferred styling file */
-
-/* Main Image Slider */
-.slick-slider {
-  position: relative;
-  display: block;
-  box-sizing: border-box;
-}
-
-.slick-list {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
-
-.slick-track {
-  display: flex;
-}
-
-.slick-slide {
-  transition: transform 0.5s ease-in-out;
-}
-
-/* Thumbnails */
-.thumbnail-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.thumbnail {
-  width: 50px;
-  height: 50px;
-  margin: 0 5px;
-  cursor: pointer;
-  border: 2px solid #fff;
-  transition: border 0.3s ease-in-out;
-}
-
-.thumbnail.active {
-  border: 2px solid #000;
 }
 
 .thumbnail-container {

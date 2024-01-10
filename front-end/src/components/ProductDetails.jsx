@@ -36,29 +36,54 @@ const ProductDetails = () => {
     setCurrentImageIndex(index);
   };
 
+  const handleArrowClick = (direction) => {
+    if (direction === "prev") {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : product.variations.length - 1
+      );
+    } else {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex < product.variations.length - 1 ? prevIndex + 1 : 0
+      );
+    }
+  };
+
   return (
     <div>
       <div>
         <h2>Single Item</h2>
-        <div key={currentImageIndex}>
+        <div key={currentImageIndex} className="image-container">
           <img
             src={product.variations[currentImageIndex].urls[0]}
             alt={product.variations[currentImageIndex].color}
-            style={{ width: "50%", margin: "0 auto" }}
+            style={{ width: "100%" }}
           />
+          <div className="navigation-arrows">
+            <div className="arrow" onClick={() => handleArrowClick("prev")}>
+              &lt;
+            </div>
+            <div className="arrow" onClick={() => handleArrowClick("next")}>
+              &gt;
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Thumbnails */}
       <div className="thumbnail-container">
         {product.variations
-          ?.filter((variation, index, self) => self.findIndex(v => v.color === variation.color) === index)
+          ?.filter(
+            (variation, index, self) =>
+              self.findIndex((v) => v.color === variation.color) === index
+          )
           .map((variation, index) => (
             <img
               key={index}
               src={variation.urls[0]}
               alt={variation.color}
-              className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
+              className={`thumbnail ${
+                index === currentImageIndex ? "active" : ""
+              }`}
               onClick={() => handleThumbnailClick(index)}
             />
           ))}
