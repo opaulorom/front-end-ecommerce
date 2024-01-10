@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Slider.css';
 
-const Slider = ({ imageUrls }) => {
+const Slider = ({ imageUrls, handleDotClickParent }) => {
+  
   const [currentImage, setCurrentImage] = useState(0);
 
   const handleDotClick = (index) => {
@@ -51,6 +52,7 @@ const Slider = ({ imageUrls }) => {
     setCurrentImage(nextImage);
   };
 
+  
   return (
     <div className="slider" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       <div className="image-container">

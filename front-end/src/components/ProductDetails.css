@@ -41,3 +41,58 @@
 .slider-container {
   height: 300px; /* Ajuste conforme necessário */
 }
+
+
+/* Adicione este estilo ao seu arquivo ProductDetails.css */
+
+.color-dot {
+  width: 50px; /* Ajuste a largura conforme necessário */
+  height: 50px; /* Ajuste a altura conforme necessário */
+  border-radius: 50%; /* Torna o div circular */
+  margin: 5px; /* Adicione margens conforme necessário */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumbnail-image {
+  width: 100%; /* Ajuste a largura conforme necessário */
+  height: 100%; /* Ajuste a altura conforme necessário */
+  border-radius: 50%; /* Torna a imagem da miniatura circular */
+}
+
+
+/* Adicione estas regras ao seu arquivo CSS (ProductDetails.css) */
+
+.color-variations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adapte o espaçamento conforme necessário */
+}
+
+.color-variation {
+  border: 1px solid #ccc; /* Adapte a cor e a espessura da borda conforme necessário */
+  padding: 10px; /* Adapte o preenchimento conforme necessário */
+  border-radius: 8px; /* Adapte o raio da borda conforme necessário */
+}
+
+.color-variation p {
+  font-weight: bold;
+}
+
+.image-thumbnails {
+  display: flex;
+  gap: 10px; /* Adapte o espaçamento entre as miniaturas conforme necessário */
+}
+
+.image-thumbnails img {
+  max-width: 80px; /* Adapte a largura máxima das miniaturas conforme necessário */
+  max-height: 80px; /* Adapte a altura máxima das miniaturas conforme necessário */
+  border-radius: 4px; /* Adapte o raio da borda das miniaturas conforme necessário */
+  cursor: pointer;
+}
+
+.image-thumbnails img:hover {
+  border: 2px solid #007bff; /* Adapte a cor e a espessura da borda ao passar o mouse conforme necessário */
+}
