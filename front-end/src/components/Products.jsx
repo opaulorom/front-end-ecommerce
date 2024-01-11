@@ -37,7 +37,7 @@ const Products = () => {
   };
 
   return (
-    <div>
+    <div className="productContainer" >
     
      
 
@@ -89,8 +89,7 @@ const Products = () => {
           zIndex: "1",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-          gap:"3rem"
+          justifyContent: "center"
         }}
       >
         <Stack spacing={2}>
@@ -99,6 +98,7 @@ const Products = () => {
             page={currentPage}
             onChange={handlePageChange}
             color="primary"
+      
           />
         </Stack>
       </div>

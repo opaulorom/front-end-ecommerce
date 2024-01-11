@@ -1,0 +1,17 @@
+.ContainerHeader{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #2196f3;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+
+
+}
+body{
+    margin: 0;
+    padding: 0;
+}
