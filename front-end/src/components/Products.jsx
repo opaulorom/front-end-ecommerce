@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Products.css";
-import ReactPaginate from "react-paginate";
+import { Pagination } from "@mui/material";
+import Stack from "@mui/material/Stack";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -24,8 +25,8 @@ const Products = () => {
     fetchProducts();
   }, [currentPage]);
 
-  const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected + 1);
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
   };
 
   return (
@@ -64,17 +65,26 @@ const Products = () => {
           </div>
         </Link>
       ))}
-      <ReactPaginate
-        pageCount={totalPages || 1} // Use um valor padrão caso totalPages seja undefined
-        pageRangeDisplayed={5}
-        marginPagesDisplayed={2}
-        onPageChange={handlePageChange}
-        containerClassName="pagination"
-        previousLabel="Anterior"
-        nextLabel="Próxima"
-        breakLabel="..."
-        activeClassName="active"
-      />
+      <div
+        style={{
+          marginBottom: "1rem",
+
+          zIndex: "1",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "100%",
+        }}
+      >
+        <Stack spacing={2}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+          />
+        </Stack>
+      </div>
     </div>
   );
 };
