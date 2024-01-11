@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Products.css";
-import { Pagination } from "@mui/material";
+import { Pagination} from '@mui/material';
 import Stack from "@mui/material/Stack";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -21,6 +25,9 @@ const Products = () => {
       } catch (error) {
         console.log("Erro ao obter produtos", error);
       }
+    finally {
+      setLoading(false); // Desativar loading, independentemente do resultado
+    }
     };
     fetchProducts();
   }, [currentPage]);
@@ -31,7 +38,17 @@ const Products = () => {
 
   return (
     <div>
-      {products.map((product) => (
+    
+     
+
+      <div>
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <div>
+           {products.map((product) => (
         <Link
           key={product._id}
           to={`/products/${product._id}`}
@@ -65,7 +82,7 @@ const Products = () => {
           </div>
         </Link>
       ))}
-      <div
+          <div
         style={{
           marginBottom: "1rem",
 
@@ -73,7 +90,7 @@ const Products = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: "100%",
+          gap:"3rem"
         }}
       >
         <Stack spacing={2}>
@@ -85,6 +102,9 @@ const Products = () => {
           />
         </Stack>
       </div>
+        </div>
+      )}
+    </div>
     </div>
   );
 };
