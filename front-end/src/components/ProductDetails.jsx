@@ -27,32 +27,17 @@ const ProductDetails = () => {
   if (!product) {
     return <p>Carregando...</p>;
   }
-
   const handleThumbnailClick = (color, index) => {
     const colorVariations = product.variations.filter(
       (variation) => variation.color === color
     );
-    const currentIndexInColor = colorVariations.findIndex(
-      (variation) => variation.urls[0] === product.variations[currentImageIndex].urls[0]
+  
+    const firstIndexInColor = product.variations.findIndex(
+      (variation) => variation.color === colorVariations[0].color
     );
   
-    if (currentIndexInColor !== -1) {
-      const newIndex = (currentIndexInColor + 1) % colorVariations.length;
-      setCurrentImageIndex(
-        product.variations.findIndex(
-          (variation) => variation.color === colorVariations[newIndex].color
-        )
-      );
-    } else {
-      // If the current variation is not found in the selected color, go to the first image of that color.
-      setCurrentImageIndex(
-        product.variations.findIndex(
-          (variation) => variation.color === color && variation.urls[0] === colorVariations[0].urls[0]
-        )
-      );
-    }
+    setCurrentImageIndex(firstIndexInColor);
   };
-  
   
 
   const handleDotClick = (index) => {
@@ -103,28 +88,6 @@ const ProductDetails = () => {
           />
         ))}
       </div>
-  {/* Thumbnails */}
-      
-  <div className="thumbnail-container">
-        {product.variations
-          ?.filter(
-            (variation, index, self) =>
-              self.findIndex((v) => v.color === variation.color) === index
-          )
-          .map((variation, index) => (
-            <div key={index} className="thumbnail-wrapper">
-              <span className="color-name">{`Cor: ${variation.color}`}</span>
-              <img
-                src={variation.urls[0]}
-                alt={variation.color}
-                className={`thumbnail ${
-                  index === currentImageIndex ? "active" : ""
-                }`}
-                onClick={() => handleThumbnailClick(variation.color, index)}
-                />
-            </div>
-          ))}
-      </div>
 
       <h1>{product.name}</h1>
       <p>{product.price}</p>
@@ -133,6 +96,29 @@ const ProductDetails = () => {
 
       <Navbar />
      
+      <div className="thumbnail-container">
+  {product.variations
+    ?.filter(
+      (variation, index, self) =>
+        self.findIndex((v) => v.color === variation.color) === index
+    )
+    .map((variation, index) => (
+      <div key={index} className="thumbnail-wrapper">
+        <span className="color-name">{`Cor: ${variation.color}`}</span>
+        <img
+          src={variation.urls[0]}
+          alt={variation.color}
+          className={`thumbnail ${
+            variation.color === product.variations[currentImageIndex].color
+              ? "active"
+              : ""
+          }`}
+          onClick={() => handleThumbnailClick(variation.color, index)}
+        />
+      </div>
+    ))}
+</div>
+
 
 
     </div>
