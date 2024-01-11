@@ -10,6 +10,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [sizesFromDatabase, setSizesFromDatabase] = useState([]);
+  const [selectedSize, setSelectedSize] = useState(""); // Adiciona este estado
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -144,8 +145,11 @@ const ProductDetails = () => {
       <p>{product.price}</p>
 
       <Navbar />
-      <ProductSizes sizes={sizesFromDatabase} />
-    </div>
+      <ProductSizes
+        sizes={sizesFromDatabase}
+        selectedSize={selectedSize} // Passa o tamanho selecionado como propriedade
+        onSelectSize={(size) => setSelectedSize(size)} // Função para atualizar o tamanho selecionado
+      />    </div>
   );
 };
 

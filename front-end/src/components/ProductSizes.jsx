@@ -1,26 +1,18 @@
-import React, { useState } from "react";
-
-const ProductSizes = ({ sizes }) => {
-  const [selectedSize, setSelectedSize] = useState(null);
-
-  const handleSizeClick = (size) => {
-    setSelectedSize(size);
-  };
-
+// ProductSizes.jsx
+import React from "react";
+import "./ProductSizes.css"
+const ProductSizes = ({ sizes, selectedSize, onSelectSize }) => {
   return (
-    <div>
-      <h3>Escolha o tamanho:</h3>
-      <div className="size-buttons">
-        {sizes.map((size, index) => (
-          <button
-            key={index}
-            className={`size-button ${size === selectedSize ? "selected" : ""}`}
-            onClick={() => handleSizeClick(size)}
-          >
-            {size}
-          </button>
-        ))}
-      </div>
+    <div className="product-sizes">
+      {sizes.map((size, index) => (
+        <button
+          key={index}
+          className={`size-button ${size === selectedSize ? "active" : ""}`}
+          onClick={() => onSelectSize(size)}
+        >
+          {size}
+        </button>
+      ))}
     </div>
   );
 };
