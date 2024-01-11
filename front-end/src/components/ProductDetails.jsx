@@ -124,7 +124,8 @@ const ProductDetails = () => {
      
 
       <h1>{product.name}</h1>
-      <p>{product.price}</p>
+      <p>R$: ${product.price}</p>
+      <p>${product.description}</p>
 
       <Navbar />
       <ProductSizes
