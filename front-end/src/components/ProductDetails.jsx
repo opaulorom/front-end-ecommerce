@@ -27,18 +27,18 @@ const ProductDetails = () => {
   if (!product) {
     return <p>Carregando...</p>;
   }
+
   const handleThumbnailClick = (color, index) => {
     const colorVariations = product.variations.filter(
       (variation) => variation.color === color
     );
-  
+
     const firstIndexInColor = product.variations.findIndex(
       (variation) => variation.color === colorVariations[0].color
     );
-  
+
     setCurrentImageIndex(firstIndexInColor);
   };
-  
 
   const handleDotClick = (index) => {
     setCurrentImageIndex(index);
@@ -54,6 +54,42 @@ const ProductDetails = () => {
         prevIndex < product.variations.length - 1 ? prevIndex + 1 : 0
       );
     }
+  };
+
+
+
+
+  
+  const renderColorPreviews = (color) => {
+    const colorVariations = product.variations.filter(
+      (variation) => variation.color === color
+    );
+
+    return colorVariations.map((variation, index) => (
+      <img
+        key={index}
+        src={variation.urls[0]}
+        alt={variation.color}
+        className={`color-preview ${index === currentImageIndex ? "active" : ""}`}
+        onClick={() => setCurrentImageIndex(index)}
+      />
+    ));
+  };
+
+
+  
+  const getAllVariations = () => {
+    const allVariations = [];
+
+    product.variations?.forEach((variation) => {
+      const existingColor = allVariations.find((v) => v.color === variation.color);
+
+      if (!existingColor) {
+        allVariations.push(variation);
+      }
+    });
+
+    return allVariations;
   };
 
   return (
@@ -77,7 +113,6 @@ const ProductDetails = () => {
         </div>
       </div>
 
-    
       {/* Dots */}
       <div className="dot-container">
         {product.variations?.map((variation, index) => (
@@ -89,38 +124,46 @@ const ProductDetails = () => {
         ))}
       </div>
 
+      {/* Thumbnails */}
+      <div className="thumbnail-container">
+        {product.variations
+          ?.filter(
+            (variation, index, self) =>
+              self.findIndex((v) => v.color === variation.color) === index
+          )
+          .map((variation, index) => (
+            <div key={index} className="thumbnail-wrapper">
+              <span className="color-name">{`Cor: ${variation.color}`}</span>
+              <img
+                src={variation.urls[0]}
+                alt={variation.color}
+                className={`thumbnail ${
+                  variation.color === product.variations[currentImageIndex].color
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() => handleThumbnailClick(variation.color, index)}
+              />
+            </div>
+          ))}
+      </div>
+
+      
+
       <h1>{product.name}</h1>
       <p>{product.price}</p>
 
+      <Navbar /> 
+    
 
-
-      <Navbar />
-     
-      <div className="thumbnail-container">
-  {product.variations
-    ?.filter(
-      (variation, index, self) =>
-        self.findIndex((v) => v.color === variation.color) === index
-    )
-    .map((variation, index) => (
-      <div key={index} className="thumbnail-wrapper">
-        <span className="color-name">{`Cor: ${variation.color}`}</span>
-        <img
-          src={variation.urls[0]}
-          alt={variation.color}
-          className={`thumbnail ${
-            variation.color === product.variations[currentImageIndex].color
-              ? "active"
-              : ""
-          }`}
-          onClick={() => handleThumbnailClick(variation.color, index)}
-        />
+      {/* Pré-visualização por cor */}
+      <div className="color-preview-container">
+        {getAllVariations().map((variation, index) => (
+          <div key={index} className="color-preview-wrapper">
+            {renderColorPreviews(variation.color)}
+          </div>
+        ))}
       </div>
-    ))}
-</div>
-
-
-
     </div>
   );
 };
