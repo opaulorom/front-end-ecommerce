@@ -3,11 +3,13 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./ProductDetails.css";
+import ProductSizes from "./ProductSizes";
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [sizesFromDatabase, setSizesFromDatabase] = useState([]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -16,6 +18,11 @@ const ProductDetails = () => {
           `http://localhost:3001/api/product/${productId}`
         );
         setProduct(response.data.product);
+        // Supondo que os tamanhos estejam em uma string no formato "M, H, SS"
+        const sizesArray = response.data.product.size
+          .split(",")
+          .map((size) => size.trim());
+        setSizesFromDatabase(sizesArray);
       } catch (error) {
         console.error("Erro ao obter detalhes do produto:", error);
       }
@@ -54,42 +61,6 @@ const ProductDetails = () => {
         prevIndex < product.variations.length - 1 ? prevIndex + 1 : 0
       );
     }
-  };
-
-
-
-
-  
-  const renderColorPreviews = (color) => {
-    const colorVariations = product.variations.filter(
-      (variation) => variation.color === color
-    );
-
-    return colorVariations.map((variation, index) => (
-      <img
-        key={index}
-        src={variation.urls[0]}
-        alt={variation.color}
-        className={`color-preview ${index === currentImageIndex ? "active" : ""}`}
-        onClick={() => setCurrentImageIndex(index)}
-      />
-    ));
-  };
-
-
-  
-  const getAllVariations = () => {
-    const allVariations = [];
-
-    product.variations?.forEach((variation) => {
-      const existingColor = allVariations.find((v) => v.color === variation.color);
-
-      if (!existingColor) {
-        allVariations.push(variation);
-      }
-    });
-
-    return allVariations;
   };
 
   return (
@@ -138,7 +109,8 @@ const ProductDetails = () => {
                 src={variation.urls[0]}
                 alt={variation.color}
                 className={`thumbnail ${
-                  variation.color === product.variations[currentImageIndex].color
+                  variation.color ===
+                  product.variations[currentImageIndex].color
                     ? "active"
                     : ""
                 }`}
@@ -148,22 +120,31 @@ const ProductDetails = () => {
           ))}
       </div>
 
-      
+      {/* Preview Thumbnails */}
+      <div className="preview-thumbnails">
+        {product.variations
+          ?.filter(
+            (variation, index, self) =>
+              self.findIndex((v) => v.color === variation.color) === index
+          )
+          .map((variation, index) => (
+            <img
+              key={index}
+              src={variation.urls[0]}
+              alt={variation.color}
+              className={`preview-thumbnail ${
+                index === currentImageIndex ? "active" : ""
+              }`}
+              onClick={() => handleDotClick(index)}
+            />
+          ))}
+      </div>
 
       <h1>{product.name}</h1>
       <p>{product.price}</p>
 
-      <Navbar /> 
-    
-
-      {/* Pré-visualização por cor */}
-      <div className="color-preview-container">
-        {getAllVariations().map((variation, index) => (
-          <div key={index} className="color-preview-wrapper">
-            {renderColorPreviews(variation.color)}
-          </div>
-        ))}
-      </div>
+      <Navbar />
+      <ProductSizes sizes={sizesFromDatabase} />
     </div>
   );
 };

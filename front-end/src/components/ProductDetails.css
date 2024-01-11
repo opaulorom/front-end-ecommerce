@@ -80,3 +80,31 @@
 }
 
 /* ... (existing styles) */
+.color-preview{
+  width: 30vw;
+}
+
+/* Adicione essas classes ao seu arquivo CSS */
+.color-preview-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.color-preview-wrapper {
+  display: flex;
+  margin-right: 10px;
+}
+
+.color-preview {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.color-preview.active {
+  border-color: #007bff;
+}
