@@ -121,25 +121,7 @@ const ProductDetails = () => {
           ))}
       </div>
 
-      {/* Preview Thumbnails */}
-      <div className="preview-thumbnails">
-        {product.variations
-          ?.filter(
-            (variation, index, self) =>
-              self.findIndex((v) => v.color === variation.color) === index
-          )
-          .map((variation, index) => (
-            <img
-              key={index}
-              src={variation.urls[0]}
-              alt={variation.color}
-              className={`preview-thumbnail ${
-                index === currentImageIndex ? "active" : ""
-              }`}
-              onClick={() => handleDotClick(index)}
-            />
-          ))}
-      </div>
+     
 
       <h1>{product.name}</h1>
       <p>{product.price}</p>
