@@ -28,9 +28,32 @@ const ProductDetails = () => {
     return <p>Carregando...</p>;
   }
 
-  const handleThumbnailClick = (index) => {
-    setCurrentImageIndex(index);
+  const handleThumbnailClick = (color, index) => {
+    const colorVariations = product.variations.filter(
+      (variation) => variation.color === color
+    );
+    const currentIndexInColor = colorVariations.findIndex(
+      (variation) => variation.urls[0] === product.variations[currentImageIndex].urls[0]
+    );
+  
+    if (currentIndexInColor !== -1) {
+      const newIndex = (currentIndexInColor + 1) % colorVariations.length;
+      setCurrentImageIndex(
+        product.variations.findIndex(
+          (variation) => variation.color === colorVariations[newIndex].color
+        )
+      );
+    } else {
+      // If the current variation is not found in the selected color, go to the first image of that color.
+      setCurrentImageIndex(
+        product.variations.findIndex(
+          (variation) => variation.color === color && variation.urls[0] === colorVariations[0].urls[0]
+        )
+      );
+    }
   };
+  
+  
 
   const handleDotClick = (index) => {
     setCurrentImageIndex(index);
@@ -56,7 +79,7 @@ const ProductDetails = () => {
           <img
             src={product.variations[currentImageIndex].urls[0]}
             alt={product.variations[currentImageIndex].color}
-            style={{ width: "20%" }}
+            style={{ width: "30%" }}
           />
           <div className="navigation-arrows">
             <div className="arrow" onClick={() => handleArrowClick("prev")}>
@@ -69,6 +92,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
+    
       {/* Dots */}
       <div className="dot-container">
         {product.variations?.map((variation, index) => (
@@ -79,50 +103,38 @@ const ProductDetails = () => {
           />
         ))}
       </div>
-
-      <h1>{product.name}</h1>
-      <p>{product.price}</p>
-
-      <div className="thumbnail-container">
-        {product.variations.reduce((acc, variation, index, array) => {
-          // Verifica se é a primeira variação ou se a cor é diferente da anterior
-          if (index === 0 || variation.color !== array[index - 1].color) {
-            // Adiciona o nome da cor
-            acc.push(
-              <div key={`color-name-${index}`} className="color-name">
-                {`Cor: ${variation.color}`}
-              </div>
-            );
-          }
-
-          // Adiciona a miniatura
-          acc.push(
-            <div key={`thumbnail-${index}`} className="thumbnail-wrapper">
+  {/* Thumbnails */}
+      
+  <div className="thumbnail-container">
+        {product.variations
+          ?.filter(
+            (variation, index, self) =>
+              self.findIndex((v) => v.color === variation.color) === index
+          )
+          .map((variation, index) => (
+            <div key={index} className="thumbnail-wrapper">
+              <span className="color-name">{`Cor: ${variation.color}`}</span>
               <img
                 src={variation.urls[0]}
                 alt={variation.color}
                 className={`thumbnail ${
                   index === currentImageIndex ? "active" : ""
                 }`}
-                onClick={() => handleThumbnailClick(index)}
-              />
-              {variation.urls.slice(1, 4).map((url, i) => (
-                <img
-                  key={`preview-${index}-${i}`}
-                  src={url}
-                  alt={variation.color}
-                  className="preview-thumbnail"
-                  onClick={() => handleThumbnailClick(i + 1)}
+                onClick={() => handleThumbnailClick(variation.color, index)}
                 />
-              ))}
             </div>
-          );
-
-          return acc;
-        }, [])}
+          ))}
       </div>
 
+      <h1>{product.name}</h1>
+      <p>{product.price}</p>
+
+
+
       <Navbar />
+     
+
+
     </div>
   );
 };
