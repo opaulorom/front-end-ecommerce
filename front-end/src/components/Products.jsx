@@ -9,11 +9,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { searchAtom } from "../Jotai/searchAtom";
 import { useAtomValue } from "jotai";
-import CloseIcon from '@mui/icons-material/Close';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-
-
+import CloseIcon from "@mui/icons-material/Close";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -22,9 +20,7 @@ const Products = () => {
   const [loading, setLoading] = useState(false);
   const searchTerm = useAtomValue(searchAtom);
   const [FilterModalOpen, setFilterModalOpen] = useState(false);
-  const [isPlusIconOpen, setIsPlusIconOpen] = useState(false)
-
-
+  const [isPlusIconOpen, setIsPlusIconOpen] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -58,17 +54,16 @@ const Products = () => {
   };
 
   const handleCloseModal = () => {
-    setFilterModalOpen(false)
-  }
-
+    setFilterModalOpen(false);
+  };
 
   const handleOpenPlusIcon = () => {
-    setIsPlusIconOpen(true)
-  } 
+    setIsPlusIconOpen(true);
+  };
 
-  const  handlePlusIconClose = () => {
-    setIsPlusIconOpen(false)
-  }
+  const handlePlusIconClose = () => {
+    setIsPlusIconOpen(false);
+  };
   return (
     <div className="productContainer">
       <div>
@@ -85,36 +80,40 @@ const Products = () => {
           </Box>
         ) : (
           <div>
-            
             {FilterModalOpen ? (
-             <div className="modal" >
-             <div className="modal-content">
-             <CloseIcon onClick={handleCloseModal} style={{position:"absolute", right:"1rem"}}></CloseIcon>
-             <div style={{
-              display:"flex",
-              alignItems:"center"
-             }}>
-             <span>Cor</span> {isPlusIconOpen ? (
-              <> <RemoveIcon onClick={handlePlusIconClose}/>
-      <div>
-                      {products.map((color) => (
-                        // Renderiza as cores do produto
-                        <div key={color.id}>
-                          <p>{color.name}</p>
-                          {/* Adicione outras informações da cor conforme necessário */}
+              <div className="modal">
+                <div className="modal-content">
+                  <CloseIcon
+                    onClick={handleCloseModal}
+                    style={{ position: "absolute", right: "1rem" }}
+                  ></CloseIcon>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span>Cor</span>{" "}
+                    {isPlusIconOpen ? (
+                      <>
+                        {" "}
+                        <RemoveIcon onClick={handlePlusIconClose} />
+                        <div>
+                          {products.map((product) => (
+                            // Renderiza as cores do produto
+                            <div key={product.id}>
+                              <p>{product.name}</p>
+                              {/* Adicione outras informações da cor conforme necessário */}
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-              
-              </>
-            
-             ):(
-              <AddIcon onClick={handleOpenPlusIcon}/>
-             )}
-
-             </div>
-             </div>
-           </div>
+                      </>
+                    ) : (
+                      <AddIcon onClick={handleOpenPlusIcon} />
+                    )}
+                  </div>
+                </div>
+              </div>
             ) : (
               <>
                 <div className="modal-filter">
