@@ -25,6 +25,7 @@ const Products = () => {
         const response = await axios.get(
           `http://localhost:3001/api/products?page=${currentPage}&keyword=${searchTerm}`
         );
+        
         setProducts(response.data.products);
         setTotalPages(response.data.totalPages);
         console.log("TotalPages", response.data.totalPages);
