@@ -40,11 +40,12 @@ const SearchInput = ({ placeholder }) => {
     };
   }, []);
 
+ 
   const handleSearch = () => {
-    setSearchTerm(localSearchTerm); // Set searchTerm to localSearchTerm
     setIsMobileInputOpen(false);
+    // Use setSearchTerm directly from the atom
+    setSearchTerm(localSearchTerm);
   };
-
   return (
     <>
       {isMobile ? (
@@ -68,6 +69,7 @@ const SearchInput = ({ placeholder }) => {
         </div>
       ) : (
         <div className="search-container">
+
           <input
             type="text"
             placeholder={placeholder}

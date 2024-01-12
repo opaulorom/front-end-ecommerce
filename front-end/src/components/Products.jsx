@@ -38,10 +38,9 @@ const Products = () => {
     fetchProducts();
   }, [currentPage, searchTerm]);
 
-  const handlePageChange = (value) => {
+  const handlePageChange = (event, value) => {
     console.log("New Page:", value);
-
-    setCurrentPage(value);
+    setCurrentPage(value || currentPage);
   };
   
   return (
@@ -102,12 +101,13 @@ const Products = () => {
               }}
             >
               <Stack spacing={2}>
-<Pagination
+              <Pagination
   count={totalPages}
   page={currentPage}
-  onChange={(event, value) => handlePageChange(value)}
+  onChange={(event, value) => handlePageChange(event, value)}
   color="primary"
 />
+
 
               </Stack>
             </div>
