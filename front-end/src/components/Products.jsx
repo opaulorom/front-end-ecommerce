@@ -13,6 +13,18 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
+// Função para mapear nomes de cores em português para valores hexadecimais
+const mapColorNameToHex = (colorName) => {
+  const colorMap = {
+    azul: "#0000FF",
+    verde: "#008000",
+    vermelho: "#FF0000",
+    // Adicione mais mapeamentos conforme necessário
+  };
+
+  return colorMap[colorName] || "#000000"; // Retorna preto se a cor não for encontrada
+};
+
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,6 +71,11 @@ const Products = () => {
 
   const handleOpenPlusIcon = () => {
     setIsPlusIconOpen(true);
+    // Verificar se 'product' e 'variations' estão definidos antes de acessá-los
+    if (products && products.variations && product.variations.length > 0) {
+      setIsPlusIconOpen(true);
+      // Restante do código...
+    }
   };
 
   const handlePlusIconClose = () => {
@@ -99,14 +116,30 @@ const Products = () => {
                         {" "}
                         <RemoveIcon onClick={handlePlusIconClose} />
                         <div>
-                          {products.map((product) => (
-                            // Renderiza as cores do produto
-                            <div key={product.id}>
-                              <p>{product.name}</p>
-                              {/* Adicione outras informações da cor conforme necessário */}
-                            </div>
-                          ))}
-                        </div>
+  {products.map((product) => (
+    <div key={product.id}>
+      <h3>Produto: {product.name}</h3>
+      <div>
+        {product.variations.map((variation, index) => (
+          <div key={index}>
+            <h4>Variação {index + 1}</h4>
+            <div>
+              Cor: {variation.color}
+              <div
+            style={{
+              backgroundColor: mapColorNameToHex(variation.color),
+              width: '20px',
+              height: '20px',
+              borderRadius: '50%',
+            }}
+          ></div>            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+
                       </>
                     ) : (
                       <AddIcon onClick={handleOpenPlusIcon} />
