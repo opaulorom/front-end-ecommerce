@@ -9,6 +9,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { searchAtom } from "../Jotai/searchAtom";
 import { useAtomValue } from "jotai";
+import CloseIcon from '@mui/icons-material/Close';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -17,6 +22,10 @@ const Products = () => {
   const [loading, setLoading] = useState(false);
   const searchTerm = useAtomValue(searchAtom);
   const [FilterModalOpen, setFilterModalOpen] = useState(false);
+  const [isPlusIconOpen, setIsPlusIconOpen] = useState(false)
+
+
+
   useEffect(() => {
     const fetchProducts = async () => {
       console.log("Current Page:", currentPage);
@@ -51,6 +60,15 @@ const Products = () => {
   const handleCloseModal = () => {
     setFilterModalOpen(false)
   }
+
+
+  const handleOpenPlusIcon = () => {
+    setIsPlusIconOpen(true)
+  } 
+
+  const  handlePlusIconClose = () => {
+    setIsPlusIconOpen(false)
+  }
   return (
     <div className="productContainer">
       <div>
@@ -68,20 +86,33 @@ const Products = () => {
         ) : (
           <div>
             {FilterModalOpen ? (
-             <div className="modal" onClick={handleCloseModal}>
+             <div className="modal" >
              <div className="modal-content">
-               <p>Conteúdo do modal</p>
+             <CloseIcon onClick={handleCloseModal} style={{position:"absolute", right:"1rem"}}></CloseIcon>
+             <div style={{
+              display:"flex",
+              alignItems:"center"
+             }}>
+             <span>Cor</span> {isPlusIconOpen ? (
+              <> <RemoveIcon onClick={handlePlusIconClose}/>
+              <div>cores</div></>
+            
+             ):(
+              <AddIcon onClick={handleOpenPlusIcon}/>
+             )}
+
+             </div>
              </div>
            </div>
             ) : (
               <>
-                <div>
+                <div className="modal-filter">
                   <img
-                    src="https://i.ibb.co/DKrhdDp/sliders.png"
+                    src="https://i.ibb.co/rwVqHvX/adjust.png"
                     onClick={handleFilterIconClick}
                     alt="Filter Icon"
                   />
-                  <span>Cor</span>
+                  <span>Filtro</span>
                 </div>
               </>
             )}

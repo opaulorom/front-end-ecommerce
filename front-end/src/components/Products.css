@@ -19,13 +19,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1000; /* Um valor alto para garantir que fique acima de outros elementos */
+
   }
   
   /* Estilo do conteúdo do modal */
   .modal-content {
     background: #fff;
     padding: 20px;
+    width: 100dvw;
+    height: 100vh;
+    margin-right: auto;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Um valor alto para garantir que fique acima de outros elementos */
+
+
+  }
+
+  .modal-filter{
+    margin-bottom: 5rem;
   }
   
