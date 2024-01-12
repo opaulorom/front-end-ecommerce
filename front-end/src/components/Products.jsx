@@ -16,7 +16,7 @@ const Products = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const searchTerm = useAtomValue(searchAtom);
-
+  const [FilterModalOpen, setFilterModalOpen] = useState(false);
   useEffect(() => {
     const fetchProducts = async () => {
       console.log("Current Page:", currentPage);
@@ -25,7 +25,7 @@ const Products = () => {
         const response = await axios.get(
           `http://localhost:3001/api/products?page=${currentPage}&keyword=${searchTerm}`
         );
-        
+
         setProducts(response.data.products);
         setTotalPages(response.data.totalPages);
         console.log("TotalPages", response.data.totalPages);
@@ -43,7 +43,14 @@ const Products = () => {
     console.log("New Page:", value);
     setCurrentPage(value || currentPage);
   };
-  
+
+  const handleFilterIconClick = () => {
+    setFilterModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setFilterModalOpen(false)
+  }
   return (
     <div className="productContainer">
       <div>
@@ -60,6 +67,24 @@ const Products = () => {
           </Box>
         ) : (
           <div>
+            {FilterModalOpen ? (
+             <div className="modal" onClick={handleCloseModal}>
+             <div className="modal-content">
+               <p>Conteúdo do modal</p>
+             </div>
+           </div>
+            ) : (
+              <>
+                <div>
+                  <img
+                    src="https://i.ibb.co/DKrhdDp/sliders.png"
+                    onClick={handleFilterIconClick}
+                    alt="Filter Icon"
+                  />
+                  <span>Cor</span>
+                </div>
+              </>
+            )}
             {products.map((product) => (
               <Link
                 key={product._id}
@@ -102,14 +127,12 @@ const Products = () => {
               }}
             >
               <Stack spacing={2}>
-              <Pagination
-  count={totalPages}
-  page={currentPage}
-  onChange={(event, value) => handlePageChange(event, value)}
-  color="primary"
-/>
-
-
+                <Pagination
+                  count={totalPages}
+                  page={currentPage}
+                  onChange={(event, value) => handlePageChange(event, value)}
+                  color="primary"
+                />
               </Stack>
             </div>
           </div>
