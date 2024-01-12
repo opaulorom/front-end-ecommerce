@@ -85,6 +85,7 @@ const Products = () => {
           </Box>
         ) : (
           <div>
+            
             {FilterModalOpen ? (
              <div className="modal" >
              <div className="modal-content">
@@ -95,7 +96,17 @@ const Products = () => {
              }}>
              <span>Cor</span> {isPlusIconOpen ? (
               <> <RemoveIcon onClick={handlePlusIconClose}/>
-              <div>cores</div></>
+      <div>
+                      {products.map((color) => (
+                        // Renderiza as cores do produto
+                        <div key={color.id}>
+                          <p>{color.name}</p>
+                          {/* Adicione outras informações da cor conforme necessário */}
+                        </div>
+                      ))}
+                    </div>
+              
+              </>
             
              ):(
               <AddIcon onClick={handleOpenPlusIcon}/>
