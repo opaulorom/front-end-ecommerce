@@ -1,10 +1,14 @@
 import React from "react";
 import "./Header.css";
 import SearchInput from "./SearchInput";
+import { useAtom } from 'jotai';
+import { searchAtom } from "../Jotai/searchAtom";
+
 const Header = () => {
-  const handleSearch = (query) => {
-    console.log("Searching for:", query);
-    // Adicione sua lógica de pesquisa aqui
+  const [searchTerm, setSearchTerm] = useAtom(searchAtom);
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
   };
   return (
     <div className="ContainerHeader">

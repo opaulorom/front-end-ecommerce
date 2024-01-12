@@ -1,11 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./SearchInput.css";
+import { useAtom } from 'jotai';
+import { searchAtom } from "../Jotai/searchAtom";
 
 const SearchInput = ({ placeholder, onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useAtom(searchAtom);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 699);
   const [isMobileInputOpen, setIsMobileInputOpen] = useState(false);
   const searchContainerRef = useRef();
+  const [localSearchTerm, setLocalSearchTerm] = useState('');
+
+  const handleSearch = () => {
+    onSearch(localSearchTerm);
+    setSearchTerm(localSearchTerm); // Optionally update the global search term
+  };
+
+  const handleInputChange = (e) => {
+    setLocalSearchTerm(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,9 +55,7 @@ const SearchInput = ({ placeholder, onSearch }) => {
     };
   }, []);
 
-  const handleSearch = () => {
-    setIsMobileInputOpen((prev) => !prev);
-  };
+ 
 
   const closeInput = () => {
     setIsMobileInputOpen(false);
@@ -74,6 +90,7 @@ const SearchInput = ({ placeholder, onSearch }) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+
           <img
             src="https://i.ibb.co/RQNdWdY/search-interface-symbol-5.png"
             alt="Search"

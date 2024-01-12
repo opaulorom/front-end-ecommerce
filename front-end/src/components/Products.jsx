@@ -6,18 +6,21 @@ import { Pagination} from '@mui/material';
 import Stack from "@mui/material/Stack";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { searchAtom } from "../Jotai/searchAtom";
+import { useAtomValue } from 'jotai';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const searchTerm = useAtomValue(searchAtom);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/products?page=${currentPage}`
+          `http://localhost:3001/api/products?page=${currentPage}&keyword=${searchTerm}`
         );
         setProducts(response.data.products);
         setTotalPages(response.data.totalPages);
@@ -30,7 +33,7 @@ const Products = () => {
     }
     };
     fetchProducts();
-  }, [currentPage]);
+  }, [currentPage, searchTerm]);
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
