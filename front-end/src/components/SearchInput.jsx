@@ -3,27 +3,12 @@ import "./SearchInput.css";
 import { useAtom } from 'jotai';
 import { searchAtom } from "../Jotai/searchAtom";
 
-const SearchInput = ({ placeholder, onSearch }) => {
+const SearchInput = ({ placeholder }) => {
   const [searchTerm, setSearchTerm] = useAtom(searchAtom);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 699);
   const [isMobileInputOpen, setIsMobileInputOpen] = useState(false);
   const searchContainerRef = useRef();
   const [localSearchTerm, setLocalSearchTerm] = useState('');
-
-  const handleSearch = () => {
-    onSearch(localSearchTerm);
-    setSearchTerm(localSearchTerm); // Optionally update the global search term
-  };
-
-  const handleInputChange = (e) => {
-    setLocalSearchTerm(e.target.value);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,9 +40,8 @@ const SearchInput = ({ placeholder, onSearch }) => {
     };
   }, []);
 
- 
-
-  const closeInput = () => {
+  const handleSearch = () => {
+    setSearchTerm(localSearchTerm); // Set searchTerm to localSearchTerm
     setIsMobileInputOpen(false);
   };
 
@@ -69,15 +53,15 @@ const SearchInput = ({ placeholder, onSearch }) => {
             src="https://i.ibb.co/By6TFwq/search-interface-symbol-1.png"
             alt="Search"
             className="search-icon"
-            onClick={handleSearch}
+            onClick={() => setIsMobileInputOpen(!isMobileInputOpen)}
           />
           {isMobileInputOpen && (
-            <div onClick={closeInput}>
+            <div onClick={handleSearch}>
               <input
                 type="text"
                 placeholder={placeholder}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={localSearchTerm}
+                onChange={(e) => setLocalSearchTerm(e.target.value)}
               />
             </div>
           )}
@@ -90,7 +74,6 @@ const SearchInput = ({ placeholder, onSearch }) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-
           <img
             src="https://i.ibb.co/RQNdWdY/search-interface-symbol-5.png"
             alt="Search"
