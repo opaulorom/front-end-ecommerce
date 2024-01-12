@@ -12,18 +12,8 @@ import { useAtomValue } from "jotai";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import colorMap from "./colorMap";
 
-// Função para mapear nomes de cores em português para valores hexadecimais
-const mapColorNameToHex = (colorName) => {
-  const colorMap = {
-    azul: "#0000FF",
-    verde: "#008000",
-    vermelho: "#FF0000",
-    // Adicione mais mapeamentos conforme necessário
-  };
-
-  return colorMap[colorName] || "#000000"; // Retorna preto se a cor não for encontrada
-};
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -126,13 +116,14 @@ const Products = () => {
             <div>
               Cor: {variation.color}
               <div
-            style={{
-              backgroundColor: mapColorNameToHex(variation.color),
-              width: '20px',
-              height: '20px',
-              borderRadius: '50%',
-            }}
-          ></div>            </div>
+                  key={index}
+                  style={{
+                    backgroundColor: colorMap[variation.color] || '#000000',
+                    width: '20px',
+                    height: '20px',
+                    borderRadius: '50%',
+                  }}
+                ></div>         </div>
           </div>
         ))}
       </div>
