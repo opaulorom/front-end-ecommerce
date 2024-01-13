@@ -45,7 +45,7 @@ const colorMap = {
     azulMédio: "#0000CD",
     violetaClaro: "#E6E6FA",
     prataClaro: "#D3D3D3",
-    
+    Salmão:"#FA8072"
   };
   
   export default colorMap;

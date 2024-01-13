@@ -181,7 +181,7 @@ const Products = () => {
                             height: "20px",
                             borderRadius: "50%",
                             marginRight: "5px", // Adicione um espaço entre as bolinhas, se necessário
-                            border:"1px solid gray"
+                            boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)", // Adicione esta linha para a sombra
                           }}
                         ></div>
                       ))}
