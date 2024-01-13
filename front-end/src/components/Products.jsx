@@ -166,10 +166,7 @@ const [selectedImageIndex, setSelectedImageIndex] = useState(0);
             {products.map((product) => (
               <Link
                 key={product._id}
-                to={{
-                  pathname: `/products/${product._id}`,
-                  state: { selectedColor, selectedImageIndex },
-                }}
+                to={`/products/${product._id}`}
                 className="product-link"
               >
                 <div className="product-card">
