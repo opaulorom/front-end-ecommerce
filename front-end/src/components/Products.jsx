@@ -14,7 +14,6 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import colorMap from "./colorMap";
 
-
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -106,31 +105,33 @@ const Products = () => {
                         {" "}
                         <RemoveIcon onClick={handlePlusIconClose} />
                         <div>
-  {products.map((product) => (
-    <div key={product.id}>
-      <h3>Produto: {product.name}</h3>
-      <div>
-        {product.variations.map((variation, index) => (
-          <div key={index}>
-            <h4>Variação {index + 1}</h4>
-            <div>
-              Cor: {variation.color}
-              <div
-                  key={index}
-                  style={{
-                    backgroundColor: colorMap[variation.color] || '#000000',
-                    width: '20px',
-                    height: '20px',
-                    borderRadius: '50%',
-                  }}
-                ></div>         </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  ))}
-</div>
-
+                          {products.map((product) => (
+                            <div key={product.id}>
+                              <h3>Produto: {product.name}</h3>
+                              <div>
+                                {product.variations.map((variation, index) => (
+                                  <div key={index}>
+                                    <h4>Variação {index + 1}</h4>
+                                    <div>
+                                      Cor: {variation.color}
+                                      <div
+                                        key={index}
+                                        style={{
+                                          backgroundColor:
+                                            colorMap[variation.color] ||
+                                            "#000000",
+                                          width: "20px",
+                                          height: "20px",
+                                          borderRadius: "50%",
+                                        }}
+                                      ></div>{" "}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </>
                     ) : (
                       <AddIcon onClick={handleOpenPlusIcon} />
@@ -170,14 +171,21 @@ const Products = () => {
                   <h3>{product.name}</h3>
                   <p>{product.price}</p>
                   {product.variations && product.variations.length > 0 && (
-                    <div
-                      style={{
-                        backgroundColor: product.variations[0].color,
-                        width: "20px",
-                        height: "20px",
-                        borderRadius: "50%",
-                      }}
-                    ></div>
+                    <div>
+                      {product.variations.map((variation, index) => (
+                        <div
+                          key={index}
+                          style={{
+                            backgroundColor: colorMap[variation.color],
+                            width: "20px",
+                            height: "20px",
+                            borderRadius: "50%",
+                            marginRight: "5px", // Adicione um espaço entre as bolinhas, se necessário
+                            border:"1px solid gray"
+                          }}
+                        ></div>
+                      ))}
+                    </div>
                   )}
                 </div>
               </Link>
