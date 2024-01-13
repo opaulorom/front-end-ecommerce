@@ -22,6 +22,8 @@ const Products = () => {
   const searchTerm = useAtomValue(searchAtom);
   const [FilterModalOpen, setFilterModalOpen] = useState(false);
   const [isPlusIconOpen, setIsPlusIconOpen] = useState(false);
+  const [selectedColor, setSelectedColor] = useState("");
+const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -70,6 +72,16 @@ const Products = () => {
   const handlePlusIconClose = () => {
     setIsPlusIconOpen(false);
   };
+
+
+  const handleColorClick = (color, urls, index) => {
+    setSelectedColor(color);
+    setSelectedImageIndex(index);
+    // Restante do código...
+  };
+  
+  
+  
   return (
     <div className="productContainer">
       <div>
@@ -154,7 +166,10 @@ const Products = () => {
             {products.map((product) => (
               <Link
                 key={product._id}
-                to={`/products/${product._id}`}
+                to={{
+                  pathname: `/products/${product._id}`,
+                  state: { selectedColor, selectedImageIndex },
+                }}
                 className="product-link"
               >
                 <div className="product-card">
@@ -170,23 +185,34 @@ const Products = () => {
                     )}
                   <h3>{product.name}</h3>
                   <p>{product.price}</p>
-                  {product.variations && product.variations.length > 0 && (
-                    <div>
-                      {product.variations.map((variation, index) => (
-                        <div
-                          key={index}
-                          style={{
-                            backgroundColor: colorMap[variation.color],
-                            width: "20px",
-                            height: "20px",
-                            borderRadius: "50%",
-                            marginRight: "5px", // Adicione um espaço entre as bolinhas, se necessário
-                            boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)", // Adicione esta linha para a sombra
-                          }}
-                        ></div>
-                      ))}
-                    </div>
-                  )}
+               {product.variations.map((variation, index) => (
+  <div
+    key={index}
+    onClick={() => handleColorClick(variation.color, variation.urls, index)}
+    style={{
+      backgroundColor: colorMap[variation.color],
+      width: "20px",
+      height: "20px",
+      borderRadius: "50%",
+      marginRight: "5px",
+      boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
+      cursor: "pointer",
+    }}
+  ></div>
+))}
+
+{selectedColor && (
+  <div>
+    <p>Descrição da Cor: {selectedColor}</p>
+    <img
+      src={selectedImageUrl}
+      alt="Imagem Selecionada"
+      style={{ maxWidth: "100%", marginTop: "10px" }}
+    />
+  </div>
+)}
+
+
                 </div>
               </Link>
             ))}
