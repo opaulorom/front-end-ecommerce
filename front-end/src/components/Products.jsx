@@ -13,7 +13,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import colorMap from "./colorMap";
-import Categories from "./Categories";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -93,7 +92,6 @@ const Products = () => {
           </Box>
         ) : (
           <div>
-            <Categories/>
             {FilterModalOpen ? (
               <div className="modal">
                 <div className="modal-content">

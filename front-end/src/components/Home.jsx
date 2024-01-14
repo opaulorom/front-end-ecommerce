@@ -3,13 +3,14 @@ import "./Home.css";
 import Products from "./Products";
 import Navbar from "./Navbar";
 import Header from "./Header";
+import Categories from "./Categories";
 const Home = () => {
  
   return (
     <div>
+            <Categories/>
 
       <Header/>
-      <Products ></Products>
       <Navbar></Navbar>
     </div>
   );

@@ -43,7 +43,9 @@ const Categories = () => {
   };
 
   return (
-    <div>
+    <div style={{
+      marginTop:"10rem"
+    }}>
       <Navbar />
       <div>
         <ul>
