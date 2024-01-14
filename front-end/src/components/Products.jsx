@@ -13,6 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import colorMap from "./colorMap";
+import Categories from "./Categories";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -22,8 +23,7 @@ const Products = () => {
   const searchTerm = useAtomValue(searchAtom);
   const [FilterModalOpen, setFilterModalOpen] = useState(false);
   const [isPlusIconOpen, setIsPlusIconOpen] = useState(false);
-  const [selectedColor, setSelectedColor] = useState("");
-const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -74,12 +74,7 @@ const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   };
 
 
-  const handleColorClick = (color, urls, index) => {
-    setSelectedColor(color);
-    setSelectedImageIndex(index);
-    // Restante do código...
-  };
-  
+
   
   
   return (
@@ -98,6 +93,8 @@ const [selectedImageIndex, setSelectedImageIndex] = useState(0);
           </Box>
         ) : (
           <div>
+            <Categories/>
+            
             {FilterModalOpen ? (
               <div className="modal">
                 <div className="modal-content">
@@ -182,32 +179,7 @@ const [selectedImageIndex, setSelectedImageIndex] = useState(0);
                     )}
                   <h3>{product.name}</h3>
                   <p>{product.price}</p>
-               {product.variations.map((variation, index) => (
-  <div
-    key={index}
-    onClick={() => handleColorClick(variation.color, variation.urls, index)}
-    style={{
-      backgroundColor: colorMap[variation.color],
-      width: "20px",
-      height: "20px",
-      borderRadius: "50%",
-      marginRight: "5px",
-      boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
-      cursor: "pointer",
-    }}
-  ></div>
-))}
-
-{selectedColor && (
-  <div>
-    <p>Descrição da Cor: {selectedColor}</p>
-    <img
-      src={selectedImageUrl}
-      alt="Imagem Selecionada"
-      style={{ maxWidth: "100%", marginTop: "10px" }}
-    />
-  </div>
-)}
+              
 
 
                 </div>
