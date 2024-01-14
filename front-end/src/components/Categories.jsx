@@ -42,8 +42,9 @@ const Categories = () => {
                               alt="Capa do Produto"
                               style={{ maxWidth: '100%', maxHeight: '100px' }}
                             />
-                            </Link>
+                       
                             <h4>{product.name}</h4>
+                            </Link>
                           </li>
                         ))}
                       </ul>
