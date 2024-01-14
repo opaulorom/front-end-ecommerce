@@ -94,7 +94,6 @@ const Products = () => {
         ) : (
           <div>
             <Categories/>
-            
             {FilterModalOpen ? (
               <div className="modal">
                 <div className="modal-content">
