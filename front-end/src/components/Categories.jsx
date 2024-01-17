@@ -1,59 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/allCategories');
-        setCategories(response.data); // Presumindo que o servidor retorna um array de categorias
+        const response = await axios.get('http://localhost:3001/api/categories');
+
+        const data = response.data.categories;
+        console.log(response.data);
+        setCategories(data);
+        setLoading(false);
       } catch (error) {
-        console.error('Erro ao obter categorias:', error);
+        console.error(error);
+        setLoading(false);
       }
     };
 
-    fetchData();
+    fetchCategories();
   }, []);
 
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (!Array.isArray(categories)) {
+    return <div>Erro: Os dados não estão no formato esperado.</div>;
+  }
+
   return (
-    <div>
-      <h1>Categorias</h1>
+    <div style={{ marginTop: "15rem" }}>
+      <h2>Categories</h2>
       <ul>
-        {categories.map((category) => (
-          <li key={category.category}>
-            <h2>{category.category}</h2>
-            {category.subcategories && (
-              <ul>
-                {category.subcategories.map((subcategory) => (
-                  <li key={subcategory.subcategory}>
-                    <h3>{subcategory.subcategory}</h3>
-                    {subcategory.products && (
-                      <ul>
-                        {subcategory.products.map((product) => (
-                          <li key={product._id}>
-                            <p>R${product.price}</p>
-                            <Link     key={product._id}
-                to={`/products/${product._id}`}>
-                            <img
-                              src={product.variations[0].urls[0]}
-                              alt="Capa do Produto"
-                              style={{ maxWidth: '100%', maxHeight: '100px' }}
-                            />
-                       
-                            <h4>{product.name}</h4>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
+        {categories.map(category => (
+          <li key={category._id}>{category.name}</li>
         ))}
       </ul>
     </div>
