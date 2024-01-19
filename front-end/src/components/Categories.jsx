@@ -32,6 +32,7 @@ const Category = ({ category, subcategory, products, onProductClick }) => {
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
+  const [uniqueCategoryNames, setUniqueCategoryNames] = useState(new Set());
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [selectedProductId, setSelectedProductId] = useState(null);
@@ -41,6 +42,9 @@ const Categories = () => {
       try {
         const response = await axios.get('http://localhost:3001/api/allCategories');
         setCategories(response.data);
+        // Extrai os nomes únicos das categorias
+        const uniqueNames = new Set(response.data.map((categoryGroup) => categoryGroup.category));
+        setUniqueCategoryNames(uniqueNames);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -67,33 +71,32 @@ const Categories = () => {
   return (
     <div style={{ marginTop: '10rem' }}>
       <h2>All Categories</h2>
-      {categories.map((categoryGroup, index) => (
+      {Array.from(uniqueCategoryNames).map((category, index) => (
         <div key={index}>
-          <h3 onClick={() => handleCategoryClick(categoryGroup.category)}>
-            {categoryGroup.category}
-          </h3>
-          // ...
-
-{selectedCategory === categoryGroup.category && (
-  <ul>
-    {Array.isArray(categoryGroup.subcategory) &&
-      categoryGroup.subcategory.map((subcategory, subIndex) => (
-        <li key={subIndex} onClick={() => handleSubcategoryClick(subcategory)}>
-          {subcategory}
-        </li>
-      ))}
-    {categoryGroup.products
-      .filter((product) => !product.subcategory)
-      .map((product) => (
-        <li key={product._id} onClick={() => handleProductClick(product._id)}>
-          {product.name} - {product.price}
-        </li>
-      ))}
-  </ul>
-)}
-
-// ...
-
+          <h3 onClick={() => handleCategoryClick(category)}>{category}</h3>
+          {selectedCategory === category && (
+            <ul>
+              {categories
+                .filter((categoryGroup) => categoryGroup.category === category)
+                .map((categoryGroup) => (
+                  <React.Fragment key={categoryGroup.category}>
+                    {Array.isArray(categoryGroup.subcategory) &&
+                      categoryGroup.subcategory.map((subcategory, subIndex) => (
+                        <li key={subIndex} onClick={() => handleSubcategoryClick(subcategory)}>
+                          {subcategory}
+                        </li>
+                      ))}
+                    {categoryGroup.products
+                      .filter((product) => !product.subcategory)
+                      .map((product) => (
+                        <li key={product._id} onClick={() => handleProductClick(product._id)}>
+                          {product.name} - {product.price}
+                        </li>
+                      ))}
+                  </React.Fragment>
+                ))}
+            </ul>
+          )}
         </div>
       ))}
       {selectedProductId && <Product productId={selectedProductId} />}
