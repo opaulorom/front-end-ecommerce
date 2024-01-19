@@ -1,13 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const Product = ({ productId }) => {
+  // Lógica para carregar dados específicos do produto do backend
+  // ...
+
+  return (
+    <div>
+      <h2>Product ID: {productId}</h2>
+      {/* Renderize os detalhes do produto aqui */}
+    </div>
+  );
+};
+
+const Category = ({ category, subcategory, products, onProductClick }) => {
+  return (
+    <div>
+      <h2>{category}</h2>
+      {subcategory && <h3>{subcategory}</h3>}
+      {/* Adicione aqui o conteúdo específico da categoria */}
+      <ul>
+        {products.map((product) => (
+          <li key={product._id} onClick={() => onProductClick(product._id)}>
+            {product.name} - {product.price}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
 const Categories = () => {
   const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const [selectedProductId, setSelectedProductId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/allCategories'); // Substitua pela rota correta do seu backend
+        const response = await axios.get('http://localhost:3001/api/allCategories');
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -18,68 +50,63 @@ const Categories = () => {
   }, []);
 
   const handleCategoryClick = (category) => {
-    // Lógica para redirecionar para a página da categoria específica
-    console.log(`Redirect to category: ${category}`);
+    setSelectedCategory(category === selectedCategory ? null : category);
+    setSelectedSubcategory(null);
+    setSelectedProductId(null);
   };
 
   const handleSubcategoryClick = (subcategory) => {
-    // Lógica para redirecionar para a página da subcategoria específica
-    console.log(`Redirect to subcategory: ${subcategory}`);
+    setSelectedSubcategory(subcategory === selectedSubcategory ? null : subcategory);
+    setSelectedProductId(null);
   };
 
-  const uniqueCategories = {};
+  const handleProductClick = (productId) => {
+    setSelectedProductId(productId === selectedProductId ? null : productId);
+  };
 
-  categories.forEach((categoryGroup) => {
-    const { category, subcategory, products } = categoryGroup;
-  
-    // Adiciona a categoria principal
-    if (!uniqueCategories[category]) {
-      uniqueCategories[category] = {
-        subcategories: [],
-        products: [],
-      };
-    }
-  
-    // Adiciona subcategorias
-    if (subcategory && !uniqueCategories[category].subcategories.includes(subcategory)) {
-      uniqueCategories[category].subcategories.push(subcategory);
-    }
-  
-    // Adiciona produtos
-    uniqueCategories[category].products = [...uniqueCategories[category].products, ...products];
-  });
-  
   return (
-    <div style={{marginTop:"10rem"}}>
+    <div style={{ marginTop: '10rem' }}>
       <h2>All Categories</h2>
-      {Object.keys(uniqueCategories).map((category, index) => (
+      {categories.map((categoryGroup, index) => (
         <div key={index}>
-          <h3 onClick={() => handleCategoryClick(category)}>{category}</h3>
-          <ul>
-            {uniqueCategories[category].subcategories.map((subcategory) => (
-              <li key={subcategory} onClick={() => handleSubcategoryClick(subcategory)}>
-                {subcategory}
-                <ul>
-                  {uniqueCategories[category].products
-                    .filter((product) => product.subcategory === subcategory)
-                    .map((product) => (
-                      <li key={product._id}>
-                        {product.name} - {product.price}
-                      </li>
-                    ))}
-                </ul>
-              </li>
-            ))}
-            {uniqueCategories[category].products
-              .filter((product) => !product.subcategory)
-              .map((product) => (
-                <li key={product._id}>
-                  {product.name} - {product.price}
-                </li>
-              ))}
-          </ul>
+          <h3 onClick={() => handleCategoryClick(categoryGroup.category)}>
+            {categoryGroup.category}
+          </h3>
+          // ...
+
+{selectedCategory === categoryGroup.category && (
+  <ul>
+    {Array.isArray(categoryGroup.subcategory) &&
+      categoryGroup.subcategory.map((subcategory, subIndex) => (
+        <li key={subIndex} onClick={() => handleSubcategoryClick(subcategory)}>
+          {subcategory}
+        </li>
+      ))}
+    {categoryGroup.products
+      .filter((product) => !product.subcategory)
+      .map((product) => (
+        <li key={product._id} onClick={() => handleProductClick(product._id)}>
+          {product.name} - {product.price}
+        </li>
+      ))}
+  </ul>
+)}
+
+// ...
+
         </div>
       ))}
+      {selectedProductId && <Product productId={selectedProductId} />}
+      {selectedSubcategory && (
+        <Category
+          category={selectedCategory}
+          subcategory={selectedSubcategory}
+          products={categories
+            .find((categoryGroup) => categoryGroup.category === selectedCategory)
+            .products.filter((product) => product.subcategory === selectedSubcategory)}
+          onProductClick={handleProductClick}
+        />
+      )}
     </div>
   );
 };
