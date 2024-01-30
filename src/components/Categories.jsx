@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -39,6 +40,11 @@ const Categories = () => {
           </li>
         ))}
       </ul>
+
+
+
+      <SearchBar/>
+
     </div>
   );
 };

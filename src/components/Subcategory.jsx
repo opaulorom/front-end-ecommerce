@@ -32,11 +32,15 @@ const Subcategory = () => {
       <h1>{subcategory} Products</h1>
       <ul>
         {products.map(product => (
+          <Link to={`/products/${product._id}`}>
           <li key={product._id}>
             {product.name} - {product.price}
           </li>
+        </Link>
+        
         ))}
       </ul>
+      
     </div>
   );
 };

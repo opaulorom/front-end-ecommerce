@@ -14,6 +14,8 @@ import ErrorBoundary from "./ErrorBoundary";
 import { Provider } from "jotai";
 import Subcategory from "./components/Subcategory";
 import CategorySubcategories from "./components/CategorySubcategories";
+import SearchResults from "./components/SearchResults";
+import SearchBar from "./components/SearchBar";
 
 const Root = () => (
   <Routes>
@@ -26,8 +28,14 @@ const Root = () => (
     <Route path="/products/:productId" element={<ProductDetails />} />{" "}
     <Route path="/pay/:payId" element={<Pay />} />
     <Route path="/" element={<Categories />} />
-        <Route path="/categories/:category" element={<CategorySubcategories />} />
-        <Route path="/categories/:category/:subcategory" element={<Subcategory />} />
+    <Route path="/categories/:category" element={<CategorySubcategories />} />
+    <Route
+      path="/categories/:category/:subcategory"
+      element={<Subcategory />}
+    />
+<Route path="/search/product/:query" element={<SearchResults />} />
+      <Route path="/" element={<SearchBar />} />
+
   </Routes>
 );
 
