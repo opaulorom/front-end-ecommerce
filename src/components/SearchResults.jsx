@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Categories from './Categories';
 
 const SearchResults = () => {
   const { query } = useParams();
@@ -32,7 +33,9 @@ const SearchResults = () => {
 
   return (
     <div>
-      <h2>Resultados da Pesquisa para "{query}"</h2>
+      <div>
+      <Categories/>
+      </div>
       <ul>
         {searchResults.map((product) => (
           <li key={product._id}>
