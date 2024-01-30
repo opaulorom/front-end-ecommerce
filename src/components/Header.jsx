@@ -3,6 +3,7 @@ import "./Header.css";
 import SearchInput from "./SearchInput";
 import { useAtom } from 'jotai';
 import { searchAtom } from "../Jotai/searchAtom";
+import SearchBar from "./SearchBar";
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useAtom(searchAtom);
@@ -15,7 +16,7 @@ const Header = () => {
       <h1>Logo</h1>
       <div style={{marginRight:"5rem"}}>
         {" "}
-        <SearchInput placeholder="Pesquisar..." onSearch={handleSearch} />
+        <SearchBar/>
       </div>
     </div>
   );

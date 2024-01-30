@@ -41,10 +41,6 @@ const Categories = () => {
         ))}
       </ul>
 
-
-
-      <SearchBar/>
-
     </div>
   );
 };
