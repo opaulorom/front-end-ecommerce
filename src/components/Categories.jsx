@@ -11,12 +11,11 @@ const Categories = () => {
         const data = await response.json();
 
         setCategories(prevCategories => {
-          // Remove duplicatas antes de adicionar as novas categorias
-          const uniqueCategories = data.filter((category, index, self) =>
-            index === self.findIndex(c => c.category === category.category)
-          );
+          // Use um conjunto temporário para armazenar categorias únicas
+          const uniqueCategoriesSet = new Set([...prevCategories.map(c => c.category), ...data.map(c => c.category)]);
+          const uniqueCategories = Array.from(uniqueCategoriesSet).map(category => ({ category }));
 
-          return [...prevCategories, ...uniqueCategories];
+          return uniqueCategories;
         });
       } catch (error) {
         console.error('Erro ao obter categorias:', error);
@@ -27,7 +26,9 @@ const Categories = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{
+      marginTop:"15rem"
+    }}>
       <h1>Categories</h1>
       <ul>
         {categories.map(category => (
