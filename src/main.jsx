@@ -12,6 +12,8 @@ import Cart from "./components/Cart";
 import ProductDetails from "./components/ProductDetails"; // Importe o componente
 import ErrorBoundary from "./ErrorBoundary";
 import { Provider } from "jotai";
+import Subcategory from "./components/Subcategory";
+import CategorySubcategories from "./components/CategorySubcategories";
 
 const Root = () => (
   <Routes>
@@ -22,8 +24,10 @@ const Root = () => (
     <Route path="/perfil" element={<Profile />} />
     <Route path="/products" element={<Products />} />
     <Route path="/products/:productId" element={<ProductDetails />} />{" "}
-    {/* Nova rota para detalhes do produto */}
     <Route path="/pay/:payId" element={<Pay />} />
+    <Route path="/" element={<Categories />} />
+        <Route path="/categories/:category" element={<CategorySubcategories />} />
+        <Route path="/categories/:category/:subcategory" element={<Subcategory />} />
   </Routes>
 );
 
