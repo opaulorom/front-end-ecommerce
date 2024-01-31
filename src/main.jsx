@@ -16,6 +16,7 @@ import Subcategory from "./components/Subcategory";
 import CategorySubcategories from "./components/CategorySubcategories";
 import SearchResults from "./components/SearchResults";
 import SearchBar from "./components/SearchBar";
+import CategoryProducts from "./components/CategoryProducts";
 
 
 const Root = () => (
@@ -36,6 +37,13 @@ const Root = () => (
     />
     <Route path="/search/product/:query" element={<SearchResults />} />
     <Route path="/" element={<SearchBar />} />
+
+    // Adicione a rota
+<Route
+  path="/categories/:category/subcategories"
+  element={<CategorySubcategories />}
+/>
+<Route path="/categories/:category/:subcategory/products" element={<CategoryProducts />} />
 
 
   </Routes>

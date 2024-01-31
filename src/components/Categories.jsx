@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import ImageGallery from './ImageGallery';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -29,6 +30,8 @@ const Categories = () => {
     <div style={{
       marginTop:"15rem"
     }}>
+            <ImageGallery />
+
       <h1>Categories</h1>
       <div style={{ marginTop: '15rem' }}>
       <ul style={{ listStyleType: 'none', padding: 0, display: 'flex', flexDirection: 'row', gap: '1rem' }}>
