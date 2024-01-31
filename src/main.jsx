@@ -16,7 +16,7 @@ import Subcategory from "./components/Subcategory";
 import CategorySubcategories from "./components/CategorySubcategories";
 import SearchResults from "./components/SearchResults";
 import SearchBar from "./components/SearchBar";
-import CategoryImages from "./components/CategoryImages";
+
 
 const Root = () => (
   <Routes>
@@ -37,7 +37,6 @@ const Root = () => (
     <Route path="/search/product/:query" element={<SearchResults />} />
     <Route path="/" element={<SearchBar />} />
 
-    <Route path="/category/:categoryId/images" element={<CategoryImages />}/>
 
   </Routes>
 );
