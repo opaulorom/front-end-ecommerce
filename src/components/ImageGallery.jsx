@@ -61,23 +61,22 @@ const handleImageClick = async (categoryName, subcategoryName) => {
   
   // ...
   
-  
   return (
     <div>
       <h2>Image Gallery</h2>
-      <div style={{ display: 'flex', gap: '10px' }}>
+      <div style={{ display: 'flex', gap: '10px', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
         {Array.isArray(categories) && categories.length > 0 ? (
           categories.flatMap(category => category.images.flatMap(subcategoryImages => (
             subcategoryImages.map(image => (
-              <div key={image._id} style={{ width: '150px', height: '150px' }}>
+              <div key={image._id} style={{ width: '150px', height: '150px', margin: '10px', textAlign: 'center' }}>
                 {image.imageUrl ? (
                   <div onClick={() => handleImageClick(category.name)}>
-                    {/* Adicione subcategoryName como segundo argumento */}
                     <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                 ) : (
                   <div>No URL available for image</div>
                 )}
+                <div style={{ marginTop: '5px' }}>{category.name}</div>
               </div>
             ))
           )))
