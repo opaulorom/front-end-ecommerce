@@ -12,9 +12,7 @@ const ImageGallery = () => {
 
         console.log('Categories Response:', response.data);
 
-        // Verifica se a resposta possui a propriedade "categories" e se é um array
         if (response.data.categories && Array.isArray(response.data.categories)) {
-          // Flatten todas as imagens de todas as subcategorias
           const flattenedImages = response.data.categories
             .map(category => category.images)
             .flat()
@@ -47,12 +45,12 @@ const ImageGallery = () => {
   return (
     <div>
       <h2>Image Gallery</h2>
-      <div>
+      <div style={{ display: 'flex', gap: '10px' }}>
         {Array.isArray(images) && images.length > 0 ? (
           images.map((image) => (
-            <div key={image._id}>
+            <div key={image._id} style={{ width: '150px', height: '150px' }}>
               {image.imageUrl ? (
-                <img src={image.imageUrl} alt={`Image ${image._id}`} />
+                <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
                 <div>No URL available for image</div>
               )}
