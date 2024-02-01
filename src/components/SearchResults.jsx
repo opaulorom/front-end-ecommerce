@@ -34,7 +34,6 @@ const SearchResults = () => {
   return (
     <div>
       <div>
-      <Categories/>
       </div>
       <ul>
         {searchResults.map((product) => (

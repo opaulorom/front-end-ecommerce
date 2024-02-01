@@ -44,25 +44,25 @@ const CategorySubcategories = () => {
     <div>
       <h1>Subcategories of {category}</h1>
       <ul>
-        {subcategories.map(subcategory => (
-          <li key={subcategory}>
-            <Link to={`/categories/${category}/${subcategory}`}>
-              {subcategory}
-            </Link>
-          </li>
-        ))}
-      </ul>
+  {subcategories.map((subcategory, index) => (
+    <li key={index}>
+      <Link to={`/categories/${category}/${subcategory}`}>
+        {subcategory}
+      </Link>
+    </li>
+  ))}
+</ul>
 
-      <h2>Mixed Products of {category}</h2>
-      <ul>
-        {mixedProducts.map(product => (
-          <li key={product._id}>
-            {product.name} - {product.price}
-          </li>
-        ))}
-      </ul>
+<h2>Mixed Products of {category}</h2>
+<ul>
+  {mixedProducts.map(product => (
+    <li key={product._id || 'undefined'}>
+      {product.name} - {product.price}
+    </li>
+  ))}
+</ul>
 
-      <CustomPagination totalPages={totalPages} currentPage={currentPage} onChangePage={handlePageChange}  size="large" />
+      <CustomPagination totalPages={totalPages} currentPage={currentPage} onChangePage={handlePageChange}  />
     </div>
   );
 };
