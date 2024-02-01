@@ -53,6 +53,8 @@ const handleImageClick = async (categoryName, subcategoryName) => {
       navigate(`/categories/${encodeURIComponent(categoryName)}/${encodeURIComponent(subcategoryName)}/products`);
     }
   };
+
+  
   
   // ...
   
