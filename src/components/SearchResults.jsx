@@ -1,20 +1,24 @@
-// SearchResults.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import Categories from './Categories';
+import Chip from '@mui/material/Chip';
 
 const SearchResults = () => {
   const { query } = useParams();
   const [searchResults, setSearchResults] = useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedFilters, setSelectedFilters] = useState({
+    color: '',
+    size: '',
+    priceRange: '',
+  });
 
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/search/product?searchQuery=${query}&page=${currentPage}`);
+        const response = await fetch(`http://localhost:3001/api/search/product?searchQuery=${query}&page=${currentPage}&color=${selectedFilters.color}&size=${selectedFilters.size}&priceRange=${selectedFilters.priceRange}`);
         const data = await response.json();
         console.log('Data from server:', data);
         setSearchResults(data.products);
@@ -25,16 +29,17 @@ const SearchResults = () => {
     };
 
     fetchSearchResults();
-  }, [query, currentPage]);
+  }, [query, currentPage, selectedFilters.color, selectedFilters.size, selectedFilters.priceRange]);
 
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
   };
 
+
+
   return (
     <div>
-      <div>
-      </div>
+      {/* Lista de resultados */}
       <ul>
         {searchResults.map((product) => (
           <li key={product._id}>
@@ -43,9 +48,10 @@ const SearchResults = () => {
         ))}
       </ul>
 
+      {/* Paginação */}
       <Stack spacing={2}>
         <Pagination
-          count={Math.ceil(totalProducts / 10)}  // Defina o número total de páginas com base no total de produtos e pageSize
+          count={Math.ceil(totalProducts / 10)}
           variant="outlined"
           color="primary"
           size="large"
