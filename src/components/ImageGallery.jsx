@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const ImageGallery = () => {
   const [categories, setCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [categoriesPerPage] = useState(4); // Defina o número de categorias por página
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -27,56 +29,47 @@ const ImageGallery = () => {
     fetchData();
   }, []);
 
-
-
-const handleImageClick = async (categoryName, subcategoryName) => {
-    console.log('Clicked on image. Redirecting to category subcategories:', categoryName, subcategoryName);
-  
-    try {
-      const response = await axios.get(`http://localhost:3001/api/subcategories/${categoryName}`);
-      const subcategories = response.data;
-  
-      console.log('Fetched subcategories:', subcategories);
-  
-      if (subcategories && subcategories.length > 0) {
-        console.log('Navigating to category subcategories:', categoryName);
-        navigate(`/categories/${encodeURIComponent(categoryName)}/subcategories`);
-      } else {
-        console.log('No subcategories found. Redirecting to category products:', categoryName, subcategoryName);
-        navigate(`/categories/${encodeURIComponent(categoryName)}/${encodeURIComponent(subcategoryName)}/products`);
-      }
-    } catch (error) {
-      console.error('Error fetching subcategories:', error);
-      // Se ocorrer um erro ou não houver subcategorias, redirecione para a página de produtos
-      navigate(`/categories/${encodeURIComponent(categoryName)}/${encodeURIComponent(subcategoryName)}/products`);
-    }
+  // Função para avançar para a próxima página
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
   };
 
-  
+  // Função para retroceder para a página anterior
+  const prevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
 
-  
+  // Índices das categorias a serem exibidas na página atual
+  const indexOfLastCategory = currentPage * categoriesPerPage;
+  const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
+  const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);
+
   return (
     <div>
       <h2>Image Gallery</h2>
-      <div style={{ display: 'flex', gap: '10px', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
-        {Array.isArray(categories) && categories.length > 0 ? (
-          categories.flatMap(category => category.images.flatMap(subcategoryImages => (
-            subcategoryImages.map(image => (
-              <div key={image._id} style={{ width: '150px', height: '150px', margin: '10px', textAlign: 'center' }}>
-                {image.imageUrl ? (
-                  <div onClick={() => handleImageClick(category.name)}>
-                    <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '10px', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+          {currentCategories.map(category => (
+            <div key={category._id} style={{ width: '150px', height: '150px', margin: '10px', textAlign: 'center' }}>
+              {category.images.map((subcategoryImages, index) => (
+                subcategoryImages.map(image => (
+                  <div key={image._id}>
+                    <Link to={`/categories/${encodeURIComponent(category.name)}`}>
+                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </Link>
+                    <div style={{ marginTop: '5px' }}>{category.name}</div>
                   </div>
-                ) : (
-                  <div>No URL available for image</div>
-                )}
-                <div style={{ marginTop: '5px' }}>{category.name}</div>
-              </div>
-            ))
-          )))
-        ) : (
-          <div>No images available</div>
-        )}
+                ))
+              ))}
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
+            <button onClick={nextPage} disabled={indexOfLastCategory >= categories.length}>Next</button>
+          </div>
+        </div>
       </div>
     </div>
   );
