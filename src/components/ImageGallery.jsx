@@ -27,9 +27,7 @@ const ImageGallery = () => {
     fetchData();
   }, []);
 
- // ...// ...
-// ...
-// ...// ...
+
 
 const handleImageClick = async (categoryName, subcategoryName) => {
     console.log('Clicked on image. Redirecting to category subcategories:', categoryName, subcategoryName);
@@ -55,13 +53,7 @@ const handleImageClick = async (categoryName, subcategoryName) => {
   };
 
   
-  
-  // ...
-  
-  
-  // ...
-  
-  // ...
+
   
   return (
     <div>
