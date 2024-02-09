@@ -97,10 +97,12 @@ const CategoryCarousel = () => {
             {category.images.map((subcategoryImages, index) => (
               subcategoryImages.map(image => (
                 <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
-                  <Link to={`/categories/${encodeURIComponent(category.name)}`}>
-                    <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </Link>
-                  <div style={{ marginTop: '5px' }}>{category.name}</div>
+                  <div onClick={() => handleImageClick(category.name, subcategoryImages.name)}>
+                    <Link to={`/categories/${encodeURIComponent(category.name)}`}>
+                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </Link>
+                    <div style={{ marginTop: '5px' }}>{category.name}</div>
+                  </div>
                 </div>
               ))
             ))}
