@@ -39,14 +39,21 @@ const CategoryCarousel = () => {
   };
 
   const handleTouchEnd = () => {
-    const deltaX = touchEndX - touchStartX;
-    if (deltaX > 50 && currentIndex > 0) {
-      // Swipe right, move to previous category
-      setCurrentIndex(currentIndex - 1);
-    } else if (deltaX < -50 && currentIndex < categories.length - 1) {
-      // Swipe left, move to next category
-      setCurrentIndex(currentIndex + 1);
+    if (touchStartX && touchEndX) {
+      const deltaX = touchEndX - touchStartX;
+      const threshold = 50; // Threshold para desencadear o movimento da categoria
+
+      if (deltaX > threshold && currentIndex > 0) {
+        // Swipe right, move to previous category
+        setCurrentIndex(currentIndex - 1);
+      } else if (deltaX < -threshold && currentIndex < categories.length - 1) {
+        // Swipe left, move to next category
+        setCurrentIndex(currentIndex + 1);
+      }
     }
+    // Reset touch values
+    setTouchStartX(null);
+    setTouchEndX(null);
   };
 
   const handleImageClick = async (categoryName, subcategoryName) => {
@@ -89,7 +96,7 @@ const CategoryCarousel = () => {
           display: 'flex',
           width: `${categories.length * 100}%`,
           transform: `translateX(-${(100 / categories.length) * currentIndex}%)`,
-          transition: 'transform 0.5s ease',
+          transition: 'transform 0.3s ease', // Tempo de transição reduzido para resposta mais rápida
         }}
       >
         {categories.map((category, index) => (
