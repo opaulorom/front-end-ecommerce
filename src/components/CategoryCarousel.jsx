@@ -15,13 +15,9 @@ const CategoryCarousel = () => {
       try {
         const response = await axios.get('http://localhost:3001/api/categories');
         console.log('Categories Response:', response.data);
-  
+
         if (response.data.categories && Array.isArray(response.data.categories)) {
-          // Filtrar categorias sem produtos
-          const categoriesWithProducts = response.data.categories.filter(category => category.images.some(subcategoryImages => subcategoryImages.length > 0));
-          console.log('Categories with products:', categoriesWithProducts);
-          
-          setCategories(categoriesWithProducts);
+          setCategories(response.data.categories);
         } else {
           setCategories([]);
         }
@@ -30,10 +26,9 @@ const CategoryCarousel = () => {
         console.error('Error fetching categories:', error);
       }
     };
-  
+
     fetchData();
   }, []);
-  
 
   const handleTouchStart = (event) => {
     setTouchStartX(event.touches[0].clientX);
@@ -84,8 +79,6 @@ const CategoryCarousel = () => {
     }
   };
 
-  
-
   return (
     <div
       onTouchStart={handleTouchStart}
@@ -95,7 +88,7 @@ const CategoryCarousel = () => {
         overflow: 'hidden',
         width: '100%',
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'center'
       }}
     >
       <div
@@ -104,6 +97,7 @@ const CategoryCarousel = () => {
           width: `${categories.length * 100}%`,
           transform: `translateX(-${(100 / categories.length) * currentIndex}%)`,
           transition: 'transform 0.3s ease', // Tempo de transição reduzido para resposta mais rápida
+          marginLeft:"20rem"
         }}
       >
         {categories.map((category, index) => (
@@ -113,14 +107,13 @@ const CategoryCarousel = () => {
                 <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
                   <div onClick={() => handleImageClick(category.name, subcategoryImages.name)}>
                     <Link to={`/categories/${encodeURIComponent(category.name)}`}>
-                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', marginLeft:"10rem" }} />
+                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover'}} />
                     </Link>
+                    <div style={{ marginTop: '5px' }}>{category.name}</div>
                   </div>
                 </div>
               ))
             ))}
-                                <div style={{ marginTop: '5rem' }}>{category.name}</div>
-
           </div>
         ))}
       </div>
