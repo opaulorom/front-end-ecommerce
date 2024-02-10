@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-
+import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 const ImageGallery = () => {
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [categoriesPerPage] = useState(4); // Defina o número de categorias por página
+  const [categoriesPerPage] = useState(6); // Defina o número de categorias por página
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -45,7 +46,7 @@ const ImageGallery = () => {
   const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);
 
   return (
-    <div>
+    <div style={{ position:"relative"}}>
       <h2>Image Gallery</h2>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ display: 'flex', gap: '10px', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -55,7 +56,7 @@ const ImageGallery = () => {
                 subcategoryImages.map(image => (
                   <div key={image._id}>
                     <Link to={`/categories/${encodeURIComponent(category.name)}`}>
-                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius:"50%", aspectRatio:"1/1" }} />
                     </Link>
                     <div style={{ marginTop: '5px' }}>{category.name}</div>
                   </div>
@@ -66,8 +67,10 @@ const ImageGallery = () => {
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
-            <button onClick={nextPage} disabled={indexOfLastCategory >= categories.length}>Next</button>
+            <ArrowBackIosNewRoundedIcon onClick={prevPage} disabled={currentPage === 1} style={{fontSize:"2.5rem", position:"absolute", top:"50%", left:"8%", cursor:"pointer" }}></ArrowBackIosNewRoundedIcon>
+            <ArrowForwardIosRoundedIcon onClick={nextPage} disabled={indexOfLastCategory >= categories.length} style={{fontSize:"2.5rem", position:"absolute", top:"50%", right:"8%", cursor:"pointer"}}></ArrowForwardIosRoundedIcon>
+            
+            
           </div>
         </div>
       </div>

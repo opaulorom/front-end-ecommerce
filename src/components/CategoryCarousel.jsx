@@ -108,13 +108,13 @@ const CategoryCarousel = () => {
                 <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
                   <div onClick={() => handleImageClick(category.name, subcategoryImages.name)}>
                     <Link to={`/categories/${encodeURIComponent(category.name)}`} style={{gap:"1rem"}}>
-                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover'}} />
+                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius:"50%", aspectRatio:"1/1"}} />
                     </Link>
                   </div>
                 </div>
               ))
             ))}
-            <div style={{ marginTop: '5rem', textAlign:"center" }}>{category.name}</div>
+            <div style={{ marginTop: '1rem', textAlign:"center" }}>{category.name}</div>
 
           </div>
         ))}
