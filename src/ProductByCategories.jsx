@@ -2,7 +2,9 @@ import React from 'react'
 
 const ProductByCategories = () => {
   return (
-    <div>ProductByCategories</div>
+    <div style={{
+      marginTop:"10rem"
+    }}>ProductByCategories</div>
   )
 }
 

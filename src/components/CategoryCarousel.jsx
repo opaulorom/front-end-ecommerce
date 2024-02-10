@@ -109,11 +109,12 @@ const CategoryCarousel = () => {
                     <Link to={`/categories/${encodeURIComponent(category.name)}`}>
                       <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover'}} />
                     </Link>
-                    <div style={{ marginTop: '5px' }}>{category.name}</div>
                   </div>
                 </div>
               ))
             ))}
+            <div style={{ marginTop: '5rem' }}>{category.name}</div>
+
           </div>
         ))}
       </div>
