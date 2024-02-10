@@ -20,17 +20,17 @@ const Navbar = () => {
     <div className="hide">
       <div className="navbar">
         <Link to={"/home"} className={`nav-item ${isActive(0)} `}>
-          <img src="https://i.ibb.co/FxJBxZS/home-2.png" />
+          <img src="https://i.ibb.co/J3gLZnz/home-4.png" />
           <span className="span">Home</span>
         </Link>
 
         <Link to={"/categorias"} className={`nav-item ${isActive(1)}`}>
-          <img src="https://i.ibb.co/NtST8zC/menu-1.png" />
+          <img src="https://i.ibb.co/HqPdMws/category-1.png" />
           <span className="span">Categorias</span>
         </Link>
 
         <Link to={"/carrinho"} className={`nav-item ${isActive(2)}`}>
-          <img src="https://i.ibb.co/RPwPY6t/shopping-bag-2.png" />
+          <img src="https://i.ibb.co/c1F91T2/shopping-bag-4.png" />
           <span className="span">Carrinho</span>
         </Link>
 
