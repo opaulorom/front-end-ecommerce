@@ -13,7 +13,7 @@ const CategoryCarousel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/categories');
+        const response = await axios.get('https://serveradmin-whhj.onrender.com/api/categories');
         console.log('Categories Response:', response.data);
 
         if (response.data.categories && Array.isArray(response.data.categories)) {
@@ -60,7 +60,7 @@ const CategoryCarousel = () => {
     console.log('Clicked on image. Redirecting to category subcategories:', categoryName, subcategoryName);
 
     try {
-      const response = await axios.get(`http://localhost:3001/api/subcategories/${categoryName}`);
+      const response = await axios.get(`https://serveradmin-whhj.onrender.com/api/subcategories/${categoryName}`);
       const subcategories = response.data;
 
       console.log('Fetched subcategories:', subcategories);

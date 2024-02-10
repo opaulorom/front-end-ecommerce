@@ -46,9 +46,9 @@ const CategorySubcategories = () => {
     const fetchFilters = async () => {
       try {
         // Alterações nas chamadas de API para obter cores, tamanhos e faixas de preço específicos
-        const colorsResponse = await fetch(`http://localhost:3001/api/categories/${category}/colors`);
-        const sizesResponse = await fetch(`http://localhost:3001/api/categories/${category}/sizes`);
-        const priceRangesResponse = await fetch(`http://localhost:3001/api/categories/${category}/priceRanges`);
+        const colorsResponse = await fetch(`https://serveradmin-whhj.onrender.com/api/categories/${category}/colors`);
+        const sizesResponse = await fetch(`https://serveradmin-whhj.onrender.com/${category}/sizes`);
+        const priceRangesResponse = await fetch(`https://serveradmin-whhj.onrender.com/api/categories/${category}/priceRanges`);
 
         const colorsData = await colorsResponse.json();
         const sizesData = await sizesResponse.json();
@@ -72,7 +72,7 @@ const CategorySubcategories = () => {
     const fetchOriginalProducts = async () => {
       try {
         // Alteração na chamada de API para obter produtos misturados específicos
-        const response = await fetch(`http://localhost:3001/api/categories/${category}/mixedProducts`);
+        const response = await fetch(`https://serveradmin-whhj.onrender.com/api/categories/${category}/mixedProducts`);
         const data = await response.json();
         setOriginalProducts(data.mixedProducts);
       } catch (error) {

@@ -8,7 +8,7 @@ const Categories = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/allCategories');
+        const response = await fetch('https://serveradmin-whhj.onrender.com/api/allCategories');
         const data = await response.json();
 
         setCategories(prevCategories => {

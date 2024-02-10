@@ -9,7 +9,7 @@ const CategoryProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/subcategoriesAndProductsByName/${category}/${subcategory}`);
+        const response = await fetch(`https://serveradmin-whhj.onrender.com/api/subcategoriesAndProductsByName/${category}/${subcategory}`);
         const data = await response.json();
         setProducts(data);
         setLoading(false);
