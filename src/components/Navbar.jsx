@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState(null);
 
@@ -35,7 +35,7 @@ const Navbar = () => {
         </Link>
 
         <Link to={"/perfil"} className={`nav-item ${isActive(3)}`}>
-          <img src="https://i.ibb.co/bBpcH5t/user-4.png" />
+          <AccountCircleOutlinedIcon src="https://i.ibb.co/bBpcH5t/user-4.png" />
           <span className="span">Perfil</span>
         </Link>
       </div>
