@@ -35,7 +35,7 @@ const Navbar = () => {
         </Link>
 
         <Link to={"/perfil"} className={`nav-item ${isActive(3)}`}>
-          <AccountCircleOutlinedIcon  style={{color:"black", fontSize:"25px"}}/>
+          <AccountCircleOutlinedIcon  style={{color:"black", fontSize:"32px"}}/>
           <span className="span">Perfil</span>
         </Link>
       </div>
