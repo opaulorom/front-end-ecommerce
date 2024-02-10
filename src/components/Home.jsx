@@ -11,7 +11,7 @@ const Home = () => {
             <Categories/>
             <CategoryCarousel/>
       <Header/>
-
+      <Navbar></Navbar>
 
 
       
