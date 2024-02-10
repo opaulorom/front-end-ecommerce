@@ -24,8 +24,21 @@ const SearchBar = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         onKeyPress={handleKeyPress} // Adiciona o event listener para capturar a tecla pressionada
+        style={{
+          width:"40vw",
+          height:"6.5vh",
+          border:"0",
+          borderRadius:"24px",
+          outline:"none",
+          position:"relative"
+        }}
       />
-      <button onClick={handleSearch}>Pesquisar</button>
+      <img src='https://i.ibb.co/t4n36kx/loupe-6.png' onClick={handleSearch}
+       style={{
+        position:"absolute",
+        top:".3rem",
+        right:"18rem"
+      }}></img>
     </div>
   );
 };
