@@ -30,7 +30,7 @@ const Navbar = () => {
         </Link>
 
         <Link to={"/carrinho"} className={`nav-item ${isActive(2)}`}>
-          <img src="https://i.ibb.co/c1F91T2/shopping-bag-4.png" />
+          <img src="https://i.ibb.co/RPwPY6t/shopping-bag-2.png" />
           <span className="span">Carrinho</span>
         </Link>
 
