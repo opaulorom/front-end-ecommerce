@@ -35,7 +35,7 @@ const Navbar = () => {
         </Link>
 
         <Link to={"/perfil"} className={`nav-item ${isActive(3)}`}>
-          <img src="https://i.ibb.co/pyMDQbH/account.png" />
+          <img src="https://i.ibb.co/ZdN8V77/user-3.png" />
           <span className="span">Perfil</span>
         </Link>
       </div>
