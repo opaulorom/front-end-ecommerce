@@ -41,22 +41,50 @@ const ImageGallery = () => {
   };
 
   // Índices das categorias a serem exibidas na página atual
-  const indexOfLastCategory = currentPage * categoriesPerPage;
-  const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
-  const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);
+  const indexOfFirstCategory = (currentPage - 1) * categoriesPerPage;
+
+  // Índice final da última categoria a ser exibida na página atual
+  let indexOfLastCategory = Math.min(indexOfFirstCategory + categoriesPerPage, categories.length - 1);
+
+  // Verificar se o índice final excede o número total de categorias
+  if (indexOfLastCategory >= categories.length - 1) {
+    indexOfLastCategory = categories.length - 1;
+  }
+
+  // Slice para obter apenas as categorias da página atual
+  const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory + 1);
+
+  // Estilo para as setas de navegação
+  const arrowStyle = {
+    fontSize: '2.5rem',
+    cursor: 'pointer',
+    margin: '0 5px', // Espaçamento entre as setas
+  };
+
+  // Calcular a largura total das categorias exibidas
+  const totalWidth = currentCategories.length * 170; // Supondo que a largura de cada categoria seja de 170px
+
+  // Estilo para o contêiner das setas de navegação
+  const arrowsContainerStyle = {
+    position: 'absolute',
+    bottom: '10px',
+    left: `calc(50% - ${totalWidth / 2}px)`,
+    display: 'flex',
+    justifyContent: 'center',
+  };
 
   return (
-    <div style={{ position:"relative"}}>
+    <div style={{ position: 'relative' }}>
       <h2>Image Gallery</h2>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ display: 'flex', gap: '10px', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
+        <div style={{ display: 'flex', gap: '10px', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', position: 'relative' }}>
           {currentCategories.map(category => (
             <div key={category._id} style={{ width: '150px', height: '150px', margin: '10px', textAlign: 'center' }}>
               {category.images.map((subcategoryImages, index) => (
                 subcategoryImages.map(image => (
                   <div key={image._id}>
                     <Link to={`/categories/${encodeURIComponent(category.name)}`}>
-                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius:"50%", aspectRatio:"1/1" }} />
+                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "50%", aspectRatio: "1/1" }} />
                     </Link>
                     <div style={{ marginTop: '5px' }}>{category.name}</div>
                   </div>
@@ -65,13 +93,9 @@ const ImageGallery = () => {
             </div>
           ))}
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <ArrowBackIosNewRoundedIcon onClick={prevPage} disabled={currentPage === 1} style={{fontSize:"2.5rem", position:"absolute", top:"50%", left:"8%", cursor:"pointer" }}></ArrowBackIosNewRoundedIcon>
-            <ArrowForwardIosRoundedIcon onClick={nextPage} disabled={indexOfLastCategory >= categories.length} style={{fontSize:"2.5rem", position:"absolute", top:"50%", right:"8%", cursor:"pointer"}}></ArrowForwardIosRoundedIcon>
-            
-            
-          </div>
+        <div style={arrowsContainerStyle}>
+          <ArrowBackIosNewRoundedIcon onClick={prevPage} disabled={currentPage === 1} style={arrowStyle} />
+          <ArrowForwardIosRoundedIcon onClick={nextPage} disabled={indexOfLastCategory >= categories.length - 1} style={arrowStyle} />
         </div>
       </div>
     </div>
