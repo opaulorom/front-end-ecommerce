@@ -97,7 +97,8 @@ const CategoryCarousel = () => {
           width: `${categories.length * 100}%`,
           transform: `translateX(-${(100 / categories.length) * currentIndex}%)`,
           transition: 'transform 0.3s ease', // Tempo de transição reduzido para resposta mais rápida
-          marginLeft:"20rem"
+          marginLeft:"40rem",
+          gap:"2rem"
         }}
       >
         {categories.map((category, index) => (
@@ -106,14 +107,14 @@ const CategoryCarousel = () => {
               subcategoryImages.map(image => (
                 <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
                   <div onClick={() => handleImageClick(category.name, subcategoryImages.name)}>
-                    <Link to={`/categories/${encodeURIComponent(category.name)}`}>
+                    <Link to={`/categories/${encodeURIComponent(category.name)}`} style={{gap:"1rem"}}>
                       <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover'}} />
                     </Link>
                   </div>
                 </div>
               ))
             ))}
-            <div style={{ marginTop: '5rem' }}>{category.name}</div>
+            <div style={{ marginTop: '5rem', textAlign:"center" }}>{category.name}</div>
 
           </div>
         ))}
