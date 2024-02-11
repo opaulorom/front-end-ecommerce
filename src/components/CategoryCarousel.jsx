@@ -125,7 +125,6 @@ const CategoryCarousel = () => {
     </div>
     </div>
   );
-  
 };
 
 export default CategoryCarousel;
