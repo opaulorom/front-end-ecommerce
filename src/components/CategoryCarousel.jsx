@@ -17,7 +17,9 @@ const CategoryCarousel = () => {
         console.log('Categories Response:', response.data);
 
         if (response.data.categories && Array.isArray(response.data.categories)) {
-          setCategories(response.data.categories);
+          // Duplicar as categorias para criar um efeito de loop infinito
+          const duplicatedCategories = response.data.categories.concat(response.data.categories);
+          setCategories(duplicatedCategories);
         } else {
           setCategories([]);
         }
@@ -43,12 +45,12 @@ const CategoryCarousel = () => {
       const deltaX = touchEndX - touchStartX;
       const threshold = 50; // Threshold para desencadear o movimento da categoria
 
-      if (deltaX > threshold && currentIndex > 0) {
+      if (deltaX > threshold) {
         // Swipe right, move to previous category
-        setCurrentIndex(currentIndex - 1);
-      } else if (deltaX < -threshold && currentIndex < categories.length - 1) {
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? categories.length / 2 - 1 : prevIndex - 1));
+      } else if (deltaX < -threshold) {
         // Swipe left, move to next category
-        setCurrentIndex(currentIndex + 1);
+        setCurrentIndex((prevIndex) => (prevIndex === categories.length / 2 - 1 ? 0 : prevIndex + 1));
       }
     }
     // Reset touch values
@@ -95,14 +97,14 @@ const CategoryCarousel = () => {
         style={{
           display: 'flex',
           width: `${categories.length * 100}%`,
-          transform: `translateX(-${(100 / categories.length) * currentIndex}%)`,
+          transform: `translateX(-${(100 / categories.length / 2) * currentIndex}%)`,
           transition: 'transform 0.3s ease', // Tempo de transição reduzido para resposta mais rápida
           marginLeft:"40rem",
           gap:"2rem"
         }}
       >
         {categories.map((category, index) => (
-          <div key={category._id} style={{ width: `${100 / categories.length}%` }}>
+          <div key={category._id} style={{ width: `${100 / categories.length / 2}%` }}>
             {category.images.map((subcategoryImages, index) => (
               subcategoryImages.map(image => (
                 <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
