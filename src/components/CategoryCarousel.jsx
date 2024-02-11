@@ -35,11 +35,16 @@ const CategoryCarousel = () => {
     if (touchStartX !== null) {
       const currentX = event.touches[0].clientX;
       const diffX = currentX - touchStartX;
-      const newIndex = currentIndex - Math.sign(diffX);
+      const width = window.innerWidth;
+      let newIndex = currentIndex - Math.sign(diffX);
 
-      if (newIndex >= 0 && newIndex < categories.length) {
-        setCurrentIndex(newIndex);
+      if (newIndex < 0) {
+        newIndex = categories.length - 1; // Volta para o último item se arrastar para a esquerda no primeiro item
+      } else if (newIndex >= categories.length) {
+        newIndex = 0; // Volta para o primeiro item se arrastar para a direita no último item
       }
+
+      setCurrentIndex(newIndex);
     }
   };
 
