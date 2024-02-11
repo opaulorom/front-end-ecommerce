@@ -10,7 +10,6 @@ const Home = () => {
   return (
     <div>
       <Categories />
-      <CategoriesMobile/>
       <CategoryCarousel />
       <Header />
       <Navbar></Navbar>

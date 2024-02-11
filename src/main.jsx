@@ -7,7 +7,7 @@ import Products from "./components/Products";
 import Pay from "./components/Pay";
 import { createRoot } from "react-dom/client";
 import Categories from "./components/Categories";
-import CategoriasMobile from "./components/Categories";
+import CategoriesMobile from "./components/CategoriesMobile";
 
 import Profile from "./components/Profile";
 import Cart from "./components/Cart";
@@ -26,7 +26,8 @@ const Root = () => (
     <Route path="/" element={<App />} />
     <Route path="/home" element={<Home />} />
     <Route path="/categorias" element={<Categories />} />
-    <Route path="/categoriasMobile" element={<CategoriasMobile />} />
+    <Route path="/categoriasMobile" element={<CategoriesMobile />} />
+    
 
 
     
