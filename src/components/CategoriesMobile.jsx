@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import ImageGallery from './ImageGallery';
+import ImageGalleryMobile from './ImageGalleryMobile';
 import styles from "./CategoriesMobile.module.css"
 
 const CategoriesMobile = () => {
@@ -33,7 +33,7 @@ const CategoriesMobile = () => {
       marginBottom:"10rem"
 
     }} className={styles.ImageGalleryMobile}>
-            <ImageGallery />
+            <ImageGalleryMobile />
     
 
     </div>
