@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const CategoryCarousel = () => {
   const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,6 +22,7 @@ const CategoryCarousel = () => {
           setCategories([]);
         }
       } catch (error) {
+        setError(`Error fetching categories: ${error.message}`);
         console.error('Error fetching categories:', error);
       }
     };
@@ -94,23 +96,26 @@ const CategoryCarousel = () => {
           display: 'flex',
           width: `${categories.length * 100}%`,
           transform: `translateX(-${(100 / categories.length) * currentIndex}%)`,
-          transition: 'transform 0.3s ease' // Tempo de transição reduzido para resposta mais rápida
+          transition: 'transform 0.3s ease', // Tempo de transição reduzido para resposta mais rápida
+          marginLeft:"40rem",
+          gap:"2rem"
         }}
       >
-        {categories.map((category) => (
-          <div key={category._id} style={{ width: `${100 / categories.length}%`, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            {category.images.map((subcategoryImages) => (
-              subcategoryImages.map((image) => (
-                <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center', marginBottom: '1rem' }}>
+        {categories.map((category, index) => (
+          <div key={category._id} style={{ width: `${100 / categories.length}%` }}>
+            {category.images.map((subcategoryImages, index) => (
+              subcategoryImages.map(image => (
+                <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
                   <div onClick={() => handleImageClick(category.name, subcategoryImages.name)}>
-                    <Link to={`/categories/${encodeURIComponent(category.name)}`}>
-                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%', aspectRatio: '1/1' }} />
+                    <Link to={`/categories/${encodeURIComponent(category.name)}`} style={{gap:"1rem"}}>
+                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius:"50%", aspectRatio:"1/1"}} />
                     </Link>
                   </div>
                 </div>
               ))
             ))}
-            <div style={{ marginTop: '1rem', textAlign: 'center' }}>{category.name}</div>
+            <div style={{ marginTop: '1rem', textAlign:"center" }}>{category.name}</div>
+
           </div>
         ))}
       </div>
