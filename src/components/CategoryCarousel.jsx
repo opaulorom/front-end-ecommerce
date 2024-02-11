@@ -17,9 +17,7 @@ const CategoryCarousel = () => {
         console.log('Categories Response:', response.data);
 
         if (response.data.categories && Array.isArray(response.data.categories)) {
-          // Duplicar as categorias para tornar o carrossel contínuo
-          const duplicatedCategories = [...response.data.categories, ...response.data.categories, ...response.data.categories];
-          setCategories(duplicatedCategories);
+          setCategories(response.data.categories);
         } else {
           setCategories([]);
         }
@@ -51,6 +49,9 @@ const CategoryCarousel = () => {
       } else if (deltaX < -threshold && currentIndex < categories.length - 1) {
         // Swipe left, move to next category
         setCurrentIndex(currentIndex + 1);
+      } else if (deltaX < -threshold && currentIndex === categories.length - 1) {
+        // Se estiver no último slide e o usuário deslizar para a esquerda, volte ao primeiro slide
+        setCurrentIndex(0);
       }
     }
     // Reset touch values
