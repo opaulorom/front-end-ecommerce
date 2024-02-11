@@ -17,9 +17,7 @@ const CategoryCarousel = () => {
         console.log('Categories Response:', response.data);
 
         if (response.data.categories && Array.isArray(response.data.categories)) {
-          // Duplicar as categorias para criar um efeito de loop infinito
-          const duplicatedCategories = response.data.categories.concat(response.data.categories);
-          setCategories(duplicatedCategories);
+          setCategories(response.data.categories);
         } else {
           setCategories([]);
         }
@@ -47,10 +45,10 @@ const CategoryCarousel = () => {
 
       if (deltaX > threshold) {
         // Swipe right, move to previous category
-        setCurrentIndex((prevIndex) => (prevIndex === 0 ? categories.length / 2 - 1 : prevIndex - 1));
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? categories.length - 1 : prevIndex - 1));
       } else if (deltaX < -threshold) {
         // Swipe left, move to next category
-        setCurrentIndex((prevIndex) => (prevIndex === categories.length / 2 - 1 ? 0 : prevIndex + 1));
+        setCurrentIndex((prevIndex) => (prevIndex === categories.length - 1 ? 0 : prevIndex + 1));
       }
     }
     // Reset touch values
@@ -97,14 +95,14 @@ const CategoryCarousel = () => {
         style={{
           display: 'flex',
           width: `${categories.length * 100}%`,
-          transform: `translateX(-${(100 / categories.length / 2) * currentIndex}%)`,
+          transform: `translateX(-${(100 / categories.length) * currentIndex}%)`,
           transition: 'transform 0.3s ease', // Tempo de transição reduzido para resposta mais rápida
           marginLeft:"40rem",
           gap:"2rem"
         }}
       >
         {categories.map((category, index) => (
-          <div key={category._id} style={{ width: `${100 / categories.length / 2}%` }}>
+          <div key={category._id} style={{ width: `${100 / categories.length}%` }}>
             {category.images.map((subcategoryImages, index) => (
               subcategoryImages.map(image => (
                 <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
@@ -116,8 +114,7 @@ const CategoryCarousel = () => {
                 </div>
               ))
             ))}
-            <div style={{ marginTop: '1rem', textAlign:"center" }}>{category.name}</div>
-
+            <div style={{ marginTop: '1rem', textAlign:"center" }}>{categories[currentIndex].name}</div>
           </div>
         ))}
       </div>
