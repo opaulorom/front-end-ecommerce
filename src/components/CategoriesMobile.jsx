@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ImageGallery from './ImageGallery';
-import styles from "./Categories.module.css"
+import styles from "./CategoriesMobile.module.css"
 
 const CategoriesMobile = () => {
   const [categories, setCategories] = useState([]);
@@ -32,7 +32,7 @@ const CategoriesMobile = () => {
       marginTop:"15rem",
       marginBottom:"10rem"
 
-    }} className={styles.ImageGallery}>
+    }} className={styles.ImageGalleryMobile}>
             <ImageGallery />
     
 

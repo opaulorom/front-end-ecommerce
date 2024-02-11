@@ -24,7 +24,7 @@ const Navbar = () => {
           <span className="span">Home</span>
         </Link>
 
-        <Link to={"/categorias"} className={`nav-item ${isActive(1)}`}>
+        <Link to={"/categoriasMobile"} className={`nav-item ${isActive(1)}`}>
           <img src="https://i.ibb.co/HqPdMws/category-1.png" />
           <span className="span">Categorias</span>
         </Link>

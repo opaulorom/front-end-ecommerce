@@ -1,8 +1,9 @@
 
 
 
-@media (min-width: 700px) { 
+@media (max-width: 600px) { 
     .ImageGallery{
         background-color: brown;
+        display: none;
     }
 }
