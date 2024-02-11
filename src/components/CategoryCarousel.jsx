@@ -13,7 +13,7 @@ const CategoryCarousel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://serveradmin-whhj.onrender.com/api/categories');
+        const response = await axios.get('http://localhost:3001/api/categories');
         console.log('Categories Response:', response.data);
 
         if (response.data.categories && Array.isArray(response.data.categories)) {
@@ -60,7 +60,7 @@ const CategoryCarousel = () => {
     console.log('Clicked on image. Redirecting to category subcategories:', categoryName, subcategoryName);
 
     try {
-      const response = await axios.get(`https://serveradmin-whhj.onrender.com/api/subcategories/${categoryName}`);
+      const response = await axios.get(`http://localhost:3001/api/subcategories/${categoryName}`);
       const subcategories = response.data;
 
       console.log('Fetched subcategories:', subcategories);
@@ -101,26 +101,31 @@ const CategoryCarousel = () => {
           gap:"2rem"
         }}
       >
+        <div style={{
+          marginLeft:"50rem",
+          display:"flex"
+        }}>
         {categories.map((category, index) => (
-          <div key={category._id} style={{ width: `${100 / categories.length}%` }}>
+          <div key={category._id} style={{ width: `${100 / categories.length}%`, textAlign: 'center', marginLeft:"1rem" }}>
             {category.images.map((subcategoryImages, index) => (
               subcategoryImages.map(image => (
-                <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
+                <div key={image._id} style={{ width: '150px', height: '150px', display: 'inline-block' }}>
                   <div onClick={() => handleImageClick(category.name, subcategoryImages.name)}>
                     <Link to={`/categories/${encodeURIComponent(category.name)}`} style={{gap:"1rem"}}>
-                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius:"50%", aspectRatio:"1/1", marginLeft:"30rem"}} />
+                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius:"50%", aspectRatio:"1/1"}} />
                     </Link>
                   </div>
                 </div>
               ))
             ))}
-            <div style={{ marginTop: '1rem', textAlign:"center" }}>{category.name}</div>
-
+            <div style={{ marginTop: '1rem' }}>{category.name}</div>
           </div>
         ))}
       </div>
     </div>
+    </div>
   );
+  
 };
 
 export default CategoryCarousel;
