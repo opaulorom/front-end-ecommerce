@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 const CategoryCarousel = () => {
   const [categories, setCategories] = useState([]);
   const [touchStartX, setTouchStartX] = useState(null);
-  const [touchEndX, setTouchEndX] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
@@ -28,33 +27,24 @@ const CategoryCarousel = () => {
     fetchData();
   }, []);
 
-  const sensitivity = 30; // Ajuste a sensibilidade conforme necessário
-
   const handleTouchStart = (event) => {
     setTouchStartX(event.touches[0].clientX);
   };
 
   const handleTouchMove = (event) => {
-    setTouchEndX(event.touches[0].clientX);
+    if (touchStartX !== null) {
+      const currentX = event.touches[0].clientX;
+      const diffX = currentX - touchStartX;
+      const newIndex = currentIndex - Math.sign(diffX);
+
+      if (newIndex >= 0 && newIndex < categories.length) {
+        setCurrentIndex(newIndex);
+      }
+    }
   };
 
   const handleTouchEnd = () => {
-    if (touchStartX !== null && touchEndX !== null) {
-      const deltaX = touchEndX - touchStartX;
-
-      if (Math.abs(deltaX) > sensitivity) {
-        const threshold = window.innerWidth * 0.2; // Ajuste o limite conforme necessário (20% da largura da tela)
-        
-        if (deltaX > threshold && currentIndex > 0) {
-          setCurrentIndex(currentIndex - 1);
-        } else if (deltaX < -threshold && currentIndex < categories.length - 1) {
-          setCurrentIndex(currentIndex + 1);
-        }
-      }
-    }
-
     setTouchStartX(null);
-    setTouchEndX(null);
   };
 
   const handleImageClick = async (categoryName, subcategoryName) => {
@@ -97,9 +87,8 @@ const CategoryCarousel = () => {
           display: 'flex',
           width: `${categories.length * 100}%`,
           transform: `translateX(-${(100 / categories.length) * currentIndex}%)`,
-          transition: 'transform 0.3s ease', // Tempo de transição reduzido para resposta mais rápida
-          marginLeft:"40rem",
-          gap:"2rem"
+          transition: 'transform 0.3s ease',
+          marginLeft: '40px' // Ajuste o valor conforme necessário
         }}
       >
         {categories.map((category, index) => (
@@ -108,15 +97,14 @@ const CategoryCarousel = () => {
               subcategoryImages.map(image => (
                 <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
                   <div onClick={() => handleImageClick(category.name, subcategoryImages.name)}>
-                    <Link to={`/categories/${encodeURIComponent(category.name)}`} style={{gap:"1rem"}}>
-                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius:"50%", aspectRatio:"1/1"}} />
+                    <Link to={`/categories/${encodeURIComponent(category.name)}`}>
+                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%', aspectRatio: '1/1'}} />
                     </Link>
                   </div>
                 </div>
               ))
             ))}
-            <div style={{ marginTop: '1rem', textAlign:"center" }}>{category.name}</div>
-
+            <div style={{ marginTop: '1rem', textAlign: 'center' }}>{category.name}</div>
           </div>
         ))}
       </div>
