@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ImageGallery from './ImageGallery';
+import styles from "./Categories.module.css"
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -31,7 +32,7 @@ const Categories = () => {
       marginTop:"15rem",
       marginBottom:"10rem"
 
-    }}>
+    }} className={styles.ImageGallery}>
             <ImageGallery />
     
 
