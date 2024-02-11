@@ -49,9 +49,6 @@ const CategoryCarousel = () => {
       } else if (deltaX < -threshold && currentIndex < categories.length - 1) {
         // Swipe left, move to next category
         setCurrentIndex(currentIndex + 1);
-      } else if (deltaX < -threshold && currentIndex === categories.length - 1) {
-        // Se estiver no último slide e o usuário deslizar para a esquerda, volte ao primeiro slide
-        setCurrentIndex(0);
       }
     }
     // Reset touch values
@@ -105,7 +102,7 @@ const CategoryCarousel = () => {
         }}
       >
         {categories.map((category, index) => (
-          <div key={index} style={{ width: `${100 / categories.length}%` }}>
+          <div key={category._id} style={{ width: `${100 / categories.length}%` }}>
             {category.images.map((subcategoryImages, index) => (
               subcategoryImages.map(image => (
                 <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
