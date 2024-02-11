@@ -47,6 +47,9 @@ const ImageGallery = () => {
   const startIndex = currentPage * categoriesPerPage;
   const endIndex = Math.min(startIndex + categoriesPerPage, categories.length);
 
+  const isBackDisabled = currentPage === 0;
+  const isForwardDisabled = endIndex >= categories.length;
+
   return (
     <div style={{ position: 'relative' }}>
       <h2>Image Gallery</h2>
@@ -67,10 +70,10 @@ const ImageGallery = () => {
         ))}
       </div>
       <div style={{ position: 'absolute', top: '60%', left: '10px', transform: 'translateY(-50%)' }}>
-        <ArrowBackIosNewRoundedIcon onClick={prevPage} disabled={currentPage === 0} style={{ fontSize: '2.5rem', cursor: 'pointer' }} />
+        <ArrowBackIosNewRoundedIcon onClick={prevPage} disabled={isBackDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', opacity: isBackDisabled ? 0.5 : 1 }} />
       </div>
       <div style={{ position: 'absolute', top: '60%', right: '10px', transform: 'translateY(-50%)' }}>
-        <ArrowForwardIosRoundedIcon onClick={nextPage} disabled={endIndex >= categories.length} style={{ fontSize: '2.5rem', cursor: 'pointer' }} />
+        <ArrowForwardIosRoundedIcon onClick={nextPage} disabled={isForwardDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', opacity: isForwardDisabled ? 0.5 : 1 }} />
       </div>
     </div>
   );
