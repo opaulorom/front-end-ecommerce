@@ -43,12 +43,12 @@ const CategoryCarousel = () => {
       const deltaX = touchEndX - touchStartX;
       const threshold = 50; // Threshold para desencadear o movimento da categoria
 
-      if (deltaX > threshold) {
+      if (deltaX > threshold && currentIndex > 0) {
         // Swipe right, move to previous category
-        setCurrentIndex((prevIndex) => (prevIndex === 0 ? categories.length - 1 : prevIndex - 1));
-      } else if (deltaX < -threshold) {
+        setCurrentIndex(currentIndex - 1);
+      } else if (deltaX < -threshold && currentIndex < categories.length - 1) {
         // Swipe left, move to next category
-        setCurrentIndex((prevIndex) => (prevIndex === categories.length - 1 ? 0 : prevIndex + 1));
+        setCurrentIndex(currentIndex + 1);
       }
     }
     // Reset touch values
@@ -114,7 +114,8 @@ const CategoryCarousel = () => {
                 </div>
               ))
             ))}
-            <div style={{ marginTop: '1rem', textAlign:"center" }}>{categories[currentIndex].name}</div>
+            <div style={{ marginTop: '1rem', textAlign:"center" }}>{category.name}</div>
+
           </div>
         ))}
       </div>
