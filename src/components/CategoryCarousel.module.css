@@ -1,0 +1,12 @@
+
+
+.categories{
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .categories{
+        display: block;
+    }
+    
+  }
