@@ -36,11 +36,10 @@ const CategoryCarousel = () => {
 
   const handleTouchMove = (event) => {
     setTouchEndX(event.touches[0].clientX);
-    handleTouchEnd(); // Chamar a função de manipulação de toque ao mover o dedo
   };
 
   const handleTouchEnd = () => {
-    if (touchStartX && touchEndX) {
+    if (touchStartX !== null && touchEndX !== null) {
       const deltaX = touchEndX - touchStartX;
 
       if (Math.abs(deltaX) > sensitivity) {
