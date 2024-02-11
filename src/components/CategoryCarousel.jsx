@@ -17,7 +17,9 @@ const CategoryCarousel = () => {
         console.log('Categories Response:', response.data);
 
         if (response.data.categories && Array.isArray(response.data.categories)) {
-          setCategories(response.data.categories);
+          // Duplicar as categorias para tornar o carrossel contínuo
+          const duplicatedCategories = [...response.data.categories, ...response.data.categories, ...response.data.categories];
+          setCategories(duplicatedCategories);
         } else {
           setCategories([]);
         }
@@ -102,7 +104,7 @@ const CategoryCarousel = () => {
         }}
       >
         {categories.map((category, index) => (
-          <div key={category._id} style={{ width: `${100 / categories.length}%` }}>
+          <div key={index} style={{ width: `${100 / categories.length}%` }}>
             {category.images.map((subcategoryImages, index) => (
               subcategoryImages.map(image => (
                 <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
