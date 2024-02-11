@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ImageGalleryMobile from './ImageGalleryMobile';
 import styles from "./CategoriesMobile.module.css"
+import Navbar from './Navbar';
 
 const CategoriesMobile = () => {
   const [categories, setCategories] = useState([]);
@@ -34,7 +35,7 @@ const CategoriesMobile = () => {
 
     }} className={styles.ImageGalleryMobile}>
             <ImageGalleryMobile />
-    
+    <Navbar/>
 
     </div>
   );
