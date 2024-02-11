@@ -39,14 +39,17 @@ const CategoryCarousel = () => {
   const handleTouchEnd = () => {
     if (touchStartX && touchEndX) {
       const deltaX = touchEndX - touchStartX;
-      const threshold = 50; // Threshold para desencadear o movimento da categoria
+      const sensitivity = 50; // Sensibilidade do movimento
+      const threshold = 100; // Threshold para desencadear o movimento da categoria
 
-      if (deltaX > threshold && currentIndex > 0) {
-        // Swipe right, move to previous category
-        setCurrentIndex(currentIndex - 1);
-      } else if (deltaX < -threshold && currentIndex < categories.length - 1) {
-        // Swipe left, move to next category
-        setCurrentIndex(currentIndex + 1);
+      if (Math.abs(deltaX) > sensitivity) {
+        if (deltaX > threshold && currentIndex > 0) {
+          // Swipe right, move to previous category
+          setCurrentIndex(currentIndex - 1);
+        } else if (deltaX < -threshold && currentIndex < categories.length - 1) {
+          // Swipe left, move to next category
+          setCurrentIndex(currentIndex + 1);
+        }
       }
     }
     // Reset touch values
