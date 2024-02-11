@@ -13,7 +13,7 @@ const CategoryCarousel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://serveradmin-whhj.onrender.com/api/categories');
+        const response = await axios.get('http://localhost:3001/api/categories');
         console.log('Categories Response:', response.data);
 
         if (response.data.categories && Array.isArray(response.data.categories)) {
@@ -60,7 +60,7 @@ const CategoryCarousel = () => {
     console.log('Clicked on image. Redirecting to category subcategories:', categoryName, subcategoryName);
 
     try {
-      const response = await axios.get(`https://serveradmin-whhj.onrender.com/api/subcategories/${categoryName}`);
+      const response = await axios.get(`http://localhost:3001/api/subcategories/${categoryName}`);
       const subcategories = response.data;
 
       console.log('Fetched subcategories:', subcategories);
@@ -108,7 +108,7 @@ const CategoryCarousel = () => {
                 <div key={image._id} style={{ width: '150px', height: '150px', textAlign: 'center' }}>
                   <div onClick={() => handleImageClick(category.name, subcategoryImages.name)}>
                     <Link to={`/categories/${encodeURIComponent(category.name)}`} style={{gap:"1rem"}}>
-                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius:"50%", aspectRatio:"1/1", marginLeft:"10rem"}} />
+                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius:"50%", aspectRatio:"1/1", marginLeft:"30rem"}} />
                     </Link>
                   </div>
                 </div>
