@@ -115,7 +115,6 @@ const CategoryCarousel = () => {
               ))
             ))}
             <div style={{ marginTop: '1rem', textAlign:"center" }}>{category.name}</div>
-
           </div>
         ))}
       </div>
