@@ -49,9 +49,6 @@ const CategoryCarousel = () => {
       } else if (deltaX < -threshold && currentIndex < categories.length - 1) {
         // Swipe left, move to next category
         setCurrentIndex(currentIndex + 1);
-      } else if (deltaX < -threshold && currentIndex === categories.length - 1) {
-        // Swipe left at the end, return to the beginning
-        setCurrentIndex(0);
       }
     }
     // Reset touch values
@@ -118,6 +115,7 @@ const CategoryCarousel = () => {
               ))
             ))}
             <div style={{ marginTop: '1rem', textAlign:"center" }}>{category.name}</div>
+
           </div>
         ))}
       </div>
@@ -126,3 +124,4 @@ const CategoryCarousel = () => {
 };
 
 export default CategoryCarousel;
+
