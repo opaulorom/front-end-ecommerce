@@ -29,7 +29,7 @@ const ImageGalleryMobile = () => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <h2>Image Gallery</h2>
+      <h2>Categorias</h2>
       <div style={{ display: 'flex', gap: '10px', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', position: 'relative' }}>
         {categories.map(category => (
           <div key={category._id} style={{ width: '150px', height: '150px', margin: '10px', textAlign: 'center' }}>
