@@ -14,7 +14,7 @@ const ImageGallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://serveradmin-whhj.onrender.com/api/categories');
+        const response = await axios.get('http://localhost:3001/api/categories');
         console.log('Categories Response:', response.data);
 
         if (response.data.categories && Array.isArray(response.data.categories)) {

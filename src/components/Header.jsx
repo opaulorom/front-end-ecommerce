@@ -1,5 +1,5 @@
 import React from "react";
-import "./Header.css";
+import styles from "./Header.module.css";
 
 import SearchBar from "./SearchBar";
 import CategoriesList from "./CategoriesList";
@@ -8,7 +8,7 @@ const Header = () => {
   
   return (
     <>
-    <div className="ContainerHeader">
+    <div className={styles.ContainerHeader}>
     <div style={{
         marginTop:"-10rem"
       }}>
@@ -28,7 +28,7 @@ const Header = () => {
   </i>
   
   {/* Componente SearchBar à direita */}
-  <div style={{ marginRight: "15rem" }}> {/* Margem esquerda automática para empurrar para a direita */}
+  <div style={{ marginRight: "15rem" }} className={styles.SearchBar}> {/* Margem esquerda automática para empurrar para a direita */}
     <SearchBar/>
   </div>
   

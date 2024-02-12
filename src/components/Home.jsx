@@ -4,7 +4,6 @@ import Navbar from "./Navbar";
 import Header from "./Header";
 import Categories from "./Categories";
 import CategoryCarousel from "./CategoryCarousel";
-import CategoriesMobile from "./CategoriesMobile";
 
 const Home = () => {
   return (

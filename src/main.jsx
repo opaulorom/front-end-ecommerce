@@ -63,7 +63,6 @@ createRoot(document.getElementById("root")).render(
         <Provider>
           <Root />
         </Provider>
-        ,
       </ErrorBoundary>
     </BrowserRouter>
   </React.StrictMode>

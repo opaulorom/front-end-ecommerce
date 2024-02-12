@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import styles from "./CategoriesList.module.css"
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
 
@@ -26,7 +26,7 @@ const CategoriesList = () => {
   }, []);
 
   return (
-    <div style={{ marginTop: '15rem'}}>
+    <div style={{ marginTop: '15rem'}} className={styles.CategoriesList}>
     <ul style={{ listStyleType: 'none', padding: 0, display: 'flex', flexDirection: 'row', gap: '2.5rem' }}>
       {categories.map((category) => (
         <li key={category.category}>

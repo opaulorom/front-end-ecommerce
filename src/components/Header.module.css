@@ -21,3 +21,13 @@ body{
     margin: 0;
     padding: 0;
 }
+
+
+
+
+
+@media (max-width: 600px) { 
+    .SearchBar{
+        display: none;
+    }
+}
