@@ -51,5 +51,10 @@ body{
 
 
 .MobileHeader{
-    margin-right: 3rem;
+    display: flex;
+    flex-direction: row;
+    margin-right: 5rem;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
 }

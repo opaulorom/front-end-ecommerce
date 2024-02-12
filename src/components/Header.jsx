@@ -56,9 +56,10 @@ const Header = () => {
 
 
           <div className={styles.MobileHeader}>
+            
             <FavoriteBorderIcon style={{ fontSize: "1.8rem"}} />
             <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem" }} />
-            <img src="https://i.ibb.co/dKFdfWR/shopping-bag-6.png" style={{ fontSize: "1.8rem" }} />
+            <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem" }} />
           </div>
           <div></div>
         </div>
