@@ -3,7 +3,7 @@ import styles from "./Header.module.css";
 
 import SearchBar from "./SearchBar";
 import CategoriesList from "./CategoriesList";
-
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 const Header = () => {
   
   return (
@@ -50,7 +50,7 @@ const Header = () => {
 
     <img src="https://i.ibb.co/FwNpdzD/shopping-bag-1.png" alt="" />
   
-
+    <FavoriteBorderIcon/>
   </div>
  
 </div>
