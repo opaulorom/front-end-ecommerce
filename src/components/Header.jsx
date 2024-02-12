@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./Header.module.css";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import SearchBar from "./SearchBar";
 import CategoriesList from "./CategoriesList";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 const Header = () => {
   return (
     <>
@@ -45,18 +45,20 @@ const Header = () => {
           </div>
 
           <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              marginRight: "5rem",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "1.5rem"
-            }}
+        
+            className={styles.desktopContainer}
           >
-            <FavoriteBorderIcon  style={{         fontSize:"1.9rem"}}/>
-            <AccountCircleOutlinedIcon style={{         fontSize:"1.9rem"}}/>
-            <ShoppingBagOutlinedIcon style={{         fontSize:"1.9rem"}}/>
+            <img src="https://i.ibb.co/L1tX6LY/user-2.png" alt="" />
+            <img src="https://i.ibb.co/2ZnFQfq/heart-1.png" alt="" />
+
+            <img src="https://i.ibb.co/FwNpdzD/shopping-bag-1.png" alt="" />
+          </div>
+
+
+          <div className={styles.MobileHeader}>
+            <FavoriteBorderIcon style={{ fontSize: "1.8rem", }} />
+            <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem" }} />
+            <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem" }} />
           </div>
           <div></div>
         </div>
