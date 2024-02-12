@@ -88,7 +88,8 @@ const CategoryCarousel = () => {
         overflow: 'hidden',
         width: '100%',
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop:"-10rem"
       }}
     >
       <div

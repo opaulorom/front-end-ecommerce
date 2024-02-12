@@ -30,8 +30,9 @@ const CategoriesMobile = () => {
 
   return (
     <div style={{
-      marginTop:"15rem",
-      marginBottom:"10rem"
+      marginTop:"2rem",
+      marginBottom:"10rem",
+    
 
     }} className={styles.ImageGalleryMobile}>
             <ImageGalleryMobile />

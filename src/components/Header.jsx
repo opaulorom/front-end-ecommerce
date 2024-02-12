@@ -29,14 +29,10 @@ const Header = () => {
           <i
             style={{
               position: "absolute",
-              left: "-20rem", // Posiciona o elemento no lado esquerdo
+              left: "-25rem", // Posiciona o elemento no lado esquerdo
             }}
           >
-            <img
-              src="https://i.ibb.co/6WRG0XT/wardrobe.png"
-              alt="logo"
-              style={{ maxWidth: "10vw" }}
-            />
+           <p>Logo</p>
           </i>
 
           {/* Componente SearchBar à direita */}
@@ -57,16 +53,16 @@ const Header = () => {
           </div>
 
 
-          <div className={styles.MobileHeader}>
+        
+          <div></div>
+        </div>
+        <div className={styles.MobileHeader}>
             <FavoriteBorderIcon style={{ fontSize: "1.8rem"}} />
             <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem" }} />
             <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem" }} />
             
           </div>
-          <div></div>
-        </div>
       </div>
-      <div></div>
     </>
   );
 };
