@@ -1,0 +1,13 @@
+.inputContainer::placeholder{
+   margin-left: 5rem;
+}
+
+.inputContainer{
+    width: 40vw;
+    height: 6.5vh;
+    border: 0;
+    border-radius: 24px;
+    outline: none;
+    position: relative;
+
+}

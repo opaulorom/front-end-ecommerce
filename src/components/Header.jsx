@@ -22,13 +22,14 @@ const Header = () => {
             display: "flex",
             alignItems: "center",
             position: "relative",
+            marginTop:'-2rem'
           }}
         >
           {/* Ícone à esquerda */}
           <i
             style={{
               position: "absolute",
-              left: "-68rem", // Posiciona o elemento no lado esquerdo
+              left: "-20rem", // Posiciona o elemento no lado esquerdo
             }}
           >
             <img
@@ -39,7 +40,7 @@ const Header = () => {
           </i>
 
           {/* Componente SearchBar à direita */}
-          <div style={{ marginRight: "15rem" }} className={styles.SearchBar}>
+          <div style={{ marginRight: "10rem" }} className={styles.SearchBar}>
             {" "}
             {/* Margem esquerda automática para empurrar para a direita */}
             <SearchBar />
