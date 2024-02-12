@@ -5,8 +5,6 @@ import CategoriesList from "./CategoriesList";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
-import { IonIcon } from '@ionic/react';
-import { personOutline } from 'ionicons/icons';
 
 const Header = () => {
   return (
@@ -59,11 +57,10 @@ const Header = () => {
 
 
           <div className={styles.MobileHeader}>
-          <IonIcon icon={personOutline} style={{ fontSize: "1.5rem"}} />
-
-            <FavoriteBorderIcon style={{ fontSize: "1.6rem"}} />
-            <AccountCircleOutlinedIcon style={{ fontSize: "1.6rem" }} />
-            <ShoppingBagOutlinedIcon style={{ fontSize: "1.6rem" }} />
+            <FavoriteBorderIcon style={{ fontSize: "1.8rem"}} />
+            <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem" }} />
+            <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem" }} />
+            
           </div>
           <div></div>
         </div>
