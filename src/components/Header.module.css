@@ -44,6 +44,16 @@ body{
     .ContainerHeader{
         height: 8svh;
     }
+
+
+    .MobileHeader{
+        display: flex;
+        flex-direction: row;
+        margin-right: 5rem;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+    }
 }
 
 
@@ -54,12 +64,5 @@ body{
 }
 
 
-.MobileHeader{
-    display: flex;
-    flex-direction: row;
-    margin-right: 5rem;
-    align-items: center;
-    justify-content: center;
-    gap: .5rem;
-}
+
 
