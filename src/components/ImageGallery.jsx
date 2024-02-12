@@ -52,7 +52,7 @@ const ImageGallery = () => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <h2>Image Gallery</h2>
+
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', position: 'relative' }}>
         {categories.slice(startIndex, endIndex).map((category, index) => (
           <div key={index} style={{ width: '150px', height: '150px', margin: '10px', textAlign: 'center' }}>
