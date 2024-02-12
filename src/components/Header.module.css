@@ -40,6 +40,10 @@ body{
     .desktopContainer{
         display: none;
     }
+
+    .ContainerHeader{
+        height: 10svh;
+    }
 }
 
 
