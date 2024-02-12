@@ -69,10 +69,10 @@ const ImageGallery = () => {
           </div>
         ))}
       </div>
-      <div style={{ position: 'absolute', top: '60%', left: '10px', transform: 'translateY(-50%)' }}>
+      <div style={{ position: 'absolute', top: '50%', left: '10%', transform: 'translateY(-50%)' }}>
         <ArrowBackIosNewRoundedIcon onClick={prevPage} disabled={isBackDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', opacity: isBackDisabled ? 0.5 : 1 }} />
       </div>
-      <div style={{ position: 'absolute', top: '60%', right: '10px', transform: 'translateY(-50%)' }}>
+      <div style={{ position: 'absolute', top: '50%', right: '10%', transform: 'translateY(-50%)' }}>
         <ArrowForwardIosRoundedIcon onClick={nextPage} disabled={isForwardDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', opacity: isForwardDisabled ? 0.5 : 1 }} />
       </div>
     </div>
