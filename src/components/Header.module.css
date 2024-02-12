@@ -37,7 +37,9 @@ body{
     .SearchBar{
         display: none;
     }
-
+    .desktopContainer{
+        display: none;
+    }
 
     .ContainerHeader{
         height: 8svh;
