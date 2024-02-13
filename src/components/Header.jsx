@@ -7,6 +7,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 
 const Header = () => {
+  
   return (
     <>
       <div className={styles.ContainerHeader}>
@@ -63,6 +64,7 @@ const Header = () => {
             
           </div>
       </div>
+      
     </>
   );
 };
