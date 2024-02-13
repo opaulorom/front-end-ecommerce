@@ -29,14 +29,14 @@ const Header = () => {
           <i
             style={{
               position: "absolute",
-              left: "-25rem", // Posiciona o elemento no lado esquerdo
+              left: "-35rem", // Posiciona o elemento no lado esquerdo
             }}
           >
-           <p>Logo</p>
+           <img  src="https://i.ibb.co/BZZ2571/Mediewallogo.png" style={{width:"12vw"}}/>
           </i>
 
           {/* Componente SearchBar à direita */}
-          <div style={{ marginRight: "10rem" }} className={styles.SearchBar}>
+          <div style={{ marginRight: "1.5rem" }} className={styles.SearchBar}>
             {" "}
             {/* Margem esquerda automática para empurrar para a direita */}
             <SearchBar />

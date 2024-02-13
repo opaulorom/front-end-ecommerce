@@ -30,7 +30,7 @@ const CategoriesList = () => {
     <ul style={{ listStyleType: 'none', padding: 0, display: 'flex', flexDirection: 'row', gap: '2.5rem' }}>
       {categories.map((category) => (
         <li key={category.category}>
-          <Link to={`/categories/${category.category}`} style={{ textDecoration: 'none', color:"white", fontWeight:"700" }}>
+          <Link to={`/categories/${category.category}`} style={{ textDecoration: 'none', color:"white", fontWeight:"700", whiteSpace:"nowrap" }}>
             {category.category}
           </Link>
         </li>
