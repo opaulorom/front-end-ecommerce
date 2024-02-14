@@ -6,8 +6,7 @@ import CategoriesDesktop from './CategoriesDesktop';
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [isModalHovering, setIsModalHovering] = useState(false);
-  const [isCloseButtonClicked, setIsCloseButtonClicked] = useState(false);
+  const [categoriesHovered, setCategoriesHovered] = useState(false);
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -30,52 +29,61 @@ const CategoriesList = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target) && !isCloseButtonClicked) {
-        setModalOpen(false);
-      }
-    };
+  const handleMouseEnter = () => {
+    if (!modalOpen && !categoriesHovered) {
+      setModalOpen(true);
+    }
+    setCategoriesHovered(true);
+  };
 
+  const handleMouseLeaveModal = () => {
     if (modalOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+      setModalOpen(false);
+    }
+  };
+
+  const handleMouseLeaveCategories = () => {
+    setCategoriesHovered(false);
+  };
+
+  const handleClickOutsideModal = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setModalOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (modalOpen) {
+      document.addEventListener("mousedown", handleClickOutsideModal);
     } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutsideModal);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutsideModal);
     };
-  }, [modalOpen, isCloseButtonClicked]);
-
-  const handleCloseModal = () => {
-    setIsCloseButtonClicked(true);
-    setModalOpen(false);
-  };
+  }, [modalOpen]);
 
   return (
     <div style={{ marginTop: '15rem'}} className={styles.CategoriesList}>
-      <ul style={{ listStyleType: 'none', padding: 0, display: 'flex', flexDirection: 'row', gap: '2.5rem' }}>
+      <ul 
+        style={{ listStyleType: 'none', padding: 0, display: 'flex', flexDirection: 'row', gap: '2.5rem' }}
+      >
         <li 
           style={{ textDecoration: 'none', color: "white", fontWeight: "700", whiteSpace: "nowrap", cursor:"pointer" }}
-          onMouseEnter={() => setModalOpen(true)}
-          onMouseLeave={() => setIsModalHovering(false)}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeaveCategories}
         >
           Categorias
         </li>
         {modalOpen && (
           <div 
             className={styles.modal} 
-            onMouseEnter={() => setIsModalHovering(true)}
-            onMouseLeave={() => setIsModalHovering(false)}
             ref={modalRef}
-      
           >
+            <button className={styles.closeButton} onClick={() => setModalOpen(false)}>X</button>
             <div className={styles.modalContent}>
-            <button className={styles.closeButton} onClick={handleCloseModal}>X</button>
-
               <CategoriesDesktop/>
-
             </div>
           </div>
         )}
