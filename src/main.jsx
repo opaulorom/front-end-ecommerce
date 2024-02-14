@@ -22,8 +22,9 @@ import CategoryProducts from "./components/CategoryProducts";
 import DiscountProducts from "./components/DiscountProducts";
 import DiscountedProductsPage from "./components/DiscountedProductsPage";
 import BannerWithDiscount from "./components/BannerWithDiscount";
-import { Auth0Provider } from '@auth0/auth0-react';
-import auth0Config from "./auth0Config";
+
+
+
 
 
 const Root = () => (
@@ -59,7 +60,7 @@ const Root = () => (
 
 <Route path="/productsByDiscountPercentage/:discount" element={<DiscountProducts />} />
 <Route path="/produtos/vestidos" element={<DiscountedProductsPage />} />
-<Route path="/login" element={<Profile />} />
+<Route path="/perfil" element={<Profile />} />
 
 
 
@@ -67,11 +68,7 @@ const Root = () => (
 );
 
 createRoot(document.getElementById("root")).render(
-  <Auth0Provider
-    domain={auth0Config.domain}
-    clientId={auth0Config.clientId}
-    redirectUri={auth0Config.redirectUri}
-  >
+ 
   <React.StrictMode>
     
     <BrowserRouter>
@@ -82,6 +79,6 @@ createRoot(document.getElementById("root")).render(
       </ErrorBoundary>
     </BrowserRouter>
   </React.StrictMode>
-  </Auth0Provider>,
+
 
 );
