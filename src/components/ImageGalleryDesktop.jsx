@@ -31,7 +31,7 @@ const ImageGalleryDesktop = () => {
     <div style={{ position: 'relative', marginTop:"-3rem" }}>
       <div style={{ display: 'flex', gap: '10px', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', position: 'relative' }}>
         {categories.map(category => (
-          <div key={category._id} style={{ width: '150px', height: '150px', margin: '10px', textAlign: 'center', marginTop:"2rem" }}>
+          <div key={category._id} style={{ width: '100px', height: '100px', margin: '10px', textAlign: 'center', marginTop:"2rem" }}>
             {category.images.map((subcategoryImages, index) => (
               subcategoryImages.map(image => (
                 <div key={image._id}>

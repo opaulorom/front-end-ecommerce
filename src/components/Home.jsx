@@ -13,7 +13,6 @@ const Home = () => {
       <CategoryCarousel />
       <Header />
       <Navbar></Navbar>
-      
     </div>
   );
 };

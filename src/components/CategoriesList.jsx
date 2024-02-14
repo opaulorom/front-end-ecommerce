@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styles from "./CategoriesList.module.css"
 import CategoriesDesktop from './CategoriesDesktop';
@@ -6,8 +6,9 @@ import CategoriesDesktop from './CategoriesDesktop';
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
   const [isModalHovering, setIsModalHovering] = useState(false);
+  const [isCloseButtonClicked, setIsCloseButtonClicked] = useState(false);
+  const modalRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,21 +31,35 @@ const CategoriesList = () => {
   }, []);
 
   useEffect(() => {
-    // Se o mouse estiver sobre o modal ou sobre o nome "Categorias", mantenha o modal aberto
-    if (isHovering || isModalHovering) {
-      setModalOpen(true);
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target) && !isCloseButtonClicked) {
+        setModalOpen(false);
+      }
+    };
+
+    if (modalOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
     } else {
-      setModalOpen(false);
+      document.removeEventListener("mousedown", handleClickOutside);
     }
-  }, [isHovering, isModalHovering]);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [modalOpen, isCloseButtonClicked]);
+
+  const handleCloseModal = () => {
+    setIsCloseButtonClicked(true);
+    setModalOpen(false);
+  };
 
   return (
     <div style={{ marginTop: '15rem'}} className={styles.CategoriesList}>
       <ul style={{ listStyleType: 'none', padding: 0, display: 'flex', flexDirection: 'row', gap: '2.5rem' }}>
         <li 
           style={{ textDecoration: 'none', color: "white", fontWeight: "700", whiteSpace: "nowrap", cursor:"pointer" }}
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
+          onMouseEnter={() => setModalOpen(true)}
+          onMouseLeave={() => setIsModalHovering(false)}
         >
           Categorias
         </li>
@@ -53,9 +68,13 @@ const CategoriesList = () => {
             className={styles.modal} 
             onMouseEnter={() => setIsModalHovering(true)}
             onMouseLeave={() => setIsModalHovering(false)}
+            ref={modalRef}
+      
           >
             <div className={styles.modalContent}>
-             <CategoriesDesktop/>
+            <button className={styles.closeButton} onClick={handleCloseModal}>X</button>
+
+              <CategoriesDesktop/>
 
             </div>
           </div>
