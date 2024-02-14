@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
-const DiscountImageLink = ({ alt }) => {
+const DiscountImageLinkPerPercentage = ({ alt }) => {
   const [imageUrl, setImageUrl] = useState('');
 
   // Fetch image URL from API on component mount
@@ -28,4 +28,4 @@ const DiscountImageLink = ({ alt }) => {
   );
 };
 
-export default DiscountImageLink;
+export default DiscountImageLinkPerPercentage;
