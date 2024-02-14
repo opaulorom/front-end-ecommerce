@@ -5,6 +5,7 @@ import CategoriesList from "./CategoriesList";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   
@@ -42,7 +43,7 @@ const Header = () => {
         
             className={styles.desktopContainer}
           >
-            <img src="https://i.ibb.co/L1tX6LY/user-2.png" alt="" />
+           <Link to={"/login"}> <img src="https://i.ibb.co/L1tX6LY/user-2.png" alt="" /></Link>
             <img src="https://i.ibb.co/2ZnFQfq/heart-1.png" alt="" />
 
             <img src="https://i.ibb.co/FwNpdzD/shopping-bag-1.png" alt="" />
