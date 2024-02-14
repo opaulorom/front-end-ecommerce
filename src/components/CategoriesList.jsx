@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styles from "./CategoriesList.module.css"
 import CategoriesDesktop from './CategoriesDesktop';
-
+import ClearIcon from '@mui/icons-material/Clear';
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -47,9 +47,13 @@ const CategoriesList = () => {
   };
 
   const handleClickOutsideModal = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
+    if (modalRef.current && !modalRef.current.contains(event.target) && !modalRef.current.classList.contains(styles.modalContent)) {
       setModalOpen(false);
     }
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
   };
 
   useEffect(() => {
@@ -66,9 +70,11 @@ const CategoriesList = () => {
 
   return (
     <div style={{ marginTop: '15rem'}} className={styles.CategoriesList}>
+      
       <ul 
         style={{ listStyleType: 'none', padding: 0, display: 'flex', flexDirection: 'row', gap: '2.5rem' }}
       >
+        
         <li 
           style={{ textDecoration: 'none', color: "white", fontWeight: "700", whiteSpace: "nowrap", cursor:"pointer" }}
           onMouseEnter={handleMouseEnter}
@@ -81,7 +87,7 @@ const CategoriesList = () => {
             className={styles.modal} 
             ref={modalRef}
           >
-            <button className={styles.closeButton} onClick={() => setModalOpen(false)}>X</button>
+            <ClearIcon className={styles.closeButton} onClick={handleCloseModal}></ClearIcon>
             <div className={styles.modalContent}>
               <CategoriesDesktop/>
             </div>

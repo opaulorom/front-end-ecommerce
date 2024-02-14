@@ -34,6 +34,9 @@
 
   .closeButton{
     position: absolute;
-    right:5rem;
+    top: 11rem;
+    right:12rem;
     color: black;
+    z-index: 999999;
+    cursor: pointer;
   }

@@ -29,14 +29,14 @@ const ImageGalleryDesktop = () => {
 
   return (
     <div style={{ position: 'relative', marginTop:"-3rem" }}>
-      <div style={{ display: 'flex', gap: '10px', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', position: 'relative' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '10px', justifyContent: 'center', position: 'relative' }}>
         {categories.map(category => (
           <div key={category._id} style={{ width: '100px', height: '100px', margin: '10px', textAlign: 'center', marginTop:"2rem" }}>
             {category.images.map((subcategoryImages, index) => (
               subcategoryImages.map(image => (
                 <div key={image._id}>
                   <Link to={`/categories/${encodeURIComponent(category.name)}`}>
-                    <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "20%", aspectRatio: "1/1" }} />
+                    <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "20%", aspectRatio: "1/1"}} />
                   </Link>
                   <div style={{ marginTop: '5px', color:"black" }}>{category.name}</div>
                 </div>
