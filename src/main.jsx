@@ -20,6 +20,8 @@ import SearchResults from "./components/SearchResults";
 import SearchBar from "./components/SearchBar";
 import CategoryProducts from "./components/CategoryProducts";
 import DiscountProducts from "./components/DiscountProducts";
+import DiscountedProductsPage from "./components/DiscountedProductsPage";
+import BannerWithDiscount from "./components/BannerWithDiscount";
 
 
 const Root = () => (
@@ -54,6 +56,7 @@ const Root = () => (
 <Route path="/categories/:category/:subcategory/products" element={<CategoryProducts />} />
 
 <Route path="/productsByDiscountPercentage/:discount" element={<DiscountProducts />} />
+<Route path="/produtos/vestidos" element={<DiscountedProductsPage />} />
 
 
   </Routes>

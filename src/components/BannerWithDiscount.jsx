@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Importe o Link do react-router-dom
 
 const BannerWithDiscount = () => {
   const [banner, setBanner] = useState([]);
@@ -7,7 +8,7 @@ const BannerWithDiscount = () => {
   useEffect(() => {
     const fetchBanner = async () => {
       const response = await axios.get(`http://localhost:3001/api/bannerByDiscount/70`);
-      setBanner(response.data.banners); // Use banners diretamente
+      setBanner(response.data.banners);
     };
 
     fetchBanner();
@@ -16,7 +17,10 @@ const BannerWithDiscount = () => {
   return (
     <div>
       {banner.length > 0 && (
-        <img src={banner[0].image} alt={banner[0].title} />
+        // Use o Link do react-router-dom ao redor da imagem
+        <Link to="/produtos/vestidos">
+          <img src={banner[0].image} alt={banner[0].title} />
+        </Link>
       )}
     </div>
   );
