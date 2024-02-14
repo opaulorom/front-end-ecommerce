@@ -11,13 +11,7 @@ const Header = () => {
   return (
     <>
       <div className={styles.ContainerHeader}>
-        <div
-          style={{
-            marginTop: "-10rem",
-          }}
-        >
-          <CategoriesList />
-        </div>
+    
         <div
           style={{
             display: "flex",
@@ -30,14 +24,15 @@ const Header = () => {
           <i
             style={{
               position: "absolute",
-              left: "-35rem", // Posiciona o elemento no lado esquerdo
+              left: "2rem", // Posiciona o elemento no lado esquerdo
+          
             }}
           >
            <img  src="https://i.ibb.co/BZZ2571/Mediewallogo.png" style={{width:"12vw"}}/>
           </i>
 
           {/* Componente SearchBar à direita */}
-          <div style={{ marginRight: "1.5rem" }} className={styles.SearchBar}>
+          <div style={{ marginRight: "1.5rem",marginLeft:"35rem", zIndex:"9999"}} className={styles.SearchBar}>
             {" "}
             {/* Margem esquerda automática para empurrar para a direita */}
             <SearchBar />
@@ -63,6 +58,15 @@ const Header = () => {
             <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem" }} />
             
           </div>
+          <div
+    style={{
+      marginTop: "-10rem",
+      zIndex: 1, // Define o z-index para 1
+     position:"absolute"
+    }}
+  >
+    <CategoriesList />
+  </div>
       </div>
       
     </>

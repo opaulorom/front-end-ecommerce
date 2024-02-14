@@ -14,21 +14,24 @@ const CategoriesList = () => {
       try {
         const response = await fetch('https://serveradmin-whhj.onrender.com/api/allCategories');
         const data = await response.json();
-
+  
         setCategories(prevCategories => {
           const uniqueCategoriesSet = new Set([...prevCategories.map(c => c.category), ...data.map(c => c.category)]);
           const uniqueCategories = Array.from(uniqueCategoriesSet).map(category => ({ category }));
-
-          return uniqueCategories;
+  
+          // Limit the number of categories to 5
+          const limitedCategories = uniqueCategories.slice(0, 6);
+  
+          return limitedCategories;
         });
       } catch (error) {
         console.error('Erro ao obter categorias:', error);
       }
     };
-
+  
     fetchData();
   }, []);
-
+  
   const handleMouseEnter = () => {
     if (!modalOpen && !categoriesHovered) {
       setModalOpen(true);
@@ -69,7 +72,7 @@ const CategoriesList = () => {
   }, [modalOpen]);
 
   return (
-    <div style={{ marginTop: '15rem'}} className={styles.CategoriesList}>
+    <div style={{ marginTop: '15rem', overflow: 'hidden'}} className={styles.CategoriesList}>
       
       <ul 
         style={{ listStyleType: 'none', padding: 0, display: 'flex', flexDirection: 'row', gap: '2.5rem' }}
@@ -87,7 +90,7 @@ const CategoriesList = () => {
             className={styles.modal} 
             ref={modalRef}
           >
-            <ClearIcon className={styles.closeButton} onClick={handleCloseModal}></ClearIcon>
+            <ClearIcon style={{fontSize:"2rem"}} className={styles.closeButton} onClick={handleCloseModal}></ClearIcon>
             <div className={styles.modalContent}>
               <CategoriesDesktop/>
             </div>
@@ -95,7 +98,7 @@ const CategoriesList = () => {
         )}
         {categories.map((category) => (
           <li key={category.category}>
-            <Link to={`/categories/${category.category}`} style={{ textDecoration: 'none', color: "white", fontWeight: "700", whiteSpace: "nowrap" }}>
+            <Link to={`/categories/${category.category}`} style={{ textDecoration: 'none', color: "white", fontWeight: "700", whiteSpace: "nowrap",  }}>
               {category.category}
             </Link>
           </li>

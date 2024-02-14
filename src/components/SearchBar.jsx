@@ -17,7 +17,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div>
+    <div >
       <input
         type="text"
         placeholder="Digite o nome do produto"
