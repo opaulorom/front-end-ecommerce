@@ -21,8 +21,14 @@ import SearchBar from "./components/SearchBar";
 import CategoryProducts from "./components/CategoryProducts";
 import DiscountProducts from "./components/DiscountProducts";
 import DiscountedProductsPage from "./components/DiscountedProductsPage";
-import BannerWithDiscount from "./components/BannerWithDiscount";
 
+
+import NoMatch from "./components/NoMatch";
+import Layout from "./components/Layout";
+import Protected from "./components/Protected";
+import { ClerkProvider } from "@clerk/clerk-react";
+
+const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 
 
@@ -64,13 +70,19 @@ const Root = () => (
 
 
 
+<Route path="*" element={<NoMatch />} />
+          <Route path="/protected" element={<Protected />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<App />} />
+          </Route>
   </Routes>
 );
 
 createRoot(document.getElementById("root")).render(
- 
+  <ClerkProvider publishableKey={publishableKey}>
+
   <React.StrictMode>
-    
+
     <BrowserRouter>
       <ErrorBoundary>
         <Provider>
@@ -78,7 +90,9 @@ createRoot(document.getElementById("root")).render(
         </Provider>
       </ErrorBoundary>
     </BrowserRouter>
+
   </React.StrictMode>
+  </ClerkProvider>
 
 
 );
