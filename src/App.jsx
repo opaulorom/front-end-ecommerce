@@ -4,6 +4,7 @@ import ProductByCategories from "./ProductByCategories";
 import Home from "./components/Home";
 import DiscountImageLinkPerPercentage from "./components/DiscountImageLinkPerPercentage";
 import BannerWithDiscount from "./components/BannerWithDiscount";
+import DiscountImageLinkPerPercentageAndCategory from "./components/DiscountImageLinkPerPercentageAndCategory";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <ProductByCategories/>
       <DiscountImageLinkPerPercentage/> 
       <BannerWithDiscount/>
+      <DiscountImageLinkPerPercentageAndCategory/>
 
     </>
   );

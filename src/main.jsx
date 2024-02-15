@@ -27,6 +27,7 @@ import NoMatch from "./components/NoMatch";
 import Layout from "./components/Layout";
 import Protected from "./components/Protected";
 import { ClerkProvider } from "@clerk/clerk-react";
+import DiscountProductsByCategoryAndPorcentage from "./components/DiscountProductsByCategoryAndPorcentage";
 
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -67,6 +68,7 @@ const Root = () => (
 <Route path="/productsByDiscountPercentage/:discount" element={<DiscountProducts />} />
 <Route path="/produtos/vestidos" element={<DiscountedProductsPage />} />
 <Route path="/perfil" element={<Profile />} />
+<Route path="/products/discount/:discount/category/:category" element={<DiscountProductsByCategoryAndPorcentage />} />
 
 
 
