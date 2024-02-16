@@ -121,7 +121,10 @@ const CategorySubcategories = () => {
   
 
   return (
-    <div>
+    <div style={{
+      display:"flex"
+    }}>
+      <div>
       <h1>Subcategories of {category}</h1>
       <ul>
         {subcategories.map((subcategory, index) => (
@@ -160,19 +163,27 @@ const CategorySubcategories = () => {
           </div>
         ))}
       </div>
-
+      </div>
+      <div>
       <h2>Mixed Products of {category}</h2>
-      <ul>
-        {mixedProducts && mixedProducts.map(product => (
-          <li key={product._id || 'undefined'}>
-          <img src={product.variations[0].urls[0]} alt={product.name} />
+<ul style={{ listStyleType: 'none', padding: 0, margin: 0, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" }}>
+  {mixedProducts && mixedProducts.map(product => (
+    <li key={product._id || 'undefined'}>
+          <Link to={`/products/${product._id}`}>
+      <img src={product.variations[0].urls[0]} alt={product.name} style={{ width: "100%", marginBottom: "10px" }} />
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <span>{product.name}</span>
+        <span>{product.price}</span>
+      </div>
+      </Link>
+    </li>
+  ))}
+</ul>
 
-            {product.name} - {product.price}
-          </li>
-        ))}
-      </ul>
+<CustomPagination totalPages={totalPages} currentPage={currentPage} onChangePage={handlePageChange} />
 
-      <CustomPagination totalPages={totalPages} currentPage={currentPage} onChangePage={handlePageChange} />
+</div>
+
     </div>
   );
 };
