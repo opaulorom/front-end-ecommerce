@@ -47,7 +47,7 @@ const CategorySubcategories = () => {
       try {
         // Alterações nas chamadas de API para obter cores, tamanhos e faixas de preço específicos
         const colorsResponse = await fetch(`https://serveradmin-whhj.onrender.com/api/categories/${category}/colors`);
-        const sizesResponse = await fetch(`https://serveradmin-whhj.onrender.com/api/${category}/sizes`);
+        const sizesResponse = await fetch(`https://serveradmin-whhj.onrender.com/api/categories/${category}/sizes`);
         const priceRangesResponse = await fetch(`https://serveradmin-whhj.onrender.com/api/categories/${category}/priceRanges`);
 
         const colorsData = await colorsResponse.json();
