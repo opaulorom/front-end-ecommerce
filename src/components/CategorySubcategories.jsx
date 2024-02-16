@@ -162,12 +162,15 @@ const CategorySubcategories = () => {
             </div>
           ))}
         </div>
-
-        <div>
-          <h3>Tamanhos</h3>
+        <h3>Tamanhos</h3>
+        <div style={{  display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",}}>
+         
           {Array.from(uniqueSizes).map((size, index) => (
             <div key={index} onClick={() => handleFilterClick("size", size)}    style={{cursor:"pointer"}}>
-              {size}
+              <div   style={{ cursor: "pointer", borderRadius: "50%", border: "1px solid black", padding: "10px", aspectRatio:"1/1",display:"flex", justifyContent:"center", alignItems:'center', width:"2svw" }}
+>  {size}</div>
+            
             </div>
           ))}
         </div>
