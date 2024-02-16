@@ -34,7 +34,7 @@ const DiscountImageCarousel = ({ alt, imageWidth, imageHeight, autoPlayInterval 
     };
 
     // Configurar o temporizador para avançar automaticamente
-    const autoPlayTimer = setInterval(nextImage, autoPlayInterval || 5000);
+    const autoPlayTimer = setInterval(nextImage, autoPlayInterval || 4000);
 
     // Limpar o temporizador quando o componente for desmontado
     return () => clearInterval(autoPlayTimer);
