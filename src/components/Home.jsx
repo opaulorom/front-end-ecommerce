@@ -9,6 +9,7 @@ const Home = () => {
 
   return (
     <div>
+      
       <Categories />
       <CategoryCarousel />
       <Header />
