@@ -30,10 +30,11 @@ const Subcategory = () => {
   return (
     <div>
       <h1>{subcategory} Products</h1>
-      <ul>
+      <ul >
         {products.map(product => (
           <Link to={`/products/${product._id}`}>
           <li key={product._id}>
+          <img src={product.variations[0].urls[0]} alt={product.name} />
             {product.name} - {product.price}
           </li>
         </Link>

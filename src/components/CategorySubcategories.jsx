@@ -165,6 +165,8 @@ const CategorySubcategories = () => {
       <ul>
         {mixedProducts && mixedProducts.map(product => (
           <li key={product._id || 'undefined'}>
+          <img src={product.variations[0].urls[0]} alt={product.name} />
+
             {product.name} - {product.price}
           </li>
         ))}
