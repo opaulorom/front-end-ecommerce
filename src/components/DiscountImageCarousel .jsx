@@ -40,10 +40,10 @@ const DiscountImageCarousel = ({ alt, imageWidth, imageHeight }) => {
 
   const imageStyle = {
     width: imageWidth || '100vw', // Tamanho fixo da largura da imagem
-    height: imageHeight || '50vh', // Tamanho fixo da altura da imagem
+    height: imageHeight || '80vh', // Tamanho fixo da altura da imagem
     objectFit: 'cover', // Mantém a proporção da imagem sem distorção
     borderRadius: '8px', // Borda arredondada (opcional)
-  };
+  };589
 
   const arrowStyle = {
     position: 'absolute',
