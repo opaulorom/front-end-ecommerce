@@ -157,7 +157,7 @@ const CategorySubcategories = () => {
         <div>
           <h3>Cores</h3>
           {colors.map((color, index) => (
-            <div key={index} onClick={() => handleFilterClick("color", color)}>
+            <div key={index} onClick={() => handleFilterClick("color", color)}    style={{cursor:"pointer"}}>
               {color}
             </div>
           ))}
@@ -166,7 +166,7 @@ const CategorySubcategories = () => {
         <div>
           <h3>Tamanhos</h3>
           {Array.from(uniqueSizes).map((size, index) => (
-            <div key={index} onClick={() => handleFilterClick("size", size)}>
+            <div key={index} onClick={() => handleFilterClick("size", size)}    style={{cursor:"pointer"}}>
               {size}
             </div>
           ))}
@@ -178,6 +178,7 @@ const CategorySubcategories = () => {
             <div
               key={index}
               onClick={() => handleFilterClick("priceRange", range)}
+              style={{cursor:"pointer"}}
             >
               {range}
             </div>
