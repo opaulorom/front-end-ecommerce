@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const DiscountImageCarousel = ({ alt, imageWidth, imageHeight }) => {
+const DiscountImageCarousel = ({ alt, imageWidth, imageHeight, autoPlayInterval }) => {
   const [imageUrls, setImageUrls] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -27,10 +27,18 @@ const DiscountImageCarousel = ({ alt, imageWidth, imageHeight }) => {
     fetchImageUrls();
   }, []);
 
-  // Função para avançar para a próxima imagem no carrossel
-  const nextImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
-  };
+  useEffect(() => {
+    // Função para avançar para a próxima imagem no carrossel
+    const nextImage = () => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
+    };
+
+    // Configurar o temporizador para avançar automaticamente
+    const autoPlayTimer = setInterval(nextImage, autoPlayInterval || 5000);
+
+    // Limpar o temporizador quando o componente for desmontado
+    return () => clearInterval(autoPlayTimer);
+  }, [currentIndex, imageUrls, autoPlayInterval]);
 
   // Estilos CSS
   const carouselContainerStyle = {
@@ -39,11 +47,11 @@ const DiscountImageCarousel = ({ alt, imageWidth, imageHeight }) => {
   };
 
   const imageStyle = {
-    width: imageWidth || '100vw', // Tamanho fixo da largura da imagem
-    height: imageHeight || '80vh', // Tamanho fixo da altura da imagem
-    objectFit: 'cover', // Mantém a proporção da imagem sem distorção
-    borderRadius: '8px', // Borda arredondada (opcional)
-  };589
+    width: imageWidth || '100svw',
+    height: imageHeight || '80svh',
+    objectFit: 'cover',
+    borderRadius: '8px',
+  };
 
   const arrowStyle = {
     position: 'absolute',
@@ -58,10 +66,10 @@ const DiscountImageCarousel = ({ alt, imageWidth, imageHeight }) => {
       <Link to={`/products/discount/${[50, 15, 70][currentIndex]}/category/Feminina`}>
         <img src={imageUrls[currentIndex]} alt={alt} style={imageStyle} />
       </Link>
-      <div style={{ ...arrowStyle, left: 0 }} onClick={nextImage}>
+      <div style={{ ...arrowStyle, left: 0 }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + imageUrls.length) % imageUrls.length)}>
         &#10094;
       </div>
-      <div style={{ ...arrowStyle, right: 0 }} onClick={nextImage}>
+      <div style={{ ...arrowStyle, right: 0 }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % imageUrls.length)}>
         &#10095;
       </div>
     </div>
