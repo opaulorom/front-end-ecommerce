@@ -10,6 +10,7 @@ const SignUpForm = () => {
     firstname: clerk.user?.firstName || '',
     lastname: clerk.user?.lastName || '',
     email: clerk.user?.emailAddress || '',
+    
   });
 
   const handleChange = (e) => {
@@ -39,7 +40,7 @@ const SignUpForm = () => {
         // Adicione os outros campos do formulário aqui
       });
   
-      console.log(response.data.message);
+      console.log(response.data);
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
       console.error('Erro ao enviar informações do usuário:', error);
@@ -66,7 +67,7 @@ const SignUpForm = () => {
       </label>
       <label>
       Telephone:
-        <input type="text" name="postcode" onChange={handleChange} value={formData.telephone} />
+        <input type="text" name="telephone" onChange={handleChange} value={formData.telephone} />
       </label>
       <label>
       postcode:
