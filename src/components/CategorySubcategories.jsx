@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import CustomPagination from "./CustomPagination";
+import IconButton from '@mui/material/IconButton';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const CategorySubcategories = () => {
   const { category } = useParams();
@@ -135,6 +138,14 @@ const CategorySubcategories = () => {
     fetchMixedProducts(1, filters);
   };
 
+  const handleFavoriteClick = (productId) => {
+    setMixedProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product._id === productId ? { ...product, isFavorite: !product.isFavorite } : product
+      )
+    );
+  };
+
   return (
     <div
       style={{
@@ -157,20 +168,39 @@ const CategorySubcategories = () => {
         <div>
           <h3>Cores</h3>
           {colors.map((color, index) => (
-            <div key={index} onClick={() => handleFilterClick("color", color)}    style={{cursor:"pointer"}}>
+            <div
+              key={index}
+              onClick={() => handleFilterClick("color", color)}
+              style={{ cursor: "pointer" }}
+            >
               {color}
             </div>
           ))}
         </div>
         <h3>Tamanhos</h3>
-        <div style={{  display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",}}>
-         
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
           {Array.from(uniqueSizes).map((size, index) => (
-            <div key={index} onClick={() => handleFilterClick("size", size)}    style={{cursor:"pointer"}}>
-              <div   style={{ cursor: "pointer", borderRadius: "50%", border: "1px solid black", padding: "10px", aspectRatio:"1/1",display:"flex", justifyContent:"center", alignItems:'center', width:"2svw" }}
->  {size}</div>
-            
+            <div
+              key={index}
+              onClick={() => handleFilterClick("size", size)}
+              style={{ cursor: "pointer" }}
+            >
+              <div
+                style={{
+                  cursor: "pointer",
+                  borderRadius: "50%",
+                  border: "1px solid black",
+                  padding: "10px",
+                  aspectRatio: "1/1",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "2svw",
+                }}
+              >
+                {" "}
+                {size}
+              </div>
             </div>
           ))}
         </div>
@@ -181,7 +211,7 @@ const CategorySubcategories = () => {
             <div
               key={index}
               onClick={() => handleFilterClick("priceRange", range)}
-              style={{cursor:"pointer"}}
+              style={{ cursor: "pointer" }}
             >
               {range}
             </div>
@@ -203,6 +233,9 @@ const CategorySubcategories = () => {
           {mixedProducts &&
             mixedProducts.map((product) => (
               <li key={product._id || "undefined"}>
+                <IconButton onClick={() => handleFavoriteClick(product._id)}>
+                  {product.isFavorite ? <FavoriteIcon sx={{ color: "red" } }/> : <FavoriteBorderIcon />}
+                </IconButton>
                 <Link to={`/products/${product._id}`}>
                   <img
                     src={product.variations[0].urls[0]}

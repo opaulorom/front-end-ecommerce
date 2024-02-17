@@ -29,6 +29,8 @@ import Protected from "./components/Protected";
 import { ClerkProvider } from "@clerk/clerk-react";
 import DiscountProductsByCategoryAndPorcentage from "./components/DiscountProductsByCategoryAndPorcentage";
 import { ptBR } from "@clerk/localizations";
+import Heart from "./components/Heart";
+import { FavoritesProvider } from "./context/FavoritesContext";
 ;
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -41,7 +43,8 @@ const Root = () => (
     <Route path="/home" element={<Home />} />
     <Route path="/categorias" element={<Categories />} />
     <Route path="/categoriasMobile" element={<CategoriesMobile />} />
-    
+    <Route path="/favoritos" element={<Heart />} />
+
 
 
     
@@ -83,6 +86,7 @@ const Root = () => (
 
 createRoot(document.getElementById("root")).render(
   <ClerkProvider publishableKey={publishableKey} localization={ptBR} >
+  <FavoritesProvider>
 
   <React.StrictMode>
 
@@ -95,6 +99,8 @@ createRoot(document.getElementById("root")).render(
     </BrowserRouter>
 
   </React.StrictMode>
+  </FavoritesProvider>,
+
   </ClerkProvider>
 
 

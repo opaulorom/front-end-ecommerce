@@ -44,7 +44,10 @@ const Header = () => {
             className={styles.desktopContainer}
           >
            <Link to={"/perfil"}> <img src="https://i.ibb.co/L1tX6LY/user-2.png" alt="" /></Link>
-            <img src="https://i.ibb.co/2ZnFQfq/heart-1.png" alt="" />
+           
+           <Link to={"/favoritos"} style={{
+            cursor:"pointer"
+           }}><img src="https://i.ibb.co/2ZnFQfq/heart-1.png" alt="" /></Link> 
 
             <img src="https://i.ibb.co/FwNpdzD/shopping-bag-1.png" alt="" />
           </div>
