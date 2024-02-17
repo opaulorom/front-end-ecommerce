@@ -14,7 +14,7 @@ function App() {
     <>
 <DiscountImageCarousel/> 
 
-      <Home></Home>
+      <Home ></Home>
       <ProductByCategories/>
       <DiscountImageLinkPerPercentage/> 
       <BannerWithDiscount/>

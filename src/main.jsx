@@ -28,7 +28,8 @@ import Layout from "./components/Layout";
 import Protected from "./components/Protected";
 import { ClerkProvider } from "@clerk/clerk-react";
 import DiscountProductsByCategoryAndPorcentage from "./components/DiscountProductsByCategoryAndPorcentage";
-
+import { ptBR } from "@clerk/localizations";
+;
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 
@@ -81,7 +82,7 @@ const Root = () => (
 );
 
 createRoot(document.getElementById("root")).render(
-  <ClerkProvider publishableKey={publishableKey}>
+  <ClerkProvider publishableKey={publishableKey} localization={ptBR} >
 
   <React.StrictMode>
 
