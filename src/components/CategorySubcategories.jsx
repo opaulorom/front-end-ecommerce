@@ -4,6 +4,7 @@ import CustomPagination from "./CustomPagination";
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import Header from "./Header";
 
 const CategorySubcategories = () => {
   const { category } = useParams();
@@ -12,11 +13,45 @@ const CategorySubcategories = () => {
   const [originalProducts, setOriginalProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [favorites, setFavorites] = useState({});
 
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [priceRanges, setPriceRanges] = useState([]);
   const [uniqueSizes, setUniqueSizes] = useState(new Set());
+
+
+// Função para adicionar ou remover um produto dos favoritos
+const toggleFavorite = async (productId) => {
+  try {
+    // Verificar se o produto já está nos favoritos
+    const isFavorite = favorites[productId] || false;
+
+    // Fazer uma chamada para a rota /favorites do backend
+    const response = await fetch('http://localhost:3001/api/favorites', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: '65ce2fde8437fe789abbfa55', // Substitua pelo ID do usuário real
+        productId,
+      }),
+    });
+
+    if (response.ok) {
+      // Atualizar o estado local dos favoritos
+      setFavorites((prevFavorites) => ({
+        ...prevFavorites,
+        [productId]: !isFavorite,
+      }));
+    } else {
+      console.error('Erro ao adicionar/remover produto dos favoritos:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Erro ao adicionar/remover produto dos favoritos:', error);
+  }
+};
 
   const fetchMixedProducts = async (page, filters) => {
     try {
@@ -93,6 +128,13 @@ const CategorySubcategories = () => {
       }
     };
 
+    const initialFavorites = {};
+    originalProducts.forEach((product) => {
+      initialFavorites[product._id] = product.isFavorite || false;
+    });
+    setFavorites(initialFavorites);
+
+
     fetchSubcategories();
     fetchMixedProducts(currentPage, {});
     fetchFilters();
@@ -152,6 +194,8 @@ const CategorySubcategories = () => {
         display: "flex",
       }}
     >
+      <Header/>
+
       <div>
         <h1>Subcategories of {category}</h1>
         <ul>
@@ -233,9 +277,9 @@ const CategorySubcategories = () => {
           {mixedProducts &&
             mixedProducts.map((product) => (
               <li key={product._id || "undefined"}>
-                <IconButton onClick={() => handleFavoriteClick(product._id)}>
-                  {product.isFavorite ? <FavoriteIcon sx={{ color: "red" } }/> : <FavoriteBorderIcon />}
-                </IconButton>
+                <IconButton onClick={() => toggleFavorite(product._id)}>
+              {favorites[product._id] ? <FavoriteIcon sx={{ color: "red" } }/> : <FavoriteBorderIcon />}
+            </IconButton>
                 <Link to={`/products/${product._id}`}>
                   <img
                     src={product.variations[0].urls[0]}

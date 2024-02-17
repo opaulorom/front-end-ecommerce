@@ -7,9 +7,9 @@ const SignUpForm = () => {
 
   const [formData, setFormData] = useState({
     clerkUserId: clerk.user?.id || '', // Obter o clerkUserId do usuário logado
-    firstname: '',
-    lastname: '',
-   
+    firstname: clerk.user?.firstName || '',
+    lastname: clerk.user?.lastName || '',
+    email: clerk.user?.emailAddress || '',
   });
 
   const handleChange = (e) => {
@@ -35,6 +35,8 @@ const SignUpForm = () => {
         address_street_district,
         address_city,
         address_state
+        
+        // Adicione os outros campos do formulário aqui
       });
   
       console.log(response.data.message);
@@ -56,6 +58,43 @@ const SignUpForm = () => {
       <label>
         Last Name:
         <input type="text" name="lastname" onChange={handleChange} value={formData.lastname} />
+      </label>
+
+      <label>
+        Email:
+        <input type="email" name="email" onChange={handleChange} value={formData.email} />
+      </label>
+      <label>
+      Telephone:
+        <input type="text" name="postcode" onChange={handleChange} value={formData.telephone} />
+      </label>
+      <label>
+      postcode:
+        <input type="text" name="postcode" onChange={handleChange} value={formData.postcode} />
+      </label>
+      <label>
+      address_street:
+        <input type="text" name="address_street" onChange={handleChange} value={formData.address_street} />
+      </label>
+      <label>
+      address_street_number:
+        <input type="text" name="address_street_number" onChange={handleChange} value={formData.address_street_number} />
+      </label>
+      <label>
+      address_street_complement:
+        <input type="text" name="address_street_complement" onChange={handleChange} value={formData.address_street_complement} />
+      </label>
+      <label>
+      address_street_district:
+        <input type="text" name="address_street_district" onChange={handleChange} value={formData.address_street_district} />
+      </label>
+      <label>
+      address_city:
+        <input type="text" name="address_city" onChange={handleChange} value={formData.address_city} />
+      </label>
+      <label>
+      address_state:
+        <input type="text" name="address_state" onChange={handleChange} value={formData.address_state} />
       </label>
       
       <button type="submit">Submit</button>
