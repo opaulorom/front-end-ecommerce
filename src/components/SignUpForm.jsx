@@ -10,7 +10,14 @@ const SignUpForm = () => {
     firstname: clerk.user?.firstName || '',
     lastname: clerk.user?.lastName || '',
     email: clerk.user?.emailAddress || '',
-    
+    telephone: '',
+    postcode: '',
+    address_street: '',
+    address_street_number: '',
+    address_street_complement: '',
+    address_street_district: '',
+    address_city: '',
+    address_state: '',
   });
 
   const handleChange = (e) => {
@@ -21,10 +28,11 @@ const SignUpForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const { firstname, lastname, email, telephone, postcode, address_street, address_street_number, address_street_complement, address_street_district, address_city, address_state } = formData;
+    const { clerkUserId, firstname, lastname, email, telephone, postcode, address_street, address_street_number, address_street_complement, address_street_district, address_city, address_state } = formData;
   
     try {
       const response = await axios.post('http://localhost:3001/api/signup', {
+        clerkUserId,
         firstname,
         lastname,
         email,
@@ -35,8 +43,7 @@ const SignUpForm = () => {
         address_street_complement,
         address_street_district,
         address_city,
-        address_state
-        
+        address_state,
         // Adicione os outros campos do formulário aqui
       });
   
@@ -65,36 +72,44 @@ const SignUpForm = () => {
         Email:
         <input type="email" name="email" onChange={handleChange} value={formData.email} />
       </label>
+
       <label>
-      Telephone:
+        Telephone:
         <input type="text" name="telephone" onChange={handleChange} value={formData.telephone} />
       </label>
+
       <label>
-      postcode:
+        Postcode:
         <input type="text" name="postcode" onChange={handleChange} value={formData.postcode} />
       </label>
+
       <label>
-      address_street:
+        Address Street:
         <input type="text" name="address_street" onChange={handleChange} value={formData.address_street} />
       </label>
+
       <label>
-      address_street_number:
+        Address Street Number:
         <input type="text" name="address_street_number" onChange={handleChange} value={formData.address_street_number} />
       </label>
+
       <label>
-      address_street_complement:
+        Address Street Complement:
         <input type="text" name="address_street_complement" onChange={handleChange} value={formData.address_street_complement} />
       </label>
+
       <label>
-      address_street_district:
+        Address Street District:
         <input type="text" name="address_street_district" onChange={handleChange} value={formData.address_street_district} />
       </label>
+
       <label>
-      address_city:
+        Address City:
         <input type="text" name="address_city" onChange={handleChange} value={formData.address_city} />
       </label>
+
       <label>
-      address_state:
+        Address State:
         <input type="text" name="address_state" onChange={handleChange} value={formData.address_state} />
       </label>
       
