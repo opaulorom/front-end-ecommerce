@@ -6,7 +6,7 @@ const SignUpForm = () => {
   const clerk = useClerk();
 
   const [formData, setFormData] = useState({
-    clerkUserId: clerk.user?.id || '', // Obter o clerkUserId do usuário logado
+    userId: clerk.user?.id || '', // Obter o userId do usuário logado
     firstname: clerk.user?.firstName || '',
     lastname: clerk.user?.lastName || '',
     email: clerk.user?.emailAddress || '',
@@ -28,11 +28,11 @@ const SignUpForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const { clerkUserId, firstname, lastname, email, telephone, postcode, address_street, address_street_number, address_street_complement, address_street_district, address_city, address_state } = formData;
+    const { userId, firstname, lastname, email, telephone, postcode, address_street, address_street_number, address_street_complement, address_street_district, address_city, address_state } = formData;
   
     try {
       const response = await axios.post('http://localhost:3001/api/signup', {
-        clerkUserId,
+        userId,
         firstname,
         lastname,
         email,
