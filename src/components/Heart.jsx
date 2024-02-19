@@ -1,32 +1,29 @@
-import { useClerk } from '@clerk/clerk-react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useClerk } from "@clerk/clerk-react";
 
-const Favorites = () => {
-  const { user } = useClerk();
-  const [favorites, setFavorites] = useState([]);
-
-  const addToFavorites = (productId) => {
-    // Adicione o produto aos favoritos do usuário
-    setFavorites((prevFavorites) => [...prevFavorites, productId]);
-  };
-
-  const removeFromFavorites = (productId) => {
-    // Remova o produto dos favoritos do usuário
-    setFavorites((prevFavorites) => prevFavorites.filter((id) => id !== productId));
-  };
+const Heart = ({ productId, clerkUserId }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const clerk = useClerk();
+  useEffect(() => {
+    // Aqui você pode fazer uma requisição para o backend para verificar se o produto está nos favoritos do usuário
+    // Você pode usar o productId e clerkUserId para fazer a requisição
+    // Por exemplo, você pode usar o fetch() ou axios para fazer a requisição
+    fetch(`http://localhost:3001/api/favorites/${clerk.userId}`)
+      .then(response => response.json())
+      .then(data => {
+        // Verificar se o produto está nos favoritos do usuário
+        const isProductInFavorites = data.favorites.some(favorite => favorite._id === productId);
+        setIsFavorite(isProductInFavorites);
+      })
+      .catch(error => console.error('Erro ao verificar se o produto está nos favoritos:', error));
+  }, [productId, clerk.userId]);
 
   return (
     <div>
-      <h1>Meus Favoritos</h1>
-      <ul>
-        {favorites.map((favorite) => (
-          <li key={favorite}>
-            {favorite} - <button onClick={() => removeFromFavorites(favorite)}>Remover</button>
-          </li>
-        ))}
-      </ul>
+      {isFavorite ? <FavoriteBorderIcon color="red" /> : <FavoriteBorderIcon color="red" />}
     </div>
   );
 };
 
-export default Favorites;
+export default Heart;

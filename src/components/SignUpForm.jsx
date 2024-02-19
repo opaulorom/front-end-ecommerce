@@ -24,15 +24,14 @@ const SignUpForm = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const { userId, firstname, lastname, email, telephone, postcode, address_street, address_street_number, address_street_complement, address_street_district, address_city, address_state } = formData;
+    const { firstname, lastname, email, telephone, postcode, address_street, address_street_number, address_street_complement, address_street_district, address_city, address_state } = formData;
   
     try {
       const response = await axios.post('http://localhost:3001/api/signup', {
-        userId,
+        clerkUserId: clerk.user.id, // Adicione o clerkUserId aqui
         firstname,
         lastname,
         email,
@@ -54,7 +53,6 @@ const SignUpForm = () => {
       // Trate erros aqui, como exibir uma mensagem para o usuário
     }
   };
-  
 
   return (
     <form onSubmit={handleSubmit}>
