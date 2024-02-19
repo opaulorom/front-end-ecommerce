@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useClerk } from "@clerk/clerk-react";
 import axios from 'axios';
 
@@ -9,7 +9,7 @@ const SignUpForm = () => {
     userId: clerk.user?.id || '', // Obter o userId do usuário logado
     firstname: clerk.user?.firstName || '',
     lastname: clerk.user?.lastName || '',
-    email: clerk.user?.emailAddress || '',
+    email: clerk.user?.emailAddresses || '',
     telephone: '',
     postcode: '',
     address_street: '',
@@ -19,6 +19,12 @@ const SignUpForm = () => {
     address_city: '',
     address_state: '',
   });
+
+
+
+
+ 
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +51,15 @@ const SignUpForm = () => {
         address_state,
         // Adicione os outros campos do formulário aqui
       });
-  
+      useEffect(() => {
+        // Atualizar o estado do formulário com o e-mail do usuário logado
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          email: clerk.user?.emailAddress || '',
+        }));
+      }, [clerk.user]);
+    
+    
       console.log(response.data);
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
