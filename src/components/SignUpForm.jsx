@@ -121,7 +121,7 @@ const SignUpForm = () => {
 
       <label>
         Postcode:
-        <input type="text" name="postcode" onChange={handleCepChange} value={formData.postcode} />
+        <input type="text" name="postcode" onChange={handleCepChange} value={formData.postcode}  placeholder='digite sem caracteres ex. 01001000  '/>
       </label>
 
       <label>
