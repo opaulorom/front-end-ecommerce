@@ -121,7 +121,7 @@ const SignUpForm = () => {
 
       <label>
         Postcode:
-        <input type="text" name="postcode" onChange={handleChange, handleCepChange} value={formData.postcode} />
+        <input type="text" name="postcode" onChange={handleCepChange} value={formData.postcode} />
       </label>
 
       <label>
