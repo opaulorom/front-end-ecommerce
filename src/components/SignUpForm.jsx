@@ -68,6 +68,35 @@ const SignUpForm = () => {
     }
   };
 
+
+
+
+
+  const handleCepChange = async (event) => {
+    const newCep = event.target.value;
+    setFormData({ ...formData, postcode: newCep });
+
+    if (newCep.length === 8) {
+      try {
+        const response = await axios.get(`https://viacep.com.br/ws/${newCep}/json/`);
+        const data = response.data;
+
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          address_street: data.logradouro,
+          address_street_complement: data.complemento,
+          address_street_district: data.bairro,
+          address_city: data.localidade,
+          address_state: data.uf,
+        }));
+      } catch (error) {
+        console.error('Erro ao buscar endereço:', error);
+        // Trate erros aqui, como exibir uma mensagem para o usuário
+      }
+    }
+  };
+
+
   return (
     <form onSubmit={handleSubmit}>
       <label>
@@ -92,7 +121,7 @@ const SignUpForm = () => {
 
       <label>
         Postcode:
-        <input type="text" name="postcode" onChange={handleChange} value={formData.postcode} />
+        <input type="text" name="postcode" onChange={handleChange, handleCepChange} value={formData.postcode} />
       </label>
 
       <label>
@@ -125,6 +154,7 @@ const SignUpForm = () => {
         <input type="text" name="address_state" onChange={handleChange} value={formData.address_state} />
       </label>
       
+     
       <button type="submit">Submit</button>
     </form>
   );
