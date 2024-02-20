@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Header from "./Header";
-import { useClerk } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 
 const CategorySubcategories = () => {
   const { category } = useParams();
@@ -20,7 +20,7 @@ const CategorySubcategories = () => {
   const [sizes, setSizes] = useState([]);
   const [priceRanges, setPriceRanges] = useState([]);
   const [uniqueSizes, setUniqueSizes] = useState(new Set());
-  const clerk = useClerk();
+  const { isSignedIn, user, isLoaded } = useUser();
 
 
 
@@ -151,13 +151,6 @@ const CategorySubcategories = () => {
     fetchMixedProducts(1, filters);
   };
 
-  const handleFavoriteClick = (productId) => {
-    setMixedProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product._id === productId ? { ...product, isFavorite: !product.isFavorite } : product
-      )
-    );
-  };
 
 
 
@@ -167,52 +160,36 @@ const CategorySubcategories = () => {
 
 
 
-
-
-
-
-
-
-
-
-  const toggleFavorite = async (productId) => {
+  const handleFavoriteClick = async (productId) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/favorites`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          clerkUserId: clerk.user?.id, // Substitua 'ID_DO_USUARIO' pelo ID do usuário atual
-          productId: productId,
-        }),
-      });
-      const data = await response.json();
-      setFavorites(data.user.favorites);
+      const response = await fetch(
+        `http://localhost:3001/api/favorites`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            clerkUserId: "user_2cVPVOEfoBibCy2khNTKk3m4fU1", // Substitua "user_id" pelo ID do usuário logado
+            productId: productId,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setFavorites(data.user.favorites);
+      } else {
+        console.error("Erro ao adicionar/remover produto dos favoritos");
+      }
     } catch (error) {
-      console.error('Erro ao adicionar/remover produto dos favoritos:', error);
+      console.error("Erro ao adicionar/remover produto dos favoritos:", error);
     }
   };
-  
-  const addFavorite = async (productId) => {
-    try {
-      const response = await fetch(`http://localhost:3001/api/favorites`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          clerkUserId:  clerk.user?.id, // Substitua 'ID_DO_USUARIO' pelo ID do usuário atual
-          productId: productId,
-        }),
-      });
-      const data = await response.json();
-      setFavorites(data.user.favorites);
-    } catch (error) {
-      console.error('Erro ao adicionar produto aos favoritos:', error);
-    }
-  };
-  
+
+
+
+
   return (
     <div
       style={{
@@ -302,9 +279,13 @@ const CategorySubcategories = () => {
           {mixedProducts &&
             mixedProducts.map((product) => (
               <li key={product._id || "undefined"}>
-            <IconButton onClick={() => toggleFavorite(product._id)}>
-  {favorites[product._id] && favorites[product._id] ? <FavoriteIcon sx={{ color: "red" } }/> : <FavoriteBorderIcon />}
-</IconButton>
+               <IconButton onClick={() => handleFavoriteClick(product._id)}>
+                  {favorites[product._id] ? (
+                    <FavoriteIcon sx={{ color: "red" }} />
+                  ) : (
+                    <FavoriteBorderIcon />
+                  )}
+                </IconButton>
 
                 <Link to={`/products/${product._id}`}>
                   <img

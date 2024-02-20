@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
+import IconToggle from "./IconToggle";
 
 const Heart = () => {
   const [favorites, setFavorites] = useState([]);
@@ -33,6 +34,7 @@ const Heart = () => {
           </div>
         ))}
       </ul>
+      <IconToggle/>
     </div>
   );
 };
