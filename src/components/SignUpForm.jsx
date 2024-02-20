@@ -55,7 +55,7 @@ const SignUpForm = () => {
         // Atualizar o estado do formulário com o e-mail do usuário logado
         setFormData((prevFormData) => ({
           ...prevFormData,
-          email: clerk.user?.emailAddress || '',
+          email: clerk.user?.emailAddresses	 || '',
         }));
       }, [clerk.user]);
     

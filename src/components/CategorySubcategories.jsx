@@ -5,6 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Header from "./Header";
+import { useClerk } from "@clerk/clerk-react";
 
 const CategorySubcategories = () => {
   const { category } = useParams();
@@ -19,6 +20,7 @@ const CategorySubcategories = () => {
   const [sizes, setSizes] = useState([]);
   const [priceRanges, setPriceRanges] = useState([]);
   const [uniqueSizes, setUniqueSizes] = useState(new Set());
+  const clerk = useClerk();
 
 
 
@@ -181,7 +183,7 @@ const CategorySubcategories = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          clerkUserId: 'user_2cVPVOEfoBibCy2khNTKk3m4fU1', // Substitua 'ID_DO_USUARIO' pelo ID do usuário atual
+          clerkUserId: clerk.user?.id, // Substitua 'ID_DO_USUARIO' pelo ID do usuário atual
           productId: productId,
         }),
       });
@@ -200,7 +202,7 @@ const CategorySubcategories = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          clerkUserId: 'ID_DO_USUARIO', // Substitua 'ID_DO_USUARIO' pelo ID do usuário atual
+          clerkUserId:  clerk.user?.id, // Substitua 'ID_DO_USUARIO' pelo ID do usuário atual
           productId: productId,
         }),
       });
