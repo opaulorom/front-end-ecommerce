@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 
 const IconToggle = () => {
   const [isFavorite, setIsFavorite] = useState(false);
