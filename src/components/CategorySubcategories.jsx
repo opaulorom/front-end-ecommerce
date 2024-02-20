@@ -151,6 +151,14 @@ const CategorySubcategories = () => {
     fetchMixedProducts(1, filters);
   };
 
+  const handleFavoriteClick = (productId) => {
+    setMixedProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product._id === productId ? { ...product, isFavorite: !product.isFavorite } : product
+      )
+    );
+  };
+  
 
 
 
@@ -160,36 +168,34 @@ const CategorySubcategories = () => {
 
 
 
-  const handleFavoriteClick = async (productId) => {
+
+
+
+
+
+
+  const toggleFavorite = async (productId) => {
+    console.log('Toggle favorite called with productId:', productId);
+
     try {
-      const response = await fetch(
-        `http://localhost:3001/api/favorites`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            clerkUserId: "user_2cVPVOEfoBibCy2khNTKk3m4fU1", // Substitua "user_id" pelo ID do usuário logado
-            productId: productId,
-          }),
-        }
-      );
+      const response = await fetch(`http://localhost:3001/api/favorites`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          clerkUserId:  user.id, // Substitua 'ID_DO_USUARIO' pelo ID do usuário atual
+          productId: productId,
+        }),
+      });
+      const data = await response.json();
+      setFavorites(data.user.favorites);
+      console.log('Favorites state updated:', data.user.favorites);
 
-      if (response.ok) {
-        const data = await response.json();
-        setFavorites(data.user.favorites);
-      } else {
-        console.error("Erro ao adicionar/remover produto dos favoritos");
-      }
     } catch (error) {
-      console.error("Erro ao adicionar/remover produto dos favoritos:", error);
+      console.error('Erro ao adicionar/remover produto dos favoritos:', error);
     }
   };
-
-
-
-
   return (
     <div
       style={{
@@ -279,13 +285,10 @@ const CategorySubcategories = () => {
           {mixedProducts &&
             mixedProducts.map((product) => (
               <li key={product._id || "undefined"}>
-               <IconButton onClick={() => handleFavoriteClick(product._id)}>
-                  {favorites[product._id] ? (
-                    <FavoriteIcon sx={{ color: "red" }} />
-                  ) : (
-                    <FavoriteBorderIcon />
-                  )}
-                </IconButton>
+             <IconButton onClick={() => toggleFavorite(product._id)}>
+              {favorites[product._id] && favorites[product._id] ? <FavoriteIcon sx={{ color: "red" } }/> : <FavoriteBorderIcon />}
+            </IconButton>
+
 
                 <Link to={`/products/${product._id}`}>
                   <img
@@ -302,6 +305,7 @@ const CategorySubcategories = () => {
                 </Link>
               </li>
             ))}
+          
         </ul>
 
         <CustomPagination
