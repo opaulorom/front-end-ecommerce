@@ -157,6 +157,60 @@ const CategorySubcategories = () => {
     );
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const toggleFavorite = async (productId) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/favorites`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          clerkUserId: 'user_2cVPVOEfoBibCy2khNTKk3m4fU1', // Substitua 'ID_DO_USUARIO' pelo ID do usuário atual
+          productId: productId,
+        }),
+      });
+      const data = await response.json();
+      setFavorites(data.user.favorites);
+    } catch (error) {
+      console.error('Erro ao adicionar/remover produto dos favoritos:', error);
+    }
+  };
+  
+  const addFavorite = async (productId) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/favorites`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          clerkUserId: 'ID_DO_USUARIO', // Substitua 'ID_DO_USUARIO' pelo ID do usuário atual
+          productId: productId,
+        }),
+      });
+      const data = await response.json();
+      setFavorites(data.user.favorites);
+    } catch (error) {
+      console.error('Erro ao adicionar produto aos favoritos:', error);
+    }
+  };
+  
   return (
     <div
       style={{
@@ -246,9 +300,10 @@ const CategorySubcategories = () => {
           {mixedProducts &&
             mixedProducts.map((product) => (
               <li key={product._id || "undefined"}>
-                <IconButton onClick={() => toggleFavorite(product._id)}>
-              {favorites[product._id] ? <FavoriteIcon sx={{ color: "red" } }/> : <FavoriteBorderIcon />}
-            </IconButton>
+            <IconButton onClick={() => toggleFavorite(product._id)}>
+  {favorites[product._id] && favorites[product._id] ? <FavoriteIcon sx={{ color: "red" } }/> : <FavoriteBorderIcon />}
+</IconButton>
+
                 <Link to={`/products/${product._id}`}>
                   <img
                     src={product.variations[0].urls[0]}

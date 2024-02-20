@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+
 const Heart = () => {
   const clerkUserId = "user_2cVPVOEfoBibCy2khNTKk3m4fU1";
   const [favorites, setFavorites] = useState([]);
@@ -30,6 +31,7 @@ const Heart = () => {
           </div>
         ))}
       </ul>
+     
     </div>
   );
 };
