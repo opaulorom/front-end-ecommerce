@@ -21,37 +21,6 @@ const CategorySubcategories = () => {
   const [uniqueSizes, setUniqueSizes] = useState(new Set());
 
 
-// Função para adicionar ou remover um produto dos favoritos
-const toggleFavorite = async (productId) => {
-  try {
-    // Verificar se o produto já está nos favoritos
-    const isFavorite = favorites[productId] || false;
-
-    // Fazer uma chamada para a rota /favorites do backend
-    const response = await fetch('http://localhost:3001/api/favorites', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userId: '65ce2fde8437fe789abbfa55', // Substitua pelo ID do usuário real
-        productId,
-      }),
-    });
-
-    if (response.ok) {
-      // Atualizar o estado local dos favoritos
-      setFavorites((prevFavorites) => ({
-        ...prevFavorites,
-        [productId]: !isFavorite,
-      }));
-    } else {
-      console.error('Erro ao adicionar/remover produto dos favoritos:', response.statusText);
-    }
-  } catch (error) {
-    console.error('Erro ao adicionar/remover produto dos favoritos:', error);
-  }
-};
 
   const fetchMixedProducts = async (page, filters) => {
     try {
