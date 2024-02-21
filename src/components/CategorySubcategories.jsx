@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import CustomPagination from "./CustomPagination";
-import IconButton from '@mui/material/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Header from "./Header";
 import { useUser } from "@clerk/clerk-react";
-import Heart from "react-heart"
+import Heart from "react-heart";
 import IconToggle from "./IconToggle";
 
 const CategorySubcategories = () => {
@@ -23,8 +23,6 @@ const CategorySubcategories = () => {
   const [priceRanges, setPriceRanges] = useState([]);
   const [uniqueSizes, setUniqueSizes] = useState(new Set());
   const { isSignedIn, user, isLoaded } = useUser();
-
-
 
   const fetchMixedProducts = async (page, filters) => {
     try {
@@ -107,7 +105,6 @@ const CategorySubcategories = () => {
     });
     setFavorites(initialFavorites);
 
-
     fetchSubcategories();
     fetchMixedProducts(currentPage, {});
     fetchFilters();
@@ -156,38 +153,31 @@ const CategorySubcategories = () => {
   const handleFavoriteClick = (productId) => {
     setMixedProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product._id === productId ? { ...product, isFavorite: !product.isFavorite } : product
+        product._id === productId
+          ? { ...product, isFavorite: !product.isFavorite }
+          : product
       )
     );
   };
-  
 
-
-
-
-
-
-
-
-
-
-
-
-
-  
   return (
     <div
       style={{
         display: "flex",
+        marginTop: "14rem",
       }}
     >
-      <Header/>
+      <Header />
 
-      <div>
-        <h1>Subcategories of {category}</h1>
-        <ul>
+      <div
+        style={{
+          marginLeft: "5rem",
+          marginRight: "5rem",
+        }}
+      >
+        <ul style={{ listStyle: "none" }}>
           {subcategories.map((subcategory, index) => (
-            <li key={index}>
+            <li key={index} style={{ marginLeft: "-2.5rem" }}>
               <Link to={`/categories/${category}/${subcategory}`}>
                 {subcategory}
               </Link>
@@ -221,7 +211,7 @@ const CategorySubcategories = () => {
                   cursor: "pointer",
                   borderRadius: "50%",
                   border: "1px solid black",
-                  padding: "10px",
+                  padding: "5px",
                   aspectRatio: "1/1",
                   display: "flex",
                   justifyContent: "center",
@@ -250,7 +240,6 @@ const CategorySubcategories = () => {
         </div>
       </div>
       <div>
-        <h2>Mixed Products of {category}</h2>
         <ul
           style={{
             listStyleType: "none",
@@ -258,31 +247,52 @@ const CategorySubcategories = () => {
             margin: 0,
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "20px",
+            gap: "5px",
           }}
         >
           {mixedProducts &&
             mixedProducts.map((product) => (
-              <li key={product._id || "undefined"}>
-         
-         <IconToggle productId={product._id} isFavorite={favorites[product._id]} />
+              <>
+                <li
+                  key={product._id || "undefined"}
+                  style={{ position: "relative" }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "5px",
+                      right: "4rem",
+                      zIndex: 1,
+                      marginBottom:"5rem"
 
-                <Link to={`/products/${product._id}`}>
-                  <img
-                    src={product.variations[0].urls[0]}
-                    alt={product.name}
-                    style={{ width: "100%", marginBottom: "10px" }}
-                  />
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span>{product.name}</span>
-                    <span>
-                      {Number(product.price).toFixed(2).padStart(5, "0")}
-                    </span>
+                    }}
+                  >
+                    <IconToggle
+                      productId={product._id}
+                      isFavorite={favorites[product._id]}
+                    />
                   </div>
-                </Link>
-              </li>
+
+                  <Link to={`/products/${product._id}`}>
+                    <img
+                      src={product.variations[0].urls[0]}
+                      alt={product.name}
+                      style={{
+                        width: "15vw",
+                        marginTop: "-2rem",
+                        zIndex: "-1",
+                      }}
+                    />
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <span>{product.name}</span>
+                      <span>
+                        {Number(product.price).toFixed(2).padStart(5, "0")}
+                      </span>
+                    </div>
+                  </Link>
+                </li>
+              </>
             ))}
-          
         </ul>
 
         <CustomPagination

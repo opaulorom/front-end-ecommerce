@@ -61,7 +61,7 @@ const IconToggle = ({ productId, isFavorite }) => {
           animationScale={1.25}
           inactiveColor="#ccc" // Cor cinza quando inativo
           activeColor="red" // Cor vermelha quando ativo
-          style={{ marginBottom: '1rem' }}
+          style={{ marginBottom: '1rem', Zindex: "99999" }}
         />
       </div>
     </div>
