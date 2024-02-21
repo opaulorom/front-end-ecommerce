@@ -324,7 +324,8 @@ const CategorySubcategories = () => {
                       width:"3rem",
                       display:"flex",
                       alignItems:"center",
-                      justifyContent:"center"
+                      justifyContent:"center",
+                    
                     }}
                   >
                     <IconToggle

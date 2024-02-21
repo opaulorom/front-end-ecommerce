@@ -54,7 +54,7 @@ const IconToggle = ({ productId, isFavorite }) => {
 
   return (
     <div>
-      <div style={{ width: "2rem" }}>
+      <div style={{ width: "2rem"}}>
         <Heart
           isActive={active}
           onClick={handleClick}
