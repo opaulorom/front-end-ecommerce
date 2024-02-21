@@ -301,7 +301,7 @@ const CategorySubcategories = () => {
             margin: 0,
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "5px",
+            gap: "1rem",
           }}
         >
           {mixedProducts &&
@@ -311,13 +311,20 @@ const CategorySubcategories = () => {
                   key={product._id || "undefined"}
                   style={{ position: "relative" }}
                 >
+
+                  <Link to={`/products/${product._id}`}>
+                    
                   <div
                     style={{
                       position: "absolute",
-                      top: "5px",
-                      right: "4rem",
+                      top: "-5%",
+                      right: "5%",
                       zIndex: 1,
                       marginBottom: "5rem",
+                      width:"3rem",
+                      display:"flex",
+                      alignItems:"center",
+                      justifyContent:"center"
                     }}
                   >
                     <IconToggle
@@ -326,7 +333,6 @@ const CategorySubcategories = () => {
                     />
                   </div>
 
-                  <Link to={`/products/${product._id}`}>
                     <img
                       src={product.variations[0].urls[0]}
                       alt={product.name}
@@ -334,6 +340,7 @@ const CategorySubcategories = () => {
                         width: "15vw",
                         marginTop: "-2rem",
                         zIndex: "-1",
+                        marginLeft:"1rem"
                       }}
                     />
                     <div
