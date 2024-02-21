@@ -166,7 +166,7 @@ const CategorySubcategories = () => {
         marginTop: "14rem",
       }}
     > 
-    <div style={{zIndex:"9999"}}>
+    <div style={{zIndex:"999999999999"}}>
     <Header />
 
     </div>
@@ -293,7 +293,9 @@ const CategorySubcategories = () => {
           ))}
         </div>
       </div>
-      <div>
+
+
+      <div >
         <ul
           style={{
             listStyleType: "none",
@@ -319,7 +321,7 @@ const CategorySubcategories = () => {
                       position: "absolute",
                       top: "-5%",
                       right: "5%",
-                      zIndex: 1,
+                      zIndex: 9999,
                       marginBottom: "5rem",
                       width:"3rem",
                       display:"flex",
