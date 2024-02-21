@@ -173,6 +173,7 @@ const CategorySubcategories = () => {
         style={{
           marginLeft: "5rem",
           marginRight: "5rem",
+          marginTop:"5rem"
         }}
       >
         <div
@@ -180,21 +181,18 @@ const CategorySubcategories = () => {
             display: "inline-flex",
             alignItems: "center",
             marginBottom: "2rem",
+            fontFamily: "Montserrat, arial, sans-serif",
+            fontWeight: "400",
+            fontSize: "1.3rem",
+            color: "rgb(52, 52, 54)",
           }}
         >
-          <span
-            style={{
-              fontFamily: "Montserrat, arial, sans-serif",
-              fontWeight: "400",
-              fontSize: "1.3rem",
-              color: "rgb(52, 52, 54)",
-            }}
-          >
-            Filtros{" "}
-          </span>
+       
+            Filtros
+    
         </div>
 
-        <span
+        <p
           style={{
             fontFamily: "Montserrat, arial, sans-serif",
             fontWeight: "600",
@@ -203,7 +201,7 @@ const CategorySubcategories = () => {
           }}
         >
           Categorias
-        </span>
+        </p>
 
         <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
           {subcategories.map((subcategory, index) => (
