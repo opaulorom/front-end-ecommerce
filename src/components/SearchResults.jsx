@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
+import IconToggle from './IconToggle';
+import Header from './Header';
 
 const SearchResults = () => {
   const { query } = useParams();
@@ -39,10 +41,15 @@ const SearchResults = () => {
 
   return (
     <div>
-      {/* Lista de resultados */}
-      <ul>
+            <Header/>
+            
+            
+            <ul>
         {searchResults.map((product) => (
           <li key={product._id}>
+            <img src={product.variations[0].urls[0]} alt="" />
+            <IconToggle productId={product._id} isFavorite={product.isFavorite} />
+
             {product.name} - {product.price}
           </li>
         ))}
