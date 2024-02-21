@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import IconToggle from './IconToggle';
+import Header from './Header';
 const Subcategory = () => {
   const { category, subcategory } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,6 +47,8 @@ const Subcategory = () => {
 
   return (
     <div>
+      <Header/>
+
       <h1>{subcategory} Products</h1>
       <ul
         style={{
@@ -62,6 +66,8 @@ const Subcategory = () => {
                 style={{ width: '100%', marginBottom: '10px' }}
               />
               <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <IconToggle productId={product._id} isFavorite={product.isFavorite} />
+                
                 <span>{product.name}</span>
                 <span>{Number(product.price).toFixed(2).padStart(5, '0')}</span>
               </div>
