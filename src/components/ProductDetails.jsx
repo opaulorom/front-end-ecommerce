@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./ProductDetails.css";
 import ProductSizes from "./ProductSizes";
+import Header from "./Header";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -66,6 +67,8 @@ const ProductDetails = () => {
 
   return (
     <div>
+      <Header/>
+
       <div>
         <h2>Single Item</h2>
         <div key={currentImageIndex} className="image-container">

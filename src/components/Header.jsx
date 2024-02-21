@@ -29,7 +29,7 @@ const Header = () => {
           
             }}
           >
-           <img  src="https://i.ibb.co/BZZ2571/Mediewallogo.png" style={{width:"12vw"}}/>
+           <Link to={"/home"}><img  src="https://i.ibb.co/BZZ2571/Mediewallogo.png" style={{width:"12vw"}}/></Link>
           </i>
 
           {/* Componente SearchBar à direita */}
