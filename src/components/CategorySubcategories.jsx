@@ -281,7 +281,10 @@ const CategorySubcategories = () => {
             <div
               key={index}
               onClick={() => handleFilterClick("priceRange", range)}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", fontFamily: "Montserrat, arial, sans-serif",
+              fontWeight: "400",
+              fontSize: "1rem",
+              color: "rgb(52, 52, 54)", }}
             >
               {range}
             </div>
