@@ -26,6 +26,7 @@ const Header = () => {
             style={{
               position: "absolute",
               left: "2rem", // Posiciona o elemento no lado esquerdo
+              zIndex:"999999"
           
             }}
           >
