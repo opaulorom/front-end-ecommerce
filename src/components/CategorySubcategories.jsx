@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import CustomPagination from "./CustomPagination";
-import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 import Header from "./Header";
 import { useUser } from "@clerk/clerk-react";
-import Heart from "react-heart";
 import IconToggle from "./IconToggle";
-
+import TuneIcon from "@mui/icons-material/Tune";
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -166,8 +163,11 @@ const CategorySubcategories = () => {
         display: "flex",
         marginTop: "14rem",
       }}
-    >
-      <Header />
+    > 
+    <div style={{zIndex:"9999"}}>
+    <Header />
+
+    </div>
 
       <div
         style={{
@@ -175,7 +175,37 @@ const CategorySubcategories = () => {
           marginRight: "5rem",
         }}
       >
-        <ul style={{ listStyle: "none" }}>
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            marginBottom: "2rem",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "Montserrat, arial, sans-serif",
+              fontWeight: "400",
+              fontSize: "1.3rem",
+              color: "rgb(52, 52, 54)",
+            }}
+          >
+            Filtros{" "}
+          </span>
+        </div>
+
+        <span
+          style={{
+            fontFamily: "Montserrat, arial, sans-serif",
+            fontWeight: "600",
+            fontSize: "1.2rem",
+            color: "rgb(52, 52, 54)",
+          }}
+        >
+          Categorias
+        </span>
+
+        <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
           {subcategories.map((subcategory, index) => (
             <li key={index} style={{ marginLeft: "-2.5rem" }}>
               <Link to={`/categories/${category}/${subcategory}`}>
@@ -185,9 +215,17 @@ const CategorySubcategories = () => {
           ))}
         </ul>
 
-        <h2>Filtros:</h2>
-        <div>
-          <h3>Cores</h3>
+        <div style={{ marginBottom: "3rem" }}>
+          <h3
+            style={{
+              fontFamily: "Montserrat, arial, sans-serif",
+              fontWeight: "600",
+              fontSize: "1.2rem",
+              color: "rgb(52, 52, 54)",
+            }}
+          >
+            Cores
+          </h3>
           {colors.map((color, index) => (
             <div
               key={index}
@@ -198,7 +236,16 @@ const CategorySubcategories = () => {
             </div>
           ))}
         </div>
-        <h3>Tamanhos</h3>
+        <h3
+          style={{
+            fontFamily: "Montserrat, arial, sans-serif",
+            fontWeight: "600",
+            fontSize: "1.2rem",
+            color: "rgb(52, 52, 54)",
+          }}
+        >
+          Tamanhos
+        </h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
           {Array.from(uniqueSizes).map((size, index) => (
             <div
@@ -206,28 +253,32 @@ const CategorySubcategories = () => {
               onClick={() => handleFilterClick("size", size)}
               style={{ cursor: "pointer" }}
             >
-              <div
-                style={{
-                  cursor: "pointer",
-                  borderRadius: "50%",
-                  border: "1px solid black",
-                  padding: "5px",
-                  aspectRatio: "1/1",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "2svw",
-                }}
-              >
-                {" "}
-                {size}
-              </div>
+           
+              <button  
+              style={{
+                borderRadius:"20px",
+                width:"40px",
+                height:"40px",
+                border:"1px solid rgb(114, 114, 114)",
+                backgroundColor:"rgb(255, 255, 255)",
+                marginLeft:"8px",
+                marginTop:"8px"
+              }}> {size}</button>
             </div>
           ))}
         </div>
 
         <div>
-          <h3>Faixas de Preço</h3>
+          <h3
+            style={{
+              fontFamily: "Montserrat, arial, sans-serif",
+              fontWeight: "600",
+              fontSize: "1.2rem",
+              color: "rgb(52, 52, 54)",
+            }}
+          >
+            Faixas de Preço
+          </h3>
           {priceRanges.map((range, index) => (
             <div
               key={index}
@@ -263,8 +314,7 @@ const CategorySubcategories = () => {
                       top: "5px",
                       right: "4rem",
                       zIndex: 1,
-                      marginBottom:"5rem"
-
+                      marginBottom: "5rem",
                     }}
                   >
                     <IconToggle
@@ -283,7 +333,13 @@ const CategorySubcategories = () => {
                         zIndex: "-1",
                       }}
                     />
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        marginBottom: "4rem",
+                      }}
+                    >
                       <span>{product.name}</span>
                       <span>
                         {Number(product.price).toFixed(2).padStart(5, "0")}
