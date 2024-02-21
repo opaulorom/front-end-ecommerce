@@ -5,7 +5,9 @@ import CustomPagination from "./CustomPagination";
 import Header from "./Header";
 import { useUser } from "@clerk/clerk-react";
 import IconToggle from "./IconToggle";
-import TuneIcon from "@mui/icons-material/Tune";
+import styles from "./CategorySubcategories.module.css"
+
+
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -173,7 +175,7 @@ const CategorySubcategories = () => {
         style={{
           marginLeft: "5rem",
           marginRight: "5rem",
-          marginTop:"5rem"
+          marginTop:"-2rem"
         }}
       >
         <div
@@ -205,8 +207,8 @@ const CategorySubcategories = () => {
 
         <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
           {subcategories.map((subcategory, index) => (
-            <li key={index} style={{ marginLeft: "-2.5rem" }}>
-              <Link to={`/categories/${category}/${subcategory}`}>
+            <li key={index} style={{ marginLeft: "-2.5rem" }} className={styles.myLinks}>
+              <Link to={`/categories/${category}/${subcategory}`} >
                 {subcategory}
               </Link>
             </li>
@@ -266,7 +268,7 @@ const CategorySubcategories = () => {
           ))}
         </div>
 
-        <div>
+        <div style={{marginTop:"3rem"}}>
           <h3
             style={{
               fontFamily: "Montserrat, arial, sans-serif",
@@ -275,7 +277,7 @@ const CategorySubcategories = () => {
               color: "rgb(52, 52, 54)",
             }}
           >
-            Faixas de Preço
+            Faixas de Preços
           </h3>
           {priceRanges.map((range, index) => (
             <div
