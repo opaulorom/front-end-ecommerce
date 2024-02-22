@@ -7,8 +7,8 @@ const SignUpForm = () => {
 
   const [formData, setFormData] = useState({
     userId: clerk.user?.id || '', // Obter o userId do usuário logado
-    firstname: clerk.user?.firstName || '',
-    lastname: clerk.user?.lastName || '',
+    name: clerk.user?.firstName.lastName  || '',
+    cpfCnpj: '',
     email: clerk.user?.emailAddresses || '',
     telephone: '',
     postcode: '',
@@ -33,13 +33,13 @@ const SignUpForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const { firstname, lastname, email, telephone, postcode, address_street, address_street_number, address_street_complement, address_street_district, address_city, address_state } = formData;
+    const { name, cpfCnpj, email, telephone, postcode, address_street, address_street_number, address_street_complement, address_street_district, address_city, address_state } = formData;
   
     try {
       const response = await axios.post('http://localhost:3001/api/signup', {
         clerkUserId: clerk.user.id, // Adicione o clerkUserId aqui
-        firstname,
-        lastname,
+        name,
+        cpfCnpj,
         email,
         telephone,
         postcode,
@@ -100,13 +100,13 @@ const SignUpForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        First Name:
-        <input type="text" name="firstname" onChange={handleChange} value={formData.firstname} />
+        nome completo:
+        <input type="text" name="name" onChange={handleChange} value={formData.name} />
       </label>
 
       <label>
-        Last Name:
-        <input type="text" name="lastname" onChange={handleChange} value={formData.lastname} />
+      cpf:
+        <input type="number" name="cpfCnpj" onChange={handleChange} value={formData.cpfCnpj} />
       </label>
 
       <label>
