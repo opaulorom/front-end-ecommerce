@@ -11,13 +11,13 @@ const SignUpForm = () => {
     cpfCnpj: '',
     email: clerk.user?.emailAddresses || '',
     telephone: '',
-    postcode: '',
-    address_street: '',
-    address_street_number: '',
-    address_street_complement: '',
-    address_street_district: '',
-    address_city: '',
-    address_state: '',
+    postalCode: '',
+    address: '',
+    addressNumber: '',
+    complement: '',
+    province: '',
+    city: '',
+    state: '',
   });
 
 
@@ -33,22 +33,34 @@ const SignUpForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const { name, cpfCnpj, email, telephone, postcode, address_street, address_street_number, address_street_complement, address_street_district, address_city, address_state } = formData;
+    const {    
+       name,
+      cpfCnpj,
+      mobilePhone,
+      email,
+      postalCode,
+      address,
+      addressNumber,
+      complement,
+      province,
+      city,
+      state, } = formData;
   
     try {
       const response = await axios.post('http://localhost:3001/api/signup', {
         clerkUserId: clerk.user.id, // Adicione o clerkUserId aqui
         name,
         cpfCnpj,
+        mobilePhone,
         email,
-        telephone,
-        postcode,
-        address_street,
-        address_street_number,
-        address_street_complement,
-        address_street_district,
-        address_city,
-        address_state,
+        postalCode,
+        address,
+        addressNumber,
+        complement,
+        province,
+        city,
+        state,
+        
         // Adicione os outros campos do formulário aqui
       });
       useEffect(() => {
@@ -74,7 +86,7 @@ const SignUpForm = () => {
 
   const handleCepChange = async (event) => {
     const newCep = event.target.value;
-    setFormData({ ...formData, postcode: newCep });
+    setFormData({ ...formData, postalCode: newCep });
 
     if (newCep.length === 8) {
       try {
@@ -83,11 +95,11 @@ const SignUpForm = () => {
 
         setFormData((prevFormData) => ({
           ...prevFormData,
-          address_street: data.logradouro,
-          address_street_complement: data.complemento,
-          address_street_district: data.bairro,
-          address_city: data.localidade,
-          address_state: data.uf,
+          address: data.logradouro,
+          complement: data.complemento,
+          province: data.bairro,
+          city: data.localidade,
+          state: data.uf,
         }));
       } catch (error) {
         console.error('Erro ao buscar endereço:', error);
@@ -116,42 +128,42 @@ const SignUpForm = () => {
 
       <label>
         Telephone:
-        <input type="text" name="telephone" onChange={handleChange} value={formData.telephone} />
+        <input type="text" name="mobilePhone" onChange={handleChange} value={formData.mobilePhone} />
       </label>
 
       <label>
         Postcode:
-        <input type="text" name="postcode" onChange={handleCepChange} value={formData.postcode}  placeholder='digite sem caracteres ex. 01001000  '/>
+        <input type="text" name="postalCode" onChange={handleCepChange} value={formData.postalCode}  placeholder='digite sem caracteres ex. 01001000  '/>
       </label>
 
       <label>
-        Address Street:
-        <input type="text" name="address_street" onChange={handleChange} value={formData.address_street} />
+        Address:
+        <input type="text" name="address" onChange={handleChange} value={formData.address} />
       </label>
 
       <label>
-        Address Street Number:
-        <input type="text" name="address_street_number" onChange={handleChange} value={formData.address_street_number} />
+        Address  Number:
+        <input type="text" name="addressNumber" onChange={handleChange} value={formData.addressNumber} />
       </label>
 
       <label>
-        Address Street Complement:
-        <input type="text" name="address_street_complement" onChange={handleChange} value={formData.address_street_complement} />
+        Complement:
+        <input type="text" name="complement" onChange={handleChange} value={formData.complement} />
       </label>
 
       <label>
-        Address Street District:
-        <input type="text" name="address_street_district" onChange={handleChange} value={formData.address_street_district} />
+        province:
+        <input type="text" name="province" onChange={handleChange} value={formData.province} />
       </label>
 
       <label>
         Address City:
-        <input type="text" name="address_city" onChange={handleChange} value={formData.address_city} />
+        <input type="text" name="city" onChange={handleChange} value={formData.city} />
       </label>
 
       <label>
         Address State:
-        <input type="text" name="address_state" onChange={handleChange} value={formData.address_state} />
+        <input type="text" name="state" onChange={handleChange} value={formData.state} />
       </label>
       
      
