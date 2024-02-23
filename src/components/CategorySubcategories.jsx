@@ -251,7 +251,6 @@ const CategorySubcategories = () => {
             <div
               key={index}
               onClick={() => handleFilterClick("size", size)}
-              style={{ cursor: "pointer" }}
             >
            
               <button  
@@ -262,7 +261,8 @@ const CategorySubcategories = () => {
                 border:"1px solid rgb(114, 114, 114)",
                 backgroundColor:"rgb(255, 255, 255)",
                 marginLeft:"8px",
-                marginTop:"8px"
+                marginTop:"8px",
+                cursor: "pointer"
               }}> {size}</button>
             </div>
           ))}
