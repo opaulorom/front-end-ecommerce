@@ -4,7 +4,7 @@ import axios from "axios";
 
 const Frete = () => {
   const [getFrete, setGetFrete] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [showForm, setShowForm] = useState(true); // Novo estado para controlar a exibição do formulário
   const { isSignedIn, user, isLoaded } = useUser();
 
   useEffect(() => {
@@ -14,6 +14,7 @@ const Frete = () => {
         .get(`http://localhost:3001/api/frete/${clerkUserId}`)
         .then((response) => {
           setGetFrete(response.data);
+          console.log("data", data);
         })
         .catch((error) => {
           console.log("Erro ao visualizar frete.", error);
@@ -27,26 +28,25 @@ const Frete = () => {
     const cep = formData.get("cep");
     const clerkUserId = user.id;
 
-    setIsLoading(true);
     axios
       .post(`http://localhost:3001/api/frete/${clerkUserId}`, { cep })
       .then((response) => {
         setGetFrete(response.data);
-        setIsLoading(false);
+        setShowForm(false); // Esconde o formulário após a pesquisa
       })
       .catch((error) => {
         console.log("Erro ao calcular frete.", error);
-        setIsLoading(false);
       });
   };
 
-  const handleSwitchFrete = () => {
-    setGetFrete([]);
+  const handleTrocarFrete = () => {
+    setShowForm(true); // Mostra o formulário novamente
+    setGetFrete([]); // Limpa os resultados do frete
   };
 
   return (
     <div>
-      {getFrete.length === 0 ? (
+      {showForm ? (
         <form
           style={{
             display: "flex",
@@ -62,19 +62,15 @@ const Frete = () => {
         </form>
       ) : (
         <>
-          <button onClick={handleSwitchFrete}>Trocar frete</button>
-          {isLoading ? (
-            <p>Calculando frete...</p>
-          ) : (
-            getFrete.map((frete) => (
-              <div key={frete._id} style={{ marginTop: "2rem", marginLeft: "1rem" }}>
-                <b>valor:</b> {frete.valorFrete}
-                <b>praso:</b> {frete.prazoEntrega}
-                <b>data:</b> {frete.dataPrevistaEntrega}
-                <b> tipo:</b> {frete.nomeTransportadora}
-              </div>
-            ))
-          )}
+          <button onClick={handleTrocarFrete}>Trocar frete</button>
+          {getFrete.map((frete) => (
+            <div key={frete._id} style={{ marginTop: "2rem", marginLeft: "1rem" }}>
+              <b>valor:</b> {frete.valorFrete}
+              <b>praso:</b> {frete.prazoEntrega}
+              <b>data:</b> {frete.dataPrevistaEntrega}
+              <b> tipo:</b> {frete.nomeTransportadora}
+            </div>
+          ))}
         </>
       )}
     </div>
