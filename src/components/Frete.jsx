@@ -13,7 +13,7 @@ const Frete = () => {
         .get(`http://localhost:3001/api/frete/${clerkUserId}`)
         .then((response) => {
           setGetFrete(response.data);
-          console.log("data", data);
+    
         })
         .catch((error) => {
           console.log("Erro ao visualizar frete.", error);
@@ -37,6 +37,11 @@ const Frete = () => {
       });
   };
 
+  const handleSwitchFrete = () => {
+    setGetFrete(true);
+    setGetFrete([])
+  }
+
   return (
     <div>
       {getFrete.length === 0 ? (
@@ -54,14 +59,21 @@ const Frete = () => {
           </div>
         </form>
       ) : (
-        getFrete.map((frete) => (
-          <div key={frete._id} style={{ marginTop: "2rem", marginLeft: "1rem" }}>
-            <b>valor:</b> {frete.valorFrete}
-            <b>praso:</b> {frete.prazoEntrega}
-            <b>data:</b> {frete.dataPrevistaEntrega}
-            <b> tipo:</b> {frete.nomeTransportadora}
-          </div>
-        ))
+        <>
+        <button onClick={handleSwitchFrete}>Trocar frete</button>
+        {
+             getFrete.map((frete) => (
+                <div key={frete._id} style={{ marginTop: "2rem", marginLeft: "1rem" }}>
+                  <b>valor:</b> {frete.valorFrete}
+                  <b>praso:</b> {frete.prazoEntrega}
+                  <b>data:</b> {frete.dataPrevistaEntrega}
+                  <b> tipo:</b> {frete.nomeTransportadora}
+                </div>
+              ))
+        }
+       
+
+        </>
       )}
     </div>
   );
