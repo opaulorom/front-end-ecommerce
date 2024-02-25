@@ -8,17 +8,15 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  
   return (
     <>
       <div className={styles.ContainerHeader}>
-    
         <div
           style={{
             display: "flex",
             alignItems: "center",
             position: "relative",
-            marginTop:'-2rem'
+            marginTop: "-2rem",
           }}
         >
           {/* Ícone à esquerda */}
@@ -26,54 +24,83 @@ const Header = () => {
             style={{
               position: "absolute",
               left: "2rem", // Posiciona o elemento no lado esquerdo
-              zIndex:"999999"
-          
+              zIndex: "999999",
             }}
           >
-           <Link to={"/home"}><img  src="https://i.ibb.co/BZZ2571/Mediewallogo.png" style={{width:"12vw"}}/></Link>
+            <Link to={"/home"}>
+              <img
+                src="https://i.ibb.co/BZZ2571/Mediewallogo.png"
+                style={{ width: "12vw" }}
+              />
+            </Link>
           </i>
 
           {/* Componente SearchBar à direita */}
-          <div style={{ marginRight: "1.5rem",marginLeft:"35rem", zIndex:"9999"}} className={styles.SearchBar}>
+          <div
+            style={{
+              marginRight: "1.5rem",
+              marginLeft: "35rem",
+              zIndex: "9999",
+            }}
+            className={styles.SearchBar}
+          >
             {" "}
             {/* Margem esquerda automática para empurrar para a direita */}
             <SearchBar />
           </div>
 
-          <div
-        
-            className={styles.desktopContainer}
-          >
-           <Link to={"/perfil"}> <img src="https://i.ibb.co/L1tX6LY/user-2.png" alt="" /></Link>
-           
-           <Link to={"/favoritos"} style={{
-            cursor:"pointer"
-           }}><img src="https://i.ibb.co/2ZnFQfq/heart-1.png" alt="" /></Link> 
+          <div className={styles.desktopContainer}>
+            <Link to={"/perfil"}>
+              {" "}
+              <img src="https://i.ibb.co/L1tX6LY/user-2.png" alt="" />
+            </Link>
 
-            <img src="https://i.ibb.co/FwNpdzD/shopping-bag-1.png" alt="" />
+            <Link
+              to={"/favoritos"}
+              style={{
+                cursor: "pointer",
+              }}
+            >
+              <img src="https://i.ibb.co/2ZnFQfq/heart-1.png" alt="" />
+            </Link>
+            <Link to={"/cart"} style={{ position: 'relative', display: 'inline-block' }}>
+  <img src="https://i.ibb.co/FwNpdzD/shopping-bag-1.png" alt="" />
+  <span style={{
+    position: 'absolute',
+    top: '-10px',
+    right: '-10px',
+    width: '20px',
+    height: '20px',
+    backgroundColor: 'red',
+    color: 'white',
+    borderRadius: '50%',
+    fontSize: '13px',
+    fontWeight: 'bold',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }}>3</span>
+</Link>
+
+
+
           </div>
-
-
-        
-          <div></div>
         </div>
         <div className={styles.MobileHeader}>
-            <FavoriteBorderIcon style={{ fontSize: "1.8rem"}} />
-            <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem" }} />
-            <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem" }} />
-            
-          </div>
-          <div
-    style={{
-      marginTop: "-10rem",
-      zIndex: 1, // Define o z-index para 1
-     position:"absolute"
-    }}
-  >
-    <CategoriesList />
-  </div>
+          <FavoriteBorderIcon style={{ fontSize: "1.8rem" }} />
+          <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem" }} />
+          <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem" }} />
+        </div>
+        <div
+          style={{
+            marginTop: "-10rem",
+            zIndex: 1, // Define o z-index para 1
+            position: "absolute",
+          }}
+        >
+          <CategoriesList />
+        </div>
       </div>
-      
     </>
   );
 };

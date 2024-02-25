@@ -22,7 +22,6 @@ import CategoryProducts from "./components/CategoryProducts";
 import DiscountProducts from "./components/DiscountProducts";
 import DiscountedProductsPage from "./components/DiscountedProductsPage";
 
-
 import NoMatch from "./components/NoMatch";
 import Layout from "./components/Layout";
 import Protected from "./components/Protected";
@@ -31,11 +30,7 @@ import DiscountProductsByCategoryAndPorcentage from "./components/DiscountProduc
 import { ptBR } from "@clerk/localizations";
 import Heart from "./components/Heart";
 import { FavoritesProvider } from "./context/FavoritesContext";
-;
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-
-
-
 
 const Root = () => (
   <Routes>
@@ -44,10 +39,6 @@ const Root = () => (
     <Route path="/categorias" element={<Categories />} />
     <Route path="/categoriasMobile" element={<CategoriesMobile />} />
     <Route path="/favoritos" element={<Heart />} />
-
-
-
-    
     <Route path="/carrinho" element={<Cart />} />
     <Route path="/perfil" element={<Profile />} />
     <Route path="/products" element={<Products />} />
@@ -61,47 +52,48 @@ const Root = () => (
     />
     <Route path="/search/product/:query" element={<SearchResults />} />
     <Route path="/" element={<SearchBar />} />
-
     // Adicione a rota
-<Route
-  path="/categories/:category/subcategories"
-  element={<CategorySubcategories />}
-/>
-<Route path="/categories/:category/:subcategory/products" element={<CategoryProducts />} />
+    <Route
+      path="/categories/:category/subcategories"
+      element={<CategorySubcategories />}
+    />
+    <Route
+      path="/categories/:category/:subcategory/products"
+      element={<CategoryProducts />}
+    />
+    <Route
+      path="/productsByDiscountPercentage/:discount"
+      element={<DiscountProducts />}
+    />
+    <Route path="/produtos/vestidos" element={<DiscountedProductsPage />} />
+    <Route path="/perfil" element={<Profile />} />
+    <Route
+      path="/products/discount/:discount/category/:category"
+      element={<DiscountProductsByCategoryAndPorcentage />}
+    />
+    <Route path="*" element={<NoMatch />} />
+    <Route path="/protected" element={<Protected />} />
+    <Route path="/" element={<Layout />}>
+      <Route index element={<App />} />
+    </Route>
+    <Route path="/cart" element={<Cart />} />
 
-<Route path="/productsByDiscountPercentage/:discount" element={<DiscountProducts />} />
-<Route path="/produtos/vestidos" element={<DiscountedProductsPage />} />
-<Route path="/perfil" element={<Profile />} />
-<Route path="/products/discount/:discount/category/:category" element={<DiscountProductsByCategoryAndPorcentage />} />
-
-
-
-<Route path="*" element={<NoMatch />} />
-          <Route path="/protected" element={<Protected />} />
-          <Route path="/" element={<Layout />}>
-            <Route index element={<App />} />
-          </Route>
   </Routes>
 );
 
 createRoot(document.getElementById("root")).render(
-  <ClerkProvider publishableKey={publishableKey} localization={ptBR} >
-  <FavoritesProvider>
-
-  <React.StrictMode>
-
-    <BrowserRouter>
-      <ErrorBoundary>
-        <Provider>
-          <Root />
-        </Provider>
-      </ErrorBoundary>
-    </BrowserRouter>
-
-  </React.StrictMode>
-  </FavoritesProvider>,
-
+  <ClerkProvider publishableKey={publishableKey} localization={ptBR}>
+    <FavoritesProvider>
+      <React.StrictMode>
+        <BrowserRouter>
+          <ErrorBoundary>
+            <Provider>
+              <Root />
+            </Provider>
+          </ErrorBoundary>
+        </BrowserRouter>
+      </React.StrictMode>
+    </FavoritesProvider>
+    ,
   </ClerkProvider>
-
-
 );
