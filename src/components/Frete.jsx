@@ -11,7 +11,7 @@ const Frete = () => {
     if (isLoaded && isSignedIn) {
       const clerkUserId = user.id;
       axios
-        .get(`https://serveradmin-whhj.onrender.com/api/frete/${clerkUserId}`)
+        .get(`http://localhost:3001/api/frete/${clerkUserId}`)
         .then((response) => {
           setGetFrete(response.data);
           console.log("data", data);
@@ -29,7 +29,7 @@ const Frete = () => {
     const clerkUserId = user.id;
 
     axios
-      .post(`https://serveradmin-whhj.onrender.com/api/frete/${clerkUserId}`, { cep })
+      .post(`http://localhost:3001/api/frete/${clerkUserId}`, { cep })
       .then((response) => {
         setGetFrete(response.data);
         setShowForm(false); // Esconde o formulário após a pesquisa
