@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import "./ProductDetails.css";
 import ProductSizes from "./ProductSizes";
 import Header from "./Header";
+import Frete from "./Frete";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -64,6 +65,9 @@ const ProductDetails = () => {
       );
     }
   };
+
+
+
 
   return (
     <div>
@@ -135,7 +139,23 @@ const ProductDetails = () => {
         sizes={sizesFromDatabase}
         selectedSize={selectedSize} // Passa o tamanho selecionado como propriedade
         onSelectSize={(size) => setSelectedSize(size)} // Função para atualizar o tamanho selecionado
-      />    </div>
+      />   
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <Frete/>
+
+      
+      
+      
+      
+       </div>
   );
 };
 
