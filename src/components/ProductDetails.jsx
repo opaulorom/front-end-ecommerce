@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import "./ProductDetails.css";
 import ProductSizes from "./ProductSizes";
 import Header from "./Header";
-import Frete from "./Frete";
+import FreteComponent from "./FreteComponent";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -149,7 +149,7 @@ const ProductDetails = () => {
       
       
       
-      <Frete/>
+      <FreteComponent/>
 
       
       
