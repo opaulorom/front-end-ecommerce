@@ -1,22 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUser } from "@clerk/clerk-react";
+
 const FreteComponent = () => {
-  const [cep, setCep] = useState('');
+  const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
-  const {  user } = useUser();
+  const { user } = useUser();
+
+  useEffect(() => {
+    localStorage.setItem('cep', cep);
+  }, [cep]);
+
+  useEffect(() => {
+    const fetchFrete = async () => {
+      try {
+        const clerkUserId = user.id;
+
+        // Faz a solicitação GET para obter os dados atualizados do frete
+        const responseGet = await axios.get(`http://localhost:3001/api/frete/${clerkUserId}`);
+        setFrete(responseGet.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchFrete();
+  }, [cep, user]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-        const clerkUserId = user.id;
+      const clerkUserId = user.id;
 
       // Faz a solicitação POST para obter os dados do frete com o novo CEP
-      const responsePost = await axios.post(`http://localhost:3001/api/frete/${clerkUserId}`, { cep });
-      setFrete(responsePost.data);
+      await axios.post(`http://localhost:3001/api/frete/${clerkUserId}`, { cep });
 
-      // Faz a solicitação GET para obter os dados atualizados do frete
+      // Atualiza o estado do frete com os dados do frete da requisição GET
       const responseGet = await axios.get(`http://localhost:3001/api/frete/${clerkUserId}`);
       setFrete(responseGet.data);
     } catch (error) {
@@ -40,7 +60,7 @@ const FreteComponent = () => {
         <div>
           {frete.map((item, index) => (
             <div key={index}>
-                            <b>logo:</b> <img src={item.logo} alt="logo das transportadoras" style={{width:"10vw"}}  />
+              <b>logo:</b> <img src={item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
 
               <p>Nome da Transportadora: {item.nomeTransportadora}</p>
               <p>Data Prevista de Entrega: {item.dataPrevistaEntrega}</p>
