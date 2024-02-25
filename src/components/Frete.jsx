@@ -14,7 +14,6 @@ const Frete = () => {
         .get(`http://localhost:3001/api/frete/${clerkUserId}`)
         .then((response) => {
           setGetFrete(response.data);
-          console.log("data", data);
         })
         .catch((error) => {
           console.log("Erro ao visualizar frete.", error);
