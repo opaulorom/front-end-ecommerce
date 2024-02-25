@@ -63,27 +63,31 @@ const Header = () => {
             >
               <img src="https://i.ibb.co/2ZnFQfq/heart-1.png" alt="" />
             </Link>
-            <Link to={"/cart"} style={{ position: 'relative', display: 'inline-block' }}>
-  <img src="https://i.ibb.co/FwNpdzD/shopping-bag-1.png" alt="" />
-  <span style={{
-    position: 'absolute',
-    top: '-10px',
-    right: '-10px',
-    width: '20px',
-    height: '20px',
-    backgroundColor: 'red',
-    color: 'white',
-    borderRadius: '50%',
-    fontSize: '13px',
-    fontWeight: 'bold',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }}>3</span>
-</Link>
-
-
-
+            <Link
+              to={"/cart"}
+              style={{ position: "relative", display: "inline-block" }}
+            >
+              <img src="https://i.ibb.co/FwNpdzD/shopping-bag-1.png" alt="" />
+              <span
+                style={{
+                  position: "absolute",
+                  top: "-10px",
+                  right: "-10px",
+                  width: "20px",
+                  height: "20px",
+                  backgroundColor: "red",
+                  color: "white",
+                  borderRadius: "50%",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                3
+              </span>
+            </Link>
           </div>
         </div>
         <div className={styles.MobileHeader}>
