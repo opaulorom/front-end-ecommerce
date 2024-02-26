@@ -23,16 +23,27 @@ const Cart = () => {
     }
   }, [isLoaded, isSignedIn, user]);
 
- 
   return (
     <div>
-            <Header/>
+      <Header />
       <Navbar />
       {getCart.length === 0 ? (
-            <div style={{display:'flex', flexDirection:"column",alignItems:"center", justifyContent:"center", marginTop:"-5rem"}}>
-            <img src='<https://i.ibb.co/x765V9y/bag-4.png>' alt=""  style={{width:"15vw"}}/>
-            <p>O carrinho está vazio.</p>
-            </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "-5rem",
+          }}
+        >
+          <img
+            src="<https://i.ibb.co/x765V9y/bag-4.png>"
+            alt=""
+            style={{ width: "15vw" }}
+          />
+          <p>O carrinho está vazio.</p>
+        </div>
       ) : (
         getCart.map((item, index) => (
           <div key={index} style={{ marginTop: "10rem", marginLeft: "1rem" }}>
@@ -58,17 +69,20 @@ const Cart = () => {
                       setGetCart(response.data.cart.products);
                     })
                     .catch((error) => {
-                      console.log("Erro ao atualizar quantidade do produto no carrinho.", error);
+                      console.log(
+                        "Erro ao atualizar quantidade do produto no carrinho.",
+                        error
+                      );
                     });
                 }
               }}
+              disabled={item.quantity <= 0} // Desativa o botão se a quantidade for menor ou igual a zero
             >
               -
             </button>
             <input
               type="number"
               value={item.quantity}
-              
               onChange={(e) => {
                 const newQuantity = parseInt(e.target.value);
                 const newCart = [...getCart];
@@ -76,7 +90,7 @@ const Cart = () => {
                 setGetCart(newCart);
               }}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   const newQuantity = parseInt(e.target.value);
                   const newCart = [...getCart];
                   newCart[index].quantity = newQuantity;
@@ -93,12 +107,14 @@ const Cart = () => {
                       setGetCart(response.data.cart.products);
                     })
                     .catch((error) => {
-                      console.log("Erro ao atualizar quantidade do produto no carrinho.", error);
+                      console.log(
+                        "Erro ao atualizar quantidade do produto no carrinho.",
+                        error
+                      );
                     });
                 }
               }}
             />
-            
             <button
               onClick={() => {
                 const newQuantity = item.quantity + 1;
@@ -117,20 +133,18 @@ const Cart = () => {
                     setGetCart(response.data.cart.products);
                   })
                   .catch((error) => {
-                    console.log("Erro ao atualizar quantidade do produto no carrinho.", error);
+                    console.log(
+                      "Erro ao atualizar quantidade do produto no carrinho.",
+                      error
+                    );
                   });
               }}
+              disabled={item.quantity <= 0} // Desativa o botão se a quantidade for menor ou igual a zero
             >
               +
             </button>
           </div>
         ))
-        
-        
-        
-        
-        
-        
       )}
     </div>
   );
