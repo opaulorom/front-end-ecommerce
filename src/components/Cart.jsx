@@ -43,41 +43,30 @@ const Cart = () => {
 
   return (
     <div>
-      <Header/>
-
+            <Header/>
       <Navbar />
       {getCart.length === 0 ? (
-        
-        <> 
-        <div style={{display:'flex', flexDirection:"column",alignItems:"center", justifyContent:"center", marginTop:"15rem"}}>
-        <img src='https://i.ibb.co/x765V9y/bag-4.png' alt=""  style={{width:"15vw"}}/>
-        <p>O carrinho está vazio.</p>
-        </div>
-        
-        
-        </>
-       
-      ) : (
-        getCart.map((item, index) => {
-          // Encontra o produto correspondente na lista de produtos
-          const product = products.find((product) => product._id === item.productId);
-          return (
-            <div key={index} style={{ marginTop: "2rem", marginLeft: "1rem" }}>
-              <b>nome:</b> {product.name}
-              <b>preço:</b> {product.price}
-              <b>tamanho:</b> {product.size}
-              <div>
-                <button onClick={handleDecrementQuantity}>-</button>
-                <input
-                  type="number"
-                  value={quantity}
-                  onChange={handleQuantityChange}
-                />
-                <button onClick={handleIncrementQuantity}>+</button>
-              </div>
+            <div style={{display:'flex', flexDirection:"column",alignItems:"center", justifyContent:"center", marginTop:"-5rem"}}>
+            <img src='<https://i.ibb.co/x765V9y/bag-4.png>' alt=""  style={{width:"15vw"}}/>
+            <p>O carrinho está vazio.</p>
             </div>
-          );
-        })
+      ) : (
+        getCart.map((item, index) => (
+          <div key={index} style={{ marginTop: "10rem", marginLeft: "1rem" }}>
+            <b>nome:</b> {item.productId.name}
+            <b>preço:</b> {item.productId.price}
+            <b>tamanho:</b> {item.productId.size}
+            <div>
+              <button onClick={handleDecrementQuantity}>-</button>
+              <input
+                type="number"
+                value={quantity}
+                onChange={handleQuantityChange}
+              />
+              <button onClick={handleIncrementQuantity}>+</button>
+            </div>
+          </div>
+        ))
       )}
     </div>
   );
