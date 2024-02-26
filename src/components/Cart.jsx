@@ -45,8 +45,6 @@ const Cart = () => {
     <div>
       <Header/>
 
-
-
       <Navbar />
       {getCart.length === 0 ? (
         
@@ -60,22 +58,26 @@ const Cart = () => {
         </>
        
       ) : (
-        getCart.map((item, index) => (
-          <div key={index} style={{ marginTop: "2rem", marginLeft: "1rem" }}>
-            <b>nome:</b> {item.productId.name}
-            <b>preço:</b> {item.productId.price}
-            <b>tamanho:</b> {item.productId.size}
-            <div>
-              <button onClick={handleDecrementQuantity}>-</button>
-              <input
-                type="number"
-                value={quantity}
-                onChange={handleQuantityChange}
-              />
-              <button onClick={handleIncrementQuantity}>+</button>
+        getCart.map((item, index) => {
+          // Encontra o produto correspondente na lista de produtos
+          const product = products.find((product) => product._id === item.productId);
+          return (
+            <div key={index} style={{ marginTop: "2rem", marginLeft: "1rem" }}>
+              <b>nome:</b> {product.name}
+              <b>preço:</b> {product.price}
+              <b>tamanho:</b> {product.size}
+              <div>
+                <button onClick={handleDecrementQuantity}>-</button>
+                <input
+                  type="number"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                />
+                <button onClick={handleIncrementQuantity}>+</button>
+              </div>
             </div>
-          </div>
-        ))
+          );
+        })
       )}
     </div>
   );
