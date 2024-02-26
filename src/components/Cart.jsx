@@ -6,7 +6,6 @@ import Header from "./Header";
 
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
-  const [quantity, setQuantity] = useState(1);
 
   const { isSignedIn, user, isLoaded } = useUser();
 
@@ -24,23 +23,7 @@ const Cart = () => {
     }
   }, [isLoaded, isSignedIn, user]);
 
-  const handleIncrementQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const handleDecrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
-
-  const handleQuantityChange = (event) => {
-    const newQuantity = parseInt(event.target.value, 10);
-    if (!isNaN(newQuantity) && newQuantity >= 1) {
-      setQuantity(newQuantity);
-    }
-  };
-
+ 
   return (
     <div>
             <Header/>
@@ -56,17 +39,73 @@ const Cart = () => {
             <b>nome:</b> {item.productId.name}
             <b>preço:</b> {item.productId.price}
             <b>tamanho:</b> {item.productId.size}
-            <div>
-              <button onClick={handleDecrementQuantity}>-</button>
-              <input
-                type="number"
-                value={quantity}
-                onChange={handleQuantityChange}
-              />
-              <button onClick={handleIncrementQuantity}>+</button>
-            </div>
+            <input
+              type="number"
+              value={item.quantity}
+              onChange={(e) => {
+                const newQuantity = parseInt(e.target.value);
+                const newCart = [...getCart];
+                newCart[index].quantity = newQuantity;
+                setGetCart(newCart);
+              }}
+            />
+            <button
+              onClick={() => {
+                const newQuantity = item.quantity - 1;
+                if (newQuantity >= 0) {
+                  const newCart = [...getCart];
+                  newCart[index].quantity = newQuantity;
+                  setGetCart([...newCart]);
+                  const clerkUserId = user.id;
+                  const productId = item.productId._id;
+                  axios
+                    .put(
+                      `http://localhost:3001/api/update-quantity/${clerkUserId}/${productId}`,
+                      { quantity: newQuantity }
+                    )
+                    .then((response) => {
+                      // Atualiza o carrinho com os dados atualizados do servidor
+                      setGetCart(response.data.cart.products);
+                    })
+                    .catch((error) => {
+                      console.log("Erro ao atualizar quantidade do produto no carrinho.", error);
+                    });
+                }
+              }}
+            >
+              -
+            </button>
+            <button
+              onClick={() => {
+                const newQuantity = item.quantity + 1;
+                const newCart = [...getCart];
+                newCart[index].quantity = newQuantity;
+                setGetCart([...newCart]);
+                const clerkUserId = user.id;
+                const productId = item.productId._id;
+                axios
+                  .put(
+                    `http://localhost:3001/api/update-quantity/${clerkUserId}/${productId}`,
+                    { quantity: newQuantity }
+                  )
+                  .then((response) => {
+                    // Atualiza o carrinho com os dados atualizados do servidor
+                    setGetCart(response.data.cart.products);
+                  })
+                  .catch((error) => {
+                    console.log("Erro ao atualizar quantidade do produto no carrinho.", error);
+                  });
+              }}
+            >
+              +
+            </button>
           </div>
         ))
+        
+        
+        
+        
+        
       )}
     </div>
   );
