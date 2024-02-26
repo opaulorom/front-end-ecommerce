@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
+import Header from "./Header";
 
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
@@ -42,11 +43,15 @@ const Cart = () => {
 
   return (
     <div>
+      <Header/>
+
+
+
       <Navbar />
       {getCart.length === 0 ? (
         
         <> 
-        <div style={{display:'flex', flexDirection:"column",alignItems:"center", justifyContent:"center", marginTop:"10rem"}}>
+        <div style={{display:'flex', flexDirection:"column",alignItems:"center", justifyContent:"center", marginTop:"15rem"}}>
         <img src='https://i.ibb.co/x765V9y/bag-4.png' alt=""  style={{width:"15vw"}}/>
         <p>O carrinho está vazio.</p>
         </div>
