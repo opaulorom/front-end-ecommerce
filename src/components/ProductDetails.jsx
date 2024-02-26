@@ -6,13 +6,14 @@ import "./ProductDetails.css";
 import ProductSizes from "./ProductSizes";
 import Header from "./Header";
 import FreteComponent from "./FreteComponent";
-
+import { useUser } from "@clerk/clerk-react";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [sizesFromDatabase, setSizesFromDatabase] = useState([]);
   const [selectedSize, setSelectedSize] = useState(""); // Adiciona este estado
+  const { isSignedIn, user, isLoaded } = useUser();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -66,7 +67,26 @@ const ProductDetails = () => {
     }
   };
 
+  const handleAddToCart = async () => {
+    const clerkUserId = user.id;
 
+    try {
+      const response = await axios.post(
+        `http://localhost:3001/api/add-to-cart/${clerkUserId}`,
+        {
+          productId: product._id,
+          quantity: 1, // Defina a quantidade aqui
+          size: selectedSize, // Use o tamanho selecionado
+          color: product.variations[currentImageIndex].color, // Use a cor atual
+        }
+      );
+      console.log(response.data.message);
+      // Aqui você pode atualizar o estado do carrinho na sua aplicação, se necessário
+    } catch (error) {
+      console.error("Erro ao adicionar produto ao carrinho:", error);
+    }
+  };
+  
 
 
   return (
@@ -152,7 +172,8 @@ const ProductDetails = () => {
       <FreteComponent/>
 
       
-      
+      <button onClick={handleAddToCart}>Adicionar ao Carrinho</button>
+
       
       
        </div>
