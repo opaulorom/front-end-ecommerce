@@ -48,6 +48,28 @@ const Cart = () => {
                 newCart[index].quantity = newQuantity;
                 setGetCart(newCart);
               }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  const newQuantity = parseInt(e.target.value);
+                  const newCart = [...getCart];
+                  newCart[index].quantity = newQuantity;
+                  setGetCart(newCart);
+                  const clerkUserId = user.id;
+                  const productId = item.productId._id;
+                  axios
+                    .put(
+                      `http://localhost:3001/api/update-quantity/${clerkUserId}/${productId}`,
+                      { quantity: newQuantity }
+                    )
+                    .then((response) => {
+                      // Atualiza o carrinho com os dados atualizados do servidor
+                      setGetCart(response.data.cart.products);
+                    })
+                    .catch((error) => {
+                      console.log("Erro ao atualizar quantidade do produto no carrinho.", error);
+                    });
+                }
+              }}
             />
             <button
               onClick={() => {
@@ -101,6 +123,7 @@ const Cart = () => {
             </button>
           </div>
         ))
+        
         
         
         
