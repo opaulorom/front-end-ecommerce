@@ -6,8 +6,6 @@ import Header from "./Header";
 
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
-  const [availableQuantities, setAvailableQuantities] = useState({});
-  const [message, setMessage] = useState("");
 
   const { isSignedIn, user, isLoaded } = useUser();
 
@@ -18,45 +16,12 @@ const Cart = () => {
         .get(`http://localhost:3001/api/cart/${clerkUserId}`)
         .then((response) => {
           setGetCart(response.data.cart.products);
-          const quantities = {};
-          response.data.cart.products.forEach((product) => {
-            quantities[product.productId._id] = product.productId.quantity;
-          });
-          setAvailableQuantities(quantities);
         })
         .catch((error) => {
           console.log("Erro ao visualizar frete.", error);
         });
     }
   }, [isLoaded, isSignedIn, user]);
-
-  const handleAdd = (productId) => {
-    const newQuantity = getCart.find((item) => item.productId._id === productId).quantity + 1;
-    if (newQuantity <= availableQuantities[productId]) {
-      const newCart = getCart.map((item) => {
-        if (item.productId._id === productId) {
-          return { ...item, quantity: newQuantity };
-        }
-        return item;
-      });
-      setGetCart(newCart);
-    } else {
-      setMessage(`Só tem ${availableQuantities[productId]} produtos em estoque.`);
-    }
-  };
-
-  const handleRemove = (productId) => {
-    const newQuantity = getCart.find((item) => item.productId._id === productId).quantity - 1;
-    if (newQuantity >= 0) {
-      const newCart = getCart.map((item) => {
-        if (item.productId._id === productId) {
-          return { ...item, quantity: newQuantity };
-        }
-        return item;
-      });
-      setGetCart(newCart);
-    }
-  };
 
   return (
     <div>
@@ -87,8 +52,33 @@ const Cart = () => {
               <b>preço:</b> {item.productId.price}
               <b>tamanho:</b> {item.productId.size}
               <button
-                onClick={() => handleRemove(item.productId._id)}
-                disabled={item.quantity === 0}
+                onClick={() => {
+                  const newQuantity = item.quantity - 1;
+                  if (newQuantity >= 0) {
+                    const newCart = [...getCart];
+                    newCart[index].quantity = newQuantity;
+                    const clerkUserId = user.id;
+                    const productId = item.productId._id;
+                    axios
+                      .put(
+                        `http://localhost:3001/api/update-quantity/${clerkUserId}/${productId}`,
+                        { quantity: newQuantity }
+                      )
+                      .then((response) => {
+                        setGetCart((prevCart) => {
+                          const newCart = [...prevCart];
+                          newCart[index].quantity = newQuantity;
+                          return newCart;
+                        });
+                      })
+                      .catch((error) => {
+                        console.log(
+                          "Erro ao atualizar quantidade do produto no carrinho.",
+                          error
+                        );
+                      });
+                  }
+                }}
               >
                 -
               </button>
@@ -97,28 +87,69 @@ const Cart = () => {
                 value={item.quantity}
                 onChange={(e) => {
                   const newQuantity = parseInt(e.target.value);
-                  if (newQuantity <= availableQuantities[item.productId._id]) {
-                    const newCart = getCart.map((cartItem) => {
-                      if (cartItem.productId._id === item.productId._id) {
-                        return { ...cartItem, quantity: newQuantity };
-                      }
-                      return cartItem;
-                    });
-                    setGetCart(newCart);
-                  } else {
-                    setMessage(`Só tem ${availableQuantities[item.productId._id]} produtos em estoque.`);
+                  const newCart = [...getCart];
+                  newCart[index].quantity = newQuantity;
+                  setGetCart(newCart);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    const newQuantity = parseInt(e.target.value);
+                    const newCart = [...getCart];
+                    newCart[index].quantity = newQuantity;
+                    const clerkUserId = user.id;
+                    const productId = item.productId._id;
+                    axios
+                      .put(
+                        `http://localhost:3001/api/update-quantity/${clerkUserId}/${productId}`,
+                        { quantity: newQuantity }
+                      )
+                      .then((response) => {
+                        setGetCart((prevCart) => {
+                          const newCart = [...prevCart];
+                          newCart[index].quantity = newQuantity;
+                          return newCart;
+                        });
+                      })
+                      .catch((error) => {
+                        console.log(
+                          "Erro ao atualizar quantidade do produto no carrinho.",
+                          error
+                        );
+                      });
                   }
                 }}
               />
               <button
-                onClick={() => handleAdd(item.productId._id)}
-                disabled={item.quantity === availableQuantities[item.productId._id]}
+                onClick={() => {
+                  const newQuantity = item.quantity + 1;
+                  const newCart = [...getCart];
+                  newCart[index].quantity = newQuantity;
+                  const clerkUserId = user.id;
+                  const productId = item.productId._id;
+                  axios
+                    .put(
+                      `http://localhost:3001/api/update-quantity/${clerkUserId}/${productId}`,
+                      { quantity: newQuantity }
+                    )
+                    .then((response) => {
+                      setGetCart((prevCart) => {
+                        const newCart = [...prevCart];
+                        newCart[index].quantity = newQuantity;
+                        return newCart;
+                      });
+                    })
+                    .catch((error) => {
+                      console.log(
+                        "Erro ao atualizar quantidade do produto no carrinho.",
+                        error
+                      );
+                    });
+                }}
               >
                 +
               </button>
             </div>
           ))}
-          {message && <p>{message}</p>}
         </>
       )}
     </div>
