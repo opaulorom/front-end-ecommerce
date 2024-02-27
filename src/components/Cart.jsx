@@ -219,7 +219,7 @@ const Cart = () => {
                           setOpen(false), handleDelete(item.productId._id);
                         }}
                       >
-                        continuar
+                        Exclui
                       </Button>
                       <Button
                         variant="outlined"
