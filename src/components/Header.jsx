@@ -6,8 +6,11 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Header = () => {
+  const { cartItemCount } = useCart();
+
   return (
     <>
       <div className={styles.ContainerHeader}>
@@ -85,7 +88,7 @@ const Header = () => {
                   alignItems: "center",
                 }}
               >
-                3
+        {cartItemCount}
               </span>
             </Link>
           </div>

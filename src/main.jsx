@@ -30,6 +30,7 @@ import DiscountProductsByCategoryAndPorcentage from "./components/DiscountProduc
 import { ptBR } from "@clerk/localizations";
 import Heart from "./components/Heart";
 import { FavoritesProvider } from "./context/FavoritesContext";
+import { CartProvider } from "./context/CartContext";
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const Root = () => (
@@ -77,23 +78,25 @@ const Root = () => (
       <Route index element={<App />} />
     </Route>
     <Route path="/cart" element={<Cart />} />
-
   </Routes>
 );
 
 createRoot(document.getElementById("root")).render(
   <ClerkProvider publishableKey={publishableKey} localization={ptBR}>
-    <FavoritesProvider>
-      <React.StrictMode>
-        <BrowserRouter>
-          <ErrorBoundary>
-            <Provider>
-              <Root />
-            </Provider>
-          </ErrorBoundary>
-        </BrowserRouter>
-      </React.StrictMode>
-    </FavoritesProvider>
-    ,
+    <CartProvider>
+      {" "}
+      {/* Envolve toda a aplicação com o CartProvider */}
+      <FavoritesProvider>
+        <React.StrictMode>
+          <BrowserRouter>
+            <ErrorBoundary>
+              <Provider>
+                <Root />
+              </Provider>
+            </ErrorBoundary>
+          </BrowserRouter>
+        </React.StrictMode>
+      </FavoritesProvider>
+    </CartProvider>
   </ClerkProvider>
 );

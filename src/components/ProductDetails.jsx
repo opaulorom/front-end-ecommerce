@@ -7,6 +7,7 @@ import ProductSizes from "./ProductSizes";
 import Header from "./Header";
 import FreteComponent from "./FreteComponent";
 import { useUser } from "@clerk/clerk-react";
+import { useCart } from "../context/CartContext";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
@@ -66,11 +67,14 @@ const ProductDetails = () => {
       );
     }
   };
+  const { addToCart } = useCart();
 
   const handleAddToCart = async () => {
     const clerkUserId = user.id;
 
     try {
+      addToCart();
+
       const response = await axios.post(
         `http://localhost:3001/api/add-to-cart/${clerkUserId}`,
         {
