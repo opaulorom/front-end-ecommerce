@@ -75,9 +75,10 @@ const ProductDetails = () => {
         `http://localhost:3001/api/add-to-cart/${clerkUserId}`,
         {
           productId: product._id,
-          quantity: 1, // Defina a quantidade aqui
           size: selectedSize, // Use o tamanho selecionado
           color: product.variations[currentImageIndex].color, // Use a cor atual
+          quantity: 1, // Adicione a quantidade do produto
+
         }
       );
       console.log(response.data.message);
