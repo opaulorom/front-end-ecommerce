@@ -194,9 +194,9 @@ const ProductDetails = () => {
         Adicionar ao Carrinho
       </button>
       {openCartModal && (
-        <div className={styles.cartModal}>
-          <div ref={modalRef} className={styles.cartModalContent}>
-            <span className={styles.cartClose} onClick={handleClickCloseModal}>
+        <div className={styles.modal}>
+          <div ref={modalRef} className={styles.modalContent}>
+            <span className={styles.close} onClick={handleClickCloseModal}>
               &times;
             </span>
             <p>This is the content of the modal. You can put anything here.</p>
