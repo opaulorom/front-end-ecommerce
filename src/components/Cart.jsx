@@ -195,14 +195,14 @@ const Cart = () => {
                     })}
                   >
                     <Typography id="nested-modal-title" level="h2">
-                      Are you absolutely sure?
+                    Você tem certeza que quer excluir o produto do carrinho?
+
                     </Typography>
                     <Typography
                       id="nested-modal-description"
                       textColor="text.tertiary"
                     >
-                      This action cannot be undone. This will permanently delete
-                      your account and remove your data from our servers.
+                      Essa ação não pode ser desfeita.
                     </Typography>
                     <Box
                       sx={{
