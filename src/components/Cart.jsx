@@ -176,7 +176,7 @@ const Cart = () => {
                   color="neutral"
                   onClick={() => setOpen(true)}
                 >
-                  Open modal
+                  Excluir
                 </Button>
                 <Modal open={open} onClose={() => setOpen(false)}>
                   <ModalDialog
