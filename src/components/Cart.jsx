@@ -6,7 +6,7 @@ import Header from "./Header";
 
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
-
+  const [handleDeleteProduct, setHandleDeleteProduct] = useState(false)
   const { isSignedIn, user, isLoaded } = useUser();
 
   useEffect(() => {
@@ -23,6 +23,23 @@ const Cart = () => {
     }
   }, [isLoaded, isSignedIn, user]);
 
+
+
+
+
+  const handleDelete = (productId) => {
+    const clerkUserId = user.id;
+    axios
+      .delete(`http://localhost:3001/api/remove-from-cart/${clerkUserId}/${productId}`)
+      .then((response) => {
+        console.log(response.data.message);
+        // Atualize o estado do carrinho na sua aplicação, se necessário
+        setGetCart((prevCart) => prevCart.filter((item) => item.productId !== productId));
+      })
+      .catch((error) => {
+        console.error("Erro ao remover produto do carrinho:", error);
+      });
+  };
   return (
     <div>
       <Header />
@@ -148,6 +165,7 @@ const Cart = () => {
               >
                 +
               </button>
+              <button onClick={() => handleDelete(item.productId._id)}>Excluir produto</button>
             </div>
           ))}
         </>
