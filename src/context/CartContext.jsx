@@ -27,8 +27,12 @@ export const CartProvider = ({ children }) => {
     setCartItemCount((prevCount) => prevCount + 1);
   };
 
+  const removeFromCart = () => {
+    setCartItemCount((prevCount) => prevCount - 1);
+  };
+
   return (
-    <CartContext.Provider value={{ cartItemCount, addToCart }}>
+    <CartContext.Provider value={{ cartItemCount, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );

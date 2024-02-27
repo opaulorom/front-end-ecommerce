@@ -8,11 +8,13 @@ import Button from "@mui/joy/Button";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import Typography from "@mui/joy/Typography";
+import { useCart } from "../context/CartContext";
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
   const [handleDeleteProduct, setHandleDeleteProduct] = useState(false);
   const { isSignedIn, user, isLoaded } = useUser();
   const [open, setOpen] = React.useState(false);
+  const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
 
   useEffect(() => {
     if (isLoaded && isSignedIn) {
@@ -40,6 +42,8 @@ const Cart = () => {
         setGetCart((prevCart) =>
           prevCart.filter((item) => item.productId._id !== productId)
         );
+        removeFromCart(); // Chame a função removeFromCart do contexto do carrinho
+
       })
       .catch((error) => {
         console.error("Erro ao remover produto do carrinho:", error);

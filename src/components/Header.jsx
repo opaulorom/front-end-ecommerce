@@ -32,7 +32,7 @@ const Header = () => {
           >
             <Link to={"/home"}>
               <img
-                src="https://i.ibb.co/BZZ2571/Mediewallogo.png"
+                src="https://i.ibb.co/QY6q085/Logo-mediewal.png"
                 style={{ width: "12vw" }}
               />
             </Link>

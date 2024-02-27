@@ -335,6 +335,7 @@ const CategorySubcategories = () => {
                       isFavorite={favorites[product._id]}
                     />
                   </div>
+                  {product.variations && product.variations.length > 0 && product.variations[0].urls && product.variations[0].urls.length > 0 ? (
 
                     <img
                       src={product.variations[0].urls[0]}
@@ -346,6 +347,8 @@ const CategorySubcategories = () => {
                         marginLeft:"1rem"
                       }}
                     />
+                    ) : null}
+
                     <div
                       style={{
                         display: "flex",

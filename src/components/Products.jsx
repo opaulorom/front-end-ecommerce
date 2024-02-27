@@ -168,6 +168,7 @@ const Products = () => {
                     product.variations.length > 0 &&
                     product.variations[0].urls &&
                     product.variations[0].urls.length > 0 && (
+                      
                       <img
                         className="image"
                         src={product.variations[0].urls[0]}
