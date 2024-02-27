@@ -164,6 +164,7 @@ const Products = () => {
                 className="product-link"
               >
                 <div className="product-card">
+                  
                   {product.variations &&
                     product.variations.length > 0 &&
                     product.variations[0].urls &&

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
@@ -8,13 +8,17 @@ import Header from "./Header";
 import FreteComponent from "./FreteComponent";
 import { useUser } from "@clerk/clerk-react";
 import { useCart } from "../context/CartContext";
+import styles from "./ProductDetails.module.css";
+
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [sizesFromDatabase, setSizesFromDatabase] = useState([]);
-  const [selectedSize, setSelectedSize] = useState(""); // Adiciona este estado
+  const [selectedSize, setSelectedSize] = useState("");
   const { isSignedIn, user, isLoaded } = useUser();
+  const [openCartModal, setOpenCartModal] = useState(false);
+  const modalRef = useRef(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -23,7 +27,6 @@ const ProductDetails = () => {
           `http://localhost:3001/api/product/${productId}`
         );
         setProduct(response.data.product);
-        // Supondo que os tamanhos estejam em uma string no formato "M, H, SS"
         const sizesArray = response.data.product.size
           .split(",")
           .map((size) => size.trim());
@@ -35,6 +38,20 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [productId]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setOpenCartModal(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   if (!product) {
     return <p>Carregando...</p>;
@@ -79,24 +96,33 @@ const ProductDetails = () => {
         `http://localhost:3001/api/add-to-cart/${clerkUserId}`,
         {
           productId: product._id,
-          size: selectedSize, // Use o tamanho selecionado
-          color: product.variations[currentImageIndex].color, // Use a cor atual
-          quantity: 1, // Adicione a quantidade do produto
-
+          size: selectedSize,
+          color: product.variations[currentImageIndex].color,
+          quantity: 1,
         }
       );
       console.log(response.data.message);
-      // Aqui você pode atualizar o estado do carrinho na sua aplicação, se necessário
     } catch (error) {
       console.error("Erro ao adicionar produto ao carrinho:", error);
     }
   };
-  
 
+  const handleClickOpenModal = () => {
+    setOpenCartModal(true);
+  };
+
+  const handleClickCloseModal = () => {
+    setOpenCartModal(false);
+  };
+
+  const handleAddToCartAndOpenModal = () => {
+    handleAddToCart();
+    handleClickOpenModal();
+  };
 
   return (
     <div>
-      <Header/>
+      <Header />
 
       <div>
         <h2>Single Item</h2>
@@ -117,7 +143,6 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Dots */}
       <div className="dot-container">
         {product.variations?.map((variation, index) => (
           <span
@@ -128,7 +153,6 @@ const ProductDetails = () => {
         ))}
       </div>
 
-      {/* Thumbnails */}
       <div className="thumbnail-container">
         {product.variations
           ?.filter(
@@ -153,8 +177,6 @@ const ProductDetails = () => {
           ))}
       </div>
 
-     
-
       <h1>{product.name}</h1>
       <p>R$: ${product.price}</p>
       <p>${product.description}</p>
@@ -162,26 +184,26 @@ const ProductDetails = () => {
       <Navbar />
       <ProductSizes
         sizes={sizesFromDatabase}
-        selectedSize={selectedSize} // Passa o tamanho selecionado como propriedade
-        onSelectSize={(size) => setSelectedSize(size)} // Função para atualizar o tamanho selecionado
-      />   
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      <FreteComponent/>
+        selectedSize={selectedSize}
+        onSelectSize={(size) => setSelectedSize(size)}
+      />
 
-      
-      <button onClick={handleAddToCart}>Adicionar ao Carrinho</button>
+      <FreteComponent />
 
-      
-      
-       </div>
+      <button onClick={handleAddToCartAndOpenModal}>
+        Adicionar ao Carrinho
+      </button>
+      {openCartModal && (
+        <div className={styles.cartModal}>
+          <div ref={modalRef} className={styles.cartModalContent}>
+            <span className={styles.cartClose} onClick={handleClickCloseModal}>
+              &times;
+            </span>
+            <p>This is the content of the modal. You can put anything here.</p>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
