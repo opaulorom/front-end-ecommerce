@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
@@ -30,7 +30,7 @@ const Cart = () => {
     }
   }, [isLoaded, isSignedIn, user]);
 
-  const handleDelete = (productId) => {
+  const handleDelete = useCallback((productId) => {
     const clerkUserId = user.id;
     axios
       .delete(
@@ -43,12 +43,12 @@ const Cart = () => {
           prevCart.filter((item) => item.productId._id !== productId)
         );
         removeFromCart(); // Chame a função removeFromCart do contexto do carrinho
-
       })
       .catch((error) => {
         console.error("Erro ao remover produto do carrinho:", error);
       });
-  };
+  }, [user, removeFromCart]);
+  
   return (
     <div>
       <Header />
@@ -178,7 +178,9 @@ const Cart = () => {
                 <Button
                   variant="outlined"
                   color="neutral"
-                  onClick={() => setOpen(true)}
+                  onClick={(e) => {    
+                    e.preventDefault();
+                    setOpen(true)}}
                   
                   sx={{
                     border:"0"
@@ -221,6 +223,8 @@ const Cart = () => {
                       }}
                     >
                       <Button
+                        type="button" // Adicione esta linha para definir o tipo do botão como "button"
+
                         variant="solid"
                         color="primary"
                         onClick={() => {
