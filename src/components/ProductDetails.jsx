@@ -9,7 +9,8 @@ import FreteComponent from "./FreteComponent";
 import { useUser } from "@clerk/clerk-react";
 import { useCart } from "../context/CartContext";
 import styles from "./ProductDetails.module.css";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
@@ -19,6 +20,7 @@ const ProductDetails = () => {
   const { isSignedIn, user, isLoaded } = useUser();
   const [openCartModal, setOpenCartModal] = useState(false);
   const modalRef = useRef(null);
+  const [isColorAndSizeSelected, setIsColorAndSizeSelected] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -114,14 +116,32 @@ const ProductDetails = () => {
   const handleClickCloseModal = () => {
     setOpenCartModal(false);
   };
-
   const handleAddToCartAndOpenModal = () => {
-    handleAddToCart();
-    handleClickOpenModal();
+    if (selectedSize && product.variations[currentImageIndex].color) {
+      handleAddToCart();
+      handleClickOpenModal();
+      toast.success("Produto adicionado ao carrinho!");
+    } else {
+      // Se a cor ou o tamanho não foram selecionados, exiba um alerta
+      toast.error("Por favor, selecione uma cor e um tamanho.");
+    }
   };
 
   return (
     <div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       <Header />
 
       <div>
@@ -185,7 +205,10 @@ const ProductDetails = () => {
       <ProductSizes
         sizes={sizesFromDatabase}
         selectedSize={selectedSize}
-        onSelectSize={(size) => setSelectedSize(size)}
+        onSelectSize={(size) => {
+          setSelectedSize(size);
+          setIsColorAndSizeSelected(true);
+        }}
       />
 
       <FreteComponent />
