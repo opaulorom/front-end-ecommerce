@@ -17,9 +17,6 @@ const Cart = () => {
   const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
   const [getTotal, setGetTotal] = useState([]);
 
-
-
-  
   useEffect(() => {
     if (isLoaded && isSignedIn) {
       const clerkUserId = user.id;
@@ -34,26 +31,27 @@ const Cart = () => {
     }
   }, [isLoaded, isSignedIn, user]);
 
-  const handleDelete = useCallback((productId) => {
-    const clerkUserId = user.id;
-    axios
-      .delete(
-        `http://localhost:3001/api/remove-from-cart/${clerkUserId}/${productId}`
-      )
-      .then((response) => {
-        console.log(response.data.message);
-        // Atualize o estado do carrinho na sua aplicação, se necessário
-        setGetCart((prevCart) =>
-          prevCart.filter((item) => item.productId._id !== productId)
-        );
-        removeFromCart(); // Chame a função removeFromCart do contexto do carrinho
-      })
-      .catch((error) => {
-        console.error("Erro ao remover produto do carrinho:", error);
-      });
-  }, [user, removeFromCart]);
-  
-
+  const handleDelete = useCallback(
+    (productId) => {
+      const clerkUserId = user.id;
+      axios
+        .delete(
+          `http://localhost:3001/api/remove-from-cart/${clerkUserId}/${productId}`
+        )
+        .then((response) => {
+          console.log(response.data.message);
+          // Atualize o estado do carrinho na sua aplicação, se necessário
+          setGetCart((prevCart) =>
+            prevCart.filter((item) => item.productId._id !== productId)
+          );
+          removeFromCart(); // Chame a função removeFromCart do contexto do carrinho
+        })
+        .catch((error) => {
+          console.error("Erro ao remover produto do carrinho:", error);
+        });
+    },
+    [user, removeFromCart]
+  );
 
   useEffect(() => {
     if (isLoaded && isSignedIn) {
@@ -197,12 +195,12 @@ const Cart = () => {
                 <Button
                   variant="outlined"
                   color="neutral"
-                  onClick={(e) => {    
+                  onClick={(e) => {
                     e.preventDefault();
-                    setOpen(true)}}
-                  
+                    setOpen(true);
+                  }}
                   sx={{
-                    border:"0"
+                    border: "0",
                   }}
                 >
                   Excluir
@@ -224,8 +222,7 @@ const Cart = () => {
                     })}
                   >
                     <Typography id="nested-modal-title" level="h2">
-                    Você tem certeza que quer excluir o produto do carrinho?
-
+                      Você tem certeza que quer excluir o produto do carrinho?
                     </Typography>
                     <Typography
                       id="nested-modal-description"
@@ -243,7 +240,6 @@ const Cart = () => {
                     >
                       <Button
                         type="button" // Adicione esta linha para definir o tipo do botão como "button"
-
                         variant="solid"
                         color="primary"
                         onClick={() => {
@@ -267,13 +263,7 @@ const Cart = () => {
           ))}
         </>
       )}
-{typeof getTotal === 'object' && (
-  <div>
-    {getTotal.totalAmount}
-  </div>
-)}
-
-
+      {typeof getTotal === "object" && <div>{getTotal.totalAmount}</div>}
     </div>
   );
 };
