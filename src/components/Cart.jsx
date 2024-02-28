@@ -15,7 +15,11 @@ const Cart = () => {
   const { isSignedIn, user, isLoaded } = useUser();
   const [open, setOpen] = React.useState(false);
   const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
+  const [getTotal, setGetTotal] = useState([]);
 
+
+
+  
   useEffect(() => {
     if (isLoaded && isSignedIn) {
       const clerkUserId = user.id;
@@ -49,6 +53,21 @@ const Cart = () => {
       });
   }, [user, removeFromCart]);
   
+
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      const clerkUserId = user.id;
+      axios
+        .get(`http://localhost:3001/api/cart/${clerkUserId}/total-price`)
+        .then((response) => {
+          setGetTotal(response.data);
+        })
+        .catch((error) => {
+          console.log("Erro ao visualizar frete.", error);
+        });
+    }
+  }, [isLoaded, isSignedIn, user]);
   return (
     <div>
       <Header />
@@ -248,6 +267,13 @@ const Cart = () => {
           ))}
         </>
       )}
+{typeof getTotal === 'object' && (
+  <div>
+    {getTotal.totalAmount}
+  </div>
+)}
+
+
     </div>
   );
 };
