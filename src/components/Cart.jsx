@@ -9,7 +9,7 @@ import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import Typography from "@mui/joy/Typography";
 import { useCart } from "../context/CartContext";
-import Frete from "./Frete";
+import { Link } from "react-router-dom";
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
   const [handleDeleteProduct, setHandleDeleteProduct] = useState(false);
@@ -264,8 +264,13 @@ const Cart = () => {
           ))}
         </>
       )}
-      <Frete/>
+      
       {typeof getTotal === "object" && <div>{getTotal.totalAmount}</div>}
+      <Link to={"/payment"}>
+      <button >Fazer Pedido</button>
+
+
+      </Link>
     </div>
   );
 };
