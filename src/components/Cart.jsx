@@ -179,6 +179,7 @@ const Cart = () => {
                   variant="outlined"
                   color="neutral"
                   onClick={() => setOpen(true)}
+                  
                   sx={{
                     border:"0"
                   }}
