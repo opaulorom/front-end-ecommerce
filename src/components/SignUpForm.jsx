@@ -4,13 +4,19 @@ import axios from 'axios';
 
 const SignUpForm = () => {
   const clerk = useClerk();
-  const email = clerk.user.emailAddresses[0].emailAddress.toString();
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    if (clerk.user && clerk.user.emailAddresses && clerk.user.emailAddresses.length > 0) {
+      setEmail(clerk.user.emailAddresses[0]?.emailAddress.toString());
+    }
+  }, [clerk.user]);
 
   const [formData, setFormData] = useState({
     userId: clerk.user?.id || '', // Obter o userId do usuário logado
     name:  '',
     cpfCnpj: '',
-    email: email,
+    email: email || '',
     telephone: '',
     postalCode: '',
     address: '',
