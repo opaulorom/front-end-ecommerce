@@ -24,6 +24,10 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
+    setLocalCartItemCount(cartItemCount);
+  }, [cartItemCount]);
+
+  useEffect(() => {
     if (isSignedIn) {
       const clerkUserId = user.id;
 
@@ -31,17 +35,13 @@ const Header = () => {
       axios
         .get(`http://localhost:3001/api/cart/${clerkUserId}`)
         .then((response) => {
-          setLocalCartItemCount(response.data.cart.products.length);
+          setLocalCartItemCount(Math.max(response.data.cart.products.length, 0));
         })
         .catch((error) => {
           console.error("Erro ao obter o número de produtos no carrinho:", error);
         });
     }
   }, [isSignedIn, user]);
-
-  useEffect(() => {
-    setLocalCartItemCount(cartItemCount);
-  }, [cartItemCount]);
 
 
   return (

@@ -24,11 +24,19 @@ export const CartProvider = ({ children }) => {
   }, [cartItemCount]);
 
   const addToCart = () => {
-    setCartItemCount((prevCount) => prevCount + 1);
+    setCartItemCount((prevCount) => {
+      const newCount = prevCount + 1;
+      localStorage.setItem("cartItemCount", newCount);
+      return newCount;
+    });
   };
 
   const removeFromCart = () => {
-    setCartItemCount((prevCount) => prevCount - 1);
+    setCartItemCount((prevCount) => {
+      const newCount = Math.max(prevCount - 1, 0);
+      localStorage.setItem("cartItemCount", newCount);
+      return newCount;
+    });
   };
 
   return (
