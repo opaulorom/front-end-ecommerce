@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import SearchBar from "./SearchBar";
 import CategoriesList from "./CategoriesList";
@@ -7,9 +7,42 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useUser } from "@clerk/clerk-react";
+import axios from "axios";
 
 const Header = () => {
   const { cartItemCount } = useCart();
+  const [localCartItemCount, setLocalCartItemCount] = useState(0);
+  const { isSignedIn, user } = useUser();
+
+  useEffect(() => {
+    const storedCartItemCount = localStorage.getItem("cartItemCount");
+
+    if (storedCartItemCount !== null) {
+      setLocalCartItemCount(Number(storedCartItemCount));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      const clerkUserId = user.id;
+
+      // Faça uma solicitação HTTP para obter o número de produtos no carrinho
+      axios
+        .get(`http://localhost:3001/api/cart/${clerkUserId}`)
+        .then((response) => {
+          setLocalCartItemCount(response.data.cart.products.length);
+        })
+        .catch((error) => {
+          console.error("Erro ao obter o número de produtos no carrinho:", error);
+        });
+    }
+  }, [isSignedIn, user]);
+
+  useEffect(() => {
+    setLocalCartItemCount(cartItemCount);
+  }, [cartItemCount]);
+
 
   return (
     <>
@@ -88,7 +121,7 @@ const Header = () => {
                   alignItems: "center",
                 }}
               >
-        {cartItemCount}
+            {isSignedIn ? localCartItemCount : 0}
               </span>
             </Link>
           </div>
