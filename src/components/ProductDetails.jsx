@@ -11,6 +11,7 @@ import { useCart } from "../context/CartContext";
 import styles from "./ProductDetails.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
@@ -21,6 +22,8 @@ const ProductDetails = () => {
   const [openCartModal, setOpenCartModal] = useState(false);
   const modalRef = useRef(null);
   const [isColorAndSizeSelected, setIsColorAndSizeSelected] = useState(false);
+
+  const { cartItemCount, addToCart } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -86,14 +89,11 @@ const ProductDetails = () => {
       );
     }
   };
-  const { addToCart } = useCart();
 
   const handleAddToCart = async () => {
     const clerkUserId = user.id;
 
     try {
-      addToCart();
-
       const response = await axios.post(
         `http://localhost:3001/api/add-to-cart/${clerkUserId}`,
         {
@@ -103,7 +103,9 @@ const ProductDetails = () => {
           quantity: 1,
         }
       );
-      console.log(response.data.message);
+
+      addToCart(); // Incrementa o número de itens no carrinho
+      toast.success("Produto adicionado ao carrinho!");
     } catch (error) {
       console.error("Erro ao adicionar produto ao carrinho:", error);
     }
@@ -116,11 +118,11 @@ const ProductDetails = () => {
   const handleClickCloseModal = () => {
     setOpenCartModal(false);
   };
+
   const handleAddToCartAndOpenModal = () => {
     if (selectedSize && product.variations[currentImageIndex].color) {
       handleAddToCart();
       handleClickOpenModal();
-      toast.success("Produto adicionado ao carrinho!");
     } else {
       // Se a cor ou o tamanho não foram selecionados, exiba um alerta
       toast.error("Por favor, selecione uma cor e um tamanho.");
