@@ -11,27 +11,20 @@ import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 
 const Header = () => {
-  const { cartItemCount } = useCart();
+  const { cartItemCount, addToCart, removeFromCart } = useCart();
   const [localCartItemCount, setLocalCartItemCount] = useState(0);
   const { isSignedIn, user } = useUser();
 
   useEffect(() => {
     const storedCartItemCount = localStorage.getItem("cartItemCount");
-
     if (storedCartItemCount !== null) {
       setLocalCartItemCount(Number(storedCartItemCount));
     }
   }, []);
 
   useEffect(() => {
-    setLocalCartItemCount(cartItemCount);
-  }, [cartItemCount]);
-
-  useEffect(() => {
     if (isSignedIn) {
       const clerkUserId = user.id;
-
-      // Faça uma solicitação HTTP para obter o número de produtos no carrinho
       axios
         .get(`http://localhost:3001/api/cart/${clerkUserId}`)
         .then((response) => {
@@ -40,10 +33,15 @@ const Header = () => {
         .catch((error) => {
           console.error("Erro ao obter o número de produtos no carrinho:", error);
         });
+    } else {
+      setLocalCartItemCount(cartItemCount);
     }
-  }, [isSignedIn, user]);
+  }, [isSignedIn, user, cartItemCount]);
 
-
+  useEffect(() => {
+    localStorage.setItem("cartItemCount", localCartItemCount);
+  }, [localCartItemCount]);
+  
   return (
     <>
       <div className={styles.ContainerHeader}>
@@ -121,7 +119,7 @@ const Header = () => {
                   alignItems: "center",
                 }}
               >
-            {isSignedIn ? localCartItemCount : 0}
+                {isSignedIn ? localCartItemCount : 0}
               </span>
             </Link>
           </div>
