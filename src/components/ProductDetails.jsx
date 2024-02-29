@@ -130,105 +130,123 @@ const ProductDetails = () => {
   };
 
   return (
-    <div>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-
-      <Header />
-
+    <>
       <div>
-        <h2>Single Item</h2>
-        <div key={currentImageIndex} className="image-container">
-          <img
-            src={product.variations[currentImageIndex].urls[0]}
-            alt={product.variations[currentImageIndex].color}
-            style={{ width: "30%" }}
-          />
-          <div className="navigation-arrows">
-            <div className="arrow" onClick={() => handleArrowClick("prev")}>
-              &lt;
-            </div>
-            <div className="arrow" onClick={() => handleArrowClick("next")}>
-              &gt;
-            </div>
-          </div>
-        </div>
-      </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
 
-      <div className="dot-container">
-        {product.variations?.map((variation, index) => (
-          <span
-            key={index}
-            className={`dot ${index === currentImageIndex ? "active" : ""}`}
-            onClick={() => handleDotClick(index)}
-          />
-        ))}
-      </div>
-
-      <div className="thumbnail-container">
-        {product.variations
-          ?.filter(
-            (variation, index, self) =>
-              self.findIndex((v) => v.color === variation.color) === index
-          )
-          .map((variation, index) => (
-            <div key={index} className="thumbnail-wrapper">
-              <span className="color-name">{`Cor: ${variation.color}`}</span>
+        <Header />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-around",
+            marginTop: "10rem" 
+          }}
+        >
+          <div >
+            
+            <div key={currentImageIndex} className="image-container">
               <img
-                src={variation.urls[0]}
-                alt={variation.color}
-                className={`thumbnail ${
-                  variation.color ===
-                  product.variations[currentImageIndex].color
-                    ? "active"
-                    : ""
-                }`}
-                onClick={() => handleThumbnailClick(variation.color, index)}
+                src={product.variations[currentImageIndex].urls[0]}
+                alt={product.variations[currentImageIndex].color}
+                style={{ width: "30%" }}
               />
+              <div className="navigation-arrows">
+                <div className="arrow" onClick={() => handleArrowClick("prev")}>
+                  &lt;
+                </div>
+                <div className="arrow" onClick={() => handleArrowClick("next")}>
+                  &gt;
+                </div>
+              </div>
             </div>
-          ))}
-      </div>
+            <div className="dot-container">
+              {product.variations?.map((variation, index) => (
+                <span
+                  key={index}
+                  className={`dot ${
+                    index === currentImageIndex ? "active" : ""
+                  }`}
+                  onClick={() => handleDotClick(index)}
+                />
+              ))}
+            </div>
+          </div>
 
-      <h1>{product.name}</h1>
-      <p>R$: ${product.price}</p>
-      <p>${product.description}</p>
+          <div style={{}}>
+            <h1>{product.name}</h1>
+            <p>R$: ${product.price}</p>
+            <p>${product.description}</p>
 
-      <Navbar />
-      <ProductSizes
-        sizes={sizesFromDatabase}
-        selectedSize={selectedSize}
-        onSelectSize={(size) => {
-          setSelectedSize(size);
-          setIsColorAndSizeSelected(true);
-        }}
-      />
-
-      <FreteComponent />
-
-      <button onClick={handleAddToCartAndOpenModal}>
-        Adicionar ao Carrinho
-      </button>
-      {openCartModal && (
-        <div className={styles.modal}>
-          <div ref={modalRef} className={styles.modalContent}>
-            <span className={styles.close} onClick={handleClickCloseModal}>
-              &times;
-            </span>
-            <p>This is the content of the modal. You can put anything here.</p>
+            <div className="thumbnail-container">
+              {product.variations
+                ?.filter(
+                  (variation, index, self) =>
+                    self.findIndex((v) => v.color === variation.color) === index
+                )
+                .map((variation, index) => (
+                  <div key={index} className="thumbnail-wrapper">
+                    <span className="color-name">{`Cor: ${variation.color}`}</span>
+                    <img
+                      src={variation.urls[0]}
+                      alt={variation.color}
+                      className={`thumbnail ${
+                        variation.color ===
+                        product.variations[currentImageIndex].color
+                          ? "active"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        handleThumbnailClick(variation.color, index)
+                      }
+                    />
+                  </div>
+                ))}
+            </div>
+            <ProductSizes
+              sizes={sizesFromDatabase}
+              selectedSize={selectedSize}
+              onSelectSize={(size) => {
+                setSelectedSize(size);
+                setIsColorAndSizeSelected(true);
+              }}
+            />
+            <button onClick={handleAddToCartAndOpenModal}>
+              Adicionar ao Carrinho
+            </button>
+            {openCartModal && (
+              <div className={styles.modal}>
+                <div ref={modalRef} className={styles.modalContent}>
+                  <span
+                    className={styles.close}
+                    onClick={handleClickCloseModal}
+                  >
+                    &times;
+                  </span>
+                  <p>
+                    This is the content of the modal. You can put anything here.
+                  </p>
+                </div>
+              </div>
+            )}
+            <FreteComponent />
           </div>
         </div>
-      )}
-    </div>
+
+        <Navbar />
+      </div>
+    </>
   );
 };
 
