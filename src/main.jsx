@@ -3,7 +3,6 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Home from "./components/Home";
-import Products from "./components/Products";
 import Pay from "./components/Pay";
 import { createRoot } from "react-dom/client";
 import Categories from "./components/Categories";
@@ -42,7 +41,6 @@ const Root = () => (
     <Route path="/favoritos" element={<Heart />} />
     <Route path="/carrinho" element={<Cart />} />
     <Route path="/perfil" element={<Profile />} />
-    <Route path="/products" element={<Products />} />
     <Route path="/products/:productId" element={<ProductDetails  />} />{" "}
     <Route path="/payment" element={<Pay />} />
     <Route path="/" element={<Categories />} />
