@@ -28,10 +28,15 @@ const Header = () => {
       axios
         .get(`http://localhost:3001/api/cart/${clerkUserId}`)
         .then((response) => {
-          setLocalCartItemCount(Math.max(response.data.cart.products.length, 0));
+          setLocalCartItemCount(
+            Math.max(response.data.cart.products.length, 0)
+          );
         })
         .catch((error) => {
-          console.error("Erro ao obter o número de produtos no carrinho:", error);
+          console.error(
+            "Erro ao obter o número de produtos no carrinho:",
+            error
+          );
         });
     } else {
       setLocalCartItemCount(cartItemCount);
@@ -41,7 +46,7 @@ const Header = () => {
   useEffect(() => {
     localStorage.setItem("cartItemCount", localCartItemCount);
   }, [localCartItemCount]);
-  
+
   return (
     <>
       <div className={styles.ContainerHeader}>
@@ -125,9 +130,42 @@ const Header = () => {
           </div>
         </div>
         <div className={styles.MobileHeader}>
-          <FavoriteBorderIcon style={{ fontSize: "1.8rem" }} />
-          <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem" }} />
-          <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem" }} />
+          <Link
+            to={"/favoritos"}
+            style={{
+              cursor: "pointer",
+            }}
+          >
+            <FavoriteBorderIcon style={{ fontSize: "1.8rem" }} />
+          </Link>
+          <Link to={"/perfil"}>
+            <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem" }} />
+          </Link>
+          <Link
+            to={"/cart"}
+            style={{ position: "relative", display: "inline-block" }}
+          >
+            <span
+              style={{
+                position: "absolute",
+                top: "-10px",
+                right: "-10px",
+                width: "20px",
+                height: "20px",
+                backgroundColor: "red",
+                color: "white",
+                borderRadius: "50%",
+                fontSize: "13px",
+                fontWeight: "bold",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {isSignedIn ? localCartItemCount : 0}
+            </span>
+            <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem" }} />
+          </Link>
         </div>
         <div
           style={{
