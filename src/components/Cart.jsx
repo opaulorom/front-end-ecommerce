@@ -81,6 +81,7 @@ const Cart = () => {
             marginTop: "-5rem",
           }}
         >
+          
           <img
             src="<https://i.ibb.co/x765V9y/bag-4.png>"
             alt=""
@@ -92,6 +93,15 @@ const Cart = () => {
         <>
           {getCart.map((item, index) => (
             <div key={index} style={{ marginTop: "10rem", marginLeft: "1rem" }}>
+                  <Link to={`/products/${item._id}`}>
+            <img
+                src={item.productId.variations[0].urls[0]}
+                alt={item.productId.name}
+                style={{ width: '20%', marginBottom: '10px' }}
+              />
+            </Link>
+          
+            
               <b>nome:</b> {item.productId.name}
               <b>preço:</b> {item.productId.price}
               <b>tamanho:</b> {item.productId.size}

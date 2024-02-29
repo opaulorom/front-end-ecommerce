@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Home from "./components/Home";
+
 import Pay from "./components/Pay";
 import { createRoot } from "react-dom/client";
 import Categories from "./components/Categories";
@@ -30,6 +31,7 @@ import { ptBR } from "@clerk/localizations";
 import Heart from "./components/Heart";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { CartProvider } from "./context/CartContext";
+import Products from "./components/Products";
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const Root = () => (
@@ -41,6 +43,7 @@ const Root = () => (
     <Route path="/favoritos" element={<Heart />} />
     <Route path="/carrinho" element={<Cart />} />
     <Route path="/perfil" element={<Profile />} />
+    <Route path="/products" element={<Products />} />
     <Route path="/products/:productId" element={<ProductDetails  />} />{" "}
     <Route path="/payment" element={<Pay />} />
     <Route path="/" element={<Categories />} />
