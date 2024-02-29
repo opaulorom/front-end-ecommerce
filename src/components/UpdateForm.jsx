@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useClerk } from "@clerk/clerk-react";
 import axios from 'axios';
 
-const SignUpForm = () => {
+const UpdateForm = () => {
   const clerk = useClerk();
 
   const [formData, setFormData] = useState({
-    userId: clerk.user?.id || '', // Obter o userId do usuário logado
+    userId: clerk.user?.id || '',
     name:  '',
     cpfCnpj: '',
     email: clerk.user?.emailAddresses || '',
-    telephone: '',
+    mobilePhone: '',
     postalCode: '',
     address: '',
     addressNumber: '',
@@ -20,58 +20,44 @@ const SignUpForm = () => {
     state: '',
   });
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/api/custumer/${clerk.user.id}`);
+        const userData = response.data;
 
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          name: userData.name,
+          cpfCnpj: userData.cpfCnpj,
+          email: userData.email,
+          mobilePhone: userData.mobilePhone,
+          postalCode: userData.postalCode,
+          address: userData.address,
+          addressNumber: userData.addressNumber,
+          complement: userData.complement,
+          province: userData.province,
+          city: userData.city,
+          state: userData.state,
+        }));
+      } catch (error) {
+        console.error('Erro ao buscar informações do usuário:', error);
+      }
+    };
 
-
- 
-
+    fetchUserData();
+  }, [clerk.user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const {    
-       name,
-      cpfCnpj,
-      mobilePhone,
-      email,
-      postalCode,
-      address,
-      addressNumber,
-      complement,
-      province,
-      city,
-      state, } = formData;
-  
     try {
-      const response = await axios.post('http://localhost:3001/api/signup', {
-        clerkUserId: clerk.user.id, // Adicione o clerkUserId aqui
-        name,
-        cpfCnpj,
-        mobilePhone,
-        email,
-        postalCode,
-        address,
-        addressNumber,
-        complement,
-        province,
-        city,
-        state,
-        
-        // Adicione os outros campos do formulário aqui
-      });
-      useEffect(() => {
-        // Atualizar o estado do formulário com o e-mail do usuário logado
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          email: clerk.user?.emailAddresses	 || '',
-        }));
-      }, [clerk.user]);
-    
-    
+      const response = await axios.put(`http://localhost:3001/api/update/${clerk.user.id}`, formData);
       console.log(response.data);
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
@@ -79,10 +65,6 @@ const SignUpForm = () => {
       // Trate erros aqui, como exibir uma mensagem para o usuário
     }
   };
-
-
-
-
 
   const handleCepChange = async (event) => {
     const newCep = event.target.value;
@@ -108,17 +90,16 @@ const SignUpForm = () => {
     }
   };
 
-
   return (
     <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column"}}>
       <label>
-        nome completo:
+        Nome completo:
         <input type="text" name="name" onChange={handleChange} value={formData.name} />
       </label>
 
       <label>
-      cpf:
-        <input type="number" name="cpfCnpj" onChange={handleChange} value={formData.cpfCnpj} />
+        CPF:
+        <input type="text" name="cpfCnpj" onChange={handleChange} value={formData.cpfCnpj} />
       </label>
 
       <label>
@@ -127,49 +108,48 @@ const SignUpForm = () => {
       </label>
 
       <label>
-        Telephone:
+        Telefone:
         <input type="text" name="mobilePhone" onChange={handleChange} value={formData.mobilePhone} />
       </label>
 
       <label>
-        Postcode:
+        CEP:
         <input type="text" name="postalCode" onChange={handleCepChange} value={formData.postalCode}  placeholder='digite sem caracteres ex. 01001000  '/>
       </label>
 
       <label>
-        Address:
+        Endereço:
         <input type="text" name="address" onChange={handleChange} value={formData.address} />
       </label>
 
       <label>
-        Address  Number:
+        Número do endereço:
         <input type="text" name="addressNumber" onChange={handleChange} value={formData.addressNumber} />
       </label>
 
       <label>
-        Complement:
+        Complemento:
         <input type="text" name="complement" onChange={handleChange} value={formData.complement} />
       </label>
 
       <label>
-        province:
+        Bairro:
         <input type="text" name="province" onChange={handleChange} value={formData.province} />
       </label>
 
       <label>
-        Address City:
+        Cidade:
         <input type="text" name="city" onChange={handleChange} value={formData.city} />
       </label>
 
       <label>
-        Address State:
+        Estado:
         <input type="text" name="state" onChange={handleChange} value={formData.state} />
       </label>
       
-     
-      <button type="submit">Submit</button>
+      <button type="submit">Atualizar</button>
     </form>
   );
 };
 
-export default SignUpForm;
+export default UpdateForm;
