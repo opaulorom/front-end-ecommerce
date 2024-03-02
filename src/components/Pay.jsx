@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
-import FreteSelect from "./Frete";
+import FreteSelect from "./FreteSelect";
 const Pay = () => {
   return (
     <div>

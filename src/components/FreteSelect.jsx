@@ -72,7 +72,7 @@ const FreteSelect = () => {
               <img src={item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
 
               <p>Nome da Transportadora: {item.nomeTransportadora}</p>
-              <p>Data Prevista de Entrega: {item.dataPrevistaEntrega}</p>
+              <p>Data Prevista de Entrega: {item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}</p>
               <p>Prazo de Entrega: {item.prazoEntrega}</p>
               <p>Valor do Frete: {item.valorFrete}</p>
 
