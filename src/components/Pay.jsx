@@ -22,6 +22,9 @@ const Pay = () => {
       });
       const data = await response.json();
       console.log(data);
+  
+      // Redirecionar para a URL de pagamento PIX
+      window.location.href = data.invoiceUrl;
     } catch (error) {
       console.error(error);
     }
