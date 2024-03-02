@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
-import FreteSelect from "./FreteSelect";
+import { useUser } from "@clerk/clerk-react";
 
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState('pix');
+  const { isSignedIn, user, isLoaded } = useUser();
 
   const handleChange = (event) => {
     setPaymentMethod(event.target.value);
@@ -12,8 +13,8 @@ const Pay = () => {
 
   const handlePixPayment = async () => {
     try {
-      const clerkUserId = 'user_2d3LzruiZ0VvbjKQYij4QIFh5pv';
-      const response = await fetch(`http://localhost:3001/api/pix/user_2d3LzruiZ0VvbjKQYij4QIFh5pv`, {
+      const clerkUserId = user.id;
+      const response = await fetch(`http://localhost:3001/api/pix/${clerkUserId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
