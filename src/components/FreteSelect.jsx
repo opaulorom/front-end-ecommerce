@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUser } from "@clerk/clerk-react";
 
-const FreteSelect = () => {
+const FreteSelect = ({ setTotalAmount }) => {
   const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
   const [selectedFreteIndex, setSelectedFreteIndex] = useState(localStorage.getItem('selectedFreteIndex') || 0); // Define o primeiro frete como padrão
@@ -39,10 +39,10 @@ const FreteSelect = () => {
     try {
       const clerkUserId = user.id;
       const freteId = frete[index]._id;
-
+  
       // Faz a solicitação PUT para atualizar o valor do frete no carrinho do cliente
       await axios.put(`http://localhost:3001/api/cart/${clerkUserId}/shippingFee/${freteId}`);
-
+  
       // Atualiza o estado do frete selecionado
       setSelectedFreteIndex(index);
       localStorage.setItem('selectedFreteIndex', index);
@@ -50,7 +50,7 @@ const FreteSelect = () => {
       console.error('Error updating shipping fee:', error);
     }
   };
-
+  
   return (
     <div>
       <form>
@@ -70,7 +70,7 @@ const FreteSelect = () => {
               <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                 <input
                   type="radio"
-                  
+                
                   name="selectedFrete"
                   value={index}
                   onClick={() => handleRadioClick(index)}

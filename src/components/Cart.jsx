@@ -21,7 +21,8 @@ const Cart = () => {
   const { isSignedIn, user, isLoaded } = useUser();
   const [open, setOpen] = React.useState(false);
   const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
-  const [getTotal, setGetTotal] = useState([]);
+  const [getTotal, setGetTotal] = useState({});
+  const [selectedFreteIndex, setSelectedFreteIndex] = useState(0); // Define o primeiro frete como padrão
 
   useEffect(() => {
     if (isLoaded && isSignedIn) {
@@ -59,19 +60,57 @@ const Cart = () => {
     [user, removeFromCart]
   );
 
-  useEffect(() => {
-    if (isLoaded && isSignedIn) {
+  const handleQuantityChange = useCallback(
+    (productId, newQuantity) => {
       const clerkUserId = user.id;
       axios
-        .get(`http://localhost:3001/api/cart/${clerkUserId}/total-price`)
+        .put(
+          `http://localhost:3001/api/update-quantity/${clerkUserId}/${productId}`,
+          { quantity: newQuantity }
+        )
         .then((response) => {
-          setGetTotal(response.data);
+          setGetCart((prevCart) => {
+            const newCart = [...prevCart];
+            const index = newCart.findIndex(
+              (item) => item.productId._id === productId
+            );
+            if (index !== -1) {
+              newCart[index].quantity = newQuantity;
+            }
+            return newCart;
+          });
         })
         .catch((error) => {
-          console.log("Erro ao visualizar frete.", error);
+          console.log(
+            "Erro ao atualizar quantidade do produto no carrinho.",
+            error
+          );
         });
-    }
-  }, [isLoaded, isSignedIn, user]);
+    },
+    [user]
+  );
+ useEffect(() => {
+  if (isLoaded && isSignedIn) {
+    const clerkUserId = user.id;
+    axios
+      .get(`http://localhost:3001/api/cart/${clerkUserId}/total-price`)
+      .then((response) => {
+        console.log(response.data); // Verifique se o valor totalAmount está presente na resposta
+        if (response.data.totalAmount !== getTotal.totalAmount) {
+          setGetTotal(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("Erro ao visualizar frete.", error);
+      });
+  }
+}, [isLoaded, isSignedIn, user, getCart, getTotal]);
+
+  
+  
+  
+  
+
   return (
     <div>
       <Header />
@@ -98,7 +137,7 @@ const Cart = () => {
           {getCart.map((item, index) => (
             <div key={index} style={{ marginTop: "10rem", marginLeft: "1rem", display:"flex", alignItems:"center" }}>
 
-              <Link to={`/products/${item._id}`}>
+        
                 {item.productId.variations[0] &&
                   item.productId.variations[0].urls &&
                   item.productId.variations[0].urls[0] &&
@@ -109,7 +148,7 @@ const Cart = () => {
                       style={{ width: "20%", marginBottom: "10px" }}
                     />
                   )}
-              </Link>
+          
              {item.productId.name}
                {item.productId.price}
               {item.productId.size}
@@ -149,32 +188,15 @@ const Cart = () => {
                   const newCart = [...getCart];
                   newCart[index].quantity = newQuantity;
                   setGetCart(newCart);
+                  handleQuantityChange(item.productId._id, newQuantity);
                 }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     const newQuantity = parseInt(e.target.value);
                     const newCart = [...getCart];
                     newCart[index].quantity = newQuantity;
-                    const clerkUserId = user.id;
-                    const productId = item.productId._id;
-                    axios
-                      .put(
-                        `http://localhost:3001/api/update-quantity/${clerkUserId}/${productId}`,
-                        { quantity: newQuantity }
-                      )
-                      .then((response) => {
-                        setGetCart((prevCart) => {
-                          const newCart = [...prevCart];
-                          newCart[index].quantity = newQuantity;
-                          return newCart;
-                        });
-                      })
-                      .catch((error) => {
-                        console.log(
-                          "Erro ao atualizar quantidade do produto no carrinho.",
-                          error
-                        );
-                      });
+                    setGetCart(newCart);
+                    handleQuantityChange(item.productId._id, newQuantity);
                   }
                 }}
                 style={{width:"2vw"}}
@@ -278,7 +300,9 @@ const Cart = () => {
         </>
       )}
 
-      {typeof getTotal === "object" && <div>{getTotal.totalAmount}</div>}
+{getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
+  <div>{getTotal.totalAmount}</div>
+)}
       <Link to={"/payment"}>
         <button>Fazer Pedido</button>
       </Link>
