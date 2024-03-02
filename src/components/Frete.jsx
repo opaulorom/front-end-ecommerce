@@ -1,81 +1,90 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useUser } from "@clerk/clerk-react";
-import axios from "axios";
 
-const Frete = () => {
-  const [getFrete, setGetFrete] = useState([]);
-  const [showForm, setShowForm] = useState(true); // Novo estado para controlar a exibição do formulário
-  const { isSignedIn, user, isLoaded } = useUser();
+const FreteSelect = () => {
+  const [cep, setCep] = useState(localStorage.getItem('cep') || '');
+  const [frete, setFrete] = useState(null);
+  const [selectedFrete, setSelectedFrete] = useState(null);
+  const { user } = useUser();
 
   useEffect(() => {
-    if (isLoaded && isSignedIn) {
-      const clerkUserId = user.id;
-      axios
-        .get(`http://localhost:3001/api/frete/${clerkUserId}`)
-        .then((response) => {
-          setGetFrete(response.data);
-          console.log("data", data);
-        })
-        .catch((error) => {
-          console.log("Erro ao visualizar frete.", error);
-        });
-    }
-  }, [isLoaded, isSignedIn, user]);
+    localStorage.setItem('cep', cep);
+  }, [cep]);
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    const fetchFrete = async () => {
+      try {
+        const clerkUserId = user.id;
+
+        // Faz a solicitação GET para obter os dados atualizados do frete
+        const responseGet = await axios.get(`http://localhost:3001/api/frete/${clerkUserId}`);
+        setFrete(responseGet.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchFrete();
+  }, [cep, user]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const cep = formData.get("cep");
-    const clerkUserId = user.id;
 
-    axios
-      .post(`http://localhost:3001/api/frete/${clerkUserId}`, { cep })
-      .then((response) => {
-        setGetFrete(response.data);
-        setShowForm(false); // Esconde o formulário após a pesquisa
-      })
-      .catch((error) => {
-        console.log("Erro ao calcular frete.", error);
-      });
-  };
+    try {
+      const clerkUserId = user.id;
 
-  const handleTrocarFrete = () => {
-    setShowForm(true); // Mostra o formulário novamente
-    setGetFrete([]); // Limpa os resultados do frete
+      // Faz a solicitação POST para obter os dados do frete com o novo CEP
+      await axios.post(`http://localhost:3001/api/frete/${clerkUserId}`, { cep });
+
+      // Atualiza o estado do frete com os dados do frete da requisição GET
+      const responseGet = await axios.get(`http://localhost:3001/api/frete/${clerkUserId}`);
+      setFrete(responseGet.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   return (
     <div>
-      {showForm ? (
-        <form
-          style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-          onSubmit={handleSubmit}
-        >
-          <label htmlFor="">CEP</label>
-          <div>
-            <input type="text" name="cep" placeholder="pesquisar frete" />
-            <button type="submit">Calcular frete</button>
-          </div>
-        </form>
-      ) : (
-        <>
-          <button onClick={handleTrocarFrete}>Trocar frete</button>
-          {getFrete.map((frete) => (
-            <div key={frete._id} style={{ marginTop: "2rem", marginLeft: "1rem" }}>
-              <b>valor:</b> {frete.valorFrete}
-              <b>praso:</b> {frete.prazoEntrega}
-              <b>data:</b> {frete.dataPrevistaEntrega}
-              <b> tipo:</b> {frete.nomeTransportadora}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={cep}
+          onChange={(event) => setCep(event.target.value)}
+          placeholder="Digite o CEP"
+        />
+        <button type="submit">Buscar</button>
+      </form>
+
+      {frete && (
+        <div>
+          {frete.map((item, index) => (
+            <div key={index}>
+              <input
+                type="radio"
+                name="selectedFrete"
+                value={index}
+                checked={selectedFrete === index}
+                onChange={() => setSelectedFrete(index)}
+              />
+              <div>
+              <img src={item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
+
+              <p>Nome da Transportadora: {item.nomeTransportadora}</p>
+              <p>Data Prevista de Entrega: {item.dataPrevistaEntrega}</p>
+              <p>Prazo de Entrega: {item.prazoEntrega}</p>
+              <p>Valor do Frete: {item.valorFrete}</p>
+
+              </div>
+
 
             </div>
           ))}
-        </>
+        </div>
       )}
     </div>
   );
 };
 
-export default Frete;
+export default FreteSelect;
