@@ -5,7 +5,7 @@ import { useUser } from "@clerk/clerk-react";
 const FreteSelect = () => {
   const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
-  const [selectedFrete, setSelectedFrete] = useState(null);
+  const [selectedFreteIndex, setSelectedFreteIndex] = useState(0); // Define o primeiro frete como padrão
   const { user } = useUser();
 
   useEffect(() => {
@@ -28,67 +28,62 @@ const FreteSelect = () => {
     fetchFrete();
   }, [cep, user]);
 
-
-// Função para enviar o frete selecionado para o carrinho
-const handleSubmit = async (event) => {
-  event.preventDefault();
-
-  try {
-    const clerkUserId = user.id;
-
-    // Verifica se um frete foi selecionado
-    if (selectedFrete === null) {
-      console.error('Nenhum frete selecionado.');
-      return;
+  useEffect(() => {
+    // Atualiza o estado do frete selecionado para o índice do primeiro frete
+    if (frete && frete.length > 0) {
+      setSelectedFreteIndex(0);
     }
+  }, [frete]);
 
-    // Obtém o ID do frete selecionado
-    const freteId = frete[selectedFrete]._id;
+  const handleRadioClick = async (index) => {
+    try {
+      const clerkUserId = user.id;
+      const freteId = frete[index]._id;
 
-    // Faz a solicitação PUT para atualizar a taxa de envio do carrinho com o valor do frete selecionado
-    await axios.put(`http://localhost:3001/api/cart/${clerkUserId}/shippingFee/${freteId}`);
+      // Faz a solicitação PUT para atualizar o valor do frete no carrinho do cliente
+      await axios.put(`http://localhost:3001/api/cart/${clerkUserId}/shippingFee/${freteId}`);
 
-    // Atualiza o estado do frete com os dados do frete da requisição GET
-    const responseGet = await axios.get(`http://localhost:3001/api/frete/${clerkUserId}`);
-    setFrete(responseGet.data);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-};
+      // Atualiza o estado do frete selecionado
+      setSelectedFreteIndex(index);
+    } catch (error) {
+      console.error('Error updating shipping fee:', error);
+    }
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-  <input
-    type="text"
-    value={cep}
-    onChange={(event) => setCep(event.target.value)}
-    placeholder="Digite o CEP"
-  />
-  <button type="submit">Buscar</button>
-</form>
-
-{frete && (
-  <div>
-    {frete.map((item, index) => (
-      <div key={index}>
+      <form>
         <input
-          type="radio"
-          name="selectedFrete"
-          value={index}
-          checked={selectedFrete === index}
-          onChange={() => setSelectedFrete(index)}
+          type="text"
+          value={cep}
+          onChange={(event) => setCep(event.target.value)}
+          placeholder="Digite o CEP"
         />
+        <button type="submit">Buscar</button>
+      </form>
+
+      {frete && (
         <div>
-          <img src={item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
-          <p>Nome da Transportadora: {item.nomeTransportadora}</p>
-          <p>Data Prevista de Entrega: {item.dataPrevistaEntrega}</p>
-          <p>Prazo de Entrega: {item.prazoEntrega}</p>
-          <p>Valor do Frete: {item.valorFrete}</p>
+          {frete.map((item, index) => (
+            <div key={index}>
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                <input
+                  type="radio"
+                  name="selectedFrete"
+                  value={index}
+                  onClick={() => handleRadioClick(index)}
+                  checked={selectedFreteIndex === index}
+                />
+                <img src={item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
+                <p>{item.nomeTransportadora}</p>
+                <p> {item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}</p>
+                <p> {item.prazoEntrega}</p>
+                <p> {item.valorFrete}</p>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-    ))}
-  </div>
-)}
+      )}
     </div>
   );
 };
