@@ -10,6 +10,8 @@ import ModalDialog from "@mui/joy/ModalDialog";
 import Typography from "@mui/joy/Typography";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
   const [handleDeleteProduct, setHandleDeleteProduct] = useState(false);
@@ -91,7 +93,8 @@ const Cart = () => {
       ) : (
         <>
           {getCart.map((item, index) => (
-            <div key={index} style={{ marginTop: "10rem", marginLeft: "1rem" }}>
+            <div key={index} style={{ marginTop: "10rem", marginLeft: "1rem", display:"flex", alignItems:"center" }}>
+
               <Link to={`/products/${item._id}`}>
                 {item.productId.variations[0] &&
                   item.productId.variations[0].urls &&
@@ -104,11 +107,11 @@ const Cart = () => {
                     />
                   )}
               </Link>
-              <b>nome:</b> {item.productId.name}
-              <b>preço:</b> {item.productId.price}
-              <b>tamanho:</b> {item.productId.size}
-              <button
-                onClick={() => {
+             {item.productId.name}
+               {item.productId.price}
+              {item.productId.size}
+             
+              <RemoveIcon  onClick={() => {
                   const newQuantity = item.quantity - 1;
                   if (newQuantity >= 0) {
                     const newCart = [...getCart];
@@ -134,10 +137,7 @@ const Cart = () => {
                         );
                       });
                   }
-                }}
-              >
-                -
-              </button>
+                }}/>
               <input
                 type="number"
                 value={item.quantity}
@@ -174,9 +174,10 @@ const Cart = () => {
                       });
                   }
                 }}
+                style={{width:"2vw"}}
               />
-              <button
-                onClick={() => {
+          
+              <AddIcon  onClick={() => {
                   const newQuantity = item.quantity + 1;
                   const newCart = [...getCart];
                   newCart[index].quantity = newQuantity;
@@ -200,10 +201,7 @@ const Cart = () => {
                         error
                       );
                     });
-                }}
-              >
-                +
-              </button>
+                }}/>
               <React.Fragment>
                 <Button
                   variant="outlined"

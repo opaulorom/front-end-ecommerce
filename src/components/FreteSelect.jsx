@@ -28,61 +28,67 @@ const FreteSelect = () => {
     fetchFrete();
   }, [cep, user]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
 
-    try {
-      const clerkUserId = user.id;
+// Função para enviar o frete selecionado para o carrinho
+const handleSubmit = async (event) => {
+  event.preventDefault();
 
-      // Faz a solicitação POST para obter os dados do frete com o novo CEP
-      await axios.post(`http://localhost:3001/api/frete/${clerkUserId}`, { cep });
+  try {
+    const clerkUserId = user.id;
 
-      // Atualiza o estado do frete com os dados do frete da requisição GET
-      const responseGet = await axios.get(`http://localhost:3001/api/frete/${clerkUserId}`);
-      setFrete(responseGet.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
+    // Verifica se um frete foi selecionado
+    if (selectedFrete === null) {
+      console.error('Nenhum frete selecionado.');
+      return;
     }
-  };
 
+    // Obtém o ID do frete selecionado
+    const freteId = frete[selectedFrete]._id;
+
+    // Faz a solicitação PUT para atualizar a taxa de envio do carrinho com o valor do frete selecionado
+    await axios.put(`http://localhost:3001/api/cart/${clerkUserId}/shippingFee/${freteId}`);
+
+    // Atualiza o estado do frete com os dados do frete da requisição GET
+    const responseGet = await axios.get(`http://localhost:3001/api/frete/${clerkUserId}`);
+    setFrete(responseGet.data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
   return (
     <div>
       <form onSubmit={handleSubmit}>
+  <input
+    type="text"
+    value={cep}
+    onChange={(event) => setCep(event.target.value)}
+    placeholder="Digite o CEP"
+  />
+  <button type="submit">Buscar</button>
+</form>
+
+{frete && (
+  <div>
+    {frete.map((item, index) => (
+      <div key={index}>
         <input
-          type="text"
-          value={cep}
-          onChange={(event) => setCep(event.target.value)}
-          placeholder="Digite o CEP"
+          type="radio"
+          name="selectedFrete"
+          value={index}
+          checked={selectedFrete === index}
+          onChange={() => setSelectedFrete(index)}
         />
-        <button type="submit">Buscar</button>
-      </form>
-
-      {frete && (
         <div>
-          {frete.map((item, index) => (
-            <div key={index}>
-              <input
-                type="radio"
-                name="selectedFrete"
-                value={index}
-                checked={selectedFrete === index}
-                onChange={() => setSelectedFrete(index)}
-              />
-              <div>
-              <img src={item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
-
-              <p>Nome da Transportadora: {item.nomeTransportadora}</p>
-              <p>Data Prevista de Entrega: {item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}</p>
-              <p>Prazo de Entrega: {item.prazoEntrega}</p>
-              <p>Valor do Frete: {item.valorFrete}</p>
-
-              </div>
-
-
-            </div>
-          ))}
+          <img src={item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
+          <p>Nome da Transportadora: {item.nomeTransportadora}</p>
+          <p>Data Prevista de Entrega: {item.dataPrevistaEntrega}</p>
+          <p>Prazo de Entrega: {item.prazoEntrega}</p>
+          <p>Valor do Frete: {item.valorFrete}</p>
         </div>
-      )}
+      </div>
+    ))}
+  </div>
+)}
     </div>
   );
 };
