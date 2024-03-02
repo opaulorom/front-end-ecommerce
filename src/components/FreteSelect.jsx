@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUser } from "@clerk/clerk-react";
-
 const FreteSelect = () => {
   const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
@@ -39,17 +38,17 @@ const FreteSelect = () => {
     try {
       const clerkUserId = user.id;
       const freteId = frete[index]._id;
-
+  
       // Faz a solicitação PUT para atualizar o valor do frete no carrinho do cliente
       await axios.put(`http://localhost:3001/api/cart/${clerkUserId}/shippingFee/${freteId}`);
-
+  
       // Atualiza o estado do frete selecionado
       setSelectedFreteIndex(index);
     } catch (error) {
       console.error('Error updating shipping fee:', error);
     }
   };
-
+  
   return (
     <div>
       <form>
@@ -63,29 +62,31 @@ const FreteSelect = () => {
       </form>
 
       {frete && (
-        <div>
-          {frete.map((item, index) => (
-            <div key={index}>
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                <input
-                  type="radio"
-                  name="selectedFrete"
-                  value={index}
-                  onClick={() => handleRadioClick(index)}
-                  checked={selectedFreteIndex === index}
-                />
-                <img src={item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
-                <p>{item.nomeTransportadora}</p>
-                <p> {item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}</p>
-                <p> {item.prazoEntrega}</p>
-                <p> {item.valorFrete}</p>
-              </div>
-            </div>
-          ))}
+  <div>
+    {frete.map((item, index) => (
+      <div key={index}>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <input
+            type="radio"
+            name="selectedFrete"
+            value={index}
+            onClick={() => handleRadioClick(index)}
+            checked={selectedFreteIndex === index}
+          />
+          <img src={item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
+          <p>{item.nomeTransportadora}</p>
+          <p> {item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}</p>
+          <p> {item.prazoEntrega}</p>
+          <p> {item.valorFrete}</p>
         </div>
-      )}
+      </div>
+    ))}
+  </div>
+)}
+
     </div>
   );
 };
+
 
 export default FreteSelect;
