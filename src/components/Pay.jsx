@@ -47,13 +47,36 @@ const Pay = () => {
       console.log(data);
   
       // Redirecionar para a URL de pagamento PIX
-      window.location.href = data.invoiceUrl;
+      window.location.href = data.bankSlipUrl;
     } catch (error) {
       console.error(error);
     }
   };
 
   
+
+    // pagar boleto com checkout transparente 
+    const handleBoletoPaymentCustom = async () => {
+      try {
+        const clerkUserId = user.id;
+        const response = await fetch(`http://localhost:3001/api/boleto/${clerkUserId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // Adicione aqui o token de acesso, se necessário
+          },
+        });
+        const data = await response.json();
+        console.log(data);
+    
+        // Redirecionar para a URL de pagamento PIX
+        window.location.href = data.bankSlipUrl;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    
 
   // pagar com cartao de credito sem checkout transparente 
   const handleCartaoDeCreditoPayment = async () => {
