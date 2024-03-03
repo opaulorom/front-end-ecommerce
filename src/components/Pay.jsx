@@ -10,7 +10,7 @@ const Pay = () => {
   const handleChange = (event) => {
     setPaymentMethod(event.target.value);
   };
-
+  // pagar com pix sem checkout transparente 
   const handlePixPayment = async () => {
     try {
       const clerkUserId = user.id;
@@ -32,7 +32,7 @@ const Pay = () => {
   };
 
 
-  
+    // pagar boleto sem checkout transparente 
   const handleBoletoPayment = async () => {
     try {
       const clerkUserId = user.id;
@@ -55,7 +55,7 @@ const Pay = () => {
 
   
 
-  
+  // pagar com cartao de credito sem checkout transparente 
   const handleCartaoDeCreditoPayment = async () => {
     try {
       const clerkUserId = user.id;
