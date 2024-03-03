@@ -30,6 +30,52 @@ const Pay = () => {
       console.error(error);
     }
   };
+
+
+  
+  const handleBoletoPayment = async () => {
+    try {
+      const clerkUserId = user.id;
+      const response = await fetch(`http://localhost:3001/api/boleto/${clerkUserId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Adicione aqui o token de acesso, se necessário
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+  
+      // Redirecionar para a URL de pagamento PIX
+      window.location.href = data.invoiceUrl;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  
+
+  
+  const handleCartaoDeCreditoPayment = async () => {
+    try {
+      const clerkUserId = user.id;
+      const response = await fetch(`http://localhost:3001/api/boleto/${clerkUserId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Adicione aqui o token de acesso, se necessário
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+  
+      // Redirecionar para a URL de pagamento PIX
+      window.location.href = data.invoiceUrl;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
   
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -73,8 +119,8 @@ const Pay = () => {
         </div>
         <div>
           {paymentMethod === 'pix' && <p><button onClick={handlePixPayment}>Pagar com Pix</button></p>}
-          {paymentMethod === 'boleto' && <p>Conteúdo para Boleto</p>}
-          {paymentMethod === 'cartao' && <p>Conteúdo para Cartão de Crédito</p>}
+          {paymentMethod === 'boleto' && <p><button onClick={handleBoletoPayment}>Pagar com Boleto</button></p>}
+          {paymentMethod === 'cartao' && <p> <button onClick={handleCartaoDeCreditoPayment}>Pagar com Cartão de Crédito</button></p>}
         </div>
       </div>
     </div>
