@@ -1,24 +1,87 @@
-// LoginForm.js
-import { useAuth } from '@clerk/clerk-react';
 import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-const LoginForm = () => {
-  const { login } = useAuth(); // Usando o hook useAuth para acessar o contexto de autenticação
+import Profile from './Profile';
+
+const Login = () => {
+  const { loggedIn, isCustomer,  login, logout } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [formErrors, setFormErrors] = useState({});
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    login(email, password); // Chamando a função login do contexto de autenticação
+  const handleLogin = () => {
+    if (validateForm()) {
+      login(email, password);
+    }
   };
 
+  const validateForm = () => {
+    const errors = {};
+
+    if (!email.trim()) {
+      errors.email = 'Campo obrigatório';
+    }
+
+    if (!password.trim()) {
+      errors.password = 'Campo obrigatório';
+    }
+
+    setFormErrors(errors);
+
+    return Object.keys(errors).length === 0;
+  };
+
+  if (loggedIn) {
+    return (
+      <div className='logout-container'>
+        {isCustomer ? <Profile/> : null}
+        <div className='button' onClick={logout}>
+          <LogoutIcon />
+          <span>Sair</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit">Login</button>
-    </form>
+    <div className="body">
+      <div className="container">
+        <div className='loginStyle'>
+          <h1>Login</h1>
+          <label htmlFor="email">Email</label>
+          <input
+            type="text"
+            placeholder="Digite o email..."
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setFormErrors((prevErrors) => ({ ...prevErrors, email: '' }));
+            }}
+            className={formErrors.email ? 'error' : ''}
+          />
+          {formErrors.email && <span className='error-message'>{formErrors.email}</span>}
+          <br />
+          <label htmlFor="password">Senha</label>
+          <input
+            type="password"
+            placeholder="Digite a senha..."
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setFormErrors((prevErrors) => ({ ...prevErrors, password: '' }));
+            }}
+            className={formErrors.password ? 'error' : ''}
+          />
+          {formErrors.password && <span className='error-message'>{formErrors.password}</span>}
+          <br />
+          <button className="loginButton" onClick={handleLogin}>
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default LoginForm;
+export default Login;
