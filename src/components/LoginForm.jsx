@@ -81,7 +81,7 @@ const LoginForm = () => {
           </button>
         </div>
       </div>
-      Ainda nao tem uma conta  <Link to={"/signup"}>Cadastre-se</Link>
+      Ainda nao tem uma conta  <Link to={"/register"}>Cadastre-se</Link>
 
     </div>
   );
