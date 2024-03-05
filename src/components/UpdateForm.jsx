@@ -17,7 +17,7 @@ const UpdateForm = () => {
     complement: '',
     province: '',
     city: '',
-    state: '',
+    state: ''
   });
 
   useEffect(() => {

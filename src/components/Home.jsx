@@ -9,6 +9,8 @@ import ProductByCategories from "../ProductByCategories";
 import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
 import BannerWithDiscount from "./BannerWithDiscount";
 import DiscountImageLinkPerPercentageAndCategory from "./DiscountImageLinkPerPercentageAndCategory";
+import { AuthProvider } from "../context/AuthContext";
+import LoginForm from "./LoginForm";
 
 const Home = () => {
   return (
@@ -22,6 +24,9 @@ const Home = () => {
       <BannerWithDiscount />
       <DiscountImageLinkPerPercentageAndCategory />
       <Navbar></Navbar>
+      <AuthProvider>
+      <LoginForm />
+    </AuthProvider>
     </div>
   );
 };
