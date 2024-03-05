@@ -33,6 +33,7 @@ import { FavoritesProvider } from "./context/FavoritesContext";
 import { CartProvider } from "./context/CartContext";
 import LoginForm from "./components/LoginForm";
 import { AuthProvider } from "./context/AuthContext";
+import Signup from "./components/Signup";
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const Root = () => (
@@ -80,6 +81,8 @@ const Root = () => (
     </Route>
     <Route path="/cart" element={<Cart />} />
     <Route path="/login" element={LoginForm} />
+    <Route path="/signup" element={Signup} />
+
   </Routes>
 );
 

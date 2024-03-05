@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ProfileDetails from './ProfileDetails';
 import "./LoginForm.css"
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
   const { loggedIn, isCustomer,  login, logout } = useAuth();
@@ -80,6 +81,8 @@ const LoginForm = () => {
           </button>
         </div>
       </div>
+      Ainda nao tem uma conta  <Link to={"/signup"}>Cadastre-se</Link>
+
     </div>
   );
 };
