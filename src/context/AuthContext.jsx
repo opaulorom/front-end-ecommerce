@@ -1,4 +1,3 @@
-// AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -9,13 +8,13 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isCustomer, setIsCustomer] = useState(false); // Renomeado para isCustomer
 
   useEffect(() => {
     const storedToken = Cookies.get('token');
     const storedRole = Cookies.get('role');
     setLoggedIn(Boolean(storedToken));
-    setIsAdmin(storedRole === 'customer');
+    setIsCustomer(storedRole === 'customer');
   }, []);
 
   const login = async (email, password) => {
@@ -28,7 +27,7 @@ export const AuthProvider = ({ children }) => {
       const userRole = response.data.user.role;
 
       setLoggedIn(true);
-      setIsAdmin(userRole === 'customer');
+      setIsCustomer(userRole === 'customer');
       Cookies.set('token', response.data.token);
       Cookies.set('role', userRole);
     } catch (error) {
@@ -44,12 +43,12 @@ export const AuthProvider = ({ children }) => {
     Cookies.remove('token');
     Cookies.remove('role');
     setLoggedIn(false);
-    setIsAdmin(false);
+    setIsCustomer(false);
   };
 
   const values = {
     loggedIn,
-    isAdmin,
+    isCustomer, // Atualizado para isCustomer
     login,
     logout,
   };
