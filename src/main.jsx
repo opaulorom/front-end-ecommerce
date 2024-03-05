@@ -32,6 +32,7 @@ import Heart from "./components/Heart";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { CartProvider } from "./context/CartContext";
 import LoginForm from "./components/LoginForm";
+import { AuthProvider } from "./context/AuthContext";
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const Root = () => (
@@ -83,6 +84,7 @@ const Root = () => (
 );
 
 createRoot(document.getElementById("root")).render(
+  <AuthProvider>
   <ClerkProvider publishableKey={publishableKey} localization={ptBR}>
 
     <CartProvider>
@@ -102,4 +104,5 @@ createRoot(document.getElementById("root")).render(
     </CartProvider>
 
   </ClerkProvider>
+  </AuthProvider>
 );

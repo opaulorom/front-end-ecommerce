@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ProfileDetails from './ProfileDetails';
+import "./LoginForm.css"
 
-import Profile from './Profile';
-
-const Login = () => {
+const LoginForm = () => {
   const { loggedIn, isCustomer,  login, logout } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,7 +35,7 @@ const Login = () => {
   if (loggedIn) {
     return (
       <div className='logout-container'>
-        {isCustomer ? <Profile/> : null}
+        {isCustomer ? <ProfileDetails/> : null}
         <div className='button' onClick={logout}>
           <LogoutIcon />
           <span>Sair</span>
@@ -84,4 +84,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;
