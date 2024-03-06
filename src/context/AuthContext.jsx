@@ -9,12 +9,15 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isCustomer, setIsCustomer] = useState(false); // Renomeado para isCustomer
+  const [userId, setUserId] = useState(null); // Adicionado userId
 
   useEffect(() => {
     const storedToken = Cookies.get('token');
     const storedRole = Cookies.get('role');
+    const storedUserId = Cookies.get('userId'); // Obtendo o ID do usuário
     setLoggedIn(Boolean(storedToken));
     setIsCustomer(storedRole === 'customer');
+    setUserId(storedUserId); // Definindo o ID do usuário
   }, []);
 
   const login = async (email, password) => {
@@ -24,12 +27,15 @@ export const AuthProvider = ({ children }) => {
         password,
       });
 
-      const userRole = response.data.user.role;
+      const { token, user } = response.data;
+      const { role, _id } = user;
 
       setLoggedIn(true);
-      setIsCustomer(userRole === 'customer');
-      Cookies.set('token', response.data.token);
-      Cookies.set('role', userRole);
+      setIsCustomer(role === 'customer');
+      setUserId(_id); // Definindo o ID do usuário após o login
+      Cookies.set('token', token);
+      Cookies.set('role', role);
+      Cookies.set('userId', _id); // Salvando o ID do usuário nos cookies
     } catch (error) {
       if (error.response && error.response.status === 401) {
         toast.error('Erro, email ou senha inválidos!', { position: toast.POSITION.TOP_CENTER });
@@ -42,13 +48,16 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     Cookies.remove('token');
     Cookies.remove('role');
+    Cookies.remove('userId'); // Removendo o ID do usuário dos cookies ao fazer logout
     setLoggedIn(false);
     setIsCustomer(false);
+    setUserId(null); // Resetando o ID do usuário ao fazer logout
   };
 
   const values = {
     loggedIn,
-    isCustomer, // Atualizado para isCustomer
+    isCustomer,
+    userId, // Incluindo userId nos valores do contexto
     login,
     logout,
   };
