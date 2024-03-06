@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import Navbar from "./Navbar";
 import Header from "./Header";
@@ -13,8 +13,15 @@ import { useAuth } from "../context/AuthContext";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const Home = () => {
-  const { logout } = useAuth(); // Obtendo o userId do contexto de autenticação
-
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+  const [showButton, setShowButton] = useState(false);
+  useEffect(() => {
+    if(loggedIn){
+      setShowButton(true)
+    } else {
+      setShowButton(false)
+    }
+  })
   return (
     <div>
       <DiscountImageCarousel />
@@ -26,11 +33,13 @@ const Home = () => {
       <BannerWithDiscount />
       <DiscountImageLinkPerPercentageAndCategory />
       <Navbar></Navbar>
-      <div className="button" onClick={logout}>
-        <LogoutIcon />
 
-        <span>Sair</span>
-      </div>
+      {showButton && (
+        <div className="button" onClick={logout}>
+          <LogoutIcon />
+          <span>Sair</span>
+        </div>
+      )}
     </div>
   );
 };
