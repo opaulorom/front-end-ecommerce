@@ -11,6 +11,8 @@ import BannerWithDiscount from "./BannerWithDiscount";
 import DiscountImageLinkPerPercentageAndCategory from "./DiscountImageLinkPerPercentageAndCategory";
 
 const Home = () => {
+
+
   return (
     <div>
       <DiscountImageCarousel />

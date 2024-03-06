@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useClerk } from "@clerk/clerk-react";
 import axios from 'axios';
+import Cookies from "js-cookie";
 
 const SignUpForm = () => {
-  const clerk = useClerk();
-  const [email, setEmail] = useState('');
-
-  useEffect(() => {
-    if (clerk.user && clerk.user.emailAddresses && clerk.user.emailAddresses.length > 0) {
-      setEmail(clerk.user.emailAddresses[0]?.emailAddress.toString());
-    }
-  }, [clerk.user]);
-
+  const userId = Cookies.get('userId'); // Obtenha o token do cookie
   const [formData, setFormData] = useState({
-    userId: clerk.user?.id || '', // Obter o userId do usuário logado
-    name:  '',
+
+    custumerId: userId, // Usando o userId do usuário logado
+    name: '',
     cpfCnpj: '',
-    email: email || '',
-    telephone: '',
+    email: '',
+    mobilePhone: '',
     postalCode: '',
     address: '',
     addressNumber: '',
@@ -25,60 +18,20 @@ const SignUpForm = () => {
     province: '',
     city: '',
     state: '',
+    
   });
-
-
-
-
- 
-
+  console.log("custumerId", userId)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    const {    
-       name,
-      cpfCnpj,
-      mobilePhone,
-      email,
-      postalCode,
-      address,
-      addressNumber,
-      complement,
-      province,
-      city,
-      state, } = formData;
-  
+
     try {
-      const response = await axios.post('http://localhost:3001/api/signup', {
-        clerkUserId: clerk.user.id, // Adicione o clerkUserId aqui
-        name,
-        cpfCnpj,
-        mobilePhone,
-        email,
-        postalCode,
-        address,
-        addressNumber,
-        complement,
-        province,
-        city,
-        state,
-        
-        // Adicione os outros campos do formulário aqui
-      });
-      useEffect(() => {
-        // Atualizar o estado do formulário com o e-mail do usuário logado
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          email: clerk.user?.emailAddresses	 || '',
-        }));
-      }, [clerk.user]);
-    
-    
+      const response = await axios.post('http://localhost:3001/api/signup', formData);
       console.log(response.data);
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
@@ -86,10 +39,6 @@ const SignUpForm = () => {
       // Trate erros aqui, como exibir uma mensagem para o usuário
     }
   };
-
-
-
-
 
   const handleCepChange = async (event) => {
     const newCep = event.target.value;
@@ -114,7 +63,6 @@ const SignUpForm = () => {
       }
     }
   };
-
 
   return (
     <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column"}}>

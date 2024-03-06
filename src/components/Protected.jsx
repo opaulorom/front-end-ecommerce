@@ -23,6 +23,7 @@ const Protected = () => {
 
   return (
     <div>
+      
       {isUserRegistered ? <UpdateForm /> : <SignUpForm />}
 
     </div>
