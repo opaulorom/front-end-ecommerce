@@ -9,8 +9,11 @@ import ProductByCategories from "../ProductByCategories";
 import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
 import BannerWithDiscount from "./BannerWithDiscount";
 import DiscountImageLinkPerPercentageAndCategory from "./DiscountImageLinkPerPercentageAndCategory";
+import { useAuth } from "@clerk/clerk-react";
+
 
 const Home = () => {
+  const { logout } = useAuth(); // Obtendo o userId do contexto de autenticação
 
 
   return (
@@ -24,7 +27,10 @@ const Home = () => {
       <BannerWithDiscount />
       <DiscountImageLinkPerPercentageAndCategory />
       <Navbar></Navbar>
-
+      <button className='button' onClick={logout}>
+    
+          <span>Sair</span>
+        </button>
 
     </div>
   );
