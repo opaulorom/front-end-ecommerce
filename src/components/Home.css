@@ -1,0 +1,22 @@
+.button {
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    cursor: pointer;
+    margin-top: 4rem;
+    color: black;
+  }
+  .button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    color: black; 
+    cursor: pointer;
+    font-family: "poppins";
+    font-weight: 500;
+  }
+  
+  .button:hover {
+    color: #0056b3; 
+  }
