@@ -34,6 +34,7 @@ import { CartProvider } from "./context/CartContext";
 import LoginForm from "./components/LoginForm";
 import { AuthProvider } from "./context/AuthContext";
 import Register from "./components/Register";
+import ResetPasswordPage from "./components/ResetPasswordPage";
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const Root = () => (
@@ -82,6 +83,7 @@ const Root = () => (
     <Route path="/cart" element={<Cart />} />
     <Route path="/login" element={<LoginForm/>} />
     <Route path="/register" element={<Register/>} />
+    <Route path="/reset-password/:token" component={<ResetPasswordPage/>} />
 
   </Routes>
 );
