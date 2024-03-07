@@ -10,7 +10,7 @@ const RegisterCustomerForm = () => {
     e.preventDefault();
     try {
       const newUser = { email, password, role: "customer" };
-      await axios.post("http://localhost:3001/user", newUser);
+      await axios.post("http://localhost:3001/custumer", newUser);
       // Limpar o formulário após o envio bem-sucedido
       setEmail("");
       setPassword("");

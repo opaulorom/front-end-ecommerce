@@ -24,12 +24,12 @@ const Profile = () => {
       <GoogleLoginButton/>
 
       </div>
-      {showButton && (
+  
         <div className="button" onClick={logout}>
           <LogoutIcon />
           <span>Sair</span>
         </div>
-      )}
+ 
       </div>
   )
 }

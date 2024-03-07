@@ -11,7 +11,8 @@ import BannerWithDiscount from "./BannerWithDiscount";
 import DiscountImageLinkPerPercentageAndCategory from "./DiscountImageLinkPerPercentageAndCategory";
 import { useAuth } from "../context/AuthContext";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+ import Register from "../components/Register"
+import LoginForm from "./LoginForm";
 const Home = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const [showButton, setShowButton] = useState(false);
@@ -40,6 +41,10 @@ const Home = () => {
           <span>Sair</span>
         </div>
       )}
+      <LoginForm/>
+
+      <Register/>
+
     </div>
   );
 };
