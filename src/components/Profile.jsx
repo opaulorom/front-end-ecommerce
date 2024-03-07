@@ -1,11 +1,11 @@
 import React from 'react'
-import LoginForm from './LoginForm'
+import Protected from './Protected'
 
 
 const Profile = () => {
   return (
     <div>
-      <LoginForm></LoginForm>
+    <Protected/>
 
       </div>
   )

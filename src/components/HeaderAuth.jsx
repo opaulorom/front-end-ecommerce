@@ -42,7 +42,7 @@ function HeaderAuth() {
               <UserButton afterSignOutUrl="/" />
             </li>
             <li>
-              <Link to="/protected">Protected Page</Link>
+              <Link to="/">Protected Page</Link>
             </li>
           </ul>
         </SignedIn>

@@ -36,6 +36,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Register from "./components/Register";
 import PasswordResetRequest from "./components/PasswordResetRequest";
 import ResetPasswordPage from "./components/ResetPasswordPage";
+import EmailProfile from "./components/EmailProfile";
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const Root = () => (
@@ -86,8 +87,9 @@ const Root = () => (
     <Route path="/register" element={<Register/>} />
     <Route path="/forgotPassword" element={<PasswordResetRequest/>} />
     <Route path="/reset-password/:token" element={<ResetPasswordPage/>} />
+    <Route path="/profile" element={<EmailProfile />} />
 
-
+    
 
   </Routes>
 );
