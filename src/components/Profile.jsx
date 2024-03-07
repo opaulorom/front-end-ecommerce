@@ -19,8 +19,11 @@ const Profile = () => {
   return (
     <div>
       <Header> </Header>
+      <div style={{marginTop:"10rem"}}>
       <Protected/>
       <GoogleLoginButton/>
+
+      </div>
       {showButton && (
         <div className="button" onClick={logout}>
           <LogoutIcon />
