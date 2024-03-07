@@ -28,7 +28,7 @@ const GoogleLoginButton = () => {
           // Se o login for bem-sucedido, atualize o estado de autenticação
           const { token, user } = response.data;
           login(token, user); // Chame a função de login do contexto de autenticação
-          navigate('/profile'); // Redirecione para a página de perfil
+          navigate('/perfil'); // Redirecione para a página de perfil
         })
         .catch(error => {
           console.error('Erro ao processar o login com o Google:', error);
