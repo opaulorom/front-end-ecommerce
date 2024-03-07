@@ -81,7 +81,10 @@ const LoginForm = () => {
           </button>
         </div>
       </div>
-      Ainda nao tem uma conta  <Link to={"/register"}>Cadastre-se</Link>
+      Ainda nao tem uma conta  <Link to={"/register"}>Cadastre-se</Link><br/>
+      Esqueceu a senha   <Link to={"/forgotPassword"}>clique aqui</Link>
+
+      
 
     </div>
   );
