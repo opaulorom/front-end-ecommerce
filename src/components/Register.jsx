@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const RegisterCustomerForm = () => {
+const RegisterCustomerForm = ({ match }) => { // Adicionando match para acessar os parâmetros da URL
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -10,16 +10,21 @@ const RegisterCustomerForm = () => {
     e.preventDefault();
     try {
       const newUser = { email, password, role: "customer" };
-      await axios.post("http://localhost:3001/register/:token", newUser);
-      // Limpar o formulário após o envio bem-sucedido
+      const token = match.params.token;
+      await axios.post(`http://localhost:3001/register/${token}`, newUser);
       setEmail("");
       setPassword("");
       setError("");
       alert("Usuário cadastrado com sucesso!");
     } catch (err) {
-      setError(err.response.data.message);
+      if (err.response && err.response.data) {
+        setError(err.response.data.error); // Usar err.response.data.error se disponível
+      } else {
+        setError("Erro desconhecido ao cadastrar usuário"); // Se não houver resposta ou dados disponíveis
+      }
     }
   };
+  
 
   return (
     <div>
