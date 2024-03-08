@@ -13,6 +13,7 @@ import { useAuth } from "../context/AuthContext";
 import LogoutIcon from "@mui/icons-material/Logout";
  import Register from "../components/Register"
 import LoginForm from "./LoginForm";
+import RegisterLink from "./RegisterLink";
 const Home = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const [showButton, setShowButton] = useState(false);
@@ -44,7 +45,7 @@ const Home = () => {
       <LoginForm/>
 
       <Register/>
-
+      <RegisterLink></RegisterLink>
     </div>
   );
 };
