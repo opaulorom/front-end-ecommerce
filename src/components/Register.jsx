@@ -1,14 +1,19 @@
 
-///http://localhost:3001/register/${token}
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function RegisterUser() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const { token } = useParams();
+
+  useEffect(() => {
+    // O token agora está disponível aqui, você pode usá-lo como desejar
+    console.log(token);
+  }, [token]);
 
   const role = 'customer'; // Definindo o papel (role) como 'customer' por padrão
 
@@ -33,9 +38,6 @@ function RegisterUser() {
         <br />
         <label>Password:</label>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <br />
-        <label>Token:</label>
-        <input type="text" value={token} onChange={(e) => setToken(e.target.value)} required />
         <br />
         <button type="submit">Register</button>
       </form>
