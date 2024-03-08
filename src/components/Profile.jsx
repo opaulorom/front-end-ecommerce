@@ -3,7 +3,7 @@ import Protected from './Protected'
 import Header from './Header'
 import { useAuth } from "../context/AuthContext";
 import LogoutIcon from "@mui/icons-material/Logout";
-import GoogleLoginButton from './GoogleLoginButton';
+import LoginForm from './LoginForm';
 
 
 const Profile = () => {
@@ -20,16 +20,10 @@ const Profile = () => {
     <div>
       <Header> </Header>
       <div style={{marginTop:"10rem"}}>
-      <Protected/>
-      <GoogleLoginButton/>
+      <LoginForm/>
 
       </div>
   
-        <div className="button" onClick={logout}>
-          <LogoutIcon />
-          <span>Sair</span>
-        </div>
- 
       </div>
   )
 }

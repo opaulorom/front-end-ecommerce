@@ -83,7 +83,7 @@ const Root = () => (
     </Route>
     <Route path="/cart" element={<Cart />} />
     <Route path="/login" element={<LoginForm/>} />
-    <Route path="/register" element={<Register/>} />
+    <Route path="/register/:token" element={<Register/>} />
     <Route path="/forgotPassword" element={<PasswordResetRequest/>} />
     <Route path="/reset-password/:token" element={<ResetPasswordPage/>} />
 
