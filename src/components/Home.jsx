@@ -40,7 +40,6 @@ const Home = () => {
           <span>Sair</span>
         </div>
       )}
-
     </div>
   );
 };

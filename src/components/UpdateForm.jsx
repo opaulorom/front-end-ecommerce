@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useClerk } from "@clerk/clerk-react";
 import axios from 'axios';
+import Cookies from "js-cookie";
 
 const UpdateForm = () => {
-  const clerk = useClerk();
+  const userId = Cookies.get('userId'); // Obtenha o token do cookie
 
   const [formData, setFormData] = useState({
-    userId: clerk.user?.id || '',
+    userId: userId,
     name:  '',
     cpfCnpj: '',
-    email: clerk.user?.emailAddresses || '',
+    email: '',
     mobilePhone: '',
     postalCode: '',
     address: '',
@@ -23,7 +23,7 @@ const UpdateForm = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/custumer/${clerk.user.id}`);
+        const response = await axios.get(`http://localhost:3001/api/custumer/${userId}`);
         const userData = response.data;
 
         setFormData((prevFormData) => ({
@@ -46,7 +46,7 @@ const UpdateForm = () => {
     };
 
     fetchUserData();
-  }, [clerk.user]);
+  }, [userId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,7 +57,7 @@ const UpdateForm = () => {
     e.preventDefault();
   
     try {
-      const response = await axios.put(`http://localhost:3001/api/update/${clerk.user.id}`, formData);
+      const response = await axios.put(`http://localhost:3001/api/update/${userId}`, formData);
       console.log(response.data);
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {

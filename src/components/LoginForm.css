@@ -113,3 +113,14 @@ input::placeholder {
   color: #0056b3; 
 }
 */
+.above-input {
+  position: absolute;
+  top: -20px; /* Ajuste conforme necessário */
+  left: 0;
+  background-color: #f00; /* Cor de fundo para destacar */
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff; /* Cor do texto */
+  font-size: 14px; /* Tamanho da fonte */
+}
+
