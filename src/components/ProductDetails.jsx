@@ -11,6 +11,7 @@ import { useCart } from "../context/CartContext";
 import styles from "./ProductDetails.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -24,6 +25,7 @@ const ProductDetails = () => {
   const [isColorAndSizeSelected, setIsColorAndSizeSelected] = useState(false);
 
   const { cartItemCount, addToCart } = useCart();
+  const userId = Cookies.get('userId'); // Obtenha o token do cookie
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -91,11 +93,11 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = async () => {
-    const clerkUserId = user.id;
+ 
 
     try {
       const response = await axios.post(
-        `http://localhost:3001/api/add-to-cart/${clerkUserId}`,
+        `http://localhost:3001/api/add-to-cart/${userId}`,
         {
           productId: product._id,
           size: selectedSize,

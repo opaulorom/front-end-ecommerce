@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUser } from "@clerk/clerk-react";
+import Cookies from 'js-cookie';
 
 const FreteSelect = ({ setTotalAmount }) => {
   const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
   const [selectedFreteIndex, setSelectedFreteIndex] = useState(localStorage.getItem('selectedFreteIndex') || 0); // Define o primeiro frete como padrão
   const { user } = useUser();
+  const userId = Cookies.get('userId'); // Obtenha o token do cookie
 
   useEffect(() => {
     localStorage.setItem('cep', cep);
@@ -15,10 +17,10 @@ const FreteSelect = ({ setTotalAmount }) => {
   useEffect(() => {
     const fetchFrete = async () => {
       try {
-        const clerkUserId = user.id;
+
 
         // Faz a solicitação GET para obter os dados atualizados do frete
-        const responseGet = await axios.get(`http://localhost:3001/api/frete/${clerkUserId}`);
+        const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);
         setFrete(responseGet.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -41,7 +43,7 @@ const FreteSelect = ({ setTotalAmount }) => {
       const freteId = frete[index]._id;
   
       // Faz a solicitação PUT para atualizar o valor do frete no carrinho do cliente
-      await axios.put(`http://localhost:3001/api/cart/${clerkUserId}/shippingFee/${freteId}`);
+      await axios.put(`http://localhost:3001/api/cart/${userId}/shippingFee/${freteId}`);
   
       // Atualiza o estado do frete selecionado
       setSelectedFreteIndex(index);

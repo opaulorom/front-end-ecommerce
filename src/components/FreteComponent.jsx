@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUser } from "@clerk/clerk-react";
+import Cookies from 'js-cookie';
 
 const FreteComponent = () => {
   const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
   const { user } = useUser();
+  const userId = Cookies.get('userId'); // Obtenha o token do cookie
 
   useEffect(() => {
     localStorage.setItem('cep', cep);
@@ -14,10 +16,10 @@ const FreteComponent = () => {
   useEffect(() => {
     const fetchFrete = async () => {
       try {
-        const clerkUserId = user.id;
+     
 
         // Faz a solicitação GET para obter os dados atualizados do frete
-        const responseGet = await axios.get(`http://localhost:3001/api/frete/${clerkUserId}`);
+        const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);
         setFrete(responseGet.data);
       } catch (error) {
         console.error('Error fetching data:', error);
