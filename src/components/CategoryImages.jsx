@@ -8,7 +8,7 @@ const CategoryImages = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch(`https://serveradmin-whhj.onrender.com/api/category/${categoryId}/images`);
+        const response = await fetch(`https://localhost:3001/api/category/${categoryId}/images`);
         const data = await response.json();
 
         if (response.ok) {
