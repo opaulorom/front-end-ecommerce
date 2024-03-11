@@ -27,7 +27,7 @@ const Cart = () => {
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
 
   useEffect(() => {
-    if (isLoaded && isSignedIn) {
+
 
       axios
         .get(`http://localhost:3001/api/cart/${userId}`)
@@ -37,8 +37,8 @@ const Cart = () => {
         .catch((error) => {
           console.log("Erro ao visualizar frete.", error);
         });
-    }
-  }, [isLoaded, isSignedIn, user]);
+
+  }, [ user]);
 
   const handleDelete = useCallback(
     (productId) => {
@@ -92,8 +92,8 @@ const Cart = () => {
     [user]
   );
  useEffect(() => {
-  if (isLoaded && isSignedIn) {
-    const clerkUserId = user.id;
+  const userId = Cookies.get('userId'); // Obtenha o token do cookie
+
     axios
       .get(`http://localhost:3001/api/cart/${userId}/total-price`)
       .then((response) => {
@@ -105,8 +105,8 @@ const Cart = () => {
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
       });
-  }
-}, [isLoaded, isSignedIn, user, getCart, getTotal]);
+
+}, [isLoaded, isSignedIn, userId, getCart, getTotal]);
 
   
   
