@@ -135,16 +135,22 @@ const Cart = () => {
                 alignItems: "center",
               }}
             >
-             {item.productId.variations && (
-      <img
-        src={item.productId.variations.find(variation => variation.color === item.color)?.urls[0]}
-        alt={item.productId.name}
-        style={{ width: "20%", marginBottom: "10px" }}
-      />
-    )}
-              <div style={{
-                gap:"2rem"
-              }}>
+              {item.productId.variations && (
+                <img
+                  src={
+                    item.productId.variations.find(
+                      (variation) => variation.color === item.color
+                    )?.urls[0]
+                  }
+                  alt={item.productId.name}
+                  style={{ width: "20%", marginBottom: "10px" }}
+                />
+              )}
+              <div
+                style={{
+                  gap: "2rem",
+                }}
+              >
                 {item.productId.name}
                 {item.productId.price}
                 {item.size}
