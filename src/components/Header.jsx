@@ -8,12 +8,16 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useUser } from "@clerk/clerk-react";
+import {useAuth} from "../context/AuthContext"
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const { cartItemCount, addToCart, removeFromCart } = useCart();
   const [localCartItemCount, setLocalCartItemCount] = useState(0);
   const { isSignedIn, user } = useUser();
+  const userId = Cookies.get('userId'); // Obtenha o token do cookie
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
 
   useEffect(() => {
     const storedCartItemCount = localStorage.getItem("cartItemCount");
@@ -23,10 +27,9 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    if (isSignedIn) {
-      const clerkUserId = user.id;
+    if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/cart/${clerkUserId}`)
+        .get(`http://localhost:3001/api/cart/${userId}`)
         .then((response) => {
           setLocalCartItemCount(
             Math.max(response.data.cart.products.length, 0)
@@ -41,7 +44,7 @@ const Header = () => {
     } else {
       setLocalCartItemCount(cartItemCount);
     }
-  }, [isSignedIn, user, cartItemCount]);
+  }, [loggedIn, user, cartItemCount]);
 
   useEffect(() => {
     localStorage.setItem("cartItemCount", localCartItemCount);
@@ -124,7 +127,7 @@ const Header = () => {
                   alignItems: "center",
                 }}
               >
-                {isSignedIn ? localCartItemCount : 0}
+                {loggedIn ? localCartItemCount : 0}
               </span>
             </Link>
           </div>
