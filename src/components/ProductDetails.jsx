@@ -91,27 +91,25 @@ const ProductDetails = () => {
       );
     }
   };
-
   const handleAddToCart = async () => {
- 
-
     try {
       const response = await axios.post(
         `http://localhost:3001/api/add-to-cart/${userId}`,
         {
           productId: product._id,
-          size: selectedSize,
+          size: selectedSize, // Aqui está sendo enviado o tamanho selecionado
           color: product.variations[currentImageIndex].color,
           quantity: 1,
         }
       );
-
+  
       addToCart(); // Incrementa o número de itens no carrinho
       toast.success("Produto adicionado ao carrinho!");
     } catch (error) {
       console.error("Erro ao adicionar produto ao carrinho:", error);
     }
   };
+  
 
   const handleClickOpenModal = () => {
     setOpenCartModal(true);
@@ -122,14 +120,16 @@ const ProductDetails = () => {
   };
 
   const handleAddToCartAndOpenModal = () => {
-    if (selectedSize && product.variations[currentImageIndex].color) {
-      handleAddToCart();
-      handleClickOpenModal();
-    } else {
-      // Se a cor ou o tamanho não foram selecionados, exiba um alerta
-      toast.error("Por favor, selecione uma cor e um tamanho.");
-    }
-  };
+  if (selectedSize && product.variations[currentImageIndex].color) {
+    // Verifica se o tamanho e a cor estão selecionados
+    handleAddToCart();
+    handleClickOpenModal();
+  } else {
+    // Se a cor ou o tamanho não foram selecionados, exiba um alerta
+    toast.error("Por favor, selecione uma cor e um tamanho.");
+  }
+};
+
 
   return (
     <>
@@ -189,7 +189,7 @@ const ProductDetails = () => {
           <div style={{}}>
             <h1>{product.name}</h1>
             <p>R$: ${product.price}</p>
-            <p>${product.description}</p>
+            <p>{product.description}</p>
 
             <div className="thumbnail-container">
               {product.variations

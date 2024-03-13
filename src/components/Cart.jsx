@@ -10,8 +10,8 @@ import ModalDialog from "@mui/joy/ModalDialog";
 import Typography from "@mui/joy/Typography";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import FreteSelect from "./FreteSelect";
 
 import Cookies from "js-cookie";
@@ -24,25 +24,21 @@ const Cart = () => {
   const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
   const [getTotal, setGetTotal] = useState({});
   const [selectedFreteIndex, setSelectedFreteIndex] = useState(0); // Define o primeiro frete como padrão
-  const userId = Cookies.get('userId'); // Obtenha o token do cookie
+  const userId = Cookies.get("userId"); // Obtenha o token do cookie
 
   useEffect(() => {
-
-
-      axios
-        .get(`http://localhost:3001/api/cart/${userId}`)
-        .then((response) => {
-          setGetCart(response.data.cart.products);
-        })
-        .catch((error) => {
-          console.log("Erro ao visualizar frete.", error);
-        });
-
-  }, [ user]);
+    axios
+      .get(`http://localhost:3001/api/cart/${userId}`)
+      .then((response) => {
+        setGetCart(response.data.cart.products);
+      })
+      .catch((error) => {
+        console.log("Erro ao visualizar frete.", error);
+      });
+  }, [user]);
 
   const handleDelete = useCallback(
     (productId) => {
-
       axios
         .delete(
           `http://localhost:3001/api/remove-from-cart/${userId}/${productId}`
@@ -64,7 +60,6 @@ const Cart = () => {
 
   const handleQuantityChange = useCallback(
     (productId, newQuantity) => {
-
       axios
         .put(
           `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
@@ -91,8 +86,8 @@ const Cart = () => {
     },
     [user]
   );
- useEffect(() => {
-  const userId = Cookies.get('userId'); // Obtenha o token do cookie
+  useEffect(() => {
+    const userId = Cookies.get("userId"); // Obtenha o token do cookie
 
     axios
       .get(`http://localhost:3001/api/cart/${userId}/total-price`)
@@ -105,13 +100,7 @@ const Cart = () => {
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
       });
-
-}, [isLoaded, isSignedIn, userId, getCart, getTotal]);
-
-  
-  
-  
-  
+  }, [isLoaded, isSignedIn, userId, getCart, getTotal]);
 
   return (
     <div>
@@ -137,25 +126,36 @@ const Cart = () => {
       ) : (
         <>
           {getCart.map((item, index) => (
-            <div key={index} style={{ marginTop: "10rem", marginLeft: "1rem", display:"flex", alignItems:"center" }}>
+            <div
+              key={index}
+              style={{
+                marginTop: "10rem",
+                marginLeft: "1rem",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              {item.productId.variations[0] &&
+                item.productId.variations[0].urls &&
+                item.productId.variations[0].urls[0] &&
+                item.productId.variations[0].urls[0] && (
+                  <img
+                    src={item.productId?.variations?.[0]?.urls?.[0]}
+                    alt={item.productId?.name}
+                    style={{ width: "20%", marginBottom: "10px" }}
+                  />
+                )}
+              <div style={{
+                gap:"2rem"
+              }}>
+                {item.productId.name}
+                {item.productId.price}
+                {item.size}
+                {item.color}
+              </div>
 
-        
-                {item.productId.variations[0] &&
-                  item.productId.variations[0].urls &&
-                  item.productId.variations[0].urls[0] &&
-                  item.productId.variations[0].urls[0] && (
-                    <img
-                      src={item.productId?.variations?.[0]?.urls?.[0]}
-                      alt={item.productId?.name}
-                      style={{ width: "20%", marginBottom: "10px" }}
-                    />
-                  )}
-          
-             {item.productId.name}
-               {item.productId.price}
-              {item.productId.size}
-             
-              <RemoveIcon  onClick={() => {
+              <RemoveIcon
+                onClick={() => {
                   const newQuantity = item.quantity - 1;
                   if (newQuantity >= 0) {
                     const newCart = [...getCart];
@@ -181,7 +181,8 @@ const Cart = () => {
                         );
                       });
                   }
-                }}/>
+                }}
+              />
               <input
                 type="number"
                 value={item.quantity}
@@ -201,10 +202,11 @@ const Cart = () => {
                     handleQuantityChange(item.productId._id, newQuantity);
                   }
                 }}
-                style={{width:"2vw"}}
+                style={{ width: "2vw" }}
               />
-          
-              <AddIcon  onClick={() => {
+
+              <AddIcon
+                onClick={() => {
                   const newQuantity = item.quantity + 1;
                   const newCart = [...getCart];
                   newCart[index].quantity = newQuantity;
@@ -228,7 +230,8 @@ const Cart = () => {
                         error
                       );
                     });
-                }}/>
+                }}
+              />
               <React.Fragment>
                 <Button
                   variant="outlined"
@@ -302,14 +305,13 @@ const Cart = () => {
         </>
       )}
 
-{getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-  <div>{getTotal.totalAmount}</div>
-)}
+      {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
+        <div>{getTotal.totalAmount}</div>
+      )}
       <Link to={"/payment"}>
         <button>Fazer Pedido</button>
       </Link>
-      <FreteSelect/>
-
+      <FreteSelect />
     </div>
   );
 };
