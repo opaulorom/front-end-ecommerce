@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
 import { useUser } from "@clerk/clerk-react";
+import Cookies from "js-cookie";
 
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState('pix');
   const { isSignedIn, user, isLoaded } = useUser();
+  const userId = Cookies.get('userId'); // Obtenha o token do cookie
 
   const handleChange = (event) => {
     setPaymentMethod(event.target.value);
@@ -13,8 +15,8 @@ const Pay = () => {
   // pagar com pix sem checkout transparente 
   const handlePixPayment = async () => {
     try {
-      const clerkUserId = user.id;
-      const response = await fetch(`http://localhost:3001/api/pix/${clerkUserId}`, {
+
+      const response = await fetch(`http://localhost:3001/api/pix/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,8 +37,7 @@ const Pay = () => {
     // pagar boleto sem checkout transparente 
   const handleBoletoPayment = async () => {
     try {
-      const clerkUserId = user.id;
-      const response = await fetch(`http://localhost:3001/api/boleto/${clerkUserId}`, {
+      const response = await fetch(`http://localhost:3001/api/boleto/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,8 +59,8 @@ const Pay = () => {
     // pagar boleto com checkout transparente 
     const handleBoletoPaymentCustom = async () => {
       try {
-        const clerkUserId = user.id;
-        const response = await fetch(`http://localhost:3001/api/boleto/${clerkUserId}`, {
+    
+        const response = await fetch(`http://localhost:3001/api/boleto/${userId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -81,8 +82,7 @@ const Pay = () => {
   // pagar com cartao de credito sem checkout transparente 
   const handleCartaoDeCreditoPayment = async () => {
     try {
-      const clerkUserId = user.id;
-      const response = await fetch(`http://localhost:3001/api/boleto/${clerkUserId}`, {
+      const response = await fetch(`http://localhost:3001/api/boleto/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
