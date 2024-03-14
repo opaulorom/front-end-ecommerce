@@ -10,7 +10,7 @@ const Pay = () => {
   const { isSignedIn, user, isLoaded } = useUser();
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
   const [encodedImage, setEncodedImage] = useState(null);
-
+  const [pixCode, setPixCode] = useState(null);
   const handleChange = (event) => {
     setPaymentMethod(event.target.value);
   };
@@ -30,6 +30,7 @@ const Pay = () => {
   
       // Redirecionar para a URL de pagamento PIX
       setEncodedImage(data.encodedImage);
+      setPixCode(data.payload)
     } catch (error) {
       console.error(error);
     }
@@ -144,6 +145,7 @@ const Pay = () => {
         <div>
           {paymentMethod === 'pix' && <p><button onClick={handlePixPayment}>Pagar com Pix</button>
           {encodedImage && <ImageComponent encodedImage={encodedImage} />}
+          {encodedImage && <p>{pixCode}</p>}
 
           </p>}
           {paymentMethod === 'boleto' && <p><button onClick={handleBoletoPayment}>Pagar com Boleto</button></p>}
