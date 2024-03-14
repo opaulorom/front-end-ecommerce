@@ -233,7 +233,7 @@ const ProductDetails = () => {
                   <span
                     className={styles.close}
                     onClick={handleClickCloseModal}
-                  >
+                 >
                     &times;
                   </span>
                   <p>

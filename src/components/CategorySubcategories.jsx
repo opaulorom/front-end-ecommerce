@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import CustomPagination from "./CustomPagination";
 
 import Header from "./Header";
-import { useUser } from "@clerk/clerk-react";
 import IconToggle from "./IconToggle";
 import styles from "./CategorySubcategories.module.css"
 
@@ -21,7 +20,6 @@ const CategorySubcategories = () => {
   const [sizes, setSizes] = useState([]);
   const [priceRanges, setPriceRanges] = useState([]);
   const [uniqueSizes, setUniqueSizes] = useState(new Set());
-  const { isSignedIn, user, isLoaded } = useUser();
 
   const fetchMixedProducts = async (page, filters) => {
     try {
@@ -316,25 +314,7 @@ const CategorySubcategories = () => {
 
                   <Link to={`/products/${product._id}`}>
                     
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "-5%",
-                      right: "5%",
-                      zIndex: 9999,
-                      marginBottom: "5rem",
-                      width:"3rem",
-                      display:"flex",
-                      alignItems:"center",
-                      justifyContent:"center",
-                    
-                    }}
-                  >
-                    <IconToggle
-                      productId={product._id}
-                      isFavorite={favorites[product._id]}
-                    />
-                  </div>
+                 
                   {product.variations && product.variations.length > 0 && product.variations[0].urls && product.variations[0].urls.length > 0 ? (
 
                     <img
@@ -362,6 +342,25 @@ const CategorySubcategories = () => {
                       </span>
                     </div>
                   </Link>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "-5%",
+                      right: "0",
+                      zIndex: 9999,
+                      marginBottom: "5rem",
+                      width:"3rem",
+                      display:"flex",
+                      alignItems:"center",
+                      justifyContent:"center",
+                    
+                    }}
+                  >
+                    <IconToggle
+                      productId={product._id}
+                      isFavorite={favorites[product._id]}
+                    />
+                  </div>
                 </li>
               </>
             ))}

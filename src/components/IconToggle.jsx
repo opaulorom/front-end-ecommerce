@@ -1,10 +1,11 @@
+import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 import Heart from "react-heart";
-import { useUser } from "@clerk/clerk-react";
-
+import {useAuth} from "../context/AuthContext"
 const IconToggle = ({ productId, isFavorite }) => {
   const [active, setActive] = useState(isFavorite ?? false);
-  const { isSignedIn, user, isLoaded } = useUser();
+  const userId = Cookies.get('userId'); // Obtenha o token do cookie
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
 
   useEffect(() => {
     setActive(isFavorite);
@@ -13,7 +14,7 @@ const IconToggle = ({ productId, isFavorite }) => {
   const handleClick = async () => {
     try {
       // Verificar se o usuário está autenticado
-      if (!isSignedIn || !user || !isLoaded) {
+      if (!loggedIn || !userId ) {
         console.error('Usuário não autenticado.');
         return;
       }
@@ -27,7 +28,7 @@ const IconToggle = ({ productId, isFavorite }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            clerkUserId: user.id,
+            custumerId: userId,
             productId: productId,
           }),
         }

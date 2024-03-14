@@ -1,18 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useUser } from "@clerk/clerk-react";
-import IconToggle from "./IconToggle";
+import {useAuth} from "../context/AuthContext"
+import Cookies from "js-cookie";
 
 const Heart = () => {
   const [favorites, setFavorites] = useState([]);
-  const { isSignedIn, user, isLoaded } = useUser();
+
+  const userId = Cookies.get('userId'); // Obtenha o token do cookie
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
 
   useEffect(() => {
-    if (isLoaded && isSignedIn) {
-      const clerkUserId = user.id;
+    if (loggedIn) {
+
       axios
-        .get(`http://localhost:3001/api/favorites/${clerkUserId}`)
+        .get(`http://localhost:3001/api/favorites/${userId}`)
         .then((response) => {
           setFavorites(response.data.favorites);
         })
@@ -20,7 +22,7 @@ const Heart = () => {
           console.error("Erro ao visualizar produtos favoritos:", error);
         });
     }
-  }, [isLoaded, isSignedIn, user]);
+  }, [loggedIn, userId]);
 
   return (
     <div>
@@ -34,7 +36,6 @@ const Heart = () => {
           </div>
         ))}
       </ul>
-      <IconToggle/>
     </div>
   );
 };
