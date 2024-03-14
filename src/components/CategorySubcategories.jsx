@@ -55,13 +55,13 @@ const CategorySubcategories = () => {
       try {
         // Alterações nas chamadas de API para obter cores, tamanhos e faixas de preço específicos
         const colorsResponse = await fetch(
-          `https://localhost:3001/api/categories/${category}/colors`
+          `http://localhost:3001/api/categories/${category}/colors`
         );
         const sizesResponse = await fetch(
-          `https://localhost:3001/api/categories/${category}/sizes`
+          `http://localhost:3001/api/categories/${category}/sizes`
         );
         const priceRangesResponse = await fetch(
-          `hhttps://localhost:3001/api/categories/${category}/priceRanges`
+          `http://localhost:3001/api/categories/${category}/priceRanges`
         );
 
         const colorsData = await colorsResponse.json();
@@ -87,7 +87,7 @@ const CategorySubcategories = () => {
       try {
         // Alteração na chamada de API para obter produtos misturados específicos
         const response = await fetch(
-          `https://localhost:3001/api/categories/${category}/mixedProducts`
+          `http://localhost:3001/api/categories/${category}/mixedProducts`
         );
         const data = await response.json();
         setOriginalProducts(data.mixedProducts);
