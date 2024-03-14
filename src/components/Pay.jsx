@@ -3,11 +3,13 @@ import Header from "./Header";
 import Navbar from "./Navbar";
 import { useUser } from "@clerk/clerk-react";
 import Cookies from "js-cookie";
+import ImageComponent from "./ImageComponent";
 
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState('pix');
   const { isSignedIn, user, isLoaded } = useUser();
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
+  const [encodedImage, setEncodedImage] = useState(null);
 
   const handleChange = (event) => {
     setPaymentMethod(event.target.value);
@@ -16,7 +18,7 @@ const Pay = () => {
   const handlePixPayment = async () => {
     try {
 
-      const response = await fetch(`http://localhost:3001/api/pix/${userId}`, {
+      const response = await fetch(`http://localhost:3001/api/pixQRcodeStatico/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +29,7 @@ const Pay = () => {
       console.log(data);
   
       // Redirecionar para a URL de pagamento PIX
-      window.location.href = data.invoiceUrl;
+      setEncodedImage(data.encodedImage);
     } catch (error) {
       console.error(error);
     }
@@ -104,7 +106,6 @@ const Pay = () => {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Header />
       <Navbar />
-    
       <div style={{ marginTop: "8rem" }}>
         <h1>Escolha o método de pagamento:</h1>
         <div>
@@ -141,7 +142,10 @@ const Pay = () => {
           <label htmlFor="cartao">Cartão de Crédito</label>
         </div>
         <div>
-          {paymentMethod === 'pix' && <p><button onClick={handlePixPayment}>Pagar com Pix</button></p>}
+          {paymentMethod === 'pix' && <p><button onClick={handlePixPayment}>Pagar com Pix</button>
+          {encodedImage && <ImageComponent encodedImage={encodedImage} />}
+
+          </p>}
           {paymentMethod === 'boleto' && <p><button onClick={handleBoletoPayment}>Pagar com Boleto</button></p>}
           {paymentMethod === 'cartao' && <p> <button onClick={handleCartaoDeCreditoPayment}>Pagar com Cartão de Crédito</button></p>}
         </div>
