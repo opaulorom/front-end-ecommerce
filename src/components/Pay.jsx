@@ -102,7 +102,15 @@ const Pay = () => {
     }
   };
   
-  
+  const [status, setStatus] = useState('copiar');
+
+  const handleClick = () => {
+    setStatus('copiado');
+    // Aqui você pode adicionar qualquer lógica adicional que deseja executar quando o botão for clicado
+    // Por exemplo, copiar algum texto para a área de transferência
+    navigator.clipboard.writeText(pixCode);
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Header />
@@ -145,7 +153,14 @@ const Pay = () => {
         <div>
           {paymentMethod === 'pix' && <p><button onClick={handlePixPayment}>Pagar com Pix</button>
           {encodedImage && <ImageComponent encodedImage={encodedImage} />}
-          {encodedImage && <p>{pixCode}</p>}
+          {encodedImage && 
+          <>
+          <p>{pixCode}</p>
+          <div>
+      <button onClick={handleClick}>{status === 'copiar' ? 'Copiar' : 'Copiado'}</button>
+    </div>
+          </>
+          }
 
           </p>}
           {paymentMethod === 'boleto' && <p><button onClick={handleBoletoPayment}>Pagar com Boleto</button></p>}
