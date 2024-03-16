@@ -119,44 +119,36 @@ const Pay = () => {
     navigator.clipboard.writeText(pixCode);
   };
 
-
-
-
-
   const [formData, setFormData] = useState({
-
     custumerId: userId, // Usando o userId do usuário logado
-    installmentCount: '',
-    holderName: '',
-    number: '',
-    expiryMonth: '',
-    expiryYear: '',
-    ccv: '',
-    
+    installmentCount: "",
+    holderName: "",
+    number: "",
+    expiryMonth: "",
+    expiryYear: "",
+    ccv: "",
   });
-
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`http://localhost:3001/api/creditCardWithoutTokenization/${userId}`, formData);
+      const response = await axios.post(
+        `http://localhost:3001/api/creditCardWithoutTokenization/${userId}`,
+        formData
+      );
       console.log(response.data);
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
-      console.error('Erro ao enviar informações do usuário:', error);
+      console.error("Erro ao enviar informações do usuário:", error);
       // Trate erros aqui, como exibir uma mensagem para o usuário
     }
   };
 
-
   const [getCart, setGetCart] = useState([]);
   const [getTotal, setGetTotal] = useState({});
 
-
   useEffect(() => {
-
     axios
       .get(`http://localhost:3001/api/cart/${userId}/total-price`)
       .then((response) => {
@@ -168,8 +160,7 @@ const Pay = () => {
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
       });
-  }, [ userId, getCart, getTotal]);
-
+  }, [userId, getCart, getTotal]);
 
   return (
     <div
@@ -177,12 +168,12 @@ const Pay = () => {
     >
       <Header />
       <Navbar />
-    
+
       <div style={{ marginTop: "8rem" }}>
         <h1>Escolha o método de pagamento:</h1>
         {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-        <div>{getTotal.totalAmount}</div>
-      )}
+          <div>{getTotal.totalAmount}</div>
+        )}
         <div>
           <input
             type="radio"
@@ -241,57 +232,88 @@ const Pay = () => {
           {paymentMethod === "cartao" && (
             <p>
               {" "}
-              <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column"}}>
-        <label>
-      nome do titular:
-        <input type="text" name="holderName" onChange={handleChange} value={formData.holderName} />
-      </label>
+              <form
+                onSubmit={handleSubmit}
+                style={{ display: "flex", flexDirection: "column" }}
+              >
+                <label>
+                  nome do titular:
+                  <input
+                    type="text"
+                    name="holderName"
+                    onChange={handleChange}
+                    value={formData.holderName}
+                  />
+                </label>
 
-      <label>
-        numero do cartão:
-        <input type="number" name="number" onChange={handleChange} value={formData.number} />
-      </label>
+                <label>
+                  numero do cartão:
+                  <input
+                    type="number"
+                    name="number"
+                    onChange={handleChange}
+                    value={formData.number}
+                  />
+                </label>
 
-  
-      <label>
-      expiryMonth:
-        <input type="text" name="expiryMonth" onChange={handleChange} value={formData.expiryMonth} />
-      </label>
+                <label>
+                  expiryMonth:
+                  <input
+                    type="text"
+                    name="expiryMonth"
+                    onChange={handleChange}
+                    value={formData.expiryMonth}
+                  />
+                </label>
 
-      <label>
-      expiryYear:
-        <input type="text" name="expiryYear" onChange={handleChange} value={formData.expiryYear} />
-      </label>
-      <label>
-        CVV:
-        <input type="text" name="ccv" onChange={handleChange} value={formData.ccv} />
-      </label>
-      <label>
-      installmentCount:
-        <input type="number" name="installmentCount" onChange={handleChange} value={formData.installmentCount} />
-      </label>
-      
-      <label for="cars">Choose a car:</label>
-  <select name="pacelas" id="cars">
-    <option value="1">1 x de {getTotal.totalAmount / 1}</option>
-    <option value="2">2 x de {getTotal.totalAmount / 2}</option>
-    <option value="3">3 x de {getTotal.totalAmount / 3}</option>
-    <option value="4">4 x de {getTotal.totalAmount / 4}</option>
-    <option value="5">5 x de {getTotal.totalAmount / 5}</option>
-    <option value="6">6 x de {getTotal.totalAmount / 6}</option>
-    <option value="7">7 x de {getTotal.totalAmount / 7}</option>
-    <option value="8">8 x de {getTotal.totalAmount / 8}</option>
-    <option value="9">9 x de {getTotal.totalAmount / 9}</option>
-    <option value="10">10 x de {getTotal.totalAmount / 10}</option>
-  </select>
-      <button type="submit">Finalisar Compra</button>
-    </form>
+                <label>
+                  expiryYear:
+                  <input
+                    type="text"
+                    name="expiryYear"
+                    onChange={handleChange}
+                    value={formData.expiryYear}
+                  />
+                </label>
+                <label>
+                  CVV:
+                  <input
+                    type="text"
+                    name="ccv"
+                    onChange={handleChange}
+                    value={formData.ccv}
+                  />
+                </label>
+                <label>
+                  installmentCount:
+                  <input
+                    type="number"
+                    name="installmentCount"
+                    onChange={handleChange}
+                    value={formData.installmentCount}
+                  />
+                </label>
+
+                <label for="cars">Parcelas:</label>
+                <select name="pacelas" id="cars">
+                  <option value="1">1 x de {getTotal.totalAmount / 1}</option>
+                  <option value="2">2 x de {getTotal.totalAmount / 2}</option>
+                  <option value="3">3 x de {getTotal.totalAmount / 3}</option>
+                  <option value="4">4 x de {getTotal.totalAmount / 4}</option>
+                  <option value="5">5 x de {getTotal.totalAmount / 5}</option>
+                  <option value="6">6 x de {getTotal.totalAmount / 6}</option>
+                  <option value="7">7 x de {getTotal.totalAmount / 7}</option>
+                  <option value="8">8 x de {getTotal.totalAmount / 8}</option>
+                  <option value="9">9 x de {getTotal.totalAmount / 9}</option>
+                  <option value="10">
+                    10 x de {getTotal.totalAmount / 10}
+                  </option>
+                </select>
+                <button type="submit">Finalisar Compra</button>
+              </form>
             </p>
           )}
         </div>
-
-
-      
       </div>
     </div>
   );
