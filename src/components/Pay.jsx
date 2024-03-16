@@ -305,9 +305,7 @@ const Pay = () => {
                   <option value="7">7 x de {getTotal.totalAmount / 7}</option>
                   <option value="8">8 x de {getTotal.totalAmount / 8}</option>
                   <option value="9">9 x de {getTotal.totalAmount / 9}</option>
-                  <option value="10">
-                    10 x de {getTotal.totalAmount / 10}
-                  </option>
+                  <option value="10">10 x de {getTotal.totalAmount / 10}</option>
                 </select>
                 <button type="submit">Finalisar Compra</button>
               </form>
