@@ -299,21 +299,23 @@ const Pay = () => {
 
                 <label>Parcelas:</label>
                 <select
-  name="pacelas"
-  onChange={handleChange}
-  value={formData.installmentCount} // Definindo o valor do select
->
-  <option value="1">1 x de {getTotal.totalAmount / 1}</option>
-  <option value="2">2 x de {getTotal.totalAmount / 2}</option>
-  <option value="3">3 x de {getTotal.totalAmount / 3}</option>
-  <option value="4">4 x de {getTotal.totalAmount / 4}</option>
-  <option value="5">5 x de {getTotal.totalAmount / 5}</option>
-  <option value="6">6 x de {getTotal.totalAmount / 6}</option>
-  <option value="7">7 x de {getTotal.totalAmount / 7}</option>
-  <option value="8">8 x de {getTotal.totalAmount / 8}</option>
-  <option value="9">9 x de {getTotal.totalAmount / 9}</option>
-  <option value="10">10 x de {getTotal.totalAmount / 10}</option>
-</select>
+                  name="pacelas"
+                  onChange={handleChange}
+                  value={formData.installmentCount} // Definindo o valor do select
+                >
+                  <option value="1">1 x de {getTotal.totalAmount / 1}</option>
+                  <option value="2">2 x de {getTotal.totalAmount / 2}</option>
+                  <option value="3">3 x de {getTotal.totalAmount / 3}</option>
+                  <option value="4">4 x de {getTotal.totalAmount / 4}</option>
+                  <option value="5">5 x de {getTotal.totalAmount / 5}</option>
+                  <option value="6">6 x de {getTotal.totalAmount / 6}</option>
+                  <option value="7">7 x de {getTotal.totalAmount / 7}</option>
+                  <option value="8">8 x de {getTotal.totalAmount / 8}</option>
+                  <option value="9">9 x de {getTotal.totalAmount / 9}</option>
+                  <option value="10">
+                    10 x de {getTotal.totalAmount / 10}
+                  </option>
+                </select>
 
                 <button type="submit">Finalisar Compra</button>
               </form>
