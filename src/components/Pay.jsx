@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
 import { useUser } from "@clerk/clerk-react";
@@ -151,9 +151,24 @@ const Pay = () => {
   };
 
 
+  const [getCart, setGetCart] = useState([]);
+  const [getTotal, setGetTotal] = useState({});
 
 
+  useEffect(() => {
 
+    axios
+      .get(`http://localhost:3001/api/cart/${userId}/total-price`)
+      .then((response) => {
+        console.log(response.data); // Verifique se o valor totalAmount está presente na resposta
+        if (response.data.totalAmount !== getTotal.totalAmount) {
+          setGetTotal(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("Erro ao visualizar frete.", error);
+      });
+  }, [ userId, getCart, getTotal]);
 
 
   return (
@@ -162,8 +177,12 @@ const Pay = () => {
     >
       <Header />
       <Navbar />
+    
       <div style={{ marginTop: "8rem" }}>
         <h1>Escolha o método de pagamento:</h1>
+        {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
+        <div>{getTotal.totalAmount}</div>
+      )}
         <div>
           <input
             type="radio"
@@ -254,16 +273,16 @@ const Pay = () => {
       
       <label for="cars">Choose a car:</label>
   <select name="pacelas" id="cars">
-    <option value="1">1 x de </option>
-    <option value="2">2 x de </option>
-    <option value="3">3 x de</option>
-    <option value="4">4 x de</option>
-    <option value="5">5 x de</option>
-    <option value="6">6 x de</option>
-    <option value="7">7 x de</option>
-    <option value="8">8 x de</option>
-    <option value="9">9 x de</option>
-    <option value="10">10 x de</option>
+    <option value="1">1 x de {getTotal.totalAmount / 1}</option>
+    <option value="2">2 x de {getTotal.totalAmount / 2}</option>
+    <option value="3">3 x de {getTotal.totalAmount / 3}</option>
+    <option value="4">4 x de {getTotal.totalAmount / 4}</option>
+    <option value="5">5 x de {getTotal.totalAmount / 5}</option>
+    <option value="6">6 x de {getTotal.totalAmount / 6}</option>
+    <option value="7">7 x de {getTotal.totalAmount / 7}</option>
+    <option value="8">8 x de {getTotal.totalAmount / 8}</option>
+    <option value="9">9 x de {getTotal.totalAmount / 9}</option>
+    <option value="10">10 x de {getTotal.totalAmount / 10}</option>
   </select>
       <button type="submit">Finalisar Compra</button>
     </form>

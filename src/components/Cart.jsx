@@ -100,7 +100,7 @@ const Cart = () => {
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
       });
-  }, [isLoaded, isSignedIn, userId, getCart, getTotal]);
+  }, [ userId, getCart, getTotal]);
 
   return (
     <div>
