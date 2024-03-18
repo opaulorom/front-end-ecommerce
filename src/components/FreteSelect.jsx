@@ -20,7 +20,7 @@ const FreteSelect = ({ setTotalAmount }) => {
 
         // Faz a solicitação GET para obter os dados atualizados do frete
         const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);
-        console.log('log', userId)
+        console.log('log', responseGet)
         setFrete(responseGet.data);
       } catch (error) {
         console.error('Error fetching data:', error);
