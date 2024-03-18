@@ -5,10 +5,11 @@ import { useUser } from "@clerk/clerk-react";
 import Cookies from "js-cookie";
 import ImageComponent from "./ImageComponent";
 import axios from "axios";
-import styles from "./Pay.module.css"
+import styles from "./Pay.module.css";
+import { Link } from "react-router-dom";
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState("pix");
-  const { isSignedIn, user, isLoaded } = useUser();
+
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
   const [encodedImage, setEncodedImage] = useState(null);
   const [pixCode, setPixCode] = useState(null);
@@ -182,11 +183,19 @@ const Pay = () => {
       <Navbar />
 
       <div style={{ marginTop: "8rem" }}>
-        <h1 style={{fontFamily:"poppins", fontWeight:"500", fontSize:"1.1rem"}}>Escolha o método de pagamento:</h1>
+        <h1
+          style={{
+            fontFamily: "poppins",
+            fontWeight: "500",
+            fontSize: "1.1rem",
+          }}
+        >
+          Escolha o método de pagamento:
+        </h1>
         {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
           <div>{getTotal.totalAmount}</div>
         )}
-        <div  style={{display:"flex", alignItems:"center", gap:".5rem"}}>
+        <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
           <input
             type="radio"
             id="pix"
@@ -195,11 +204,28 @@ const Pay = () => {
             checked={paymentMethod === "pix"}
             onChange={handleChange}
           />
-          <label htmlFor="pix" style={{display:"flex", alignItems:"center", gap:".5rem", fontFamily:"poppins", fontWeight:"600", fontSize:"1.1rem"}}><img src="https://i.ibb.co/dfvK4s0/icons8-foto-48.png" alt="" style={{
-            maxWidth:"14vw"
-          }}/> PIX</label>
+          <label
+            htmlFor="pix"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: ".5rem",
+              fontFamily: "poppins",
+              fontWeight: "600",
+              fontSize: "1.1rem",
+            }}
+          >
+            <img
+              src="https://i.ibb.co/dfvK4s0/icons8-foto-48.png"
+              alt=""
+              style={{
+                maxWidth: "14vw",
+              }}
+            />{" "}
+            PIX
+          </label>
         </div>
-        <div  style={{display:"flex", alignItems:"center", gap:".5rem"}}>
+        <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
           <input
             type="radio"
             id="boleto"
@@ -208,9 +234,26 @@ const Pay = () => {
             checked={paymentMethod === "boleto"}
             onChange={handleChange}
           />
-          <label htmlFor="boleto" style={{display:"flex", alignItems:"center", gap:".5rem" ,fontFamily:"poppins", fontWeight:"600", fontSize:"1.1rem"}}><img src="https://i.ibb.co/LNrSsZt/icons8-boleto-bankario-48.png" alt=""  style={{        maxWidth:"14vw"}}/> Boleto</label>
+          <label
+            htmlFor="boleto"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: ".5rem",
+              fontFamily: "poppins",
+              fontWeight: "600",
+              fontSize: "1.1rem",
+            }}
+          >
+            <img
+              src="https://i.ibb.co/LNrSsZt/icons8-boleto-bankario-48.png"
+              alt=""
+              style={{ maxWidth: "14vw" }}
+            />{" "}
+            Boleto
+          </label>
         </div>
-        <div style={{display:"flex", alignItems:"center", gap:".5rem"}}>
+        <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
           <input
             type="radio"
             id="cartao"
@@ -219,25 +262,46 @@ const Pay = () => {
             checked={paymentMethod === "cartao"}
             onChange={handleChange}
           />
-          <label htmlFor="cartao" style={{display:"flex", alignItems:"center", gap:".5rem", fontFamily:"poppins", fontWeight:"600", fontSize:"1.1rem"}}> <img src="https://i.ibb.co/HtWhHR0/icons8-emoji-de-cart-o-de-cr-dito-48.png" alt="" /> Cartão de Crédito</label>
+          <label
+            htmlFor="cartao"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: ".5rem",
+              fontFamily: "poppins",
+              fontWeight: "600",
+              fontSize: "1.1rem",
+            }}
+          >
+            {" "}
+            <img
+              src="https://i.ibb.co/HtWhHR0/icons8-emoji-de-cart-o-de-cr-dito-48.png"
+              alt=""
+            />{" "}
+            Cartão de Crédito
+          </label>
         </div>
         <div>
           {paymentMethod === "pix" && (
             <p>
               <button onClick={handlePixPayment}>Pagar com Pix</button>
-              {encodedImage && <ImageComponent encodedImage={encodedImage} />}
-              {encodedImage && (
-                <>
-                  <p>{pixCode}</p>
-                  <div>
-                    <button onClick={handleClick}>
-                      {status === "copiar" ? "Copiar" : "Copiado"}
-                    </button>
-                  </div>
-                </>
-              )}
+
+              <div>
+                {encodedImage && <ImageComponent encodedImage={encodedImage} />}
+                {encodedImage && (
+                  <>
+                    <p style={{width:"10vw"}}>{pixCode}</p>
+                    <div>
+                      <button onClick={handleClick}>
+                        {status === "copiar" ? "Copiar" : "Copiado"}
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             </p>
           )}
+
           {paymentMethod === "boleto" && (
             <p>
               <button onClick={handleBoletoPayment}>Pagar com Boleto</button>
@@ -248,9 +312,16 @@ const Pay = () => {
               {" "}
               <form
                 onSubmit={handleSubmit}
-                style={{ display: "flex", flexDirection: "column", fontFamily:"poppins", fontWeight:"400", fontSize:"1.1rem", marginBottom:"1rem" }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  fontFamily: "poppins",
+                  fontWeight: "400",
+                  fontSize: "1.1rem",
+                  marginBottom: "1rem",
+                }}
               >
-                <label style={{display:"flex", flexDirection:"column"}}>
+                <label style={{ display: "flex", flexDirection: "column" }}>
                   nome do titular:
                   <input
                     type="text"
@@ -260,7 +331,7 @@ const Pay = () => {
                   />
                 </label>
 
-                <label style={{display:"flex", flexDirection:"column"}}>
+                <label style={{ display: "flex", flexDirection: "column" }}>
                   numero do cartão:
                   <input
                     type="number"
@@ -270,8 +341,8 @@ const Pay = () => {
                   />
                 </label>
 
-                <label style={{display:"flex", flexDirection:"column"}}>
-                mês de vencimento:
+                <label style={{ display: "flex", flexDirection: "column" }}>
+                  mês de vencimento:
                   <input
                     type="text"
                     name="expiryMonth"
@@ -280,8 +351,8 @@ const Pay = () => {
                   />
                 </label>
 
-                <label style={{display:"flex", flexDirection:"column"}}>
-                Ano de vencimento:
+                <label style={{ display: "flex", flexDirection: "column" }}>
+                  Ano de vencimento:
                   <input
                     type="text"
                     name="expiryYear"
@@ -289,7 +360,7 @@ const Pay = () => {
                     value={formData.expiryYear}
                   />
                 </label>
-                <label style={{display:"flex", flexDirection:"column"}}>
+                <label style={{ display: "flex", flexDirection: "column" }}>
                   CVV:
                   <input
                     type="text"
