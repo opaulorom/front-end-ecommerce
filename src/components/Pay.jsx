@@ -186,7 +186,7 @@ const Pay = () => {
         {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
           <div>{getTotal.totalAmount}</div>
         )}
-        <div>
+        <div  style={{display:"flex", alignItems:"center", gap:".5rem"}}>
           <input
             type="radio"
             id="pix"
@@ -195,9 +195,11 @@ const Pay = () => {
             checked={paymentMethod === "pix"}
             onChange={handleChange}
           />
-          <label htmlFor="pix">PIX</label>
+          <label htmlFor="pix" style={{display:"flex", alignItems:"center", gap:".5rem"}}><img src="https://i.ibb.co/dfvK4s0/icons8-foto-48.png" alt="" style={{
+            width:"3vw"
+          }}/> PIX</label>
         </div>
-        <div>
+        <div  style={{display:"flex", alignItems:"center", gap:".5rem"}}>
           <input
             type="radio"
             id="boleto"
@@ -206,9 +208,9 @@ const Pay = () => {
             checked={paymentMethod === "boleto"}
             onChange={handleChange}
           />
-          <label htmlFor="boleto">Boleto</label>
+          <label htmlFor="boleto" style={{display:"flex", alignItems:"center", gap:".5rem"}}><img src="https://i.ibb.co/tx6PF7Z/icons8-boleto-bankario-96.png" alt=""  style={{ width:"4vw"}}/> Boleto</label>
         </div>
-        <div>
+        <div style={{display:"flex", alignItems:"center", gap:".5rem"}}>
           <input
             type="radio"
             id="cartao"
@@ -217,7 +219,7 @@ const Pay = () => {
             checked={paymentMethod === "cartao"}
             onChange={handleChange}
           />
-          <label htmlFor="cartao">Cartão de Crédito</label>
+          <label htmlFor="cartao" style={{display:"flex", alignItems:"center", gap:".5rem", fontSize:"1.5rem"}}> <img src="https://i.ibb.co/HtWhHR0/icons8-emoji-de-cart-o-de-cr-dito-48.png" alt="" /> Cartão de Crédito</label>
         </div>
         <div>
           {paymentMethod === "pix" && (
