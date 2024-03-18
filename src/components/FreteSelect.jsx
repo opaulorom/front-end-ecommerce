@@ -39,7 +39,7 @@ const FreteSelect = ({ setTotalAmount }) => {
   
   const handleRadioClick = async (index) => {
     try {
-      const clerkUserId = user.id;
+
       const freteId = frete[index]._id;
   
       // Faz a solicitação PUT para atualizar o valor do frete no carrinho do cliente

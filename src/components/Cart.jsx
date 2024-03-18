@@ -163,11 +163,10 @@ const Cart = () => {
                   if (newQuantity >= 0) {
                     const newCart = [...getCart];
                     newCart[index].quantity = newQuantity;
-                    const clerkUserId = user.id;
                     const productId = item.productId._id;
                     axios
                       .put(
-                        `http://localhost:3001/api/update-quantity/${clerkUserId}/${productId}`,
+                        `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
                         { quantity: newQuantity }
                       )
                       .then((response) => {
@@ -213,11 +212,11 @@ const Cart = () => {
                   const newQuantity = item.quantity + 1;
                   const newCart = [...getCart];
                   newCart[index].quantity = newQuantity;
-                  const clerkUserId = user.id;
+               
                   const productId = item.productId._id;
                   axios
                     .put(
-                      `http://localhost:3001/api/update-quantity/${clerkUserId}/${productId}`,
+                      `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
                       { quantity: newQuantity }
                     )
                     .then((response) => {

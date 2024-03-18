@@ -33,13 +33,12 @@ const FreteComponent = () => {
     event.preventDefault();
 
     try {
-      const clerkUserId = user.id;
 
       // Faz a solicitação POST para obter os dados do frete com o novo CEP
-      await axios.post(`http://localhost:3001/api/frete/${clerkUserId}`, { cep });
+      await axios.post(`http://localhost:3001/api/frete/${userId}`, { cep });
 
       // Atualiza o estado do frete com os dados do frete da requisição GET
-      const responseGet = await axios.get(`http://localhost:3001/api/frete/${clerkUserId}`);
+      const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);
       setFrete(responseGet.data);
     } catch (error) {
       console.error('Error fetching data:', error);
