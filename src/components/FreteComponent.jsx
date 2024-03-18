@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useUser } from "@clerk/clerk-react";
+
 import Cookies from 'js-cookie';
 
 const FreteComponent = () => {
   const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
-  const { user } = useUser();
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
 
   useEffect(() => {
@@ -27,7 +26,7 @@ const FreteComponent = () => {
     };
 
     fetchFrete();
-  }, [cep, user]);
+  }, [cep, userId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -39,6 +38,7 @@ const FreteComponent = () => {
 
       // Atualiza o estado do frete com os dados do frete da requisição GET
       const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);
+      console.log('log', userId)
       setFrete(responseGet.data);
     } catch (error) {
       console.error('Error fetching data:', error);

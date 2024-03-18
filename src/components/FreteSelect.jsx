@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useUser } from "@clerk/clerk-react";
 import Cookies from 'js-cookie';
 
 const FreteSelect = ({ setTotalAmount }) => {
   const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
   const [selectedFreteIndex, setSelectedFreteIndex] = useState(localStorage.getItem('selectedFreteIndex') || 0); // Define o primeiro frete como padrão
-  const { user } = useUser();
+
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
 
   useEffect(() => {
@@ -21,6 +20,7 @@ const FreteSelect = ({ setTotalAmount }) => {
 
         // Faz a solicitação GET para obter os dados atualizados do frete
         const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);
+        console.log('log', userId)
         setFrete(responseGet.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -28,7 +28,7 @@ const FreteSelect = ({ setTotalAmount }) => {
     };
 
     fetchFrete();
-  }, [cep, user]);
+  }, [cep, userId]);
 
   useEffect(() => {
     // Atualiza o estado do frete selecionado para o índice do primeiro frete
