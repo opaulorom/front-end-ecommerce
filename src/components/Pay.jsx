@@ -14,16 +14,16 @@ const Pay = () => {
   const [encodedImage, setEncodedImage] = useState(null);
   const [pixCode, setPixCode] = useState(null);
   const handleChange = (event) => {
-    setPaymentMethod(event.target.value);
+    event.preventDefault();
     const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-    // Se o nome for 'pacelas', atualize o installmentCount
-    if (name === "pacelas") {
-      setFormData({ ...formData, installmentCount: value });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+    setPaymentMethod(value);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+      ...(name === "pacelas" && { installmentCount: value }),
+    }));
   };
+  
   // pagar com pix sem checkout transparente
   const handlePixPayment = async () => {
     try {
