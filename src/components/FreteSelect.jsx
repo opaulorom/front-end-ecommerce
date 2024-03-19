@@ -82,7 +82,7 @@ const FreteSelect = ({ setTotalAmount }) => {
                 <p>{item.nomeTransportadora}</p>
                 <p> {item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}</p>
                 <p> {item.prazoEntrega}</p>
-                <p> {item.valorFrete}</p>
+                <p> valor do frete:{item.valorFrete}</p>
               </div>
             </div>
           ))}

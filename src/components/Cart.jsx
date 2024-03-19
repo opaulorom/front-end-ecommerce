@@ -308,12 +308,15 @@ const Cart = () => {
       )}
 
       {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-        <div>{getTotal.totalAmount}</div>
+        <div style={{marginLeft:"20rem"}}>total a pagar:{getTotal.totalAmount}</div>
       )}
       <Link to={"/payment"}>
         <button>Fazer Pedido</button>
       </Link>
+       <div style={{marginLeft:"14rem"}}>
+
       <FreteSelect />
+       </div>
     </div>
   );
 };
