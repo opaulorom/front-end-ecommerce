@@ -1,16 +1,13 @@
 import React from 'react'
 import Header from './Header'
 import Navbar from './Navbar'
-import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
-import BannerWithDiscount from "./BannerWithDiscount";
-import DiscountImageLinkPerPercentageAndCategory from "./DiscountImageLinkPerPercentageAndCategory";
 
 import  { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import Chip from "@mui/material/Chip";
-import IconToggle from "./IconToggle";
+import { useAuth } from '';
+
 const NewArrivals = () => {
     const [newArrivals, setNewArrivals] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0);
@@ -43,6 +40,20 @@ const NewArrivals = () => {
       setCurrentPage(page);
     };
     
+
+
+
+
+
+    const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+    const [showButton, setShowButton] = useState(false);
+    useEffect(() => {
+      if (loggedIn) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    });
   return (
     <div>
          <Header />
@@ -73,6 +84,12 @@ const NewArrivals = () => {
           />
         </Stack>
       </div>
+      {showButton && (
+        <div className="button" onClick={logout}>
+          <LogoutIcon />
+          <span>Sair</span>
+        </div>
+      )}
     </div>
   )
 }
