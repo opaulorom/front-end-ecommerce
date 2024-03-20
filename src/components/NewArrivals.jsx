@@ -12,7 +12,6 @@ import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import IconToggle from "./IconToggle";
 const NewArrivals = () => {
-    const { query } = useParams();
     const [newArrivals, setNewArrivals] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
