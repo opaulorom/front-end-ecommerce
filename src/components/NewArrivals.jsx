@@ -16,10 +16,7 @@ const NewArrivals = () => {
     const [newArrivals, setNewArrivals] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedFilters, setSelectedFilters] = useState({
-      page: "",
-     
-    });
+   
   
     useEffect(() => {
       const fetchSearchResults = async () => {
