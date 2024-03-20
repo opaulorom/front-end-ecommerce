@@ -106,10 +106,16 @@ const CategoriesList = () => {
           </li>
         ))}
         <li>
+          <Link to={"/whatsNew"} style={{ color: 'white', textDecoration: 'none' }}>
+
           <span style={{fontSize:"1rem"}}>Ofertas</span>
+          </Link>
         </li>
         <li>
+        <Link to={"/whatsNew"} style={{ color: 'white', textDecoration: 'none' }}>
+
           <span style={{fontSize:"1rem"}}>Novidades</span>
+        </Link>
         </li>
         
       </ul>
