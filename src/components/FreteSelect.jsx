@@ -44,7 +44,6 @@ const FreteSelect = ({ setTotalAmount }) => {
   
       // Faz a solicitação PUT para atualizar o valor do frete no carrinho do cliente
       await axios.put(`http://localhost:3001/api/cart/${userId}/shippingFee/${freteId}`);
-  
       // Atualiza o estado do frete selecionado
       setSelectedFreteIndex(index);
       localStorage.setItem('selectedFreteIndex', index);

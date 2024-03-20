@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import Header from "./Header";
 import Box from "@mui/joy/Box";
@@ -19,7 +18,6 @@ import Cookies from "js-cookie";
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
   const [handleDeleteProduct, setHandleDeleteProduct] = useState(false);
-  const { isSignedIn, user, isLoaded } = useUser();
   const [open, setOpen] = React.useState(false);
   const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
   const [getTotal, setGetTotal] = useState({});
@@ -35,7 +33,7 @@ const Cart = () => {
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
       });
-  }, [user]);
+  }, [userId]);
 
   const handleDelete = useCallback(
     (productId) => {
@@ -55,7 +53,7 @@ const Cart = () => {
           console.error("Erro ao remover produto do carrinho:", error);
         });
     },
-    [user, removeFromCart]
+    [userId, removeFromCart]
   );
 
   const handleQuantityChange = useCallback(
@@ -84,7 +82,7 @@ const Cart = () => {
           );
         });
     },
-    [user]
+    [userId]
   );
   useEffect(() => {
     const userId = Cookies.get("userId"); // Obtenha o token do cookie
@@ -102,6 +100,20 @@ const Cart = () => {
       });
   }, [ userId, getCart, getTotal]);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   return (
     <div>
       <Header />

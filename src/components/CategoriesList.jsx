@@ -85,6 +85,7 @@ const CategoriesList = () => {
         >
           Categorias
         </li>
+
         {modalOpen && (
           <div 
             className={styles.modal} 
@@ -96,6 +97,7 @@ const CategoriesList = () => {
             </div>
           </div>
         )}
+        
         {categories.map((category) => (
           <li key={category.category}>
             <Link to={`/categories/${category.category}`} style={{ textDecoration: 'none', color: "white", fontWeight: "700", whiteSpace: "nowrap",  }}>
@@ -103,7 +105,15 @@ const CategoriesList = () => {
             </Link>
           </li>
         ))}
+        <li>
+          <span style={{fontSize:"1rem"}}>Ofertas</span>
+        </li>
+        <li>
+          <span style={{fontSize:"1rem"}}>Novidades</span>
+        </li>
+        
       </ul>
+      
     </div>
   );
 };

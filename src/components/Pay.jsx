@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
-import { useUser } from "@clerk/clerk-react";
 import Cookies from "js-cookie";
 import ImageComponent from "./ImageComponent";
 import axios from "axios";
-import styles from "./Pay.module.css";
-import { Link } from "react-router-dom";
+
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState("pix");
 
@@ -14,7 +12,6 @@ const Pay = () => {
   const [encodedImage, setEncodedImage] = useState(null);
   const [pixCode, setPixCode] = useState(null);
   const handleChange = (event) => {
-    event.preventDefault();
     const { name, value } = event.target;
     setPaymentMethod(value);
     setFormData((prevFormData) => ({
@@ -90,6 +87,7 @@ const Pay = () => {
     expiryMonth: "",
     expiryYear: "",
     ccv: "",
+    
   });
 
   const handleSubmit = async (e) => {
@@ -264,8 +262,8 @@ const Pay = () => {
             </p>
           )}
           {paymentMethod === "cartao" && (
-            <p>
-              {" "}
+            <>
+         
               <form
                 onSubmit={handleSubmit}
                 style={{
@@ -276,6 +274,7 @@ const Pay = () => {
                   fontSize: "1.1rem",
                   marginBottom: "1rem",
                 }}
+                
               >
                 <label style={{ display: "flex", flexDirection: "column" }}>
                   nome do titular:
@@ -284,6 +283,7 @@ const Pay = () => {
                     name="holderName"
                     onChange={handleChange}
                     value={formData.holderName}
+                    
                   />
                 </label>
 
@@ -348,10 +348,11 @@ const Pay = () => {
 
                 <button type="submit">Finalisar Compra</button>
               </form>
-            </p>
+            </>
           )}
         </div>
       </div>
+      
     </div>
   );
 };

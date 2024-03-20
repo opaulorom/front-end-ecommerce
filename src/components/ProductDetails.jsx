@@ -6,7 +6,6 @@ import "./ProductDetails.css";
 import ProductSizes from "./ProductSizes";
 import Header from "./Header";
 import FreteComponent from "./FreteComponent";
-import { useUser } from "@clerk/clerk-react";
 import { useCart } from "../context/CartContext";
 import styles from "./ProductDetails.module.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -19,7 +18,6 @@ const ProductDetails = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [sizesFromDatabase, setSizesFromDatabase] = useState([]);
   const [selectedSize, setSelectedSize] = useState("");
-  const { isSignedIn, user, isLoaded } = useUser();
   const [openCartModal, setOpenCartModal] = useState(false);
   const modalRef = useRef(null);
   const [isColorAndSizeSelected, setIsColorAndSizeSelected] = useState(false);
@@ -129,6 +127,18 @@ const ProductDetails = () => {
     toast.error("Por favor, selecione uma cor e um tamanho.");
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   return (
