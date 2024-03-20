@@ -36,12 +36,15 @@ const DiscountImageLinkPerPercentage = ({ alt }) => {
   }, []);
   return (
     <>
+    <div style={{display:"flex", gap:"1rem", margin:"0 auto"}}>
+
     <Link to={`/productsByDiscountPercentage/70`}>
-      <img src={imageUrl} alt={alt} />
+      <img src={imageUrl} alt={alt}  style={{width:"40vw"}}/>
     </Link> 
-      <Link to={`/productsByDiscountPercentage/15`}>
-      <img src={imageUrl15} alt={alt} />
+      <Link to={`/productsByDiscountPercentage/15`}  >
+      <img src={imageUrl15} alt={alt} style={{width:"40vw"  }}/>
     </Link> 
+    </div>
     </>
   );
 };

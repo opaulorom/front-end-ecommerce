@@ -5,33 +5,33 @@ import Header from "./Header";
 import Categories from "./Categories";
 import CategoryCarousel from "./CategoryCarousel";
 import DiscountImageCarousel from "./DiscountImageCarousel ";
-import ProductByCategories from "../ProductByCategories";
-import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
-import BannerWithDiscount from "./BannerWithDiscount";
-import DiscountImageLinkPerPercentageAndCategory from "./DiscountImageLinkPerPercentageAndCategory";
 import { useAuth } from "../context/AuthContext";
 import LogoutIcon from "@mui/icons-material/Logout";
+import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
+import NewArrivals from "./NewArrivals";
 
 const Home = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const [showButton, setShowButton] = useState(false);
   useEffect(() => {
-    if(loggedIn){
-      setShowButton(true)
+    if (loggedIn) {
+      setShowButton(true);
     } else {
-      setShowButton(false)
+      setShowButton(false);
     }
-  })
+  });
   return (
     <div>
       <DiscountImageCarousel />
       <Categories />
       <CategoryCarousel />
       <Header />
-      <ProductByCategories />
-      <DiscountImageLinkPerPercentage />
-      <BannerWithDiscount />
-      <DiscountImageLinkPerPercentageAndCategory />
+      <h1 style={{ marginTop: "10rem" }}>Ofertas</h1>
+      <div style={{ display: "flex", marginTop: "5rem" }}>
+        <DiscountImageLinkPerPercentage />
+      </div>
+
+      <NewArrivals/>
       <Navbar></Navbar>
 
       {showButton && (
@@ -40,9 +40,6 @@ const Home = () => {
           <span>Sair</span>
         </div>
       )}
-
-
-      
     </div>
   );
 };
