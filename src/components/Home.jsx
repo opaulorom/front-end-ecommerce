@@ -9,6 +9,7 @@ import { useAuth } from "../context/AuthContext";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
 import NewArrivals from "./NewArrivals";
+import LoginForm from "./LoginForm";
 
 const Home = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
@@ -40,6 +41,8 @@ const Home = () => {
           <span>Sair</span>
         </div>
       )}
+
+<LoginForm/>
     </div>
   );
 };

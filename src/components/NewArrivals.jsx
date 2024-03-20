@@ -6,7 +6,8 @@ import  { useEffect, useState } from "react";
 import { Link,  } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { useAuth } from '';
+import { useAuth } from '../context/AuthContext';
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const NewArrivals = () => {
     const [newArrivals, setNewArrivals] = useState([]);

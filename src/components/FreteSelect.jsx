@@ -47,6 +47,8 @@ const FreteSelect = ({ setTotalAmount }) => {
       // Atualiza o estado do frete selecionado
       setSelectedFreteIndex(index);
       localStorage.setItem('selectedFreteIndex', index);
+      await axios.get(`http://localhost:3001/api/cart/${userId}/total-price`);
+
     } catch (error) {
       console.error('Error updating shipping fee:', error);
     }

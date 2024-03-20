@@ -40,6 +40,8 @@ const FreteComponent = () => {
       const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);
       console.log('log', userId)
       setFrete(responseGet.data);
+      await axios.get(`http://localhost:3001/api/cart/${userId}/total-price`);
+
     } catch (error) {
       console.error('Error fetching data:', error);
     }
