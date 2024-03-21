@@ -13,13 +13,18 @@ const Pay = () => {
   const [pixCode, setPixCode] = useState(null);
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setPaymentMethod(value);
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
       ...(name === "pacelas" && { installmentCount: value }),
     }));
   };
+
+  const handleCreditCardPayment = (event) => {
+    const { name, value } = event.target;
+    setPaymentMethod(value);
+  }
   
   // pagar com pix sem checkout transparente
   const handlePixPayment = async () => {
@@ -214,6 +219,7 @@ const Pay = () => {
             name="paymentMethod"
             value="cartao"
             checked={paymentMethod === "cartao"}
+            onClick={handleCreditCardPayment}
             onChange={handleChange}
           />
           <label

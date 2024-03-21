@@ -59,13 +59,15 @@ const NewArrivals = () => {
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
             gap: "1rem",
+            flexDirection:"column"
           }}
         >
           {newArrivals.map((product) => (
-            <li key={product._id}>
+            <li key={product._id} >
               <Link to={`/products/${product._id}`}>
-                <img src={product.variations[0].urls[0]} alt="" />
-                {product.name} - {product.price}
+                <img src={product.variations[0].urls[0]} alt="" style={{width:"15vw"}} />
+                {product.name} 
+                {product.price}
               </Link>
             </li>
           ))}
