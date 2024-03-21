@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const FreteSelect = ({ setTotalAmount }) => {
+const FreteSelect = () => {
   const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
   const [selectedFreteIndex, setSelectedFreteIndex] = useState(localStorage.getItem('selectedFreteIndex') || 0); // Define o primeiro frete como padrão
+  const [getTotal, setGetTotal] = useState({});
 
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
 
@@ -39,23 +40,33 @@ const FreteSelect = ({ setTotalAmount }) => {
   
   const handleRadioClick = async (index) => {
     try {
-
       const freteId = frete[index]._id;
   
       // Faz a solicitação PUT para atualizar o valor do frete no carrinho do cliente
       await axios.put(`http://localhost:3001/api/cart/${userId}/shippingFee/${freteId}`);
+  
       // Atualiza o estado do frete selecionado
       setSelectedFreteIndex(index);
       localStorage.setItem('selectedFreteIndex', index);
-      await axios.get(`http://localhost:3001/api/cart/${userId}/total-price`);
-
+  
+      // Captura a resposta da solicitação para poder acessar os dados
+      const response = await axios.get(`http://localhost:3001/api/cart/${userId}/total-price`);
+  
+      // Verifica se a resposta está definida e se os dados estão presentes
+      if (response && response.data && response.data.totalAmount !== getTotal.totalAmount) {
+        setGetTotal(response.data);
+      }
     } catch (error) {
       console.error('Error updating shipping fee:', error);
     }
   };
   
+  
   return (
     <div>
+        {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
+        <div style={{ marginTop:"10rem"}}>total a gfdgdfgfd:{getTotal.totalAmount}</div>
+      )}
       <form>
         <input
           type="text"
@@ -89,6 +100,7 @@ const FreteSelect = ({ setTotalAmount }) => {
           ))}
         </div>
       )}
+      
     </div>
   );
 };

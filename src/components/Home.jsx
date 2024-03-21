@@ -41,8 +41,6 @@ const Home = () => {
           <span>Sair</span>
         </div>
       )}
-
-<LoginForm/>
     </div>
   );
 };

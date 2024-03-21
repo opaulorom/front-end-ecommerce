@@ -74,6 +74,7 @@ const FreteComponent = () => {
           ))}
         </div>
       )}
+     
     </div>
   );
 };
