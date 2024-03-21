@@ -90,7 +90,7 @@ const Header = () => {
           </div>
 
           <div className={styles.desktopContainer}>
-            <Link to={"/perfil"}>
+            <Link to={"/perfil"} style={{zIndex:"99999"}}>
               {" "}
               <img src="https://i.ibb.co/L1tX6LY/user-2.png" alt="" />
             </Link>
