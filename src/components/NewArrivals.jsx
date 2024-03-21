@@ -62,7 +62,14 @@ const NewArrivals = () => {
       
 
       <div style={{ marginTop: "10rem" }}>
-        <ul>
+        <ul  style={{
+            listStyleType: "none",
+            padding: 0,
+            margin: 0,
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: "1rem",
+          }}>
           {newArrivals.map((product) => (
             <li key={product._id}>
               <Link to={`/products/${product._id}`}>
