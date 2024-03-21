@@ -22,7 +22,6 @@ const Cart = () => {
   const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
   const [getTotal, setGetTotal] = useState({});
   const [selectedFreteIndex, setSelectedFreteIndex] = useState(0); // Define o primeiro frete como padrão
-  const  [shippingFee, setShippingFee] = useState(0)
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
   
   useEffect(() => {
@@ -30,7 +29,6 @@ const Cart = () => {
       .get(`http://localhost:3001/api/cart/${userId}`)
       .then((response) => {
         setGetCart(response.data.cart.products);
-        setShippingFee(response.data.cart.shippingFee); // Aqui você define a taxa de envio
       })
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
@@ -86,21 +84,7 @@ const Cart = () => {
     },
     [userId]
   );
-  useEffect(() => {
-    const userId = Cookies.get("userId"); // Obtenha o token do cookie
 
-    axios
-      .get(`http://localhost:3001/api/cart/${userId}/total-price`)
-      .then((response) => {
-        console.log(response.data); // Verifique se o valor totalAmount está presente na resposta
-        if (response.data.totalAmount !== getTotal.totalAmount) {
-          setGetTotal(response.data);
-        }
-      })
-      .catch((error) => {
-        console.log("Erro ao visualizar frete.", error);
-      });
-  }, [ userId, getCart, getTotal]);
 
 
 
@@ -323,12 +307,8 @@ const Cart = () => {
         </>
       )}
 
-      {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-        <div style={{marginLeft:"20rem"}}>total a pagar:{getTotal.totalAmount}</div>
-      )}
+    
 
-
-<div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
 
 
       <Link to={"/payment"}>

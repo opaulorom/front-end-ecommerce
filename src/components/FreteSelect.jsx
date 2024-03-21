@@ -37,7 +37,8 @@ const FreteSelect = () => {
       setSelectedFreteIndex(+localStorage.getItem('selectedFreteIndex') || 0);
     }
   }, [frete]);
-  
+  const  [shippingFee, setShippingFee] = useState(0)
+
   const handleRadioClick = async (index) => {
     try {
       const freteId = frete[index]._id;
@@ -56,6 +57,9 @@ const FreteSelect = () => {
       if (response && response.data && response.data.totalAmount !== getTotal.totalAmount) {
         setGetTotal(response.data);
       }
+      const res = await axios.get(`http://localhost:3001/api/cart/${userId}`);
+      setShippingFee(res.data.cart.shippingFee); // Aqui você define a taxa de envio
+
     } catch (error) {
       console.error('Error updating shipping fee:', error);
     }
@@ -74,9 +78,11 @@ const FreteSelect = () => {
         />
         <button type="submit">Buscar</button>
       </form>
+      <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
       {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
         <div style={{ marginTop:"10rem"}}>total que muda:{getTotal.totalAmount}</div>
       )}
+      
       {frete && (
         <div>
           {frete.map((item, index) => (
