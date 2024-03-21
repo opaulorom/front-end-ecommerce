@@ -99,13 +99,14 @@ const Header = () => {
               to={"/favoritos"}
               style={{
                 cursor: "pointer",
+                zIndex:"99999"
               }}
             >
               <img src="https://i.ibb.co/2ZnFQfq/heart-1.png" alt="" />
             </Link>
             <Link
               to={"/cart"}
-              style={{ position: "relative", display: "inline-block" }}
+              style={{ position: "relative", display: "inline-block",zIndex:"99999" }}
             >
               <img src="https://i.ibb.co/FwNpdzD/shopping-bag-1.png" alt="" />
               <span
