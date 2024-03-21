@@ -328,7 +328,7 @@ const Cart = () => {
       )}
 
 
-<div>Taxa de Envio: R$ {shippingFee.toFixed(2)}</div>
+<div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
 
 
       <Link to={"/payment"}>

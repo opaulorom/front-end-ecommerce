@@ -64,9 +64,7 @@ const FreteSelect = () => {
   
   return (
     <div>
-        {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-        <div style={{ marginTop:"10rem"}}>total a gfdgdfgfd:{getTotal.totalAmount}</div>
-      )}
+     
       <form>
         <input
           type="text"
@@ -76,7 +74,9 @@ const FreteSelect = () => {
         />
         <button type="submit">Buscar</button>
       </form>
-
+      {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
+        <div style={{ marginTop:"10rem"}}>total que muda:{getTotal.totalAmount}</div>
+      )}
       {frete && (
         <div>
           {frete.map((item, index) => (
