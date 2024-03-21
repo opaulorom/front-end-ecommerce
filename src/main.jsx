@@ -25,9 +25,7 @@ import DiscountedProductsPage from "./components/DiscountedProductsPage";
 import NoMatch from "./components/NoMatch";
 import Layout from "./components/Layout";
 import Protected from "./components/Protected";
-import { ClerkProvider } from "@clerk/clerk-react";
 import DiscountProductsByCategoryAndPorcentage from "./components/DiscountProductsByCategoryAndPorcentage";
-import { ptBR } from "@clerk/localizations";
 import Heart from "./components/Heart";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { CartProvider } from "./context/CartContext";
@@ -40,7 +38,6 @@ import RegisterLink from "./components/RegisterLink";
 import PixPage from "./components/PixPage";
 import NewArrivals from "./components/NewArrivals";
 import WhatsNew from "./components/WhatsNew";
-const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const Root = () => (
   <Routes>
@@ -103,7 +100,6 @@ const Root = () => (
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
-  <ClerkProvider publishableKey={publishableKey} localization={ptBR}>
 
     <CartProvider>
       {" "}
@@ -120,7 +116,5 @@ createRoot(document.getElementById("root")).render(
         </React.StrictMode>
       </FavoritesProvider>
     </CartProvider>
-
-  </ClerkProvider>
   </AuthProvider>
 );

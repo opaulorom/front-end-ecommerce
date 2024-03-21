@@ -7,7 +7,6 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { useUser } from "@clerk/clerk-react";
 import {useAuth} from "../context/AuthContext"
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -15,7 +14,6 @@ import Cookies from "js-cookie";
 const Header = () => {
   const { cartItemCount, addToCart, removeFromCart } = useCart();
   const [localCartItemCount, setLocalCartItemCount] = useState(0);
-  const { isSignedIn, user } = useUser();
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
 
@@ -44,7 +42,7 @@ const Header = () => {
     } else {
       setLocalCartItemCount(cartItemCount);
     }
-  }, [loggedIn, user, cartItemCount]);
+  }, [loggedIn, userId, cartItemCount]);
 
   useEffect(() => {
     localStorage.setItem("cartItemCount", localCartItemCount);
@@ -165,7 +163,7 @@ const Header = () => {
                 alignItems: "center",
               }}
             >
-              {isSignedIn ? localCartItemCount : 0}
+              {loggedIn ? localCartItemCount : 0}
             </span>
             <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem" }} />
           </Link>
