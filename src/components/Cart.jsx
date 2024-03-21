@@ -22,13 +22,15 @@ const Cart = () => {
   const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
   const [getTotal, setGetTotal] = useState({});
   const [selectedFreteIndex, setSelectedFreteIndex] = useState(0); // Define o primeiro frete como padrão
+  const  [shippingFee, setShippingFee] = useState(0)
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
-
+  
   useEffect(() => {
     axios
       .get(`http://localhost:3001/api/cart/${userId}`)
       .then((response) => {
         setGetCart(response.data.cart.products);
+        setShippingFee(response.data.cart.shippingFee); // Aqui você define a taxa de envio
       })
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
@@ -167,6 +169,8 @@ const Cart = () => {
                 {item.productId.price}
                 {item.size}
                 {item.color}
+
+                
               </div>
 
               <RemoveIcon
@@ -322,6 +326,11 @@ const Cart = () => {
       {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
         <div style={{marginLeft:"20rem"}}>total a pagar:{getTotal.totalAmount}</div>
       )}
+
+
+<div>Taxa de Envio: R$ {shippingFee.toFixed(2)}</div>
+
+
       <Link to={"/payment"}>
         <button>Fazer Pedido</button>
       </Link>
