@@ -312,7 +312,7 @@ const CategorySubcategories = () => {
                   style={{ position: "relative" }}
                 >
 
-                  <Link to={`/products/${product._id}`}>
+                  <Link to={`/products/${product._id}`} style={{ color: 'black', textDecoration: 'none'}}>
                     
                  
                   {product.variations && product.variations.length > 0 && product.variations[0].urls && product.variations[0].urls.length > 0 ? (
@@ -334,11 +334,17 @@ const CategorySubcategories = () => {
                         display: "flex",
                         flexDirection: "column",
                         marginBottom: "4rem",
+                        marginLeft:"1rem"
                       }}
                     >
-                      <span>{product.name}</span>
+                      <span   style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      width: "15vw",
+                    }}>{product.name}</span>
                       <span>
-                        {Number(product.price).toFixed(2).padStart(5, "0")}
+                      R$  {Number(product.price).toFixed(2).padStart(5, "0")}
                       </span>
                     </div>
                   </Link>
@@ -352,7 +358,8 @@ const CategorySubcategories = () => {
                       width:"3rem",
                       display:"flex",
                       alignItems:"center",
-                      justifyContent:"center",
+                      justifyContent:"center"
+                     
                     
                     }}
                   >
@@ -365,12 +372,15 @@ const CategorySubcategories = () => {
               </>
             ))}
         </ul>
-
+        <div style={{display:"flex", alignItems:"center", justifyContent:"center", marginBottom:"2rem"}}>
         <CustomPagination
           totalPages={totalPages}
           currentPage={currentPage}
           onChangePage={handlePageChange}
         />
+
+        </div>
+
       </div>
     </div>
   );

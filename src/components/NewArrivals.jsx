@@ -59,31 +59,64 @@ const NewArrivals = () => {
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
             gap: "1rem",
-            flexDirection:"column"
+            flexDirection: "column",
           }}
         >
           {newArrivals.map((product) => (
-            <li key={product._id} >
-              <Link to={`/products/${product._id}`}>
-                <img src={product.variations[0].urls[0]} alt="" style={{width:"15vw"}} />
-                {product.name} 
-                {product.price}
+            <li key={product._id}>
+              <Link
+                to={`/products/${product._id}`}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: "2rem",
+                  alignItems: "center",
+                  color: 'black',
+                  textDecoration: 'none'
+                }}
+              >
+                <img
+                  src={product.variations[0].urls[0]}
+                  alt=""
+                  style={{ width: "15vw" }}
+                />
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <span
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      width: "15vw",
+                    }}
+                  >
+                    {product.name}
+                  </span>
+                  <span>R$ {product.price}</span>
+                </div>
               </Link>
             </li>
           ))}
         </ul>
 
-        {/* Paginação */}
-        <Stack spacing={2}>
-          <Pagination
-            count={Math.ceil(totalProducts / 10)}
-            variant="outlined"
-            color="primary"
-            size="large"
-            page={currentPage}
-            onChange={handlePageChange}
-          />
-        </Stack>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom:"2rem"
+          }}
+        >
+          <Stack spacing={2}>
+            <Pagination
+              count={Math.ceil(totalProducts / 10)}
+              variant="outlined"
+              color="primary"
+              size="large"
+              page={currentPage}
+              onChange={handlePageChange}
+            />
+          </Stack>
+        </div>
       </div>
       {showButton && (
         <div className="button" onClick={logout}>

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import Chip from "@mui/material/Chip";
-import IconToggle from "./IconToggle";
+
 import Header from "./Header";
 
 const SearchResults = () => {
@@ -48,33 +47,80 @@ const SearchResults = () => {
   return (
     <div>
       <Header />
+
       <div style={{ marginTop: "10rem" }}>
-        <ul>
+        <ul
+          style={{
+            listStyleType: "none",
+            padding: 0,
+            margin: 0,
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: "1rem",
+            marginTop: "13rem",
+          }}
+        >
+
           {searchResults.map((product) => (
             <li key={product._id}>
-              <Link to={`/products/${product._id}`}>
-                <img src={product.variations[0].urls[0]} alt="" />
-                <IconToggle
-                  productId={product._id}
-                  isFavorite={product.isFavorite}
+              <Link
+                to={`/products/${product._id}`}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: "2rem",
+                  alignItems: "center",
+                  color: 'black',
+                  textDecoration: 'none'
+                }}
+              >
+                <img
+                  src={product.variations[0].urls[0]}
+                  alt=""
+                  style={{
+                    width: "15vw",
+                    marginTop: "-2rem",
+                    zIndex: "-1",
+                    marginLeft: "1rem",
+                  }}
                 />
-                {product.name} - {product.price}
+                <div style={{ display: "flex", flexDirection: "column", marginLeft:"1rem" }}>
+                  <span
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      width: "15vw",
+                    }}
+                  >
+                    {product.name}
+                  </span>
+                  <span>R$ {product.price.toFixed(2)}</span>
+                </div>
               </Link>
             </li>
           ))}
         </ul>
 
-        {/* Paginação */}
-        <Stack spacing={2}>
-          <Pagination
-            count={Math.ceil(totalProducts / 10)}
-            variant="outlined"
-            color="primary"
-            size="large"
-            page={currentPage}
-            onChange={handlePageChange}
-          />
-        </Stack>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: "2rem",
+          }}
+        >
+          <Stack spacing={2}>
+            <Pagination
+              count={Math.ceil(totalProducts / 10)}
+              variant="outlined"
+              color="primary"
+              size="large"
+              page={currentPage}
+              onChange={handlePageChange}
+            />
+          </Stack>
+        </div>
       </div>
     </div>
   );
