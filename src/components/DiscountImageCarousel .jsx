@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 const DiscountImageCarousel = ({ alt, imageWidth, imageHeight, autoPlayInterval }) => {
   const [imageUrls, setImageUrls] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -67,10 +68,10 @@ const DiscountImageCarousel = ({ alt, imageWidth, imageHeight, autoPlayInterval 
         <img src={imageUrls[currentIndex]} alt={alt} style={imageStyle} />
       </Link>
       <div style={{ ...arrowStyle, left: 0 }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + imageUrls.length) % imageUrls.length)}>
-        &#10094;
+      <ArrowBackIosIcon style={{fontSize:"2rem"}}/>
       </div>
       <div style={{ ...arrowStyle, right: 0 }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % imageUrls.length)}>
-        &#10095;
+        <ArrowForwardIosIcon style={{fontSize:"2rem"}}/>
       </div>
     </div>
   );
