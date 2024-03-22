@@ -197,8 +197,8 @@ const ProductDetails = () => {
           </div>
 
           <div style={{}}>
-            <h1>{product.name}</h1>
-            <p>R$: ${product.price}</p>
+            <h1 style={{fontSize:"1.1rem",color:'black' , fontWeight:"400", fontFamily:'poppins'}}>{product.name}</h1>
+            <p style={{fontSize:"1rem", fontWeight:"700", fontFamily:"poppins, sans-serif"}}>R$ {product.price}</p>
             <p>{product.description}</p>
 
             <div className="thumbnail-container">
@@ -209,7 +209,7 @@ const ProductDetails = () => {
                 )
                 .map((variation, index) => (
                   <div key={index} className="thumbnail-wrapper">
-                    <span className="color-name">{`Cor: ${variation.color}`}</span>
+                    <span className="color-name">{`${variation.color}`}</span>
                     <img
                       src={variation.urls[0]}
                       alt={variation.color}
@@ -255,7 +255,19 @@ const ProductDetails = () => {
             <FreteComponent />
           </div>
         </div>
+ {/* <div style={{ display: "flex", flexDirection: "column" }}>
+                <span style={{fontSize:"1rem", fontWeight:"700", fontFamily:"poppins, sans-serif"}}>R$ {product.price}</span>
 
+                  <span
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      width: "15vw",
+                      color: "rgb(114, 114, 114)",
+                      fontSize:".8rem"
+                    }}
+                  ></span> */}
         <Navbar />
       </div>
     </>

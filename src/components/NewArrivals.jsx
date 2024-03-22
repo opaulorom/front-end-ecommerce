@@ -81,17 +81,20 @@ const NewArrivals = () => {
                   style={{ width: "15vw" }}
                 />
                 <div style={{ display: "flex", flexDirection: "column" }}>
+                <span style={{fontSize:"1rem", fontWeight:"700", fontFamily:"poppins, sans-serif"}}>R$ {product.price}</span>
+
                   <span
                     style={{
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
                       width: "15vw",
+                      color: "rgb(114, 114, 114)",
+                      fontSize:".8rem"
                     }}
                   >
                     {product.name}
                   </span>
-                  <span>R$ {product.price}</span>
                 </div>
               </Link>
             </li>

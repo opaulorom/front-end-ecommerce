@@ -4,8 +4,7 @@ import CustomPagination from "./CustomPagination";
 
 import Header from "./Header";
 import IconToggle from "./IconToggle";
-import styles from "./CategorySubcategories.module.css"
-
+import styles from "./CategorySubcategories.module.css";
 
 const CategorySubcategories = () => {
   const { category } = useParams();
@@ -163,17 +162,16 @@ const CategorySubcategories = () => {
         display: "flex",
         marginTop: "14rem",
       }}
-    > 
-    <div style={{zIndex:"999999999999"}}>
-    <Header />
-
-    </div>
+    >
+      <div style={{ zIndex: "999999999999" }}>
+        <Header />
+      </div>
 
       <div
         style={{
           marginLeft: "5rem",
           marginRight: "5rem",
-          marginTop:"-2rem"
+          marginTop: "-2rem",
         }}
       >
         <div
@@ -187,9 +185,7 @@ const CategorySubcategories = () => {
             color: "rgb(52, 52, 54)",
           }}
         >
-       
-            Filtros
-    
+          Filtros
         </div>
 
         <p
@@ -205,8 +201,12 @@ const CategorySubcategories = () => {
 
         <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
           {subcategories.map((subcategory, index) => (
-            <li key={index} style={{ marginLeft: "-2.5rem" }} className={styles.myLinks}>
-              <Link to={`/categories/${category}/${subcategory}`} >
+            <li
+              key={index}
+              style={{ marginLeft: "-2.5rem" }}
+              className={styles.myLinks}
+            >
+              <Link to={`/categories/${category}/${subcategory}`}>
                 {subcategory}
               </Link>
             </li>
@@ -246,27 +246,27 @@ const CategorySubcategories = () => {
         </h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
           {Array.from(uniqueSizes).map((size, index) => (
-            <div
-              key={index}
-              onClick={() => handleFilterClick("size", size)}
-            >
-           
-              <button  
-              style={{
-                borderRadius:"20px",
-                width:"40px",
-                height:"40px",
-                border:"1px solid rgb(114, 114, 114)",
-                backgroundColor:"rgb(255, 255, 255)",
-                marginLeft:"8px",
-                marginTop:"8px",
-                cursor: "pointer"
-              }}> {size}</button>
+            <div key={index} onClick={() => handleFilterClick("size", size)}>
+              <button
+                style={{
+                  borderRadius: "20px",
+                  width: "40px",
+                  height: "40px",
+                  border: "1px solid rgb(114, 114, 114)",
+                  backgroundColor: "rgb(255, 255, 255)",
+                  marginLeft: "8px",
+                  marginTop: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                {" "}
+                {size}
+              </button>
             </div>
           ))}
         </div>
 
-        <div style={{marginTop:"3rem"}}>
+        <div style={{ marginTop: "3rem" }}>
           <h3
             style={{
               fontFamily: "Montserrat, arial, sans-serif",
@@ -281,10 +281,13 @@ const CategorySubcategories = () => {
             <div
               key={index}
               onClick={() => handleFilterClick("priceRange", range)}
-              style={{ cursor: "pointer", fontFamily: "Montserrat, arial, sans-serif",
-              fontWeight: "400",
-              fontSize: "1rem",
-              color: "rgb(52, 52, 54)", }}
+              style={{
+                cursor: "pointer",
+                fontFamily: "Montserrat, arial, sans-serif",
+                fontWeight: "400",
+                fontSize: "1rem",
+                color: "rgb(52, 52, 54)",
+              }}
             >
               {range}
             </div>
@@ -292,8 +295,7 @@ const CategorySubcategories = () => {
         </div>
       </div>
 
-
-      <div >
+      <div>
         <ul
           style={{
             listStyleType: "none",
@@ -311,22 +313,24 @@ const CategorySubcategories = () => {
                   key={product._id || "undefined"}
                   style={{ position: "relative" }}
                 >
-
-                  <Link to={`/products/${product._id}`} style={{ color: 'black', textDecoration: 'none'}}>
-                    
-                 
-                  {product.variations && product.variations.length > 0 && product.variations[0].urls && product.variations[0].urls.length > 0 ? (
-
-                    <img
-                      src={product.variations[0].urls[0]}
-                      alt={product.name}
-                      style={{
-                        width: "15vw",
-                        marginTop: "-2rem",
-                        zIndex: "-1",
-                        marginLeft:"1rem"
-                      }}
-                    />
+                  <Link
+                    to={`/products/${product._id}`}
+                    style={{ color: "black", textDecoration: "none" }}
+                  >
+                    {product.variations &&
+                    product.variations.length > 0 &&
+                    product.variations[0].urls &&
+                    product.variations[0].urls.length > 0 ? (
+                      <img
+                        src={product.variations[0].urls[0]}
+                        alt={product.name}
+                        style={{
+                          width: "15vw",
+                          marginTop: "-2rem",
+                          zIndex: "-1",
+                          marginLeft: "1rem",
+                        }}
+                      />
                     ) : null}
 
                     <div
@@ -334,18 +338,31 @@ const CategorySubcategories = () => {
                         display: "flex",
                         flexDirection: "column",
                         marginBottom: "4rem",
-                        marginLeft:"1rem"
+                        marginLeft: "1rem",
                       }}
                     >
-                      <span   style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      width: "15vw",
-                    }}>{product.name}</span>
-                      <span>
-                      R$  {Number(product.price).toFixed(2).padStart(5, "0")}
+                       <span
+                        style={{
+                          fontSize: "1rem",
+                          fontWeight: "700",
+                          fontFamily: "poppins, sans-serif",
+                        }}
+                      >
+                        R$ {Number(product.price).toFixed(2).padStart(5, "0")}
                       </span>
+                      <span
+                        style={{
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          width: "15vw",
+                          color: "rgb(114, 114, 114)",
+                          fontSize: ".8rem",
+                        }}
+                      >
+                        {product.name}
+                      </span>
+                     
                     </div>
                   </Link>
                   <div
@@ -355,12 +372,10 @@ const CategorySubcategories = () => {
                       right: "0",
                       zIndex: 9999,
                       marginBottom: "5rem",
-                      width:"3rem",
-                      display:"flex",
-                      alignItems:"center",
-                      justifyContent:"center"
-                     
-                    
+                      width: "3rem",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
                     <IconToggle
@@ -372,15 +387,21 @@ const CategorySubcategories = () => {
               </>
             ))}
         </ul>
-        <div style={{display:"flex", alignItems:"center", justifyContent:"center", marginBottom:"2rem"}}>
-        <CustomPagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onChangePage={handlePageChange}
-        />
-
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: "2rem",
+          }}
+        >
+          <CustomPagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onChangePage={handlePageChange}
+          />
+         
         </div>
-
       </div>
     </div>
   );
