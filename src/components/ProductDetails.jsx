@@ -234,7 +234,15 @@ const ProductDetails = () => {
                 setIsColorAndSizeSelected(true);
               }}
             />
-            <button onClick={handleAddToCartAndOpenModal}>
+            <button onClick={handleAddToCartAndOpenModal} style={{
+              backgroundColor:"#5070E3",
+              color:"white",
+              border:"none",
+              padding:".8rem",
+              borderRadius:"5px",
+              fontWeight:"500",
+              fontFamily:"poppins, sans-serif"
+            }}>
               Adicionar ao Carrinho
             </button>
             {openCartModal && (

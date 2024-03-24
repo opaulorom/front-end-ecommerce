@@ -68,7 +68,7 @@ const FreteComponent = () => {
               <p>{item.nomeTransportadora}</p>
               <p>Data Prevista de Entrega: {item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}</p>
               <p>Prazo de Entrega: {item.prazoEntrega}</p>
-              <p>Valor do Frete: {item.valorFrete}</p>
+              <p>Valor do Frete: R$  {item.valorFrete}</p>
 
             </div>
           ))}

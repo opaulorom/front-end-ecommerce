@@ -6,17 +6,21 @@
   .size-button {
     padding: 8px 16px;
     margin: 4px;
-    font-size: 14px;
+    font-size: 16px;
     border: 1px solid #ccc;
     background-color: #fff;
     color: #333;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
+    border-radius: 8px;
+    font-weight: 500;
   }
   
   /* Estilo para o botão ativo */
   .size-button.active {
-    background-color: #007bff; /* Cor de fundo quando ativo */
+    background-color: #05070a; /* Cor de fundo quando ativo */
     color: #fff; /* Cor do texto quando ativo */
+    border-radius: 8px;
+    font-weight: 500;
   }
   
