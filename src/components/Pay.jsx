@@ -14,11 +14,20 @@ const Pay = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
       ...(name === "pacelas" && { installmentCount: value }),
     }));
+  };
+
+
+  const handleChangePixAndBoleto = (event) => {
+    const { name, value } = event.target;
+    setPaymentMethod(value);
+
+  
   };
 
   const handleCreditCardPayment = (event) => {
@@ -151,9 +160,7 @@ const Pay = () => {
         >
           Escolha o método de pagamento:
         </h1>
-        {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-          <div>{getTotal.totalAmount}</div>
-        )}
+     
         <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
           <input
             type="radio"
@@ -161,7 +168,7 @@ const Pay = () => {
             name="paymentMethod"
             value="pix"
             checked={paymentMethod === "pix"}
-            onChange={handleChange}
+            onChange={handleChangePixAndBoleto}
           />
           <label
             htmlFor="pix"
@@ -191,7 +198,7 @@ const Pay = () => {
             name="paymentMethod"
             value="boleto"
             checked={paymentMethod === "boleto"}
-            onChange={handleChange}
+            onChange={handleChangePixAndBoleto}
           />
           <label
             htmlFor="boleto"
