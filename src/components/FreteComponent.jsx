@@ -63,12 +63,12 @@ const FreteComponent = () => {
         <div>
           {frete.map((item, index) => (
             <div key={index}>
-              <b></b> <img src={item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
+              <b></b> <img src={item.logo && item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
 
               <p>{item.nomeTransportadora}</p>
-              <p>Data Prevista de Entrega: {item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}</p>
-              <p>Prazo de Entrega: {item.prazoEntrega}</p>
-              <p>Valor do Frete: R$  {item.valorFrete}</p>
+              <p>Data Prevista de Entrega: { item.dataPrevistaEntrega && item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}</p>
+              <p>Prazo de Entrega: {item.prazoEntrega && item.prazoEntrega}</p>
+              <p>Valor do Frete: R$  {item.valorFrete && item.valorFrete}</p>
 
             </div>
           ))}
