@@ -167,13 +167,17 @@ const ProductDetails = () => {
           }}
         >
           <div >
-            
+        
+
             <div key={currentImageIndex} className="image-container">
-              <img
-                src={product.variations[currentImageIndex].urls[0]}
-                alt={product.variations[currentImageIndex].color}
-                style={{ width: "30%" }}
-              />
+            {product.variations[currentImageIndex] && (
+    <img
+        src={product.variations[currentImageIndex].urls[0]}
+        alt={product.variations[currentImageIndex].color}
+        style={{ width: "30%" }}
+    />
+)}
+
               <div className="navigation-arrows">
                 <div className="arrow" onClick={() => handleArrowClick("prev")}>
                   &lt;

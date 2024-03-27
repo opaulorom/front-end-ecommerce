@@ -12,9 +12,8 @@ import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import FreteSelect from "./FreteSelect";
-
+import styles from "./Cart.module.css"
 import Cookies from "js-cookie";
-
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
   const [handleDeleteProduct, setHandleDeleteProduct] = useState(false);
@@ -103,7 +102,12 @@ const Cart = () => {
   return (
     <div style={{position:"relative"}}>
       <Header />
-      
+      <div style={{marginTop:"8rem", display:"flex", marginLeft:"4rem", gap:"2rem", width:"45vw"}}>
+               <h3 className={styles.h1}>Produto</h3>
+                <h3 className={styles.h1}>Tamanho</h3>
+                <h3 className={styles.h1}>Cor</h3>
+                <h3 className={styles.h1}> Quantidade</h3>
+      </div>
       <Navbar />
       <Link to={"/payment"}>
         <button style={{
@@ -119,6 +123,7 @@ const Cart = () => {
               right:"10px"
             }}>Fazer Pedido</button>
       </Link>
+    
       {getCart.length === 0 ? (
         <div
           style={{
@@ -129,6 +134,7 @@ const Cart = () => {
             marginTop: "-5rem",
           }}
         >
+          
           <img
             src="<https://i.ibb.co/x765V9y/bag-4.png>"
             alt=""
@@ -138,16 +144,21 @@ const Cart = () => {
         </div>
       ) : (
         <>
+         
           {getCart.map((item, index) => (
             <div
               key={index}
               style={{
-                marginTop: "10rem",
-                marginLeft: "1rem",
+                marginTop: "14rem",
+                marginLeft: "3rem",
                 display: "flex",
                 alignItems: "center",
+                gap:"1rem"
               }}
             >
+           
+<div className={styles.linha}></div>
+
               {item.productId.variations && (
                 <img
                   src={
@@ -156,17 +167,22 @@ const Cart = () => {
                     )?.urls[0]
                   }
                   alt={item.productId.name}
-                  style={{ width: "20%", marginBottom: "10px" }}
+                  style={{ width: "10%", marginBottom: "10px" }}
                 />
               )}
+              
               <div
                 style={{
-                  gap: "2rem",
+                  display:"flex",
+                  gap: "1rem",
                 }}
               >
-                {item.productId.name}
-                {item.size}
-                {item.color}
+                <span> {item.productId.name}
+</span>
+                <span> {item.size}</span>
+                <span>                {item.color}
+</span>
+               
 
                 
               </div>
@@ -325,8 +341,8 @@ const Cart = () => {
 
 
 
-  
-       <div style={{marginLeft:"14rem"}}>
+
+       <div style={{marginLeft:"14rem", position:"absolute", right:"10px"}}>
 
       <FreteSelect />
       

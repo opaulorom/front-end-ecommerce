@@ -75,11 +75,14 @@ const NewArrivals = () => {
                   textDecoration: 'none'
                 }}
               >
-                <img
-                  src={product.variations[0].urls[0]}
-                  alt=""
-                  style={{ width: "15vw" }}
-                />
+              {product.variations && product.variations[0] && product.variations[0].urls && (
+    <img
+        src={product.variations[0].urls[0]}
+        alt=""
+        style={{ width: "15vw" }}
+    />
+)}
+
                 <div style={{ display: "flex", flexDirection: "column" }}>
                 <span style={{fontSize:"1rem", fontWeight:"700", fontFamily:"poppins, sans-serif"}}>R$ {product.price}</span>
 
