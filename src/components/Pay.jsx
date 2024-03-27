@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "./Header";
+import PaymentHeader from "./PaymentHeader";
 import Navbar from "./Navbar";
 import Cookies from "js-cookie";
 import ImageComponent from "./ImageComponent";
@@ -147,7 +147,7 @@ const Pay = () => {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <Header />
+      <PaymentHeader />
       <Navbar />
 
       <div style={{ marginTop: "8rem" }}>

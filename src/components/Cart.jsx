@@ -101,9 +101,24 @@ const Cart = () => {
 
   
   return (
-    <div>
+    <div style={{position:"relative"}}>
       <Header />
+      
       <Navbar />
+      <Link to={"/payment"}>
+        <button style={{
+              backgroundColor:"#5070E3",
+              color:"white",
+              border:"none",
+              padding:".8rem",
+              borderRadius:"5px",
+              fontWeight:"500",
+              fontFamily:"poppins, sans-serif",
+              cursor:"pointer",
+              position:"absolute",
+              right:"10px"
+            }}>Fazer Pedido</button>
+      </Link>
       {getCart.length === 0 ? (
         <div
           style={{
@@ -150,7 +165,6 @@ const Cart = () => {
                 }}
               >
                 {item.productId.name}
-                {item.productId.price}
                 {item.size}
                 {item.color}
 
@@ -311,13 +325,13 @@ const Cart = () => {
 
 
 
-      <Link to={"/payment"}>
-        <button>Fazer Pedido</button>
-      </Link>
+  
        <div style={{marginLeft:"14rem"}}>
 
       <FreteSelect />
+      
        </div>
+       
     </div>
   );
 };

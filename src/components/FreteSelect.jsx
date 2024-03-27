@@ -82,7 +82,7 @@ const FreteSelect = () => {
       {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
         <div style={{ marginTop:"10rem"}}>total que muda:{getTotal.totalAmount}</div>
       )}
-      
+       
       {frete && (
         <div>
           {frete.map((item, index) => (
