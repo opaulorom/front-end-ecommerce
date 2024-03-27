@@ -3,6 +3,7 @@
   position: relative;
   overflow: hidden;
   text-align: center;
+  margin-top: -55rem;
 
 }
 
@@ -22,6 +23,9 @@
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   border-radius: 50%;
+  width: 35px; /* Largura */
+  height: 35px; /* Altura */
+  
 }
 
 .thumbnail-container {

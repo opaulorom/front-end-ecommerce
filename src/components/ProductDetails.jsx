@@ -11,7 +11,8 @@ import styles from "./ProductDetails.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
-
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
@@ -23,7 +24,7 @@ const ProductDetails = () => {
   const [isColorAndSizeSelected, setIsColorAndSizeSelected] = useState(false);
 
   const { cartItemCount, addToCart } = useCart();
-  const userId = Cookies.get('userId'); // Obtenha o token do cookie
+  const userId = Cookies.get("userId"); // Obtenha o token do cookie
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -100,14 +101,13 @@ const ProductDetails = () => {
           quantity: 1,
         }
       );
-  
+
       addToCart(); // Incrementa o número de itens no carrinho
       toast.success("Produto adicionado ao carrinho!");
     } catch (error) {
       console.error("Erro ao adicionar produto ao carrinho:", error);
     }
   };
-  
 
   const handleClickOpenModal = () => {
     setOpenCartModal(true);
@@ -118,28 +118,15 @@ const ProductDetails = () => {
   };
 
   const handleAddToCartAndOpenModal = () => {
-  if (selectedSize && product.variations[currentImageIndex].color) {
-    // Verifica se o tamanho e a cor estão selecionados
-    handleAddToCart();
-    handleClickOpenModal();
-  } else {
-    // Se a cor ou o tamanho não foram selecionados, exiba um alerta
-    toast.error("Por favor, selecione uma cor e um tamanho.");
-  }
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
+    if (selectedSize && product.variations[currentImageIndex].color) {
+      // Verifica se o tamanho e a cor estão selecionados
+      handleAddToCart();
+      handleClickOpenModal();
+    } else {
+      // Se a cor ou o tamanho não foram selecionados, exiba um alerta
+      toast.error("Por favor, selecione uma cor e um tamanho.");
+    }
+  };
 
   return (
     <>
@@ -156,34 +143,34 @@ const ProductDetails = () => {
           pauseOnHover
           theme="light"
         />
-
-        <Header />
+        <div style={{ position: "absolute", zIndex: "9999999" }}>
+          <Header />
+        </div>
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-around",
-            marginTop: "10rem" 
+            marginTop: "10rem",
           }}
         >
-          <div >
-        
-
+          <div>
             <div key={currentImageIndex} className="image-container">
-            {product.variations[currentImageIndex] && (
-    <img
-        src={product.variations[currentImageIndex].urls[0]}
-        alt={product.variations[currentImageIndex].color}
-        style={{ width: "30%" }}
-    />
-)}
+              {product.variations[currentImageIndex] && (
+                <img
+                  src={product.variations[currentImageIndex].urls[0]}
+                  alt={product.variations[currentImageIndex].color}
+                  style={{ width: "25vw" }}
+                />
+              )}
 
               <div className="navigation-arrows">
-                <div className="arrow" onClick={() => handleArrowClick("prev")}>
-                  &lt;
+                <div className="arrow" onClick={() => handleArrowClick("prev")} >
+                  <img src="https://i.ibb.co/8MqhvFq/left-arrow.png" style={{fontSize:"2rem", zIndex:"-1", color:"white"}} />
                 </div>
+
                 <div className="arrow" onClick={() => handleArrowClick("next")}>
-                  &gt;
+                <img src="https://i.ibb.co/vDty4Gc/right-arrow-1.png" style={{fontSize:"2rem", zIndex:"-1", color:"white"}} />
                 </div>
               </div>
             </div>
@@ -201,8 +188,25 @@ const ProductDetails = () => {
           </div>
 
           <div style={{}}>
-            <h1 style={{fontSize:"1.1rem",color:'black' , fontWeight:"400", fontFamily:'poppins'}}>{product.name}</h1>
-            <p style={{fontSize:"1rem", fontWeight:"700", fontFamily:"poppins, sans-serif"}}>R$ {product.price}</p>
+            <h1
+              style={{
+                fontSize: "1.1rem",
+                color: "black",
+                fontWeight: "400",
+                fontFamily: "poppins",
+              }}
+            >
+              {product.name}
+            </h1>
+            <p
+              style={{
+                fontSize: "1rem",
+                fontWeight: "700",
+                fontFamily: "poppins, sans-serif",
+              }}
+            >
+              R$ {product.price}
+            </p>
             <p>{product.description}</p>
 
             <div className="thumbnail-container">
@@ -238,15 +242,18 @@ const ProductDetails = () => {
                 setIsColorAndSizeSelected(true);
               }}
             />
-            <button onClick={handleAddToCartAndOpenModal} style={{
-              backgroundColor:"#5070E3",
-              color:"white",
-              border:"none",
-              padding:".8rem",
-              borderRadius:"5px",
-              fontWeight:"500",
-              fontFamily:"poppins, sans-serif"
-            }}>
+            <button
+              onClick={handleAddToCartAndOpenModal}
+              style={{
+                backgroundColor: "#5070E3",
+                color: "white",
+                border: "none",
+                padding: ".8rem",
+                borderRadius: "5px",
+                fontWeight: "500",
+                fontFamily: "poppins, sans-serif",
+              }}
+            >
               Adicionar ao Carrinho
             </button>
             {openCartModal && (
@@ -255,7 +262,7 @@ const ProductDetails = () => {
                   <span
                     className={styles.close}
                     onClick={handleClickCloseModal}
-                 >
+                  >
                     &times;
                   </span>
                   <p>
