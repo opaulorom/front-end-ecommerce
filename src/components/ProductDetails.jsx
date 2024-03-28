@@ -22,9 +22,22 @@ const ProductDetails = () => {
   const [openCartModal, setOpenCartModal] = useState(false);
   const modalRef = useRef(null);
   const [isColorAndSizeSelected, setIsColorAndSizeSelected] = useState(false);
-
+  const [customer, setCustomer] = useState([])
   const { cartItemCount, addToCart } = useCart();
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
+
+  useEffect(() => {
+    axios.get(`http://localhost:3001/api/customers`)
+      .then(response => {
+        setCustomer(response.data.customers);
+        console.log(response)
+        // fazer algo com a resposta
+      
+      })
+      .catch(error => {
+        // lidar com erros
+      });
+  }, []);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -128,6 +141,8 @@ const ProductDetails = () => {
     }
   };
 
+
+  
   return (
     <>
       <div>
@@ -275,6 +290,16 @@ const ProductDetails = () => {
           </div>
         </div>
 
+        <div>
+      {customer && customer.map(user => (
+        <div key={user.custumerId}> {/* Certifique-se de fornecer uma chave única para cada elemento na lista */}
+          <span>Nome: {user.name}</span>
+          <span>Email: {user.email}</span>
+          <span>Telefone: {user.mobilePhone}</span>
+          {/* Renderize outras informações do cliente conforme necessário */}
+        </div>
+      ))}
+    </div>
         <Navbar />
       </div>
     </>

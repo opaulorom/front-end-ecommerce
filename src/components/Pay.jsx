@@ -198,7 +198,7 @@ const Pay = () => {
             name="paymentMethod"
             value="boleto"
             checked={paymentMethod === "boleto"}
-            onChange={handleChangePixAndBoleto}
+            onClick={handleChangePixAndBoleto}
           />
           <label
             htmlFor="boleto"

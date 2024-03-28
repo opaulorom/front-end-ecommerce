@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import FreteSelect from "./FreteSelect";
-import styles from "./Cart.module.css"
+import styles from "./Cart.module.css";
 import Cookies from "js-cookie";
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
@@ -22,7 +22,7 @@ const Cart = () => {
   const [getTotal, setGetTotal] = useState({});
   const [selectedFreteIndex, setSelectedFreteIndex] = useState(0); // Define o primeiro frete como padrão
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
-  
+
   useEffect(() => {
     axios
       .get(`http://localhost:3001/api/cart/${userId}`)
@@ -84,46 +84,43 @@ const Cart = () => {
     [userId]
   );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   return (
-    <div style={{position:"relative"}}>
+    <div style={{ position: "relative" }}>
       <Header />
-      <div style={{marginTop:"8rem", display:"flex", marginLeft:"4rem", gap:"2rem", width:"45vw"}}>
-               <h3 className={styles.h1}>Produto</h3>
-                <h3 className={styles.h1}>Tamanho</h3>
-                <h3 className={styles.h1}>Cor</h3>
-                <h3 className={styles.h1}> Quantidade</h3>
+      <div
+        style={{
+          marginTop: "8rem",
+          display: "flex",
+          marginLeft: "4rem",
+          gap: "2rem",
+          width: "45vw",
+        }}
+      >
+        <h3 className={styles.h1}>Produto</h3>
+        <h3 className={styles.h1}>Tamanho</h3>
+        <h3 className={styles.h1}>Cor</h3>
+        <h3 className={styles.h1}> Quantidade</h3>
       </div>
       <Navbar />
       <Link to={"/payment"}>
-        <button style={{
-              backgroundColor:"#5070E3",
-              color:"white",
-              border:"none",
-              padding:".8rem",
-              borderRadius:"5px",
-              fontWeight:"500",
-              fontFamily:"poppins, sans-serif",
-              cursor:"pointer",
-              position:"absolute",
-              right:"10px"
-            }}>Fazer Pedido</button>
+        <button
+          style={{
+            backgroundColor: "#5070E3",
+            color: "white",
+            border: "none",
+            padding: ".8rem",
+            borderRadius: "5px",
+            fontWeight: "500",
+            fontFamily: "poppins, sans-serif",
+            cursor: "pointer",
+            position: "absolute",
+            right: "10px",
+          }}
+        >
+          Fazer Pedido
+        </button>
       </Link>
-    
+
       {getCart.length === 0 ? (
         <div
           style={{
@@ -134,7 +131,6 @@ const Cart = () => {
             marginTop: "-5rem",
           }}
         >
-          
           <img
             src="<https://i.ibb.co/x765V9y/bag-4.png>"
             alt=""
@@ -144,7 +140,6 @@ const Cart = () => {
         </div>
       ) : (
         <>
-         
           {getCart.map((item, index) => (
             <div
               key={index}
@@ -153,11 +148,10 @@ const Cart = () => {
                 marginLeft: "3rem",
                 display: "flex",
                 alignItems: "center",
-                gap:"1rem"
+                gap: "1rem",
               }}
             >
-           
-<div className={styles.linha}></div>
+              <div className={styles.linha}></div>
 
               {item.productId.variations && (
                 <img
@@ -170,21 +164,16 @@ const Cart = () => {
                   style={{ width: "10%", marginBottom: "10px" }}
                 />
               )}
-              
+
               <div
                 style={{
-                  display:"flex",
+                  display: "flex",
                   gap: "1rem",
                 }}
               >
-                <span> {item.productId.name}
-</span>
+                <span> {item.productId.name}</span>
                 <span> {item.size}</span>
-                <span>                {item.color}
-</span>
-               
-
-                
+                <span> {item.color}</span>
               </div>
 
               <RemoveIcon
@@ -242,7 +231,7 @@ const Cart = () => {
                   const newQuantity = item.quantity + 1;
                   const newCart = [...getCart];
                   newCart[index].quantity = newQuantity;
-               
+
                   const productId = item.productId._id;
                   axios
                     .put(
@@ -337,17 +326,9 @@ const Cart = () => {
         </>
       )}
 
-    
-
-
-
-
-       <div style={{marginLeft:"14rem", position:"absolute", right:"10px"}}>
-
-      <FreteSelect />
-      
-       </div>
-       
+      <div style={{ marginLeft: "14rem", position: "absolute", right: "10px" }}>
+        <FreteSelect />
+      </div>
     </div>
   );
 };
