@@ -11,8 +11,7 @@ import styles from "./ProductDetails.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
@@ -22,19 +21,19 @@ const ProductDetails = () => {
   const [openCartModal, setOpenCartModal] = useState(false);
   const modalRef = useRef(null);
   const [isColorAndSizeSelected, setIsColorAndSizeSelected] = useState(false);
-  const [customer, setCustomer] = useState([])
+  const [customer, setCustomer] = useState([]);
   const { cartItemCount, addToCart } = useCart();
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/customers`)
-      .then(response => {
-        setCustomer(response.data.customers);
-        console.log(response)
+    axios
+      .get(`http://localhost:3001/api/custumer/${userId}`)
+      .then((response) => {
+        setCustomer(response.data);
+        console.log(response);
         // fazer algo com a resposta
-      
       })
-      .catch(error => {
+      .catch((error) => {
         // lidar com erros
       });
   }, []);
@@ -134,15 +133,15 @@ const ProductDetails = () => {
     if (selectedSize && product.variations[currentImageIndex].color) {
       // Verifica se o tamanho e a cor estão selecionados
       handleAddToCart();
-      handleClickOpenModal();
+      if (!customer || customer.length === 0) {
+        handleClickOpenModal();
+      }
     } else {
       // Se a cor ou o tamanho não foram selecionados, exiba um alerta
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
   };
 
-
-  
   return (
     <>
       <div>
@@ -180,12 +179,18 @@ const ProductDetails = () => {
               )}
 
               <div className="navigation-arrows">
-                <div className="arrow" onClick={() => handleArrowClick("prev")} >
-                  <img src="https://i.ibb.co/8MqhvFq/left-arrow.png" style={{fontSize:"2rem", zIndex:"-1", color:"white"}} />
+                <div className="arrow" onClick={() => handleArrowClick("prev")}>
+                  <img
+                    src="https://i.ibb.co/8MqhvFq/left-arrow.png"
+                    style={{ fontSize: "2rem", zIndex: "-1", color: "white" }}
+                  />
                 </div>
 
                 <div className="arrow" onClick={() => handleArrowClick("next")}>
-                <img src="https://i.ibb.co/vDty4Gc/right-arrow-1.png" style={{fontSize:"2rem", zIndex:"-1", color:"white"}} />
+                  <img
+                    src="https://i.ibb.co/vDty4Gc/right-arrow-1.png"
+                    style={{ fontSize: "2rem", zIndex: "-1", color: "white" }}
+                  />
                 </div>
               </div>
             </div>
@@ -289,17 +294,6 @@ const ProductDetails = () => {
             <FreteComponent />
           </div>
         </div>
-
-        <div>
-      {customer && customer.map(user => (
-        <div key={user.custumerId}> {/* Certifique-se de fornecer uma chave única para cada elemento na lista */}
-          <span>Nome: {user.name}</span>
-          <span>Email: {user.email}</span>
-          <span>Telefone: {user.mobilePhone}</span>
-          {/* Renderize outras informações do cliente conforme necessário */}
-        </div>
-      ))}
-    </div>
         <Navbar />
       </div>
     </>
