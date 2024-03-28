@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./ProductDetails.css";
 import ProductSizes from "./ProductSizes";
@@ -24,7 +24,9 @@ const ProductDetails = () => {
   const [customer, setCustomer] = useState([]);
   const { cartItemCount, addToCart } = useCart();
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
+  const [openSecondCartModal, setOpenSecondCartModal] = useState(false);
 
+  
   useEffect(() => {
     axios
       .get(`http://localhost:3001/api/custumer/${userId}`)
@@ -56,20 +58,24 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [productId]);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+      if (
+        (modalRef.current && !modalRef.current.contains(event.target)) &&
+        (openCartModal || openSecondCartModal)
+      ) {
         setOpenCartModal(false);
+        setOpenSecondCartModal(false);
       }
     };
-
+  
     document.addEventListener("mousedown", handleClickOutside);
-
+  
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [openCartModal, openSecondCartModal]);
+  
 
   if (!product) {
     return <p>Carregando...</p>;
@@ -129,12 +135,25 @@ const ProductDetails = () => {
     setOpenCartModal(false);
   };
 
+//  modal do carrinho 
+
+  const handleClickOpenCartModal = () => {
+    setOpenSecondCartModal(true);
+  };
+
+  const handleClickCloseCartModal  = () => {
+    setOpenSecondCartModal(false);
+  };
+
   const handleAddToCartAndOpenModal = () => {
     if (selectedSize && product.variations[currentImageIndex].color) {
       // Verifica se o tamanho e a cor estão selecionados
       handleAddToCart();
+
       if (!customer || customer.length === 0) {
         handleClickOpenModal();
+      } else {
+        handleClickOpenCartModal();
       }
     } else {
       // Se a cor ou o tamanho não foram selecionados, exiba um alerta
@@ -272,22 +291,41 @@ const ProductDetails = () => {
                 borderRadius: "5px",
                 fontWeight: "500",
                 fontFamily: "poppins, sans-serif",
+                cursor:"pointer"
               }}
             >
               Adicionar ao Carrinho
             </button>
             {openCartModal && (
-              <div className={styles.modal}>
-                <div ref={modalRef} className={styles.modalContent}>
+              <div className={styles.cartModal}>
+                <div ref={modalRef} className={styles.cartModalContent}>
                   <span
-                    className={styles.close}
+                    className={styles.cartClose}
                     onClick={handleClickCloseModal}
                   >
                     &times;
                   </span>
                   <p>
-                    This is the content of the modal. You can put anything here.
+                    vc nao ainda nao  cadastrou os dados necessarios pra compra se cadastre 
                   </p>
+                  <Link to={"/signUp"}>
+                  <button >cadastre-se</button>
+
+                  </Link>
+                </div>
+              </div>
+            )}
+             {openSecondCartModal && (
+              <div className={styles.cartModal}>
+                <div ref={modalRef} className={styles.cartModalContent}>
+                  <span
+                    className={styles.cartClose}
+                    onClick={handleClickCloseCartModal}
+                  >
+                    &times;
+                  </span>
+                  <p>          carrinho        </p>
+                 
                 </div>
               </div>
             )}
