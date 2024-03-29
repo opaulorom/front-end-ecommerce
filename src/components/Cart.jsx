@@ -87,6 +87,8 @@ const Cart = () => {
   return (
     <div style={{ position: "relative" }}>
       <Header />
+      {getCart.length > 0 && (
+                
       <div
         style={{
           marginTop: "8rem",
@@ -101,7 +103,10 @@ const Cart = () => {
         <h3 className={styles.h1}>Cor</h3>
         <h3 className={styles.h1}> Quantidade</h3>
       </div>
+                )}
       <Navbar />
+      {getCart.length > 0 && (
+
       <Link to={"/payment"}>
         <button
           style={{
@@ -120,6 +125,7 @@ const Cart = () => {
           Fazer Pedido
         </button>
       </Link>
+)}
 
       {getCart.length === 0 ? (
         <div
@@ -128,11 +134,11 @@ const Cart = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            marginTop: "-5rem",
+            marginTop: "15rem",
           }}
         >
           <img
-            src="<https://i.ibb.co/x765V9y/bag-4.png>"
+            src="https://i.ibb.co/x765V9y/bag-4.png"
             alt=""
             style={{ width: "15vw" }}
           />
@@ -170,6 +176,10 @@ const Cart = () => {
                 />
               )}
 
+
+
+
+           
               <div
                 style={{
                   display: "flex",
@@ -332,10 +342,13 @@ const Cart = () => {
           ))}
         </>
       )}
+      {getCart.length > 0 && (
 
       <div style={{ marginLeft: "14rem", position: "absolute", right: "10px" }}>
         <FreteSelect />
       </div>
+      )}
+
     </div>
   );
 };
