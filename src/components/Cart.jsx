@@ -151,6 +151,11 @@ const Cart = () => {
                 gap: "1rem",
               }}
             >
+              {item.productId.quantity > 0 ? (
+                <p>{`Apenas ${item.productId.quantity} unidades em estoque`}</p>
+              ) : (
+                <p>Produto esgotado</p>
+              )}
               <div className={styles.linha}></div>
 
               {item.productId.variations && (
@@ -203,6 +208,7 @@ const Cart = () => {
                       });
                   }
                 }}
+                style={{ cursor: "pointer" }}
               />
               <input
                 type="number"
@@ -252,6 +258,7 @@ const Cart = () => {
                       );
                     });
                 }}
+                style={{ cursor: "pointer" }}
               />
               <React.Fragment>
                 <Button
