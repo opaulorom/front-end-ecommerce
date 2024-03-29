@@ -11,6 +11,7 @@ import styles from "./ProductDetails.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
+import CartB from "./CartB";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -316,15 +317,15 @@ const ProductDetails = () => {
               </div>
             )}
              {openSecondCartModal && (
-              <div className={styles.cartModal}>
-                <div ref={modalRef} className={styles.cartModalContent}>
+              <div className={styles.secondCartModal}>
+                <div ref={modalRef} className={styles.secondCartModalContent}>
                   <span
-                    className={styles.cartClose}
+                    className={styles.secondCartClose}
                     onClick={handleClickCloseCartModal}
                   >
                     &times;
                   </span>
-                  <p>          carrinho        </p>
+                  <CartB/>
                  
                 </div>
               </div>
