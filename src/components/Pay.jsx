@@ -11,6 +11,8 @@ const Pay = () => {
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
   const [encodedImage, setEncodedImage] = useState(null);
   const [pixCode, setPixCode] = useState(null);
+  const [getCart, setGetCart] = useState([]);
+  const [getTotal, setGetTotal] = useState({});
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -126,8 +128,7 @@ const Pay = () => {
     }
   };
 
-  const [getCart, setGetCart] = useState([]);
-  const [getTotal, setGetTotal] = useState({});
+
 
   useEffect(() => {
     axios

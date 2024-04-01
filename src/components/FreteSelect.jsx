@@ -7,11 +7,11 @@ const FreteSelect = () => {
   const [cep, setCep] = useState(localStorage.getItem("cep") || "");
   const [frete, setFrete] = useState(null);
   const [selectedFreteIndex, setSelectedFreteIndex] = useState(
-    localStorage.getItem("selectedFreteIndex") || 0
-  ); // Define o primeiro frete como padrão
+    localStorage.getItem("selectedFreteIndex") || null
+  );
   const [getTotal, setGetTotal] = useState({});
 
-  const userId = Cookies.get("userId"); // Obtenha o token do cookie
+  const userId = Cookies.get("userId");
 
   useEffect(() => {
     localStorage.setItem("cep", cep);
@@ -20,11 +20,9 @@ const FreteSelect = () => {
   useEffect(() => {
     const fetchFrete = async () => {
       try {
-        // Faz a solicitação GET para obter os dados atualizados do frete
         const responseGet = await axios.get(
           `http://localhost:3001/api/frete/${userId}`
         );
-        console.log("log", responseGet);
         setFrete(responseGet.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -35,32 +33,26 @@ const FreteSelect = () => {
   }, [cep, userId]);
 
   useEffect(() => {
-    // Atualiza o estado do frete selecionado para o índice do primeiro frete
     if (frete && frete.length > 0) {
-      setSelectedFreteIndex(+localStorage.getItem("selectedFreteIndex") || 0);
+      setSelectedFreteIndex(+localStorage.getItem("selectedFreteIndex") || null);
     }
   }, [frete]);
+
   const [shippingFee, setShippingFee] = useState(0);
 
   const handleRadioClick = async (index) => {
     try {
       const freteId = frete[index]._id;
-
-      // Faz a solicitação PUT para atualizar o valor do frete no carrinho do cliente
       await axios.put(
         `http://localhost:3001/api/cart/${userId}/shippingFee/${freteId}`
       );
-
-      // Atualiza o estado do frete selecionado
       setSelectedFreteIndex(index);
       localStorage.setItem("selectedFreteIndex", index);
 
-      // Captura a resposta da solicitação para poder acessar os dados
       const response = await axios.get(
         `http://localhost:3001/api/cart/${userId}/total-price`
       );
 
-      // Verifica se a resposta está definida e se os dados estão presentes
       if (
         response &&
         response.data &&
@@ -69,7 +61,7 @@ const FreteSelect = () => {
         setGetTotal(response.data);
       }
       const res = await axios.get(`http://localhost:3001/api/cart/${userId}`);
-      setShippingFee(res.data.cart.shippingFee); // Aqui você define a taxa de envio
+      setShippingFee(res.data.cart.shippingFee);
     } catch (error) {
       console.error("Error updating shipping fee:", error);
     }
@@ -77,6 +69,12 @@ const FreteSelect = () => {
 
   return (
     <div>
+        <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
+      {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
+        <div style={{ marginTop: "10rem" }}>
+          total que muda:{getTotal.totalAmount}
+        </div>
+      )}
       <form style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
         <input
           type="text"
@@ -108,12 +106,7 @@ const FreteSelect = () => {
           <SearchIcon /> Buscar{" "}
         </button>
       </form>
-      <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
-      {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-        <div style={{ marginTop: "10rem" }}>
-          total que muda:{getTotal.totalAmount}
-        </div>
-      )}
+    
 
       {frete && (
         <div>

@@ -11,7 +11,8 @@ import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import FreteSelect from "./FreteSelect";
+import SearchIcon from "@mui/icons-material/Search";
+
 import styles from "./Cart.module.css";
 import Cookies from "js-cookie";
 const Cart = () => {
@@ -20,9 +21,12 @@ const Cart = () => {
   const [open, setOpen] = React.useState(false);
   const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
   const [getTotal, setGetTotal] = useState({});
-  const [selectedFreteIndex, setSelectedFreteIndex] = useState(0); // Define o primeiro frete como padrão
+  const [selectedFreteIndex, setSelectedFreteIndex] = useState(
+    localStorage.getItem("selectedFreteIndex") || null
+  );
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
-
+  const [cep, setCep] = useState(localStorage.getItem("cep") || "");
+  const [frete, setFrete] = useState(null);
   useEffect(() => {
     axios
       .get(`http://localhost:3001/api/cart/${userId}`)
@@ -84,48 +88,155 @@ const Cart = () => {
     [userId]
   );
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/api/cart/${userId}/total-price`)
+      .then((response) => {
+        console.log(response.data); // Verifique se o valor totalAmount está presente na resposta
+        if (response.data.totalAmount !== getTotal.totalAmount) {
+          setGetTotal(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("Erro ao visualizar frete.", error);
+      });
+  }, [userId, getCart, getTotal]);
+
+  useEffect(() => {
+    localStorage.setItem("cep", cep);
+  }, [cep]);
+
+  useEffect(() => {
+    const fetchFrete = async () => {
+      try {
+        const responseGet = await axios.get(
+          `http://localhost:3001/api/frete/${userId}`
+        );
+        setFrete(responseGet.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchFrete();
+  }, [cep, userId]);
+
+  useEffect(() => {
+    if (frete && frete.length > 0) {
+      setSelectedFreteIndex(
+        +localStorage.getItem("selectedFreteIndex") || null
+      );
+    }
+  }, [frete]);
+
+  const [shippingFee, setShippingFee] = useState(0);
+
+  const handleRadioClick = async (index) => {
+    try {
+      const freteId = frete[index]._id;
+      await axios.put(
+        `http://localhost:3001/api/cart/${userId}/shippingFee/${freteId}`
+      );
+      setSelectedFreteIndex(index);
+      localStorage.setItem("selectedFreteIndex", index);
+
+      const response = await axios.get(
+        `http://localhost:3001/api/cart/${userId}/total-price`
+      );
+
+      if (
+        response &&
+        response.data &&
+        response.data.totalAmount !== getTotal.totalAmount
+      ) {
+        setGetTotal(response.data);
+      }
+      const res = await axios.get(`http://localhost:3001/api/cart/${userId}`);
+      setShippingFee(res.data.cart.shippingFee);
+    } catch (error) {
+      console.error("Error updating shipping fee:", error);
+    }
+  };
+
+  const handleAddShippingFee = () => {
+    if (selectedFreteIndex !== null) {
+      // Verifica se um frete foi selecionado
+      if (getTotal.totalAmount >= 300) {
+      }
+    } else {
+    }
+  };
+
   return (
     <div style={{ position: "relative" }}>
       <Header />
       {getCart.length > 0 && (
-                
-      <div
-        style={{
-          marginTop: "8rem",
-          display: "flex",
-          marginLeft: "4rem",
-          gap: "2rem",
-          width: "45vw",
-        }}
-      >
-        <h3 className={styles.h1}>Produto</h3>
-        <h3 className={styles.h1}>Tamanho</h3>
-        <h3 className={styles.h1}>Cor</h3>
-        <h3 className={styles.h1}> Quantidade</h3>
-      </div>
-                )}
-      <Navbar />
-      {getCart.length > 0 && (
-
-      <Link to={"/payment"}>
-        <button
+        <div
           style={{
-            backgroundColor: "#5070E3",
-            color: "white",
-            border: "none",
-            padding: ".8rem",
-            borderRadius: "5px",
-            fontWeight: "500",
-            fontFamily: "poppins, sans-serif",
-            cursor: "pointer",
-            position: "absolute",
-            right: "10px",
+            marginTop: "8rem",
+            display: "flex",
+            marginLeft: "4rem",
+            gap: "2rem",
+            width: "45vw",
           }}
         >
-          Fazer Pedido
-        </button>
-      </Link>
-)}
+          <h3 className={styles.h1}>Produto</h3>
+          <h3 className={styles.h1}>Tamanho</h3>
+          <h3 className={styles.h1}>Cor</h3>
+          <h3 className={styles.h1}> Quantidade</h3>
+        </div>
+      )}
+      <Navbar />
+      {getCart.length > 0 && (
+        <>
+          {selectedFreteIndex === null && getTotal.totalAmount < 300 && (
+            <p
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "10px",
+                color: "red",
+              }}
+            >
+              Por favor, selecione um frete antes de prosseguir.
+            </p>
+          )}
+
+          <Link
+            to={
+              selectedFreteIndex !== null || getTotal.totalAmount >= 300
+                ? "/payment"
+                : "#"
+            }
+          >
+            <button
+              onClick={handleAddShippingFee}
+              style={{
+                backgroundColor: "#5070E3",
+                color: "white",
+                border: "none",
+                padding: ".8rem",
+                borderRadius: "5px",
+                fontWeight: "500",
+                fontFamily: "poppins, sans-serif",
+                cursor: "pointer",
+                position: "absolute",
+                right: "10px",
+                pointerEvents:
+                  selectedFreteIndex !== null || getTotal.totalAmount >= 300
+                    ? "auto"
+                    : "none",
+                opacity:
+                  selectedFreteIndex !== null || getTotal.totalAmount >= 300
+                    ? 1
+                    : 0.5,
+              }}
+            >
+              Fazer Pedido
+            </button>
+          </Link>
+        </>
+      )}
 
       {getCart.length === 0 ? (
         <div
@@ -176,10 +287,6 @@ const Cart = () => {
                 />
               )}
 
-
-
-
-           
               <div
                 style={{
                   display: "flex",
@@ -343,12 +450,87 @@ const Cart = () => {
         </>
       )}
       {getCart.length > 0 && (
+        <div
+          style={{ marginLeft: "14rem", position: "absolute", right: "10px" }}
+        >
+          <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
+          {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
+            <div style={{ marginTop: "10rem" }}>
+              total que muda:{getTotal.totalAmount}
+            </div>
+          )}
+          <form style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <input
+              type="text"
+              value={cep}
+              onChange={(event) => setCep(event.target.value)}
+              placeholder="Digite pra pesquisar um cep."
+              style={{ height: "4vh" }}
+            />
 
-      <div style={{ marginLeft: "14rem", position: "absolute", right: "10px" }}>
-        <FreteSelect />
-      </div>
+            <button
+              type="submit"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "#5070E3",
+                color: "white",
+                border: "none",
+                padding: ".4rem",
+                borderRadius: "5px",
+                fontWeight: "500",
+                fontFamily: "poppins, sans-serif",
+                cursor: "pointer",
+                width: "8vw",
+                justifyContent: "center",
+              }}
+            >
+              {" "}
+              <SearchIcon /> Buscar{" "}
+            </button>
+          </form>
+
+          {frete && (
+            <div>
+              {frete.map((item, index) => (
+                <div key={index}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1rem",
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      name="selectedFrete"
+                      value={index}
+                      onClick={() => handleRadioClick(index)}
+                      checked={selectedFreteIndex === index}
+                    />
+                    <img
+                      src={item.logo}
+                      alt="logo das transportadoras"
+                      style={{ width: "10vw" }}
+                    />
+                    <p>{item.nomeTransportadora}</p>
+                    <p>
+                      {" "}
+                      {item.dataPrevistaEntrega
+                        .split("T")[0]
+                        .split("-")
+                        .reverse()
+                        .join("/")}
+                    </p>
+                    <p> {item.prazoEntrega}</p>
+                    <p> valor do frete:{item.valorFrete}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       )}
-
     </div>
   );
 };

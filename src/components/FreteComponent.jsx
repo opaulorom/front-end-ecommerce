@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import SearchIcon from "@mui/icons-material/Search";
 import Cookies from 'js-cookie';
 
 const FreteComponent = () => {
@@ -48,15 +48,34 @@ const FreteComponent = () => {
   };
 
   return (
-    <div style={{marginTop:"2rem"}}>
-      <form onSubmit={handleSubmit}>
+    <div style={{marginTop:"2rem", position:"relative"}}>
+      <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center", gap: ".3rem" }}>
         <input
           type="text"
           value={cep}
           onChange={(event) => setCep(event.target.value)}
           placeholder="Digite o CEP"
+          style={{ height: "4vh" }}
         />
-        <button type="submit">Salvar</button>
+        <button type="submit"
+         style={{
+          backgroundColor: "#5070E3",
+          color: "white",
+          border: "none",
+          padding: ".8rem",
+          borderRadius: "5px",
+          fontWeight: "500",
+          fontFamily: "poppins, sans-serif",
+          cursor: "pointer",
+          position: "absolute",
+          right: "10px",
+          width:"8vw", 
+          display:"flex",
+          alignItems:"center",
+          gap:".3rem"
+        }}
+        
+        ><SearchIcon />Salvar</button>
       </form>
 
       {frete && (
