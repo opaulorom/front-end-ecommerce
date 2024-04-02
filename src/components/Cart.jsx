@@ -198,7 +198,8 @@ const Cart = () => {
         setGetTotal(response.data);
       }
   
-      const res = await axios.get(`http://localhost:3001/api/cart/${userId}`, {
+      const res = await axios.get(`http://localhost:3001/api/cart/${userId}`, 
+      {
         headers: {
           Authorization: `Bearer ${token}`,
           // Remova 'Credentials: credentials'

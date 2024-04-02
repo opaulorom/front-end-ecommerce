@@ -9,12 +9,19 @@ const Heart = () => {
 
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-
+  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
+  const token = Cookies.get('token'); // Obtenha o token do cookie
   useEffect(() => {
     if (loggedIn) {
 
       axios
-        .get(`http://localhost:3001/api/favorites/${userId}`)
+        .get(`http://localhost:3001/api/favorites/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
+          },
+        })
         .then((response) => {
           setFavorites(response.data.favorites);
         })

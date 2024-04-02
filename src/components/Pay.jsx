@@ -13,6 +13,9 @@ const Pay = () => {
   const [pixCode, setPixCode] = useState(null);
   const [getCart, setGetCart] = useState([]);
   const [getTotal, setGetTotal] = useState({});
+  const token = Cookies.get('token'); // Obtenha o token do cookie
+
+  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -46,7 +49,8 @@ const Pay = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // Adicione aqui o token de acesso, se necessário
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
           },
         }
       );
@@ -70,7 +74,8 @@ const Pay = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // Adicione aqui o token de acesso, se necessário
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
           },
         }
       );
@@ -108,17 +113,22 @@ const Pay = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const updatedFormData = {
         ...formData,
         installmentCount: formData.pacelas,
       };
-
+  
       const response = await axios.post(
         `http://localhost:3001/api/creditCardWithoutTokenization/${userId}`,
-        formData,
-        updatedFormData
+        updatedFormData, // Aqui está o corpo da requisição
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Remova 'Credentials: credentials'
+          },
+        }
       );
       console.log(response.data);
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
@@ -127,12 +137,19 @@ const Pay = () => {
       // Trate erros aqui, como exibir uma mensagem para o usuário
     }
   };
+  
 
 
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/cart/${userId}/total-price`)
+      .get(`http://localhost:3001/api/cart/${userId}/total-price`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
+          },
+        })
       .then((response) => {
         console.log(response.data); // Verifique se o valor totalAmount está presente na resposta
         if (response.data.totalAmount !== getTotal.totalAmount) {

@@ -6,7 +6,9 @@ const IconToggle = ({ productId, isFavorite }) => {
   const [active, setActive] = useState(isFavorite ?? false);
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
+  const token = Cookies.get('token'); // Obtenha o token do cookie
   useEffect(() => {
     setActive(isFavorite);
   }, [isFavorite]);
@@ -26,6 +28,8 @@ const IconToggle = ({ productId, isFavorite }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
           },
           body: JSON.stringify({
             custumerId: userId,
