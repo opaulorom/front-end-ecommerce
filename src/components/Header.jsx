@@ -16,7 +16,9 @@ const Header = () => {
   const [localCartItemCount, setLocalCartItemCount] = useState(0);
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
+  const token = Cookies.get('token'); // Obtenha o token do cookie
   useEffect(() => {
     const storedCartItemCount = localStorage.getItem("cartItemCount");
     if (storedCartItemCount !== null) {
@@ -27,7 +29,13 @@ const Header = () => {
   useEffect(() => {
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/cart/${userId}`)
+        .get(`http://localhost:3001/api/cart/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
+          },
+        })
         .then((response) => {
           setLocalCartItemCount(
             Math.max(response.data.cart.products.length, 0)

@@ -26,11 +26,19 @@ const ProductDetails = () => {
   const { cartItemCount, addToCart } = useCart();
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
   const [openSecondCartModal, setOpenSecondCartModal] = useState(false);
+  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
+  const token = Cookies.get('token'); // Obtenha o token do cookie
   
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/custumer/${userId}`)
+      .get(`http://localhost:3001/api/custumer/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Credentials: credentials,
+        },
+      })
       .then((response) => {
         setCustomer(response.data);
         console.log(response);
@@ -45,7 +53,13 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/product/${productId}`
+          `http://localhost:3001/api/product/${productId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Credentials: credentials,
+            },
+          }
         );
         setProduct(response.data.product);
         const sizesArray = response.data.product.size
@@ -113,12 +127,19 @@ const ProductDetails = () => {
     try {
       const response = await axios.post(
         `http://localhost:3001/api/add-to-cart/${userId}`,
+      
         {
           productId: product._id,
           size: selectedSize, // Aqui está sendo enviado o tamanho selecionado
           color: product.variations[currentImageIndex].color,
           quantity: 1,
-        }
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
+          },
+        },
       );
 
       addToCart(); // Incrementa o número de itens no carrinho

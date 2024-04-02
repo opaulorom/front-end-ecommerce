@@ -3,6 +3,9 @@ import axios from 'axios';
 import Cookies from "js-cookie";
 
 const SignUpForm = () => {
+  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
+
+  const token = Cookies.get('token'); // Obtenha o token do cookie
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
   const [formData, setFormData] = useState({
 
@@ -20,7 +23,6 @@ const SignUpForm = () => {
     state: '',
     
   });
-  console.log("custumerId", userId)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +33,12 @@ const SignUpForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3001/api/signup', formData);
+      const response = await axios.post('http://localhost:3001/api/signup', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Credentials: credentials,
+        },
+      }, formData);
       console.log(response.data);
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
@@ -46,7 +53,12 @@ const SignUpForm = () => {
 
     if (newCep.length === 8) {
       try {
-        const response = await axios.get(`https://viacep.com.br/ws/${newCep}/json/`);
+        const response = await axios.get(`https://viacep.com.br/ws/${newCep}/json/`,  {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
+          },
+        });
         const data = response.data;
 
         setFormData((prevFormData) => ({

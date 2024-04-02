@@ -3,8 +3,9 @@ import axios from 'axios';
 import Cookies from "js-cookie";
 
 const UpdateForm = () => {
+  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
+  const token = Cookies.get('token'); // Obtenha o token do cookie
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
-
   const [formData, setFormData] = useState({
     userId: userId,
     name:  '',
@@ -21,9 +22,21 @@ const UpdateForm = () => {
   });
 
   useEffect(() => {
+    
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/custumer/${userId}`);
+        const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
+
+        const token = Cookies.get('token'); // Obtenha o token do cookie
+
+
+        console.log('Token:', token);
+        const response = await axios.get(`http://localhost:3001/api/custumer/${userId}`,  {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
+          },
+        });
         const userData = response.data;
 
         setFormData((prevFormData) => ({
@@ -57,7 +70,12 @@ const UpdateForm = () => {
     e.preventDefault();
   
     try {
-      const response = await axios.put(`http://localhost:3001/api/update/${userId}`, formData);
+      const response = await axios.put(`http://localhost:3001/api/update/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Credentials: credentials,
+        },
+      }, formData);
       console.log(response.data);
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
@@ -72,7 +90,13 @@ const UpdateForm = () => {
 
     if (newCep.length === 8) {
       try {
-        const response = await axios.get(`https://viacep.com.br/ws/${newCep}/json/`);
+        const response = await axios.get(`https://viacep.com.br/ws/${newCep}/json/`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
+          },
+        });
         const data = response.data;
 
         setFormData((prevFormData) => ({

@@ -27,9 +27,18 @@ const Cart = () => {
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
   const [cep, setCep] = useState(localStorage.getItem("cep") || "");
   const [frete, setFrete] = useState(null);
+  const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
+  const token = Cookies.get("token"); // Obtenha o token do cookie
+  const [shippingFee, setShippingFee] = useState(0);
+
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/cart/${userId}`)
+      .get(`http://localhost:3001/api/cart/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Credentials: credentials,
+        },
+      })
       .then((response) => {
         setGetCart(response.data.cart.products);
       })
@@ -42,7 +51,13 @@ const Cart = () => {
     (productId) => {
       axios
         .delete(
-          `http://localhost:3001/api/remove-from-cart/${userId}/${productId}`
+          `http://localhost:3001/api/remove-from-cart/${userId}/${productId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Credentials: credentials,
+            },
+          }
         )
         .then((response) => {
           console.log(response.data.message);
@@ -64,7 +79,13 @@ const Cart = () => {
       axios
         .put(
           `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
-          { quantity: newQuantity }
+          { quantity: newQuantity },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Credentials: credentials,
+            },
+          }
         )
         .then((response) => {
           setGetCart((prevCart) => {
@@ -90,13 +111,19 @@ const Cart = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/cart/${userId}/total-price`)
+      .get(`http://localhost:3001/api/cart/${userId}/total-price`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Credentials: credentials,
+        },
+      })
       .then((response) => {
         console.log(response.data); // Verifique se o valor totalAmount está presente na resposta
         if (response.data.totalAmount !== getTotal.totalAmount) {
           setGetTotal(response.data);
         }
       })
+
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
       });
@@ -110,7 +137,13 @@ const Cart = () => {
     const fetchFrete = async () => {
       try {
         const responseGet = await axios.get(
-          `http://localhost:3001/api/frete/${userId}`
+          `http://localhost:3001/api/frete/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Credentials: credentials,
+            },
+          }
         );
         setFrete(responseGet.data);
       } catch (error) {
@@ -129,21 +162,34 @@ const Cart = () => {
     }
   }, [frete]);
 
-  const [shippingFee, setShippingFee] = useState(0);
-
   const handleRadioClick = async (index) => {
     try {
       const freteId = frete[index]._id;
       await axios.put(
-        `http://localhost:3001/api/cart/${userId}/shippingFee/${freteId}`
+        `http://localhost:3001/api/cart/${userId}/shippingFee/${freteId}`,
+        {
+          // Remova as linhas de cabeçalho daqui
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Remova 'Credentials: credentials'
+          },
+        }
       );
       setSelectedFreteIndex(index);
       localStorage.setItem("selectedFreteIndex", index);
-
+  
       const response = await axios.get(
-        `http://localhost:3001/api/cart/${userId}/total-price`
+        `http://localhost:3001/api/cart/${userId}/total-price`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Remova 'Credentials: credentials'
+          },
+        }
       );
-
+  
       if (
         response &&
         response.data &&
@@ -151,12 +197,20 @@ const Cart = () => {
       ) {
         setGetTotal(response.data);
       }
-      const res = await axios.get(`http://localhost:3001/api/cart/${userId}`);
+  
+      const res = await axios.get(`http://localhost:3001/api/cart/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Remova 'Credentials: credentials'
+        },
+      });
+  
       setShippingFee(res.data.cart.shippingFee);
     } catch (error) {
       console.error("Error updating shipping fee:", error);
     }
   };
+  
 
   const handleAddShippingFee = () => {
     if (selectedFreteIndex !== null) {
@@ -305,10 +359,19 @@ const Cart = () => {
                     const newCart = [...getCart];
                     newCart[index].quantity = newQuantity;
                     const productId = item.productId._id;
+                    const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
+
+                    const token = Cookies.get("token"); // Obtenha o token do cookie
                     axios
                       .put(
                         `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
-                        { quantity: newQuantity }
+                        { quantity: newQuantity },
+                        {
+                          headers: {
+                            Authorization: `Bearer ${token}`,
+                            Credentials: credentials,
+                          },
+                        }
                       )
                       .then((response) => {
                         setGetCart((prevCart) => {
@@ -356,10 +419,19 @@ const Cart = () => {
                   newCart[index].quantity = newQuantity;
 
                   const productId = item.productId._id;
+                  const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
+
+                  const token = Cookies.get("token"); // Obtenha o token do cookie
                   axios
                     .put(
                       `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
-                      { quantity: newQuantity }
+                      { quantity: newQuantity },
+                      {
+                        headers: {
+                          Authorization: `Bearer ${token}`,
+                          Credentials: credentials,
+                        },
+                      }
                     )
                     .then((response) => {
                       setGetCart((prevCart) => {

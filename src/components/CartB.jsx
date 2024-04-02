@@ -11,10 +11,18 @@ const CartB = () => {
   const [lastAddedProduct, setLastAddedProduct] = useState(null);
   const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
+  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
+  const token = Cookies.get('token'); // Obtenha o token do cookie
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/cart/${userId}`)
+      .get(`http://localhost:3001/api/cart/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Credentials: credentials,
+        },
+      })
       .then((response) => {
         const cartProducts = response.data.cart.products;
         if (cartProducts.length > 0) {
