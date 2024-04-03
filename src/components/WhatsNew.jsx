@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
 import BannerWithDiscount from "./BannerWithDiscount";
 import DiscountImageLinkPerPercentageAndCategory from "./DiscountImageLinkPerPercentageAndCategory";
@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 
 import { useAuth } from "../context/AuthContext";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useState } from "react";
 const WhatsNew = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const [showButton, setShowButton] = useState(false);
