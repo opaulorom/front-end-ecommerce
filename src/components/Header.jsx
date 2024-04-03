@@ -11,6 +11,7 @@ import {useAuth} from "../context/AuthContext"
 import axios from "axios";
 import Cookies from "js-cookie";
 
+
 const Header = () => {
   const { cartItemCount, addToCart, removeFromCart } = useCart();
   const [localCartItemCount, setLocalCartItemCount] = useState(0);
@@ -96,8 +97,16 @@ const Header = () => {
             {/* Margem esquerda automática para empurrar para a direita */}
             <SearchBar />
           </div>
-
+       
           <div className={styles.desktopContainer}>
+          {/* {loggedIn && (
+            <>
+            <div style={{width:"5rem", zIndex:"99999"}}>
+            <img src="https://i.ibb.co/Qr5PHNT/bell-3.png" alt="" style={{fontSize:"14rem"}} />
+
+            </div>
+            </>
+          )} */}
             <Link to={"/perfil"} style={{zIndex:"99999"}}>
               {" "}
               <img src="https://i.ibb.co/L1tX6LY/user-2.png" alt="" />
@@ -137,6 +146,7 @@ const Header = () => {
                 {loggedIn ? localCartItemCount : 0}
               </span>
             </Link>
+            
           </div>
         </div>
         <div className={styles.MobileHeader}>

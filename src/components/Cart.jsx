@@ -12,9 +12,10 @@ import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import SearchIcon from "@mui/icons-material/Search";
-
 import styles from "./Cart.module.css";
 import Cookies from "js-cookie";
+import { useAuth } from "../context/AuthContext";
+
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
   const [handleDeleteProduct, setHandleDeleteProduct] = useState(false);
@@ -30,6 +31,7 @@ const Cart = () => {
   const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const [shippingFee, setShippingFee] = useState(0);
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
 
   useEffect(() => {
     axios
@@ -179,7 +181,7 @@ const Cart = () => {
       );
       setSelectedFreteIndex(index);
       localStorage.setItem("selectedFreteIndex", index);
-  
+
       const response = await axios.get(
         `http://localhost:3001/api/cart/${userId}/total-price`,
         {
@@ -189,7 +191,7 @@ const Cart = () => {
           },
         }
       );
-  
+
       if (
         response &&
         response.data &&
@@ -197,21 +199,19 @@ const Cart = () => {
       ) {
         setGetTotal(response.data);
       }
-  
-      const res = await axios.get(`http://localhost:3001/api/cart/${userId}`, 
-      {
+
+      const res = await axios.get(`http://localhost:3001/api/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           // Remova 'Credentials: credentials'
         },
       });
-  
+
       setShippingFee(res.data.cart.shippingFee);
     } catch (error) {
       console.error("Error updating shipping fee:", error);
     }
   };
-  
 
   const handleAddShippingFee = () => {
     if (selectedFreteIndex !== null) {
@@ -293,7 +293,49 @@ const Cart = () => {
         </>
       )}
 
-      {getCart.length === 0 ? (
+      {getCart.length === 0 && !loggedIn && (
+        <>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "15rem",
+            }}
+          >
+            <div
+              style={{
+                marginTop: "5rem",
+                fontFamily: "poppins",
+                fontSize: "1rem",
+                fontWeight: "400",
+              }}
+            >
+              {" "}
+              Somente os usuários registrados podem acessar esta página faça{" "}
+              <Link
+                to={"/perfil"}
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                {" "}
+                <b
+                  style={{
+                    fontFamily: "poppins",
+                    fontWeight: "600",
+                    fontSize: "1.2rem",
+                  }}
+                >
+                  {" "}
+                  Login
+                </b>
+                .
+              </Link>{" "}
+            </div>
+          </div>
+        </>
+      )}
+
+      {getCart.length === 0 && loggedIn === true ? (
         <div
           style={{
             display: "flex",

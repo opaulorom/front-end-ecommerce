@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {useAuth} from "../context/AuthContext"
 import Cookies from "js-cookie";
+import Navbar from "./Navbar";
+import Header from "./Header";
 
 const Heart = () => {
   const [favorites, setFavorites] = useState([]);
@@ -33,6 +35,17 @@ const Heart = () => {
 
   return (
     <div>
+      <Header/>
+      <Navbar/>
+      
+      {favorites.length === 0 && !loggedIn && (
+        <div  style={{display:"flex",alignItems:"center", justifyContent:"center", marginTop:"15rem",  }}>
+                <div style={{ marginTop:"5rem", fontFamily:"poppins", fontSize:"1rem", fontWeight:"400" }}> Somente os usuários registrados podem acessar esta página faça <Link to={"/perfil"} style={{ color: "inherit", textDecoration: "none", }}> <b style={{fontFamily:"poppins", fontWeight:"600", fontSize:"1.2rem" }}>  Login</b>.</Link> </div>
+
+
+        </div>
+   
+      )}
       <ul>
         {favorites.map((favorite) => (
           <div key={favorite._id}>

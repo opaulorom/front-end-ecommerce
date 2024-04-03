@@ -4,16 +4,21 @@ import BannerWithDiscount from "./BannerWithDiscount";
 import DiscountImageLinkPerPercentageAndCategory from "./DiscountImageLinkPerPercentageAndCategory";
 import Header from "./Header";
 import Navbar from "./Navbar";
-import  { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import Chip from "@mui/material/Chip";
-import IconToggle from "./IconToggle";
 
+import { useAuth } from "../context/AuthContext";
+import LogoutIcon from "@mui/icons-material/Logout";
 const WhatsNew = () => {
-  
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+  const [showButton, setShowButton] = useState(false);
 
+
+  useEffect(() => {
+    if (loggedIn) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  });
   return (
     <div>
       <Header />
@@ -25,7 +30,12 @@ const WhatsNew = () => {
       <BannerWithDiscount />
       <DiscountImageLinkPerPercentageAndCategory />
 
-
+      {showButton && (
+        <div className="button" onClick={logout}>
+          <LogoutIcon />
+          <span>Sair</span>
+        </div>
+      )}
 
     </div>
   );

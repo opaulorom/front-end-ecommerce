@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from "js-cookie";
+import Navbar from './Navbar';
 
 const UpdateForm = () => {
   const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
@@ -115,6 +116,18 @@ const UpdateForm = () => {
   };
 
   return (
+    <>
+    <Navbar/>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column"}}>
       <label>
         Nome completo:
@@ -173,6 +186,7 @@ const UpdateForm = () => {
       
       <button type="submit">Atualizar</button>
     </form>
+    </>
   );
 };
 

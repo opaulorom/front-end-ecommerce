@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from "js-cookie";
+import Navbar from './Navbar';
 
 const SignUpForm = () => {
   const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
@@ -77,6 +78,8 @@ const SignUpForm = () => {
   };
 
   return (
+    <>    <Navbar/>
+    
     <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column"}}>
       <label>
         nome completo:
@@ -136,6 +139,7 @@ const SignUpForm = () => {
      
       <button type="submit">Submit</button>
     </form>
+    </>
   );
 };
 

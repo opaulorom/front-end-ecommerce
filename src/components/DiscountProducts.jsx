@@ -9,7 +9,8 @@ const DiscountProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/productsByDiscountPercentage/${discount}`);
+        const response = await axios.get(`http://localhost:3001/api/productsByDiscountPercentage/${discount}`,
+        );
         setProducts(response.data.productsWithDiscount);
       } catch (error) {
         console.error('Erro ao obter produtos:', error);

@@ -13,7 +13,8 @@ const NewArrivals = () => {
   const [newArrivals, setNewArrivals] = useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+  const [showButton, setShowButton] = useState(false);
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
@@ -36,8 +37,6 @@ const NewArrivals = () => {
     setCurrentPage(page);
   };
 
-  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-  const [showButton, setShowButton] = useState(false);
   useEffect(() => {
     if (loggedIn) {
       setShowButton(true);
@@ -71,20 +70,30 @@ const NewArrivals = () => {
                   flexDirection: "column",
                   marginBottom: "2rem",
                   alignItems: "center",
-                  color: 'black',
-                  textDecoration: 'none'
+                  color: "black",
+                  textDecoration: "none",
                 }}
               >
-              {product.variations && product.variations[0] && product.variations[0].urls && (
-    <img
-        src={product.variations[0].urls[0]}
-        alt=""
-        style={{ width: "15vw" }}
-    />
-)}
+                {product.variations &&
+                  product.variations[0] &&
+                  product.variations[0].urls && (
+                    <img
+                      src={product.variations[0].urls[0]}
+                      alt=""
+                      style={{ width: "15vw" }}
+                    />
+                  )}
 
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                <span style={{fontSize:"1rem", fontWeight:"700", fontFamily:"poppins, sans-serif"}}>R$ {product.price}</span>
+                  <span
+                    style={{
+                      fontSize: "1rem",
+                      fontWeight: "700",
+                      fontFamily: "poppins, sans-serif",
+                    }}
+                  >
+                    R$ {product.price}
+                  </span>
 
                   <span
                     style={{
@@ -93,7 +102,7 @@ const NewArrivals = () => {
                       whiteSpace: "nowrap",
                       width: "15vw",
                       color: "rgb(114, 114, 114)",
-                      fontSize:".8rem"
+                      fontSize: ".8rem",
                     }}
                   >
                     {product.name}
@@ -109,7 +118,7 @@ const NewArrivals = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginBottom:"2rem"
+            marginBottom: "2rem",
           }}
         >
           <Stack spacing={2}>

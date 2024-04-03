@@ -24,7 +24,7 @@ const SearchBar = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         onKeyPress={handleKeyPress} // Adiciona o event listener para capturar a tecla pressionada
-     
+        
         className={styles.inputContainer}
       />
       <img src='https://i.ibb.co/t4n36kx/loupe-5.png' onClick={handleSearch}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import Navbar from "./Navbar";
+import Header from "./Header";
 
 const DiscountProductsByCategoryAndPorcentage = () => {
   const [products, setProducts] = useState(null);
@@ -23,6 +25,8 @@ const DiscountProductsByCategoryAndPorcentage = () => {
 
   return (
     <div>
+      <Header/>
+      <Navbar/>
       {Array.isArray(products) &&
         products.map((product) => (
           <div key={product._id}>
