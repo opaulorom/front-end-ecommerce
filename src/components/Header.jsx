@@ -140,30 +140,39 @@ const Header = () => {
             <SearchBar />
           </div>
           {openCartModal && loggedIn === true && (
-              <div className={styles.HeaderModal}>
-                <div ref={modalRef} className={styles.HeaderModalContent}>
-                  <span
-                    className={styles.HeaderModalClose}
-                    onClick={handleClickCloseModal}
+            <div className={styles.HeaderModal}>
+              <div ref={modalRef} className={styles.HeaderModalContent}>
+                <p className={styles.h4}>
+                  vc nao ainda nao cadastrou os dados necessarios pra compra se
+                  cadastre
+                </p>
+                {showButton && (
+                  <div
+                    style={{
+                      display:"flex",
+                      alignItems:"center",
+                      color: "red",
+                      position: "absolute",
+                      bottom: "10px",
+                      left: "10px",
+                      gap:".2rem"
+                    }}
+                    onClick={logout}
                   >
-                    &times;
-                  </span>
-                  <p>
-                    vc nao ainda nao cadastrou os dados necessarios pra compra
-                    se cadastre
-                  </p>
-                  {showButton && (
-                    <div style={{color:"black"}} onClick={logout}>
-                      <LogoutIcon />
-                      <span>Sair</span>
-                    </div>
-                  )}
-                </div>
+                    <LogoutIcon />
+                    <span 
+                    style={{
+                      fontSize:"1rem",
+                      fontFamily:"poppins",
+                      fontWeight:"400"
+                    }}>Sair</span>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
+          )}
           <div className={styles.desktopContainer}>
-           
-            <Link to={"/perfil"} style={{ zIndex: "99999" }}>
+            <Link to={loggedIn === true  ? " " : "/perfil"} style={{ zIndex: "99999" }}>
               {" "}
               <img
                 src="https://i.ibb.co/L1tX6LY/user-2.png"

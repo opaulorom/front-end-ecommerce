@@ -37,10 +37,6 @@ const LoginForm = () => {
     return (
       <div className='logout-container'>
         {isCustomer ? <ProfileDetails/> : null}
-        <div className='button' onClick={logout}>
-          <LogoutIcon />
-          <span>Sair</span>
-        </div>
       </div>
     );
   }

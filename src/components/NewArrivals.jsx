@@ -7,14 +7,12 @@ import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useAuth } from "../context/AuthContext";
-import LogoutIcon from "@mui/icons-material/Logout";
 
 const NewArrivals = () => {
   const [newArrivals, setNewArrivals] = useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-  const [showButton, setShowButton] = useState(false);
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
@@ -37,13 +35,7 @@ const NewArrivals = () => {
     setCurrentPage(page);
   };
 
-  useEffect(() => {
-    if (loggedIn) {
-      setShowButton(true);
-    } else {
-      setShowButton(false);
-    }
-  });
+ 
   return (
     <div>
       <Header />
@@ -133,12 +125,7 @@ const NewArrivals = () => {
           </Stack>
         </div>
       </div>
-      {showButton && (
-        <div className="button" onClick={logout}>
-          <LogoutIcon />
-          <span>Sair</span>
-        </div>
-      )}
+     
     </div>
   );
 };
