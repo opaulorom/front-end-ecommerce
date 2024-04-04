@@ -31,7 +31,6 @@ const UpdateForm = () => {
         const token = Cookies.get('token'); // Obtenha o token do cookie
 
 
-        console.log('Token:', token);
         const response = await axios.get(`http://localhost:3001/api/custumer/${userId}`,  {
           headers: {
             Authorization: `Bearer ${token}`,

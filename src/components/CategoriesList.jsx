@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from "./CategoriesList.module.css"
 import CategoriesDesktop from './CategoriesDesktop';
 import ClearIcon from '@mui/icons-material/Clear';
+
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -90,6 +91,7 @@ const CategoriesList = () => {
           <div 
             className={styles.modal} 
             ref={modalRef}
+            onMouseLeave={handleMouseLeaveModal} // Adicione esse manipulador de eventos
           >
             <ClearIcon style={{fontSize:"2rem"}} className={styles.closeButton} onClick={handleCloseModal}></ClearIcon>
             <div className={styles.modalContent}>

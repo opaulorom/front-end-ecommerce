@@ -10,7 +10,6 @@ const Protected = () => {
   const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
   const token = Cookies.get('token'); // Obtenha o token do cookie
-  console.log('Token:', token);
 
   useEffect(() => {
     const checkUserRegistration = async () => {

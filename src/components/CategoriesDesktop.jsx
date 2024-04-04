@@ -36,6 +36,7 @@ const CategoriesDesktop = () => {
 
     }} className={styles.ImageGalleryDesktop}>
             <ImageGalleryDesktop />
+          
 
     <Navbar/>
 

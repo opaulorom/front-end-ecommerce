@@ -10,7 +10,7 @@ const ImageGalleryDesktop = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://localhost:3001/api/categories');
+        const response = await axios.get('http://localhost:3001/api/categories');
         console.log('Categories Response:', response.data);
 
         if (response.data.categories && Array.isArray(response.data.categories)) {
@@ -44,6 +44,7 @@ const ImageGalleryDesktop = () => {
             ))}
           </div>
         ))}
+        
       </div>
     </div>
   );

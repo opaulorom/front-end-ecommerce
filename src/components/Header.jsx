@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Header.module.css";
 import SearchBar from "./SearchBar";
 import CategoriesList from "./CategoriesList";
@@ -7,19 +7,23 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import {useAuth} from "../context/AuthContext"
+import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import Cookies from "js-cookie";
-
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Header = () => {
   const { cartItemCount, addToCart, removeFromCart } = useCart();
   const [localCartItemCount, setLocalCartItemCount] = useState(0);
-  const userId = Cookies.get('userId'); // Obtenha o token do cookie
-  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
+  const userId = Cookies.get("userId"); // Obtenha o token do cookie
+  const [showButton, setShowButton] = useState(false);
 
-  const token = Cookies.get('token'); // Obtenha o token do cookie
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+  const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
+  const token = Cookies.get("token"); // Obtenha o token do cookie
+  const modalRef = useRef(null);
+  const [openCartModal, setOpenCartModal] = useState(false);
+
   useEffect(() => {
     const storedCartItemCount = localStorage.getItem("cartItemCount");
     if (storedCartItemCount !== null) {
@@ -30,8 +34,7 @@ const Header = () => {
   useEffect(() => {
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/cart/${userId}`,
-        {
+        .get(`http://localhost:3001/api/cart/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             Credentials: credentials,
@@ -57,6 +60,45 @@ const Header = () => {
     localStorage.setItem("cartItemCount", localCartItemCount);
   }, [localCartItemCount]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target) &&
+        openCartModal
+      ) {
+        setOpenCartModal(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openCartModal]);
+
+  const handleClickOpenModal = () => {
+    setOpenCartModal(true);
+  };
+
+  const handleClickCloseModal = () => {
+    setOpenCartModal(false);
+  };
+
+  const handleOpenModalAccount = () => {
+    // Verifica se o tamanho e a cor estão selecionados
+
+    handleClickOpenModal();
+  };
+
+  useEffect(() => {
+    if (loggedIn) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  });
   return (
     <>
       <div className={styles.ContainerHeader}>
@@ -97,33 +139,55 @@ const Header = () => {
             {/* Margem esquerda automática para empurrar para a direita */}
             <SearchBar />
           </div>
-       
+          {openCartModal && loggedIn === true && (
+              <div className={styles.HeaderModal}>
+                <div ref={modalRef} className={styles.HeaderModalContent}>
+                  <span
+                    className={styles.HeaderModalClose}
+                    onClick={handleClickCloseModal}
+                  >
+                    &times;
+                  </span>
+                  <p>
+                    vc nao ainda nao cadastrou os dados necessarios pra compra
+                    se cadastre
+                  </p>
+                  {showButton && (
+                    <div style={{color:"black"}} onClick={logout}>
+                      <LogoutIcon />
+                      <span>Sair</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           <div className={styles.desktopContainer}>
-          {/* {loggedIn && (
-            <>
-            <div style={{width:"5rem", zIndex:"99999"}}>
-            <img src="https://i.ibb.co/Qr5PHNT/bell-3.png" alt="" style={{fontSize:"14rem"}} />
-
-            </div>
-            </>
-          )} */}
-            <Link to={"/perfil"} style={{zIndex:"99999"}}>
+           
+            <Link to={"/perfil"} style={{ zIndex: "99999" }}>
               {" "}
-              <img src="https://i.ibb.co/L1tX6LY/user-2.png" alt="" />
+              <img
+                src="https://i.ibb.co/L1tX6LY/user-2.png"
+                alt=""
+                onClick={handleOpenModalAccount}
+              />
             </Link>
 
             <Link
               to={"/favoritos"}
               style={{
                 cursor: "pointer",
-                zIndex:"99999"
+                zIndex: "99999",
               }}
             >
               <img src="https://i.ibb.co/2ZnFQfq/heart-1.png" alt="" />
             </Link>
             <Link
               to={"/cart"}
-              style={{ position: "relative", display: "inline-block",zIndex:"99999" }}
+              style={{
+                position: "relative",
+                display: "inline-block",
+                zIndex: "99999",
+              }}
             >
               <img src="https://i.ibb.co/FwNpdzD/shopping-bag-1.png" alt="" />
               <span
@@ -146,7 +210,6 @@ const Header = () => {
                 {loggedIn ? localCartItemCount : 0}
               </span>
             </Link>
-            
           </div>
         </div>
         <div className={styles.MobileHeader}>
@@ -161,6 +224,17 @@ const Header = () => {
           <Link to={"/perfil"}>
             <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem" }} />
           </Link>
+          {loggedIn === true && (
+            <div>
+              <div style={{ width: "5rem", zIndex: "99999" }}>
+                <img
+                  src="https://i.ibb.co/Qr5PHNT/bell-3.png"
+                  alt=""
+                  style={{ fontSize: "14rem" }}
+                />
+              </div>
+            </div>
+          )}
           <Link
             to={"/cart"}
             style={{ position: "relative", display: "inline-block" }}
