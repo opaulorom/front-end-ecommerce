@@ -39,6 +39,7 @@ import PixPage from "./components/PixPage";
 import NewArrivals from "./components/NewArrivals";
 import WhatsNew from "./components/WhatsNew";
 import SignUpForm from "./components/SignUpForm";
+import MyOrders from "./components/MyOrders";
 
 const Root = () => (
   <Routes>
@@ -95,7 +96,8 @@ const Root = () => (
     <Route path="/newArrivals" element={<NewArrivals/>} />
     <Route path="/signUp" element={<SignUpForm/>} />
 
-    
+    <Route path="/orders" element={<MyOrders/>} />
+
 
   </Routes>
 );

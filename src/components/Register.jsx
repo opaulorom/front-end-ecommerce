@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Header from './Header';
+import Navbar from './Navbar';
 
 function RegisterUser() {
   const [email, setEmail] = useState('');
@@ -28,7 +30,12 @@ function RegisterUser() {
   };
 
   return (
+    <>
+    
+    <Header/>
+      <Navbar/>
     <div>
+      
       <h2>Register User</h2>
       {message && <p>{message}</p>}
       {error && <p>{error}</p>}
@@ -42,6 +49,7 @@ function RegisterUser() {
         <button type="submit">Register</button>
       </form>
     </div>
+    </>
   );
 }
 

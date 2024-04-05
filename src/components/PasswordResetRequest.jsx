@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Header from './Header';
+import Navbar from './Navbar';
 
 const PasswordResetRequest = () => {
   const [email, setEmail] = useState('');
@@ -21,7 +23,11 @@ const PasswordResetRequest = () => {
   };
 
   return (
-    <div>
+    <>
+    <Header/>
+      <Navbar/>
+    <div style={{marginTop:"15rem"}}>
+
       <h2>Solicitar Redefinição de Senha</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -32,6 +38,7 @@ const PasswordResetRequest = () => {
       </form>
       {message && <p>{message}</p>}
     </div>
+    </>
   );
 };
 

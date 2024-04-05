@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Navbar from "./Navbar";
+import Header from "./Header";
 
 const RegisterLink = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +24,11 @@ const RegisterLink = () => {
   };
 
   return (
-    <div>
+    <>
+    <Header/>
+    <Navbar/>
+    
+    <div style={{marginTop:"15rem"}}>
       <h2>Enviar link (Customer)</h2>
       {error && <p>{error}</p>}
       <form onSubmit={handleSubmit}>
@@ -39,6 +45,7 @@ const RegisterLink = () => {
         <button type="submit">enviar</button>
       </form>
     </div>
+    </>
   );
 };
 

@@ -11,7 +11,8 @@ import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import Cookies from "js-cookie";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+import SettingsIcon from "@mui/icons-material/Settings";
+import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 const Header = () => {
   const { cartItemCount, addToCart, removeFromCart } = useCart();
   const [localCartItemCount, setLocalCartItemCount] = useState(0);
@@ -142,37 +143,71 @@ const Header = () => {
           {openCartModal && loggedIn === true && (
             <div className={styles.HeaderModal}>
               <div ref={modalRef} className={styles.HeaderModalContent}>
-                <p className={styles.h4}>
-                  vc nao ainda nao cadastrou os dados necessarios pra compra se
-                  cadastre
-                </p>
+                <div className={styles.FirstContainer}>
+                  <h4 className={styles.h4}>Configurações</h4>
+                </div>
+
                 {showButton && (
-                  <div
-                    style={{
-                      display:"flex",
-                      alignItems:"center",
-                      color: "red",
-                      position: "absolute",
-                      bottom: "10px",
-                      left: "10px",
-                      gap:".2rem"
-                    }}
-                    onClick={logout}
-                  >
-                    <LogoutIcon />
-                    <span 
-                    style={{
-                      fontSize:"1rem",
-                      fontFamily:"poppins",
-                      fontWeight:"400"
-                    }}>Sair</span>
-                  </div>
+                  <>
+                    <nav className={styles.NavContainer}>
+                      <ul style={{ listStyleType: "none" }}>
+                        <li className={styles.li}>
+                          <Link to={"/perfil"} style={{textDecoration:"none"}}>
+                            <a style={{textDecoration:"none",color: "rgb(108, 117, 125)" }}>
+                              Minha Conta
+                            </a>
+                          </Link>
+                        </li>
+                        <li className={styles.li}>
+                          <Link to={"/orders"} style={{textDecoration:"none"}}>
+                            <a style={{ color: "rgb(108, 117, 125)" }}>
+                              Compras
+                            </a>
+                          </Link>
+                        </li>
+                        <li className={styles.li}>
+                          <Link to={"/forgotPassword"} style={{textDecoration:"none"}}>
+                            <a style={{ color: "rgb(108, 117, 125)" }}>
+                              Alterar senha
+                            </a>
+                          </Link>
+                        </li>
+                      </ul>
+                    </nav>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        color: "red",
+                        position: "absolute",
+                        bottom: "10px",
+                        left: "10px",
+                        gap: ".2rem",
+                        cursor:"pointer"
+                      }}
+                      onClick={logout}
+                    >
+                      <LogoutIcon />
+                      <span
+                        style={{
+                          fontSize: "1rem",
+                          fontFamily: "poppins",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Sair
+                      </span>
+                    </div>
+                  </>
                 )}
               </div>
             </div>
           )}
           <div className={styles.desktopContainer}>
-            <Link to={loggedIn === true  ? " " : "/perfil"} style={{ zIndex: "99999" }}>
+            <Link
+              to={loggedIn === true ? " " : "/perfil"}
+              style={{ zIndex: "99999" }}
+            >
               {" "}
               <img
                 src="https://i.ibb.co/L1tX6LY/user-2.png"
