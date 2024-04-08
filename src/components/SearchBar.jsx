@@ -31,7 +31,7 @@ const SearchBar = () => {
        style={{
         position:"absolute",
         top:".3rem",
-        right:"16rem",
+        right:"21rem",
         cursor:"pointer"
       }}></img>
     </div>

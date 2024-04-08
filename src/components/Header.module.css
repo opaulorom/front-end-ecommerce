@@ -27,6 +27,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
+  margin-left: 5rem;
 }
 
 @media (max-width: 600px) {
@@ -76,6 +77,9 @@ body {
   border-radius: 8px;
 }
 
+
+
+
 .HeaderModalContent {
   position: absolute;
   right: 11.5rem;
@@ -88,6 +92,20 @@ body {
   border: 1px solid rgb(206, 212, 218);
   border-radius: 4px;
 }
+
+.BellModalContent{
+  position: absolute;
+  right: 15rem;
+  margin-top: 1.5rem;
+  color: black;
+  background-color: white;
+  width: 20vw;
+  height: 40vh;
+  z-index: 7;
+  border: 1px solid rgb(206, 212, 218);
+  border-radius: 4px;
+}
+
 
 .FirstContainer {
   border-bottom: 1px solid rgb(206, 212, 218);
@@ -121,4 +139,10 @@ body {
 .li:hover{
     background-color: #E9ECEF;
 
+}
+
+
+
+.scroll{
+  
 }

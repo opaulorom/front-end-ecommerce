@@ -24,6 +24,7 @@ const Header = () => {
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const modalRef = useRef(null);
   const [openCartModal, setOpenCartModal] = useState(false);
+  const [openBellModal, setOpenBellModal] = useState(false);
 
   useEffect(() => {
     const storedCartItemCount = localStorage.getItem("cartItemCount");
@@ -60,24 +61,24 @@ const Header = () => {
   useEffect(() => {
     localStorage.setItem("cartItemCount", localCartItemCount);
   }, [localCartItemCount]);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target) &&
-        openCartModal
+        (modalRef.current && !modalRef.current.contains(event.target)) &&
+        (openCartModal || openBellModal) // Só fecha se um dos modais estiver aberto
       ) {
         setOpenCartModal(false);
+        setOpenBellModal(false);
       }
     };
-
+  
     document.addEventListener("mousedown", handleClickOutside);
-
+  
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [openCartModal]);
+  }, [openCartModal, openBellModal]); // Adicionei openCartModal e openBellModal como dependências
+  
 
   const handleClickOpenModal = () => {
     setOpenCartModal(true);
@@ -93,6 +94,22 @@ const Header = () => {
     handleClickOpenModal();
   };
 
+  // modal do sino
+
+  const handleClickOpenBellModal = () => {
+    setOpenBellModal(true);
+  };
+
+  const handleClickCloseBellModal = () => {
+    setOpenBellModal(false);
+  };
+
+  const handleOpenBellModal = () => {
+    // Verifica se o tamanho e a cor estão selecionados
+
+    handleClickOpenBellModal();
+  };
+
   useEffect(() => {
     if (loggedIn) {
       setShowButton(true);
@@ -100,6 +117,7 @@ const Header = () => {
       setShowButton(false);
     }
   });
+
   return (
     <>
       <div className={styles.ContainerHeader}>
@@ -131,15 +149,80 @@ const Header = () => {
           <div
             style={{
               marginRight: "1.5rem",
-              marginLeft: "35rem",
+              marginLeft: "30rem",
               zIndex: "9999",
             }}
             className={styles.SearchBar}
           >
-            {" "}
-            {/* Margem esquerda automática para empurrar para a direita */}
             <SearchBar />
           </div>
+
+          {loggedIn === true && (
+            <div>
+              <div
+                style={{
+                  position: "absolute",
+                  width: "5rem",
+                  zIndex: "99999",
+                  top: "5px",
+                  right: "12.5rem",
+                }}
+              >
+                <img
+                  src="https://i.ibb.co/98L4Hny/bell-6.png"
+                  alt=""
+                  style={{ fontSize: "14rem", cursor: "pointer" }}
+                  onClick={handleOpenBellModal}
+                />
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "-10px",
+                    right: "40px",
+                    width: "20px",
+                    height: "20px",
+                    backgroundColor: " #2196f3",
+                    color: "white",
+                    borderRadius: "50%",
+                    fontSize: "13px",
+                    fontWeight: "bold",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {loggedIn ? localCartItemCount : 0}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {openBellModal && loggedIn === true && (
+            <div className={styles.HeaderModal}>
+              <div ref={modalRef} className={styles.BellModalContent}>
+                <div className={styles.FirstContainer}>
+                  <h4 className={styles.h4}>Alertas</h4>
+                </div>
+
+                {showButton && (
+                  <>
+                    <div className={styles.scroll}>
+                      <div>item 1</div>
+                      <div>item 1</div>
+                      <div>item 1</div>
+                      <div>item 1</div>
+                      <div>item 1</div>
+                      <div>item 1</div>
+                      <div>item 1</div>
+                      <div>item 1</div>
+                      <div>item 1</div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+
           {openCartModal && loggedIn === true && (
             <div className={styles.HeaderModal}>
               <div ref={modalRef} className={styles.HeaderModalContent}>
@@ -152,21 +235,35 @@ const Header = () => {
                     <nav className={styles.NavContainer}>
                       <ul style={{ listStyleType: "none" }}>
                         <li className={styles.li}>
-                          <Link to={"/perfil"} style={{textDecoration:"none"}}>
-                            <a style={{textDecoration:"none",color: "rgb(108, 117, 125)" }}>
+                          <Link
+                            to={"/perfil"}
+                            style={{ textDecoration: "none" }}
+                          >
+                            <a
+                              style={{
+                                textDecoration: "none",
+                                color: "rgb(108, 117, 125)",
+                              }}
+                            >
                               Minha Conta
                             </a>
                           </Link>
                         </li>
                         <li className={styles.li}>
-                          <Link to={"/orders"} style={{textDecoration:"none"}}>
+                          <Link
+                            to={"/orders"}
+                            style={{ textDecoration: "none" }}
+                          >
                             <a style={{ color: "rgb(108, 117, 125)" }}>
                               Compras
                             </a>
                           </Link>
                         </li>
                         <li className={styles.li}>
-                          <Link to={"/forgotPassword"} style={{textDecoration:"none"}}>
+                          <Link
+                            to={"/forgotPassword"}
+                            style={{ textDecoration: "none" }}
+                          >
                             <a style={{ color: "rgb(108, 117, 125)" }}>
                               Alterar senha
                             </a>
@@ -183,7 +280,7 @@ const Header = () => {
                         bottom: "10px",
                         left: "10px",
                         gap: ".2rem",
-                        cursor:"pointer"
+                        cursor: "pointer",
                       }}
                       onClick={logout}
                     >
@@ -268,17 +365,7 @@ const Header = () => {
           <Link to={"/perfil"}>
             <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem" }} />
           </Link>
-          {loggedIn === true && (
-            <div>
-              <div style={{ width: "5rem", zIndex: "99999" }}>
-                <img
-                  src="https://i.ibb.co/Qr5PHNT/bell-3.png"
-                  alt=""
-                  style={{ fontSize: "14rem" }}
-                />
-              </div>
-            </div>
-          )}
+
           <Link
             to={"/cart"}
             style={{ position: "relative", display: "inline-block" }}
