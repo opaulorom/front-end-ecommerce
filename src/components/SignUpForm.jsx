@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from "js-cookie";
 import Navbar from './Navbar';
+import Header from './Header';
 
 const SignUpForm = () => {
+  const token = Cookies.get('token'); // Obtenha o token do cookie
+
   const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
-  const token = Cookies.get('token'); // Obtenha o token do cookie
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
   const [formData, setFormData] = useState({
 
@@ -35,12 +37,9 @@ const SignUpForm = () => {
 
     try {
       const response = await axios.post('http://localhost:3001/api/signup', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Credentials: credentials,
-        },
+      
       }, formData);
-      console.log(response.data);
+   
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
       console.error('Erro ao enviar informações do usuário:', error);
@@ -55,10 +54,7 @@ const SignUpForm = () => {
     if (newCep.length === 8) {
       try {
         const response = await axios.get(`https://viacep.com.br/ws/${newCep}/json/`,  {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Credentials: credentials,
-          },
+      
         });
         const data = response.data;
 
@@ -78,9 +74,11 @@ const SignUpForm = () => {
   };
 
   return (
-    <>    <Navbar/>
+    <>
+    <Header/>    
+    <Navbar/>
     
-    <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column"}}>
+    <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column", marginTop:"15rem"}}>
       <label>
         nome completo:
         <input type="text" name="name" onChange={handleChange} value={formData.name} />

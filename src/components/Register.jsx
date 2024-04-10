@@ -34,7 +34,7 @@ function RegisterUser() {
     
     <Header/>
       <Navbar/>
-    <div>
+    <div style={{marginTop:"15rem"}}>
       
       <h2>Register User</h2>
       {message && <p>{message}</p>}
