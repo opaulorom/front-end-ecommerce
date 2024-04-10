@@ -5,9 +5,7 @@ import Navbar from './Navbar';
 import Header from './Header';
 
 const SignUpForm = () => {
-  const token = Cookies.get('token'); // Obtenha o token do cookie
 
-  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
   const [formData, setFormData] = useState({
@@ -34,18 +32,17 @@ const SignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const response = await axios.post('http://localhost:3001/api/signup', {
-      
-      }, formData);
-   
+      const response = await axios.post('http://localhost:3001/api/signup', formData);
+      console.log('Dados enviados com sucesso:', response.data);
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
       console.error('Erro ao enviar informações do usuário:', error);
       // Trate erros aqui, como exibir uma mensagem para o usuário
     }
   };
+  
 
   const handleCepChange = async (event) => {
     const newCep = event.target.value;
