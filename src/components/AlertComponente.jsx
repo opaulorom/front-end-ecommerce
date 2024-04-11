@@ -28,7 +28,7 @@ const AlertComponente = () => {
       {orders &&
         orders.map((order, index) => (
           <div key={index} className={styles.ordersContent}>
-      <p>
+            <p>
               {order.payment.billingType && ""}
               {order.payment.billingType === "CREDIT_CARD"
                 ? "Cartão de Crédito"
@@ -52,18 +52,16 @@ const AlertComponente = () => {
               <span style={{ color: "black" }}> status: </span>
               {(() => {
                 switch (order.payment.status) {
-                    case "RECEIVED":
-                        return "pago";
-                 
+                  case "RECEIVED":
+                    return "pago";
                   case "PENDING":
                     return "Pendente";
-                
                   case "CONFIRMED":
                     return "Cobrança confirmada";
-                case "OVERDUE":
+                  case "OVERDUE":
                     return "Cobrança vencida";
                   default:
-                    return ;
+                    return;
                 }
               })()}
             </p>
