@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
+import AlertComponente from "./AlertComponente";
 const Header = () => {
   const { cartItemCount, addToCart, removeFromCart } = useCart();
   const [localCartItemCount, setLocalCartItemCount] = useState(0);
@@ -191,7 +192,7 @@ const Header = () => {
                     alignItems: "center",
                   }}
                 >
-                  {loggedIn ? localCartItemCount : 0}
+                  {loggedIn ? 0 : 0}
                 </span>
               </div>
             </div>
@@ -207,15 +208,7 @@ const Header = () => {
                 {showButton && (
                   <>
                     <div className={styles.scroll}>
-                      <div>item 1</div>
-                      <div>item 1</div>
-                      <div>item 1</div>
-                      <div>item 1</div>
-                      <div>item 1</div>
-                      <div>item 1</div>
-                      <div>item 1</div>
-                      <div>item 1</div>
-                      <div>item 1</div>
+                    <AlertComponente/>
                     </div>
                   </>
                 )}
@@ -226,12 +219,14 @@ const Header = () => {
           {openCartModal && loggedIn === true && (
             <div className={styles.HeaderModal}>
               <div ref={modalRef} className={styles.HeaderModalContent}>
-                <div className={styles.FirstContainer}>
-                  <h4 className={styles.h4}>Configurações</h4>
-                </div>
+               
 
                 {showButton && (
+
                   <>
+                    <div className={styles.FirstContainer}>
+                  <h4 className={styles.h4}>Configurações</h4>
+                </div>
                     <nav className={styles.NavContainer}>
                       <ul style={{ listStyleType: "none" }}>
                         <li className={styles.li}>

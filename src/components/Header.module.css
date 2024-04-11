@@ -104,11 +104,15 @@ body {
   z-index: 7;
   border: 1px solid rgb(206, 212, 218);
   border-radius: 4px;
+  color: white;
+  overflow: auto;
+  border: 1px solid #ccc;
 }
 
 
 .FirstContainer {
   border-bottom: 1px solid rgb(206, 212, 218);
+
   height: 5vh;
 }
 .h4 {
@@ -144,11 +148,5 @@ body {
 
 
 .scroll{
-  background: #4CAF50;
-  color: white;
-  padding: 15px;
-  width: 50%;
-  height: 100px;
-  overflow: scroll;
-  border: 1px solid #ccc;
+  color: #05070a;
 }
