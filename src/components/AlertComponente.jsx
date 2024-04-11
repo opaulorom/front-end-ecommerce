@@ -28,10 +28,11 @@ const AlertComponente = () => {
       {orders &&
         orders.map((order, index) => (
           <div key={index} className={styles.ordersContent}>
-            <h2>Detalhes do Pedido {index + 1}</h2>
-            <p>
-              {order.payment.billingType && "tipo do pagamento:"}
-              {order.payment.billingType && order.payment.billingType}
+      <p>
+              {order.payment.billingType && ""}
+              {order.payment.billingType === "CREDIT_CARD"
+                ? "Cartão de Crédito"
+                : order.payment.billingType}
             </p>
             <p>
               {order.payment.value && "valor: R$"}{" "}
@@ -48,8 +49,7 @@ const AlertComponente = () => {
                 styles[order.payment.status.toLowerCase()]
               }`}
             >
-                <span style={{color:"black"}}>              status:{" "}
-</span>
+              <span style={{ color: "black" }}> status: </span>
               {(() => {
                 switch (order.payment.status) {
                   case "OVERDUE":
@@ -61,7 +61,7 @@ const AlertComponente = () => {
                   case "CONFIRMED":
                     return "Cobrança confirmada";
                   default:
-                    return "Status Desconhecido";
+                    return ;
                 }
               })()}
             </p>
