@@ -172,7 +172,12 @@ const Cart = () => {
         {
           // Remova as linhas de cabeçalho daqui
         },
-       
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Remova 'Credentials: credentials'
+          },
+        }
       );
       setSelectedFreteIndex(index);
       localStorage.setItem("selectedFreteIndex", index);
@@ -224,16 +229,22 @@ const Cart = () => {
     try {
 
       // Faz a solicitação POST para obter os dados do frete com o novo CEP
-      await axios.post(`http://localhost:3001/api/frete/${userId}`, {
+      await axios.post(`http://localhost:3001/api/frete/${userId}`,  { cep }, {
         headers: {
           Authorization: `Bearer ${token}`,
           Credentials: credentials,
         },
-      }, { cep }
+      }
      );
 
       // Atualiza o estado do frete com os dados do frete da requisição GET
-      const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);
+      const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Credentials: credentials,
+        },
+      });
       console.log('log', userId)
       setFrete(responseGet.data);
       await axios.get(`http://localhost:3001/api/cart/${userId}/total-price`);

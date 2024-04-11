@@ -52,7 +52,12 @@ const FreteComponent = () => {
      );
 
       // Atualiza o estado do frete com os dados do frete da requisição GET
-      const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);
+      const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Credentials: credentials,
+      },
+    });
       console.log('log', userId)
       setFrete(responseGet.data);
       await axios.get(`http://localhost:3001/api/cart/${userId}/total-price`);
