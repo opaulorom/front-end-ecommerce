@@ -52,14 +52,16 @@ const AlertComponente = () => {
               <span style={{ color: "black" }}> status: </span>
               {(() => {
                 switch (order.payment.status) {
-                  case "OVERDUE":
-                    return "Cobrança vencida";
+                    case "RECEIVED":
+                        return "pago";
+                 
                   case "PENDING":
                     return "Pendente";
-                  case "RECEIVED":
-                    return "pago";
+                
                   case "CONFIRMED":
                     return "Cobrança confirmada";
+                case "OVERDUE":
+                    return "Cobrança vencida";
                   default:
                     return ;
                 }
