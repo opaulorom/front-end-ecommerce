@@ -30,29 +30,38 @@ const AlertComponente = () => {
           <div key={index} className={styles.ordersContent}>
             <h2>Detalhes do Pedido {index + 1}</h2>
             <p>
-              {order.payment.billingType && "tipo do pagamento:"} 
+              {order.payment.billingType && "tipo do pagamento:"}
               {order.payment.billingType && order.payment.billingType}
             </p>
-            <p>{order.payment.value && "valor: R$"} {order.payment.value && order.payment.value}</p>
+            <p>
+              {order.payment.value && "valor: R$"}{" "}
+              {order.payment.value && order.payment.value}
+            </p>
             <p>
               {order.payment.installmentNumber && "parcela: "}{" "}
               {order.payment.installmentNumber &&
                 order.payment.installmentNumber}
             </p>
 
-            <p>
-              status:{" "}
+            <p
+              className={`${styles.status} ${
+                styles[order.payment.status.toLowerCase()]
+              }`}
+            >
+                <span style={{color:"black"}}>              status:{" "}
+</span>
               {(() => {
-                if (order.payment.status === "OVERDUE") {
-                  return "Cobrança vencida";
-                } else if (order.payment.status === "PENDING") {
-                  return "Pendente";
-                } else if (order.payment.status === "RECEIVED") {
-                  return "Pago";
-                } else if (order.payment.status === "CONFIRMED") {
-                  return "Cobrança confirmada";
-                } else {
-                  return "Status Desconhecido";
+                switch (order.payment.status) {
+                  case "OVERDUE":
+                    return "Cobrança vencida";
+                  case "PENDING":
+                    return "Pendente";
+                  case "RECEIVED":
+                    return "pago";
+                  case "CONFIRMED":
+                    return "Cobrança confirmada";
+                  default:
+                    return "Status Desconhecido";
                 }
               })()}
             </p>
