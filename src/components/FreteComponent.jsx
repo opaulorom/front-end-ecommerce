@@ -7,7 +7,9 @@ const FreteComponent = () => {
   const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
+  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
+  const token = Cookies.get('token'); // Obtenha o token do cookie
   useEffect(() => {
     localStorage.setItem('cep', cep);
   }, [cep]);
@@ -18,7 +20,14 @@ const FreteComponent = () => {
      
 
         // Faz a solicitação GET para obter os dados atualizados do frete
-        const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);
+        const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
+          },
+        }
+      );
         setFrete(responseGet.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -34,7 +43,13 @@ const FreteComponent = () => {
     try {
 
       // Faz a solicitação POST para obter os dados do frete com o novo CEP
-      await axios.post(`http://localhost:3001/api/frete/${userId}`, { cep });
+      await axios.post(`http://localhost:3001/api/frete/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Credentials: credentials,
+        },
+      }, { cep }
+     );
 
       // Atualiza o estado do frete com os dados do frete da requisição GET
       const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);

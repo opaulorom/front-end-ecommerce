@@ -172,16 +172,10 @@ const Cart = () => {
         {
           // Remova as linhas de cabeçalho daqui
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            // Remova 'Credentials: credentials'
-          },
-        }
+       
       );
       setSelectedFreteIndex(index);
       localStorage.setItem("selectedFreteIndex", index);
-
       const response = await axios.get(
         `http://localhost:3001/api/cart/${userId}/total-price`,
         {
@@ -208,6 +202,7 @@ const Cart = () => {
       });
 
       setShippingFee(res.data.cart.shippingFee);
+     
     } catch (error) {
       console.error("Error updating shipping fee:", error);
     }
@@ -222,6 +217,34 @@ const Cart = () => {
     }
   };
 
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+
+      // Faz a solicitação POST para obter os dados do frete com o novo CEP
+      await axios.post(`http://localhost:3001/api/frete/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Credentials: credentials,
+        },
+      }, { cep }
+     );
+
+      // Atualiza o estado do frete com os dados do frete da requisição GET
+      const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`);
+      console.log('log', userId)
+      setFrete(responseGet.data);
+      await axios.get(`http://localhost:3001/api/cart/${userId}/total-price`);
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+
+  
   return (
     <div style={{ position: "relative" }}>
       <Header />
@@ -599,6 +622,7 @@ const Cart = () => {
                 width: "8vw",
                 justifyContent: "center",
               }}
+              onClick={handleSubmit}
             >
               {" "}
               <SearchIcon /> Buscar{" "}
