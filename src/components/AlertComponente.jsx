@@ -3,10 +3,12 @@ import Cookies from "js-cookie";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios"; // Corrigindo a importação do Axios
 import styles from "./AlertComponente.module.css";
+import { useUnreadCount } from "../context/UnreadContext";
 const AlertComponente = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
   const [orders, setOrders] = useState([]);
+  const { updateUnreadCount } = useUnreadCount(); // Obter função para atualizar o estado do contexto
 
   useEffect(() => {
     if (loggedIn) {
@@ -15,7 +17,10 @@ const AlertComponente = () => {
         .then((response) => {
           setOrders(response.data);
           console.log(response.data);
+          const newOrders = response.data.filter(order => order.payment.status !== "RECEIVED");
+          updateUnreadCount(newOrders.length); // Atualizar o estado do contexto
         })
+        
         .catch((error) => {
           console.error("Erro ao obter os pedidos:", error);
         });

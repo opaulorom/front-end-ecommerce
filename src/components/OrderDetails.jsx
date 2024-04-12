@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Importe o Link do React Router
 import Header from "./Header";
 import Navbar from "./Navbar";
 import { useAuth } from "../context/AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
-
-const MyOrders = () => {
+const OrderDetails = () => {
+  const { orderID } = useParams();
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
   const [boletos, setBoletos] = useState([]);
@@ -26,11 +28,8 @@ const MyOrders = () => {
         });
     }
   }, [loggedIn, userId]);
-
   return (
-    <>
-      <Header></Header>
-      <Navbar></Navbar>
+    <div>
       {boletos.map((order, index) => (
         <div key={index} style={{ marginTop: "15rem" }}>
           <span>{order.billingType}</span>
@@ -39,9 +38,7 @@ const MyOrders = () => {
           <div>
             {order.products.map((product, prodIndex) => (
               <div key={prodIndex}>
-                <Link to={`/order/${product.productId}`}> {/* Use o Link aqui */}
-                  <img src={product.image} alt={`Produto ${product.productId}`} style={{width:"10vw"}}/>
-                </Link>
+               
               </div>
             ))}
           </div>
@@ -53,16 +50,14 @@ const MyOrders = () => {
           <div>
             {order.products.map((product, prodIndex) => (
               <div key={prodIndex}>
-                <Link to={`/order/${product.productId}`}> {/* Use o Link aqui */}
-                  <img src={product.image} alt={`Produto ${product.productId}`} style={{width:"10vw"}}/>
-                </Link>
+                
               </div>
             ))}
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 
-export default MyOrders;
+export default OrderDetails;

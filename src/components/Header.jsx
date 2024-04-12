@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import AlertComponente from "./AlertComponente";
+import { useUnreadCount } from "../context/UnreadContext";
 const Header = () => {
   const { cartItemCount, addToCart, removeFromCart } = useCart();
   const [localCartItemCount, setLocalCartItemCount] = useState(0);
@@ -25,6 +26,7 @@ const Header = () => {
   const modalRef = useRef(null);
   const [openCartModal, setOpenCartModal] = useState(false);
   const [openBellModal, setOpenBellModal] = useState(false);
+  const { unreadCount } = useUnreadCount(); // Obter o estado do contexto
 
   useEffect(() => {
     const storedCartItemCount = localStorage.getItem("cartItemCount");
@@ -175,24 +177,24 @@ const Header = () => {
                   onClick={handleOpenBellModal}
                 />
                 <span
-                  style={{
-                    position: "absolute",
-                    top: "-10px",
-                    right: "40px",
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: " #2196f3",
-                    color: "white",
-                    borderRadius: "50%",
-                    fontSize: "13px",
-                    fontWeight: "bold",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {loggedIn ? 0 : 0}
-                </span>
+        style={{
+          position: "absolute",
+          top: "-10px",
+          right: "40px",
+          width: "20px",
+          height: "20px",
+          backgroundColor: "#2196f3",
+          color: "white",
+          borderRadius: "50%",
+          fontSize: "13px",
+          fontWeight: "bold",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {unreadCount} {/* Substituir 0 pelo valor do estado do contexto */}
+      </span>
               </div>
             </div>
           )}
@@ -243,16 +245,16 @@ const Header = () => {
                             </a>
                           </Link>
                         </li>
-                        <li className={styles.li}>
+                        {/* <li className={styles.li}>
                           <Link
                             to={"/orders"}
                             style={{ textDecoration: "none" }}
                           >
                             <a style={{ color: "rgb(108, 117, 125)" }}>
-                              Pedidos
+                              Historico de Compras
                             </a>
                           </Link>
-                        </li>
+                        </li> */}
                         <li className={styles.li}>
                           <Link
                             to={"/forgotPassword"}

@@ -40,6 +40,8 @@ import NewArrivals from "./components/NewArrivals";
 import WhatsNew from "./components/WhatsNew";
 import SignUpForm from "./components/SignUpForm";
 import MyOrders from "./components/MyOrders";
+import OrderDetails from "./components/OrderDetails";
+import { UnreadProvider } from "./context/UnreadContext";
 
 const Root = () => (
   <Routes>
@@ -97,6 +99,7 @@ const Root = () => (
     <Route path="/signUp" element={<SignUpForm/>} />
 
     <Route path="/orders" element={<MyOrders/>} />
+    <Route path="/order/:orderID" element={<OrderDetails  />} />{" "}
 
 
   </Routes>
@@ -104,6 +107,7 @@ const Root = () => (
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
+    <UnreadProvider>
 
     <CartProvider>
       {" "}
@@ -120,5 +124,7 @@ createRoot(document.getElementById("root")).render(
         </React.StrictMode>
       </FavoritesProvider>
     </CartProvider>
+    </UnreadProvider>
+
   </AuthProvider>
 );
