@@ -67,6 +67,9 @@ const ProductDetails = () => {
           .split(",")
           .map((size) => size.trim());
         setSizesFromDatabase(sizesArray);
+        if (response.data.product.variations.length > 0) {
+          setSelectedColorImage(response.data.product.variations[0].urls[0]);
+        }
       } catch (error) {
         console.error("Erro ao obter detalhes do produto:", error);
       }
