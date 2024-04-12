@@ -17,10 +17,12 @@ const AlertComponente = () => {
         .then((response) => {
           setOrders(response.data);
           console.log(response.data);
-          const newOrders = response.data.filter(order => order.payment.status !== "RECEIVED");
+          const newOrders = response.data.filter(
+            (order) => order.payment.status !== "RECEIVED"
+          );
           updateUnreadCount(newOrders.length); // Atualizar o estado do contexto
         })
-        
+
         .catch((error) => {
           console.error("Erro ao obter os pedidos:", error);
         });
@@ -33,7 +35,30 @@ const AlertComponente = () => {
       {orders &&
         orders.map((order, index) => (
           <div key={index} className={styles.ordersContent}>
-            <p>
+            <p style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
+              {order.payment.billingType === "PIX" && (
+                <img
+                  src="https://i.ibb.co/dfvK4s0/icons8-foto-48.png"
+                  alt=""
+                  style={{
+                    maxWidth: "14vw",
+                  }}
+                />
+              )}
+              {order.payment.billingType === "BOLETO" && (
+                <img
+                  src="https://i.ibb.co/LNrSsZt/icons8-boleto-bankario-48.png"
+                  alt=""
+                  style={{ maxWidth: "14vw" }}
+                />
+              )}
+
+              {order.payment.billingType === "CREDIT_CARD" && (
+                <img
+                  src="https://i.ibb.co/HtWhHR0/icons8-emoji-de-cart-o-de-cr-dito-48.png"
+                  alt=""
+                />
+              )}
               {order.payment.billingType && ""}
               {order.payment.billingType === "CREDIT_CARD"
                 ? "Cartão de Crédito"
