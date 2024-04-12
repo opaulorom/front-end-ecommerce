@@ -27,6 +27,7 @@ const ProductDetails = () => {
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
   const [openSecondCartModal, setOpenSecondCartModal] = useState(false);
   const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
+  const [selectedColorImage, setSelectedColorImage] = useState("");
 
   const token = Cookies.get('token'); // Obtenha o token do cookie
   
@@ -100,13 +101,21 @@ const ProductDetails = () => {
     const colorVariations = product.variations.filter(
       (variation) => variation.color === color
     );
-
+  
     const firstIndexInColor = product.variations.findIndex(
       (variation) => variation.color === colorVariations[0].color
     );
 
     setCurrentImageIndex(firstIndexInColor);
+  
+    // Log das URLs de imagem para a cor selecionada
+  
+    // Atualize o estado com a URL da imagem correspondente à cor selecionada
+    setSelectedColorImage(product.variations[firstIndexInColor].urls[0]);
   };
+  
+  
+  
 
   const handleDotClick = (index) => {
     setCurrentImageIndex(index);
@@ -123,8 +132,11 @@ const ProductDetails = () => {
       );
     }
   };
+
+
   const handleAddToCart = async () => {
     try {
+     
       const response = await axios.post(
         `http://localhost:3001/api/add-to-cart/${userId}`,
       
@@ -133,6 +145,8 @@ const ProductDetails = () => {
           size: selectedSize, // Aqui está sendo enviado o tamanho selecionado
           color: product.variations[currentImageIndex].color,
           quantity: 1,
+          image: selectedColorImage, // Envie a URL da imagem selecionada
+       
         },
         {
           headers: {

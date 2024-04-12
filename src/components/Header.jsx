@@ -11,8 +11,7 @@ import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import Cookies from "js-cookie";
 import LogoutIcon from "@mui/icons-material/Logout";
-import SettingsIcon from "@mui/icons-material/Settings";
-import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
+
 import AlertComponente from "./AlertComponente";
 const Header = () => {
   const { cartItemCount, addToCart, removeFromCart } = useCart();
@@ -250,7 +249,7 @@ const Header = () => {
                             style={{ textDecoration: "none" }}
                           >
                             <a style={{ color: "rgb(108, 117, 125)" }}>
-                              Compras
+                              Pedidos
                             </a>
                           </Link>
                         </li>

@@ -54,10 +54,10 @@ const AlertComponente = () => {
                 switch (order.payment.status) {
                   case "RECEIVED":
                     return "pago";
-                  case "PENDING":
-                    return "Pendente";
                   case "CONFIRMED":
                     return "Cobrança confirmada";
+                  case "PENDING":
+                    return "Pendente";
                   case "OVERDUE":
                     return "Cobrança vencida";
                   default:
