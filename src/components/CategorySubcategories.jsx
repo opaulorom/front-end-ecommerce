@@ -204,34 +204,38 @@ const CategorySubcategories = () => {
           marginTop: "-2rem",
         }}
       >
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            marginBottom: "2rem",
-            fontFamily: "Montserrat, arial, sans-serif",
-            fontWeight: "400",
-            fontSize: "1.3rem",
-            color: "rgb(52, 52, 54)",
-          }}
-        >
-          Filtros
+        <div className={styles.DesktopFilter}>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              marginBottom: "2rem",
+              fontFamily: "Montserrat, arial, sans-serif",
+              fontWeight: "400",
+              fontSize: "1.3rem",
+              color: "rgb(52, 52, 54)",
+            }}
+          >
+            Filtros
+          </div>
         </div>
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            marginBottom: "2rem",
-            fontFamily: "Montserrat, arial, sans-serif",
-            fontWeight: "400",
-            fontSize: "1.3rem",
-            color: "rgb(52, 52, 54)",
-            cursor: "pointer",
-          }}
-          onClick={handleOpenModal}
-        >
-          <TuneIcon />
-          Filtros
+        <div className={styles.MobileFilter}>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              marginBottom: "2rem",
+              fontFamily: "Montserrat, arial, sans-serif",
+              fontWeight: "400",
+              fontSize: "1.3rem",
+              color: "rgb(52, 52, 54)",
+              cursor: "pointer",
+            }}
+            onClick={handleOpenModal}
+          >
+            <TuneIcon />
+            Filtros
+          </div>
         </div>
         {openFilterModal && (
           <div className={styles.FilterModal}>
@@ -252,26 +256,22 @@ const CategorySubcategories = () => {
               >
                 Categorias
               </p>
-              <div                 onClick={handleClickCloseModal}
->
-<ul style={{ listStyle: "none", marginBottom: "3rem" }}>
-                {subcategories.map((subcategory, index) => (
-                  <li
-                    key={index}
-                    style={{ marginLeft: "-2.5rem" }}
-                    className={styles.myLinks}
-                  >
-                    <Link to={`/categories/${category}/${subcategory}`}>
-                      {subcategory}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-
+              <div onClick={handleClickCloseModal}>
+                <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
+                  {subcategories.map((subcategory, index) => (
+                    <li
+                      key={index}
+                      style={{ marginLeft: "-2.5rem" }}
+                      className={styles.myLinks}
+                    >
+                      <Link to={`/categories/${category}/${subcategory}`}>
+                        {subcategory}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-          
 
-            
               <div style={{ marginBottom: "3rem" }}>
                 <h3
                   style={{
@@ -283,19 +283,18 @@ const CategorySubcategories = () => {
                 >
                   Cores
                 </h3>
-                <div  onClick={handleClickCloseModal}>
-                {colors.map((color, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleFilterClick("color", color)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {color}
-                  </div>
-                ))}
-              </div>
-
+                <div onClick={handleClickCloseModal}>
+                  {colors.map((color, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleFilterClick("color", color)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {color}
+                    </div>
+                  ))}
                 </div>
+              </div>
               <h3
                 style={{
                   fontFamily: "Montserrat, arial, sans-serif",
@@ -306,37 +305,36 @@ const CategorySubcategories = () => {
               >
                 Tamanhos
               </h3>
-              <div  onClick={handleClickCloseModal}>
-                
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(4, 1fr)",
-                }}
-              >
-                {Array.from(uniqueSizes).map((size, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleFilterClick("size", size)}
-                  >
-                    <button
-                      style={{
-                        borderRadius: "20px",
-                        width: "40px",
-                        height: "40px",
-                        border: "1px solid rgb(114, 114, 114)",
-                        backgroundColor: "rgb(255, 255, 255)",
-                        marginLeft: "8px",
-                        marginTop: "8px",
-                        cursor: "pointer",
-                      }}
+              <div onClick={handleClickCloseModal}>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(4, 1fr)",
+                  }}
+                >
+                  {Array.from(uniqueSizes).map((size, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleFilterClick("size", size)}
                     >
-                      {" "}
-                      {size}
-                    </button>
-                  </div>
-                ))}
-              </div>
+                      <button
+                        style={{
+                          borderRadius: "20px",
+                          width: "40px",
+                          height: "40px",
+                          border: "1px solid rgb(114, 114, 114)",
+                          backgroundColor: "rgb(255, 255, 255)",
+                          marginLeft: "8px",
+                          marginTop: "8px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {" "}
+                        {size}
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div style={{ marginTop: "3rem" }}>
@@ -350,55 +348,30 @@ const CategorySubcategories = () => {
                 >
                   Faixas de Preços
                 </h3>
-                <div  onClick={handleClickCloseModal}>
-
-                {priceRanges.map((range, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleFilterClick("priceRange", range)}
-                    style={{
-                      cursor: "pointer",
-                      fontFamily: "Montserrat, arial, sans-serif",
-                      fontWeight: "400",
-                      fontSize: "1rem",
-                      color: "rgb(52, 52, 54)",
-                    }}
-                  >
-                    {range}
-                  </div>
-                ))}
+                <div onClick={handleClickCloseModal}>
+                  {priceRanges.map((range, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleFilterClick("priceRange", range)}
+                      style={{
+                        cursor: "pointer",
+                        fontFamily: "Montserrat, arial, sans-serif",
+                        fontWeight: "400",
+                        fontSize: "1rem",
+                        color: "rgb(52, 52, 54)",
+                      }}
+                    >
+                      {range}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         )}
-        <p
-          style={{
-            fontFamily: "Montserrat, arial, sans-serif",
-            fontWeight: "600",
-            fontSize: "1.2rem",
-            color: "rgb(52, 52, 54)",
-          }}
-        >
-          Categorias
-        </p>
 
-        <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
-          {subcategories.map((subcategory, index) => (
-            <li
-              key={index}
-              style={{ marginLeft: "-2.5rem" }}
-              className={styles.myLinks}
-            >
-              <Link to={`/categories/${category}/${subcategory}`}>
-                {subcategory}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <div style={{ marginBottom: "3rem" }}>
-          <h3
+        <div className={styles.DesktopFilter}>
+          <p
             style={{
               fontFamily: "Montserrat, arial, sans-serif",
               fontWeight: "600",
@@ -406,80 +379,128 @@ const CategorySubcategories = () => {
               color: "rgb(52, 52, 54)",
             }}
           >
-            Cores
-          </h3>
-          {colors.map((color, index) => (
-            <div
-              key={index}
-              onClick={() => handleFilterClick("color", color)}
-              style={{ cursor: "pointer" }}
-            >
-              {color}
-            </div>
-          ))}
-        </div>
-        <h3
-          style={{
-            fontFamily: "Montserrat, arial, sans-serif",
-            fontWeight: "600",
-            fontSize: "1.2rem",
-            color: "rgb(52, 52, 54)",
-          }}
-        >
-          Tamanhos
-        </h3>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
-          {Array.from(uniqueSizes).map((size, index) => (
-            <div key={index} onClick={() => handleFilterClick("size", size)}>
-              <button
-                style={{
-                  borderRadius: "20px",
-                  width: "40px",
-                  height: "40px",
-                  border: "1px solid rgb(114, 114, 114)",
-                  backgroundColor: "rgb(255, 255, 255)",
-                  marginLeft: "8px",
-                  marginTop: "8px",
-                  cursor: "pointer",
-                }}
+            Categorias
+          </p>
+
+          <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
+            {subcategories.map((subcategory, index) => (
+              <li
+                key={index}
+                style={{ marginLeft: "-2.5rem" }}
+                className={styles.myLinks}
               >
-                {" "}
-                {size}
-              </button>
-            </div>
-          ))}
-        </div>
+                <Link to={`/categories/${category}/${subcategory}`}>
+                  {subcategory}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-        <div style={{ marginTop: "3rem" }}>
-          <h3
-            style={{
-              fontFamily: "Montserrat, arial, sans-serif",
-              fontWeight: "600",
-              fontSize: "1.2rem",
-              color: "rgb(52, 52, 54)",
-            }}
-          >
-            Faixas de Preços
-          </h3>
-          {priceRanges.map((range, index) => (
-            <div
-              key={index}
-              onClick={() => handleFilterClick("priceRange", range)}
+          <div style={{ marginBottom: "3rem" }}>
+            <h3
               style={{
-                cursor: "pointer",
                 fontFamily: "Montserrat, arial, sans-serif",
-                fontWeight: "400",
-                fontSize: "1rem",
+                fontWeight: "600",
+                fontSize: "1.2rem",
                 color: "rgb(52, 52, 54)",
               }}
             >
-              {range}
-            </div>
-          ))}
+              Cores
+            </h3>
+            {colors.map((color, index) => (
+              <div
+                key={index}
+                onClick={() => handleFilterClick("color", color)}
+                style={{ cursor: "pointer" }}
+              >
+                {color}
+              </div>
+            ))}
+          </div>
+          <h3
+            style={{
+              fontFamily: "Montserrat, arial, sans-serif",
+              fontWeight: "600",
+              fontSize: "1.2rem",
+              color: "rgb(52, 52, 54)",
+            }}
+          >
+            Tamanhos
+          </h3>
+          <div
+            style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}
+          >
+            {Array.from(uniqueSizes).map((size, index) => (
+              <div key={index} onClick={() => handleFilterClick("size", size)}>
+                <button
+                  style={{
+                    borderRadius: "20px",
+                    width: "40px",
+                    height: "40px",
+                    border: "1px solid rgb(114, 114, 114)",
+                    backgroundColor: "rgb(255, 255, 255)",
+                    marginLeft: "8px",
+                    marginTop: "8px",
+                    cursor: "pointer",
+                  }}
+                >
+                  {" "}
+                  {size}
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ marginTop: "3rem" }}>
+            <h3
+              style={{
+                fontFamily: "Montserrat, arial, sans-serif",
+                fontWeight: "600",
+                fontSize: "1.2rem",
+                color: "rgb(52, 52, 54)",
+              }}
+            >
+              Faixas de Preços
+            </h3>
+            {priceRanges.map((range, index) => (
+              <div
+                key={index}
+                onClick={() => handleFilterClick("priceRange", range)}
+                style={{
+                  cursor: "pointer",
+                  fontFamily: "Montserrat, arial, sans-serif",
+                  fontWeight: "400",
+                  fontSize: "1rem",
+                  color: "rgb(52, 52, 54)",
+                }}
+              >
+                {range}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       <div>
+        {mixedProducts.length === 0 && (
+          <div
+            style={{
+              position: "absolute",
+              display: "flex",
+              flexDirection: "column",
+              top: "15rem",
+              left: "35rem",
+            }}
+          >
+            <img
+              src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
+              alt=""
+            />
+            <span>
+              O Produto que Você Procura Não Está Disponível no momento.
+            </span>
+          </div>
+        )}
         <ul
           style={{
             listStyleType: "none",

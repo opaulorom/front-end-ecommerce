@@ -48,3 +48,16 @@
   }
 
 
+  @media (max-width: 600px) {
+    .DesktopFilter {
+      display: none;
+    }
+  }
+  @media (min-width: 700px) { 
+    .MobileFilter{
+        display: none;
+
+    }
+   }
+
+  
