@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import CustomPagination from "./CustomPagination";
 
 import Header from "./Header";
 import IconToggle from "./IconToggle";
 import styles from "./CategorySubcategories.module.css";
-
+import TuneIcon from "@mui/icons-material/Tune";
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -14,11 +14,12 @@ const CategorySubcategories = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [favorites, setFavorites] = useState({});
-
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [priceRanges, setPriceRanges] = useState([]);
   const [uniqueSizes, setUniqueSizes] = useState(new Set());
+  const [openFilterModal, setOpenFilterModal] = useState(false);
+  const modalRef = useRef(null);
 
   const fetchMixedProducts = async (page, filters) => {
     try {
@@ -156,6 +157,35 @@ const CategorySubcategories = () => {
     );
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target) &&
+        openFilterModal
+      ) {
+        setOpenFilterModal(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openFilterModal]);
+
+  const handleOpenModal = () => {
+    handleClickOpenModal();
+  };
+
+  const handleClickOpenModal = () => {
+    setOpenFilterModal(true);
+  };
+
+  const handleClickCloseModal = () => {
+    setOpenFilterModal(false);
+  };
   return (
     <div
       style={{
@@ -187,7 +217,161 @@ const CategorySubcategories = () => {
         >
           Filtros
         </div>
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            marginBottom: "2rem",
+            fontFamily: "Montserrat, arial, sans-serif",
+            fontWeight: "400",
+            fontSize: "1.3rem",
+            color: "rgb(52, 52, 54)",
+            cursor: "pointer",
+          }}
+          onClick={handleOpenModal}
+        >
+          <TuneIcon />
+          Filtros
+        </div>
+        {openFilterModal && (
+          <div className={styles.FilterModal}>
+            <div ref={modalRef} className={styles.FilterModalContent}>
+              <span
+                className={styles.FilterClose}
+                onClick={handleClickCloseModal}
+              >
+                &times;
+              </span>
+              <p
+                style={{
+                  fontFamily: "Montserrat, arial, sans-serif",
+                  fontWeight: "600",
+                  fontSize: "1.2rem",
+                  color: "rgb(52, 52, 54)",
+                }}
+              >
+                Categorias
+              </p>
+              <div                 onClick={handleClickCloseModal}
+>
+<ul style={{ listStyle: "none", marginBottom: "3rem" }}>
+                {subcategories.map((subcategory, index) => (
+                  <li
+                    key={index}
+                    style={{ marginLeft: "-2.5rem" }}
+                    className={styles.myLinks}
+                  >
+                    <Link to={`/categories/${category}/${subcategory}`}>
+                      {subcategory}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
 
+              </div>
+          
+
+            
+              <div style={{ marginBottom: "3rem" }}>
+                <h3
+                  style={{
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: "600",
+                    fontSize: "1.2rem",
+                    color: "rgb(52, 52, 54)",
+                  }}
+                >
+                  Cores
+                </h3>
+                <div  onClick={handleClickCloseModal}>
+                {colors.map((color, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleFilterClick("color", color)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {color}
+                  </div>
+                ))}
+              </div>
+
+                </div>
+              <h3
+                style={{
+                  fontFamily: "Montserrat, arial, sans-serif",
+                  fontWeight: "600",
+                  fontSize: "1.2rem",
+                  color: "rgb(52, 52, 54)",
+                }}
+              >
+                Tamanhos
+              </h3>
+              <div  onClick={handleClickCloseModal}>
+                
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(4, 1fr)",
+                }}
+              >
+                {Array.from(uniqueSizes).map((size, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleFilterClick("size", size)}
+                  >
+                    <button
+                      style={{
+                        borderRadius: "20px",
+                        width: "40px",
+                        height: "40px",
+                        border: "1px solid rgb(114, 114, 114)",
+                        backgroundColor: "rgb(255, 255, 255)",
+                        marginLeft: "8px",
+                        marginTop: "8px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {" "}
+                      {size}
+                    </button>
+                  </div>
+                ))}
+              </div>
+              </div>
+
+              <div style={{ marginTop: "3rem" }}>
+                <h3
+                  style={{
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: "600",
+                    fontSize: "1.2rem",
+                    color: "rgb(52, 52, 54)",
+                  }}
+                >
+                  Faixas de Preços
+                </h3>
+                <div  onClick={handleClickCloseModal}>
+
+                {priceRanges.map((range, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleFilterClick("priceRange", range)}
+                    style={{
+                      cursor: "pointer",
+                      fontFamily: "Montserrat, arial, sans-serif",
+                      fontWeight: "400",
+                      fontSize: "1rem",
+                      color: "rgb(52, 52, 54)",
+                    }}
+                  >
+                    {range}
+                  </div>
+                ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <p
           style={{
             fontFamily: "Montserrat, arial, sans-serif",
@@ -341,7 +525,7 @@ const CategorySubcategories = () => {
                         marginLeft: "1rem",
                       }}
                     >
-                       <span
+                      <span
                         style={{
                           fontSize: "1rem",
                           fontWeight: "700",
@@ -362,7 +546,6 @@ const CategorySubcategories = () => {
                       >
                         {product.name}
                       </span>
-                     
                     </div>
                   </Link>
                   <div
@@ -400,7 +583,6 @@ const CategorySubcategories = () => {
             currentPage={currentPage}
             onChangePage={handlePageChange}
           />
-         
         </div>
       </div>
     </div>
