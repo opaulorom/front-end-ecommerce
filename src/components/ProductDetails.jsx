@@ -183,23 +183,57 @@ const ProductDetails = () => {
   const handleClickCloseCartModal  = () => {
     setOpenSecondCartModal(false);
   };
-
-  const handleAddToCartAndOpenModal = () => {
+  const handleAddToCartAndOpenModal = async () => {
     if (selectedSize && product.variations[currentImageIndex].color) {
       // Verifica se o tamanho e a cor estão selecionados
-      handleAddToCart();
-
-      if (!customer || customer.length === 0) {
-        handleClickOpenModal();
+  
+      // Verifica se o número de itens no carrinho não excede três
+      if (cartItemCount < 3) {
+        handleAddToCart();
+  
+        if (!customer || customer.length === 0) {
+          handleClickOpenModal();
+        } else {
+          handleClickOpenCartModal();
+        }
+      } else if (cartItemCount >= 4) {
+        // Se o número de itens no carrinho for maior ou igual a 4, exiba uma mensagem
+        toast.error("Você já adicionou o máximo de produtos permitidos ao carrinho.");
       } else {
-        handleClickOpenCartModal();
+        // Se o número de itens exceder três, exiba um alerta
+        toast.error("Você só pode adicionar até três produtos por vez.");
+      }
+  
+      try {
+        const response = await axios.post(
+          `http://localhost:3001/api/add-to-cart/${userId}`,
+          {
+            productId: product._id,
+            size: selectedSize,
+            color: product.variations[currentImageIndex].color,
+            quantity: 1,
+            image: selectedColorImage,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Credentials: credentials,
+            },
+          },
+        );
+  
+        addToCart(); // Atualiza o contexto do carrinho para refletir a adição do novo item
+        toast.success("Produto adicionado ao carrinho!");
+      } catch (error) {
+        console.error("Erro ao adicionar produto ao carrinho:", error);
       }
     } else {
       // Se a cor ou o tamanho não foram selecionados, exiba um alerta
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
   };
-
+  
+  
   return (
     <>
       <div>

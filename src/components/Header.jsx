@@ -245,7 +245,7 @@ const Header = () => {
                             </a>
                           </Link>
                         </li>
-                        {/* <li className={styles.li}>
+                    <li className={styles.li}>
                           <Link
                             to={"/orders"}
                             style={{ textDecoration: "none" }}
@@ -254,7 +254,7 @@ const Header = () => {
                               Historico de Compras
                             </a>
                           </Link>
-                        </li> */}
+                        </li> 
                         <li className={styles.li}>
                           <Link
                             to={"/forgotPassword"}

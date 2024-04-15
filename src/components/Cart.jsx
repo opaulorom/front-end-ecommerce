@@ -135,6 +135,9 @@ const Cart = () => {
     localStorage.setItem("cep", cep);
   }, [cep]);
 
+
+  
+
   useEffect(() => {
     const fetchFrete = async () => {
       try {
@@ -604,10 +607,11 @@ const Cart = () => {
         >
           <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
           {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-            <div style={{ marginTop: "10rem" }}>
-              total que muda:{getTotal.totalAmount}
-            </div>
-          )}
+  <div style={{ marginTop: "10rem" }}>
+    total que muda: {getTotal.totalAmount}
+  </div>
+)}
+
           <form style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
             <input
               type="text"
