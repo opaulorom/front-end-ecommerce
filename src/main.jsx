@@ -99,7 +99,7 @@ const Root = () => (
     <Route path="/signUp" element={<SignUpForm/>} />
 
     <Route path="/orders" element={<MyOrders/>} />
-    <Route path="/order/:orderID" element={<OrderDetails  />} />{" "}
+    <Route path="/boleto/:id/:customerId" element={<OrderDetails  />} />{" "}
 
 
   </Routes>
