@@ -44,6 +44,9 @@ const ProductDetails = () => {
         setCustomer(response.data);
         console.log(response);
         // fazer algo com a resposta
+        if (!response.data || response.data.length === 0) {
+          setOpenCartModal(true); // Abre o modal se o cliente não estiver cadastrado
+        }
       })
       .catch((error) => {
         // lidar com erros
@@ -233,6 +236,10 @@ const ProductDetails = () => {
     }
   };
   
+
+
+
+
   
   return (
     <>
@@ -260,6 +267,8 @@ const ProductDetails = () => {
             marginTop: "10rem",
           }}
         >
+
+
           <div>
             <div key={currentImageIndex} className="image-container">
               {product.variations[currentImageIndex] && (
@@ -388,7 +397,7 @@ const ProductDetails = () => {
                 </div>
               </div>
             )}
-             {openSecondCartModal && (
+             {openSecondCartModal  && (
               <div className={styles.secondCartModal}>
                 <div ref={modalRef} className={styles.secondCartModalContent}>
                   <span

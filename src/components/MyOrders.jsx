@@ -87,6 +87,8 @@ const MyOrders = () => {
       <Navbar></Navbar>
       {boletos.map((order, index) => (
         <div key={index} style={{ marginTop: "15rem" }}>
+                <div key={index} style={{ marginTop: "15rem" }}>{index}</div>
+
           <span>{order.billingType}</span>
 
           <div>
@@ -113,6 +115,8 @@ const MyOrders = () => {
                       <Typography>
                         {boletos.map((order, index) => (
                           <div key={index} style={{}}>
+                                            <div key={index} style={{ marginTop: "15rem" }}>{index}</div>
+
                             <span>{order.billingType}</span>
                             <Link to={order.bankSlipUrl}>
                               {order.bankSlipUrl}
@@ -166,7 +170,7 @@ const MyOrders = () => {
                                   </p>
                                   <div>
                                 <button onClick={() => handleClick(order.payload)}>
-                                  Copiar
+                                  Copiar 
                                 </button>
                               </div>
                                 </>
