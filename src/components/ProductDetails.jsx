@@ -33,8 +33,7 @@ const ProductDetails = () => {
   
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/custumer/${userId}`,
-      {
+      .get(`https://serveradmin-whhj.onrender.com/api/customer/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           Credentials: credentials,
@@ -50,8 +49,10 @@ const ProductDetails = () => {
       })
       .catch((error) => {
         // lidar com erros
+        console.log(error)
       });
   }, []);
+  
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -154,12 +155,7 @@ const ProductDetails = () => {
           image: selectedColorImage, // Envie a URL da imagem selecionada
        
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Credentials: credentials,
-          },
-        },
+       
       );
 
       addToCart(); // Incrementa o número de itens no carrinho
@@ -186,6 +182,7 @@ const ProductDetails = () => {
   const handleClickCloseCartModal  = () => {
     setOpenSecondCartModal(false);
   };
+  
   const handleAddToCartAndOpenModal = async () => {
     if (selectedSize && product.variations[currentImageIndex].color) {
       // Verifica se o tamanho e a cor estão selecionados
