@@ -33,7 +33,7 @@ const ProductDetails = () => {
   
   useEffect(() => {
     axios
-      .get(`https://serveradmin-whhj.onrender.com/api/customer/${userId}`, {
+      .get(`http://localhost:3001/api/customer/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           Credentials: credentials,
