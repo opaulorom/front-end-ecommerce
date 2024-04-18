@@ -57,7 +57,7 @@ const MyOrders = () => {
   const [creditCard, setCreditCard] = useState([]);
 
   const [expanded, setExpanded] = React.useState("panel1");
-  
+
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -89,7 +89,9 @@ const MyOrders = () => {
       <Navbar></Navbar>
       {boletos.map((order, index) => (
         <div key={index} style={{ marginTop: "15rem" }}>
-                <div key={index} style={{ marginTop: "15rem" }}>{index}</div>
+          <div key={index} style={{ marginTop: "15rem" }}>
+            {index}
+          </div>
 
           <span>{order.billingType}</span>
 
@@ -101,12 +103,8 @@ const MyOrders = () => {
                   alt={`Produto ${order.productId}`}
                   style={{ width: "10vw" }}
                 />
- <div>
-                  {order.status}
-                </div>
-                <div>
-                  {order.trackingCode}
-                </div>
+                <div>{order.status}</div>
+                <div>{order.trackingCode}</div>
                 <div>
                   <Accordion
                     expanded={expanded === "panel1"}
@@ -122,7 +120,9 @@ const MyOrders = () => {
                       <Typography>
                         {boletos.map((order, index) => (
                           <div key={index} style={{}}>
-                                            <div key={index} style={{ marginTop: "15rem" }}>{index}</div>
+                            <div key={index} style={{ marginTop: "15rem" }}>
+                              {index}
+                            </div>
 
                             <span>{order.billingType}</span>
                             <Link to={order.bankSlipUrl}>
@@ -149,12 +149,8 @@ const MyOrders = () => {
                   alt={`Produto ${product.productId}`}
                   style={{ width: "10vw" }}
                 />
-                 <div>
-                  {order.status}
-                </div>
-                <div>
-                  {order.trackingCode}
-                </div>
+                <div>{order.status}</div>
+                <div>{order.trackingCode}</div>
                 <div>
                   <Accordion
                     expanded={expanded === "panel1"}
@@ -182,10 +178,12 @@ const MyOrders = () => {
                                     {order.payload}
                                   </p>
                                   <div>
-                                <button onClick={() => handleClick(order.payload)}>
-                                  Copiar 
-                                </button>
-                              </div>
+                                    <button
+                                      onClick={() => handleClick(order.payload)}
+                                    >
+                                      Copiar
+                                    </button>
+                                  </div>
                                 </>
                               )}
                             </div>
@@ -201,7 +199,7 @@ const MyOrders = () => {
         </div>
       ))}
 
-{creditCard.map((order, index) => (
+      {creditCard.map((order, index) => (
         <div key={index} style={{ marginTop: "15rem" }}>
           <div>
             {order.products.map((product, prodIndex) => (
@@ -211,13 +209,8 @@ const MyOrders = () => {
                   alt={`Produto ${product.productId}`}
                   style={{ width: "10vw" }}
                 />
-                <div>
-                  {order.status}
-                </div>
-                <div>
-                  {order.trackingCode}
-                </div>
-                
+                <div>{order.status}</div>
+                <div>{order.trackingCode}</div>
               </div>
             ))}
           </div>
