@@ -54,8 +54,10 @@ const MyOrders = () => {
   const { logout, loggedIn } = useAuth();
   const [boletos, setBoletos] = useState([]);
   const [pix, setPix] = useState([]);
-  const [expanded, setExpanded] = React.useState("panel1");
+  const [creditCard, setCreditCard] = useState([]);
 
+  const [expanded, setExpanded] = React.useState("panel1");
+  
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -68,7 +70,7 @@ const MyOrders = () => {
         .then((response) => {
           setBoletos(response.data.boleto); // Assuming 'boleto' is the key containing
           setPix(response.data.pix); // Assuming 'boleto' is the key containing orders
-          console.log(response.data);
+          setCreditCard(response.data.creditCard);
         })
         .catch((error) => {
           console.error("Erro ao obter os pedidos:", error);
@@ -181,6 +183,25 @@ const MyOrders = () => {
                       </Typography>
                     </AccordionDetails>
                   </Accordion>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+{creditCard.map((order, index) => (
+        <div key={index} style={{ marginTop: "15rem" }}>
+          <div>
+            {order.products.map((product, prodIndex) => (
+              <div key={prodIndex}>
+                <img
+                  src={product.image}
+                  alt={`Produto ${product.productId}`}
+                  style={{ width: "10vw" }}
+                />
+                <div>
+                  cartao
                 </div>
               </div>
             ))}

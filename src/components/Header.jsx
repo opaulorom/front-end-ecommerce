@@ -66,21 +66,21 @@ const Header = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        (modalRef.current && !modalRef.current.contains(event.target)) &&
+        modalRef.current &&
+        !modalRef.current.contains(event.target) &&
         (openCartModal || openBellModal) // Só fecha se um dos modais estiver aberto
       ) {
         setOpenCartModal(false);
         setOpenBellModal(false);
       }
     };
-  
+
     document.addEventListener("mousedown", handleClickOutside);
-  
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [openCartModal, openBellModal]); // Adicionei openCartModal e openBellModal como dependências
-  
 
   const handleClickOpenModal = () => {
     setOpenCartModal(true);
@@ -177,24 +177,25 @@ const Header = () => {
                   onClick={handleOpenBellModal}
                 />
                 <span
-        style={{
-          position: "absolute",
-          top: "-10px",
-          right: "40px",
-          width: "20px",
-          height: "20px",
-          backgroundColor: "#2196f3",
-          color: "white",
-          borderRadius: "50%",
-          fontSize: "13px",
-          fontWeight: "bold",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {unreadCount} {/* Substituir 0 pelo valor do estado do contexto */}
-      </span>
+                  style={{
+                    position: "absolute",
+                    top: "-10px",
+                    right: "40px",
+                    width: "20px",
+                    height: "20px",
+                    backgroundColor: "#2196f3",
+                    color: "white",
+                    borderRadius: "50%",
+                    fontSize: "13px",
+                    fontWeight: "bold",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {unreadCount}{" "}
+                  {/* Substituir 0 pelo valor do estado do contexto */}
+                </span>
               </div>
             </div>
           )}
@@ -209,7 +210,7 @@ const Header = () => {
                 {showButton && (
                   <>
                     <div className={styles.scroll}>
-                    <AlertComponente/>
+                      <AlertComponente />
                     </div>
                   </>
                 )}
@@ -220,14 +221,11 @@ const Header = () => {
           {openCartModal && loggedIn === true && (
             <div className={styles.HeaderModal}>
               <div ref={modalRef} className={styles.HeaderModalContent}>
-               
-
                 {showButton && (
-
                   <>
                     <div className={styles.FirstContainer}>
-                  <h4 className={styles.h4}>Configurações</h4>
-                </div>
+                      <h4 className={styles.h4}>Configurações</h4>
+                    </div>
                     <nav className={styles.NavContainer}>
                       <ul style={{ listStyleType: "none" }}>
                         <li className={styles.li}>
@@ -245,7 +243,7 @@ const Header = () => {
                             </a>
                           </Link>
                         </li>
-                    <li className={styles.li}>
+                        <li className={styles.li}>
                           <Link
                             to={"/orders"}
                             style={{ textDecoration: "none" }}
@@ -254,7 +252,7 @@ const Header = () => {
                               Historico de Compras
                             </a>
                           </Link>
-                        </li> 
+                        </li>
                         <li className={styles.li}>
                           <Link
                             to={"/forgotPassword"}

@@ -5,7 +5,7 @@ function NoMatch() {
     <div>
       <h2>Pagina não encontrada</h2>
       <p>
-        <Link to="/payment">Volte pra a pagina principal</Link>
+        <Link to="/">Volte pra a pagina principal</Link>
       </p>
     </div>
   );
