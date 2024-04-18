@@ -101,7 +101,12 @@ const MyOrders = () => {
                   alt={`Produto ${order.productId}`}
                   style={{ width: "10vw" }}
                 />
-
+ <div>
+                  {order.status}
+                </div>
+                <div>
+                  {order.trackingCode}
+                </div>
                 <div>
                   <Accordion
                     expanded={expanded === "panel1"}
@@ -144,6 +149,12 @@ const MyOrders = () => {
                   alt={`Produto ${product.productId}`}
                   style={{ width: "10vw" }}
                 />
+                 <div>
+                  {order.status}
+                </div>
+                <div>
+                  {order.trackingCode}
+                </div>
                 <div>
                   <Accordion
                     expanded={expanded === "panel1"}
@@ -201,8 +212,12 @@ const MyOrders = () => {
                   style={{ width: "10vw" }}
                 />
                 <div>
-                  cartao
+                  {order.status}
                 </div>
+                <div>
+                  {order.trackingCode}
+                </div>
+                
               </div>
             ))}
           </div>
