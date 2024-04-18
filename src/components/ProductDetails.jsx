@@ -36,7 +36,7 @@ const ProductDetails = () => {
       .get(`http://localhost:3001/api/customer/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-          Credentials: credentials,
+
         },
       })
       .then((response) => {
@@ -187,22 +187,19 @@ const ProductDetails = () => {
     if (selectedSize && product.variations[currentImageIndex].color) {
       // Verifica se o tamanho e a cor estão selecionados
   
-      // Verifica se o número de itens no carrinho não excede três
       if (cartItemCount < 3) {
         handleAddToCart();
-  
+      
         if (!customer || customer.length === 0) {
-          handleClickOpenModal();
+          handleClickOpenModal(); // Abre o modal de cadastro se o cliente não estiver cadastrado
         } else {
-          handleClickOpenCartModal();
+          handleClickOpenCartModal(); // Abre o modal do carrinho se o cliente estiver cadastrado
         }
-      } else if (cartItemCount >= 4) {
-        // Se o número de itens no carrinho for maior ou igual a 4, exiba uma mensagem
-        toast.error("Você já adicionou o máximo de produtos permitidos ao carrinho.");
       } else {
         // Se o número de itens exceder três, exiba um alerta
-        toast.error("Você só pode adicionar até três produtos por vez.");
+        toast.error("Você só pode adicionar até 4 produtos por vez ao carrinho.");
       }
+      
   
       try {
         const response = await axios.post(
@@ -236,7 +233,6 @@ const ProductDetails = () => {
 
 
 
-
   
   return (
     <>
@@ -252,6 +248,7 @@ const ProductDetails = () => {
           draggable
           pauseOnHover
           theme="light"
+          style={{marginTop:"8rem"}}
         />
         <div style={{ position: "absolute", zIndex: "9999999" }}>
           <Header />
