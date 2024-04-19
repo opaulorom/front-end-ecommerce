@@ -124,6 +124,7 @@ const ProductDetails = () => {
     <CircularIndeterminate/>;
     </div>
   }
+  
 
   const handleThumbnailClick = (color, index) => {
     const colorVariations = product.variations.filter(
