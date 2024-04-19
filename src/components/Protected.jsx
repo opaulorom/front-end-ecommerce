@@ -7,7 +7,6 @@ import Cookies from 'js-cookie';
 const Protected = () => {
   const [isUserRegistered, setIsUserRegistered] = useState(false);
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
-  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
   const token = Cookies.get('token'); // Obtenha o token do cookie
 
@@ -18,13 +17,15 @@ const Protected = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
+ 
           },
         }
         );
         setIsUserRegistered(true);
+     
       } catch (error) {
         setIsUserRegistered(false);
+        
       }
     };
 
@@ -33,7 +34,7 @@ const Protected = () => {
 
   return (
     <div>
-      
+
       {isUserRegistered ? <UpdateForm /> : <SignUpForm />}
 
     </div>

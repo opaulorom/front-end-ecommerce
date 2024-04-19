@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 import { useAuth } from "../context/AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
+import CircularIndeterminate from "./CircularIndeterminate";
 
 const OrderDetails = () => {
   const { id } = useParams(); // Certifique-se de que o parâmetro corresponde ao nome na URL
@@ -52,7 +53,7 @@ const OrderDetails = () => {
           </div>
         </div>
       ) : (
-        <p>Carregando...</p>
+        <p><CircularIndeterminate/></p>
       )}
     </>
   );

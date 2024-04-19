@@ -235,7 +235,7 @@ const Cart = () => {
       await axios.post(`http://localhost:3001/api/frete/${userId}`,  { cep }, {
         headers: {
           Authorization: `Bearer ${token}`,
-          Credentials: credentials,
+   
         },
       }
      );
@@ -245,7 +245,7 @@ const Cart = () => {
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          Credentials: credentials,
+         
         },
       });
       console.log('log', userId)

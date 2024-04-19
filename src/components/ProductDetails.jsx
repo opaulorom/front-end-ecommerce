@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import CartB from "./CartB";
+import CircularIndeterminate from "./CircularIndeterminate";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -31,119 +32,11 @@ const ProductDetails = () => {
 
   const token = Cookies.get('token'); // Obtenha o token do cookie
   
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3001/api/customer/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-
-        },
-      })
-      .then((response) => {
-        setCustomer(response.data);
-        console.log(response);
-        // fazer algo com a resposta
-        if (!response.data || response.data.length === 0) {
-          setOpenCartModal(true); // Abre o modal se o cliente não estiver cadastrado
-        }
-      })
-      .catch((error) => {
-        // lidar com erros
-        console.log(error)
-      });
-  }, []);
-  
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/api/product/${productId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              Credentials: credentials,
-            },
-          }
-        );
-        setProduct(response.data.product);
-        const sizesArray = response.data.product.size
-          .split(",")
-          .map((size) => size.trim());
-        setSizesFromDatabase(sizesArray);
-        if (response.data.product.variations.length > 0) {
-          setSelectedColorImage(response.data.product.variations[0].urls[0]);
-        }
-      } catch (error) {
-        console.error("Erro ao obter detalhes do produto:", error);
-      }
-    };
-
-    fetchProduct();
-  }, [productId]);
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        (modalRef.current && !modalRef.current.contains(event.target)) &&
-        (openCartModal || openSecondCartModal)
-      ) {
-        setOpenCartModal(false);
-        setOpenSecondCartModal(false);
-      }
-    };
-  
-    document.addEventListener("mousedown", handleClickOutside);
-  
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [openCartModal, openSecondCartModal]);
-  
-
-  if (!product) {
-    return <p>Carregando...</p>;
-  }
-
-  const handleThumbnailClick = (color, index) => {
-    const colorVariations = product.variations.filter(
-      (variation) => variation.color === color
-    );
-  
-    const firstIndexInColor = product.variations.findIndex(
-      (variation) => variation.color === colorVariations[0].color
-    );
-
-    setCurrentImageIndex(firstIndexInColor);
-  
-    // Log das URLs de imagem para a cor selecionada
-  
-    // Atualize o estado com a URL da imagem correspondente à cor selecionada
-    setSelectedColorImage(product.variations[firstIndexInColor].urls[0]);
-  };
-  
-  
-  
-
-  const handleDotClick = (index) => {
-    setCurrentImageIndex(index);
-  };
-
-  const handleArrowClick = (direction) => {
-    if (direction === "prev") {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : product.variations.length - 1
-      );
-    } else {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex < product.variations.length - 1 ? prevIndex + 1 : 0
-      );
-    }
-  };
-
-
   const handleAddToCart = async () => {
+
     try {
-     
+      const userId = Cookies.get("userId"); // Obtenha o token do cookie
+
       const response = await axios.post(
         `http://localhost:3001/api/add-to-cart/${userId}`,
       
@@ -187,19 +80,6 @@ const ProductDetails = () => {
     if (selectedSize && product.variations[currentImageIndex].color) {
       // Verifica se o tamanho e a cor estão selecionados
   
-      if (cartItemCount < 3) {
-        handleAddToCart();
-      
-        if (!customer || customer.length === 0) {
-          handleClickOpenModal(); // Abre o modal de cadastro se o cliente não estiver cadastrado
-        } else {
-          handleClickOpenCartModal(); // Abre o modal do carrinho se o cliente estiver cadastrado
-        }
-      } else {
-        // Se o número de itens exceder três, exiba um alerta
-        toast.error("Você só pode adicionar até 4 produtos por vez ao carrinho.");
-      }
-      
   
       try {
         const response = await axios.post(
@@ -214,11 +94,12 @@ const ProductDetails = () => {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              Credentials: credentials,
+    
             },
           },
         );
-  
+     
+       
         addToCart(); // Atualiza o contexto do carrinho para refletir a adição do novo item
         toast.success("Produto adicionado ao carrinho!");
       } catch (error) {
@@ -228,8 +109,148 @@ const ProductDetails = () => {
       // Se a cor ou o tamanho não foram selecionados, exiba um alerta
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
+
+    if (cartItemCount < 3) {
+      handleAddToCart();
+  
+    } else {
+      // Se o número de itens exceder três, exiba um alerta
+      toast.error("Você só pode adicionar até 4 produtos por vez ao carrinho.");
+    }
+   
+    
   };
   
+  useEffect(() => {
+    const userId = Cookies.get("userId"); // Obtenha o token do cookie
+
+    axios
+      .get(`http://localhost:3001/api/custumer/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+
+        },
+      })
+      .then((response) => {
+        setCustomer(response.data);
+           if (!response.data || response.data.length === 0 ) {
+        handleClickOpenModal(); // Abre o modal de cadastro se o cliente não estiver cadastrado
+      } else  {
+       
+        handleClickOpenCartModal(); // Abre o modal do carrinho se o cliente estiver cadastrado
+      }
+
+        // fazer algo com a resposta
+    
+          
+   
+      })
+      .catch((error) => {
+        // lidar com erros
+        console.log(error)
+      });
+      
+  }, []);
+  
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const userId = Cookies.get("userId"); // Obtenha o token do cookie
+
+      try {
+
+        const response = await axios.get(
+          `http://localhost:3001/api/product/${productId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+          
+            },
+          }
+        );
+        setProduct(response.data.product);
+        const sizesArray = response.data.product.size
+          .split(",")
+          .map((size) => size.trim());
+        setSizesFromDatabase(sizesArray);
+        if (response.data.product.variations.length > 0) {
+          setSelectedColorImage(response.data.product.variations[0].urls[0]);
+        }
+      } catch (error) {
+        console.error("Erro ao obter detalhes do produto:", error);
+      }
+    };
+
+    fetchProduct();
+  }, [productId]);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        (modalRef.current && !modalRef.current.contains(event.target)) &&
+        (openCartModal || openSecondCartModal)
+      ) {
+        setOpenCartModal(false);
+        setOpenSecondCartModal(false);
+      }
+    };
+  
+    document.addEventListener("mousedown", handleClickOutside);
+  
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openCartModal, openSecondCartModal]);
+  
+
+  if (!product) {
+    return
+    <div style={{
+      display:"flex",
+      justifyContent:"center",
+      marginTop:"15rem"
+
+    }}>
+    <CircularIndeterminate/>;
+    </div>
+  }
+
+  const handleThumbnailClick = (color, index) => {
+    const colorVariations = product.variations.filter(
+      (variation) => variation.color === color
+    );
+  
+    const firstIndexInColor = product.variations.findIndex(
+      (variation) => variation.color === colorVariations[0].color
+    );
+
+    setCurrentImageIndex(firstIndexInColor);
+  
+    // Log das URLs de imagem para a cor selecionada
+  
+    // Atualize o estado com a URL da imagem correspondente à cor selecionada
+    setSelectedColorImage(product.variations[firstIndexInColor].urls[0]);
+  };
+  
+  
+  
+
+  const handleDotClick = (index) => {
+    setCurrentImageIndex(index);
+  };
+
+  const handleArrowClick = (direction) => {
+    if (direction === "prev") {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : product.variations.length - 1
+      );
+    } else {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex < product.variations.length - 1 ? prevIndex + 1 : 0
+      );
+    }
+  };
+
+
 
 
 

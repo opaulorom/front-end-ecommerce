@@ -7,7 +7,6 @@ const ProfileDetails = () => {
   return (
     <div>
         <Header></Header>
-        <Protected></Protected>
     </div>
   )
 }

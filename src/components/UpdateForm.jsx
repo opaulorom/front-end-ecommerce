@@ -34,7 +34,7 @@ const UpdateForm = () => {
         const response = await axios.get(`http://localhost:3001/api/custumer/${userId}`,  {
           headers: {
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
+         
           },
         });
         const userData = response.data;
@@ -73,7 +73,7 @@ const UpdateForm = () => {
       const response = await axios.put(`http://localhost:3001/api/update/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-          Credentials: credentials,
+ 
         },
       }, formData);
       console.log(response.data);
@@ -94,7 +94,7 @@ const UpdateForm = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
+    
           },
         });
         const data = response.data;
@@ -130,7 +130,7 @@ const UpdateForm = () => {
     <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column"}}>
       <label>
         Nome completo:
-        <input type="text" name="name" onChange={handleChange} value={formData.name} />
+        <input type="text" name="name" onChange={handleChange} value={formData.name} placeholder={formData.name}/>
       </label>
 
       <label>

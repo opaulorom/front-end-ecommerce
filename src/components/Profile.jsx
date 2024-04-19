@@ -4,6 +4,7 @@ import Header from './Header'
 import { useAuth } from "../context/AuthContext";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginForm from './LoginForm';
+;
 
 
 const Profile = () => {
@@ -21,6 +22,7 @@ const Profile = () => {
       <Header> </Header>
       <div style={{marginTop:"10rem"}}>
       <LoginForm/>
+      <Protected></Protected>
 
       </div>
   
