@@ -387,8 +387,7 @@ const ProductDetails = () => {
                 setIsColorAndSizeSelected(true);
               }}
             />
-            
-             <button
+            {!showCartButton && <button
               onClick={handleAddToCartAndOpenModal}
               style={{
                 backgroundColor: "#5070E3",
@@ -402,7 +401,8 @@ const ProductDetails = () => {
               }}
             >
               Adicionar ao Carrinho
-            </button>
+            </button>}
+             
             {showCartButton && <button
               onClick={handleClickOpenModal}
               style={{
