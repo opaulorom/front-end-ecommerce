@@ -35,8 +35,7 @@ const Protected = () => {
   return (
     <div>
 
-      {isUserRegistered ? <UpdateForm /> : <SignUpForm />}
-
+      <SignUpForm />
     </div>
   );
 };

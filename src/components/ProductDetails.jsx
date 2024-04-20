@@ -32,28 +32,31 @@ const ProductDetails = () => {
   const [showCartButton, setShowCartButton] = useState(false)
   const token = Cookies.get('token'); // Obtenha o token do cookie
   
+ 
   useEffect(() => {
-    const userId = Cookies.get("userId"); // Obtenha o token do cookie
+    const userId = Cookies.get("userId");
 
     axios
-      .get(`http://localhost:3001/api/custumer/${userId}`, {
+      .get(`http://localhost:3001/api/customer/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-
         },
       })
       .then((response) => {
         setCustomer(response.data);
-           if (!response.data || response.data.length === 0 ) {
-        handleClickOpenModal(); // Abre o modal de cadastro se o cliente não estiver cadastrado
-      } else  {
-       
-        handleClickOpenCartModal(); // Abre o modal do carrinho se o cliente estiver cadastrado
-      }
-
-        // fazer algo com a resposta
-    
-                 
+        if (!response.data || response.data.length === 0 ) {
+          setShowCartButton(false);
+          handleClickOpenModal();
+        } else {
+          setShowCartButton(true);
+          handleClickOpenCartModal();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+ 
 
 const handleClickOpenButton = () => {
   setShowCartButton(true)
@@ -64,20 +67,11 @@ const handleClickCloseButton = () => {
 }
   
 const handleOpenButton = async () => {
-  if(!userId ===  response.data.custumerId){
+
     handleClickOpenButton()
 
-  }
+ 
 }
-   
-      })
-      .catch((error) => {
-        // lidar com erros
-        console.log(error)
-      });
-      
-  }, []);
-  
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -393,7 +387,7 @@ const handleOpenButton = async () => {
                 setIsColorAndSizeSelected(true);
               }}
             />
-            {showCartButton && userId === response.data ?  <button
+             <button
               onClick={handleAddToCartAndOpenModal}
               style={{
                 backgroundColor: "#5070E3",
@@ -407,7 +401,8 @@ const handleOpenButton = async () => {
               }}
             >
               Adicionar ao Carrinho
-            </button>: <button
+            </button>
+            {showCartButton && <button
               onClick={handleClickOpenModal}
               style={{
                 backgroundColor: "red",

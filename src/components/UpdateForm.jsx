@@ -37,7 +37,7 @@ const UpdateForm = () => {
          
           },
         });
-        const userData = response.data;
+        const userData = response.data.customers;
 
         setFormData((prevFormData) => ({
           ...prevFormData,
@@ -130,7 +130,7 @@ const UpdateForm = () => {
     <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column"}}>
       <label>
         Nome completo:
-        <input type="text" name="name" onChange={handleChange} value={formData.name} placeholder={formData.name}/>
+        <input type="text" name="name" onChange={handleChange} value={formData.name} />
       </label>
 
       <label>
