@@ -32,12 +32,42 @@ const ProductDetails = () => {
   const [showCartButton, setShowCartButton] = useState(false)
   const token = Cookies.get('token'); // Obtenha o token do cookie
   
- 
+  const handleClickOpenButton = () => {
+    setShowCartButton(true)
+  
+  }
+  const handleClickCloseButton = () => {
+    setShowCartButton(false)
+  }
+    
+  const handleOpenButton = async () => {
+  
+      handleClickOpenButton()
+  
+   
+  }
+  const handleClickOpenModal = () => {
+    setOpenCartModal(true);
+  };
+  
+  const handleClickCloseModal = () => {
+    setOpenCartModal(false);
+  };
+  
+  //  modal do carrinho 
+  
+  const handleClickOpenCartModal = () => {
+    setOpenSecondCartModal(true);
+  };
+  
+  const handleClickCloseCartModal  = () => {
+    setOpenSecondCartModal(false);
+  };
   useEffect(() => {
     const userId = Cookies.get("userId");
 
     axios
-      .get(`http://localhost:3001/api/customer/${userId}`, {
+      .get(`http://localhost:3001/api/custumer/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -45,10 +75,10 @@ const ProductDetails = () => {
       .then((response) => {
         setCustomer(response.data);
         if (!response.data || response.data.length === 0 ) {
-          setShowCartButton(false);
+          setShowCartButton(true);
           handleClickOpenModal();
         } else {
-          setShowCartButton(true);
+          setShowCartButton(false);
           handleClickOpenCartModal();
         }
       })
@@ -58,20 +88,6 @@ const ProductDetails = () => {
   }, []);
  
 
-const handleClickOpenButton = () => {
-  setShowCartButton(true)
-
-}
-const handleClickCloseButton = () => {
-  setShowCartButton(false)
-}
-  
-const handleOpenButton = async () => {
-
-    handleClickOpenButton()
-
- 
-}
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -200,23 +216,7 @@ const handleOpenButton = async () => {
     }
   };
 
-  const handleClickOpenModal = () => {
-    setOpenCartModal(true);
-  };
 
-  const handleClickCloseModal = () => {
-    setOpenCartModal(false);
-  };
-
-//  modal do carrinho 
-
-  const handleClickOpenCartModal = () => {
-    setOpenSecondCartModal(true);
-  };
-
-  const handleClickCloseCartModal  = () => {
-    setOpenSecondCartModal(false);
-  };
   
   const handleAddToCartAndOpenModal = async () => {
     if (selectedSize && product.variations[currentImageIndex].color) {
@@ -387,6 +387,7 @@ const handleOpenButton = async () => {
                 setIsColorAndSizeSelected(true);
               }}
             />
+            
              <button
               onClick={handleAddToCartAndOpenModal}
               style={{
