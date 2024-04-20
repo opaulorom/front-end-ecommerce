@@ -1,12 +1,29 @@
-import { Link } from "react-router-dom";
+import Header from "./Header";
+import Navbar from "./Navbar";
 
 function NoMatch() {
   return (
     <div>
-      <h2>Pagina não encontrada</h2>
-      <p>
-        <Link to="/">Volte pra a pagina principal</Link>
-      </p>
+       <Header/>
+       <Navbar/>
+
+      <div style={{
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center",
+        marginTop:"15rem",
+        gap:"1rem"
+      }}>
+              <img src="https://i.ibb.co/0M09gh3/browser.png" alt="" />
+
+      <h2 style={{
+        fontFamily:"poppins",
+        fontWeight:"500"
+      }}>Pagina não encontrada</h2>
+
+      </div>
+
+     
     </div>
   );
 }
