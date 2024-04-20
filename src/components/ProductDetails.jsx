@@ -29,7 +29,7 @@ const ProductDetails = () => {
   const [openSecondCartModal, setOpenSecondCartModal] = useState(false);
   const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
   const [selectedColorImage, setSelectedColorImage] = useState("");
-
+  const [showCartButton, setShowCartButton] = useState(false)
   const token = Cookies.get('token'); // Obtenha o token do cookie
   
   useEffect(() => {
@@ -53,7 +53,22 @@ const ProductDetails = () => {
 
         // fazer algo com a resposta
     
-          
+                 
+
+const handleClickOpenButton = () => {
+  setShowCartButton(true)
+
+}
+const handleClickCloseButton = () => {
+  setShowCartButton(false)
+}
+  
+const handleOpenButton = async () => {
+  if(!userId ===  response.data.custumerId){
+    handleClickOpenButton()
+
+  }
+}
    
       })
       .catch((error) => {
@@ -87,6 +102,8 @@ const ProductDetails = () => {
         if (response.data.product.variations.length > 0) {
           setSelectedColorImage(response.data.product.variations[0].urls[0]);
         }
+
+ 
       } catch (error) {
         console.error("Erro ao obter detalhes do produto:", error);
       }
@@ -253,9 +270,6 @@ const ProductDetails = () => {
   };
   
 
-
-
-  
   return (
     <>
       <div>
@@ -379,7 +393,7 @@ const ProductDetails = () => {
                 setIsColorAndSizeSelected(true);
               }}
             />
-            <button
+            {showCartButton && userId === response.data ?  <button
               onClick={handleAddToCartAndOpenModal}
               style={{
                 backgroundColor: "#5070E3",
@@ -393,7 +407,25 @@ const ProductDetails = () => {
               }}
             >
               Adicionar ao Carrinho
-            </button>
+            </button>: <button
+              onClick={handleClickOpenModal}
+              style={{
+                backgroundColor: "red",
+                color: "white",
+                border: "none",
+                padding: ".8rem",
+                borderRadius: "5px",
+                fontWeight: "500",
+                fontFamily: "poppins, sans-serif",
+                cursor:"pointer",
+                
+              }}
+            >
+              Adicionar ao Carrinho
+            </button>}
+           
+           
+
             {openCartModal && (
               <div className={styles.cartModal}>
                 <div ref={modalRef} className={styles.cartModalContent}>
