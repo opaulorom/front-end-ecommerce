@@ -21,7 +21,6 @@ const Header = () => {
   const [showButton, setShowButton] = useState(false);
 
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-  const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const modalRef = useRef(null);
   const [openCartModal, setOpenCartModal] = useState(false);
@@ -41,7 +40,7 @@ const Header = () => {
         .get(`http://localhost:3001/api/cart/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
+  
           },
         })
         .then((response) => {

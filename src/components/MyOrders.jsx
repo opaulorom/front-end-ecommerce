@@ -120,9 +120,7 @@ const MyOrders = () => {
                       <Typography>
                         {boletos.map((order, index) => (
                           <div key={index} style={{}}>
-                            <div key={index} style={{ marginTop: "15rem" }}>
-                              {index}
-                            </div>
+                           
 
                             <span>{order.billingType}</span>
                             <Link to={order.bankSlipUrl}>
