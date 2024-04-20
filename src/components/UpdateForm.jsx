@@ -37,7 +37,7 @@ const UpdateForm = () => {
          
           },
         });
-        const userData = response.data.customers;
+        const userData = response.data;
 
         setFormData((prevFormData) => ({
           ...prevFormData,

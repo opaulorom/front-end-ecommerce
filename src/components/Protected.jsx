@@ -5,7 +5,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const Protected = () => {
-  const [isUserRegistered, setIsUserRegistered] = useState(false);
+  const [showComponent, setShowComponent] = useState(false);
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
 
   const token = Cookies.get('token'); // Obtenha o token do cookie
@@ -21,10 +21,16 @@ const Protected = () => {
           },
         }
         );
-        setIsUserRegistered(true);
+        if (!response.data || response.data.length === 0 ) {
+        
+          setShowComponent(true)
+        } else {
+          setShowComponent(false);
+   
+        }
      
       } catch (error) {
-        setIsUserRegistered(false);
+ 
         
       }
     };
@@ -34,8 +40,9 @@ const Protected = () => {
 
   return (
     <div>
-
-      <SignUpForm />
+      {showComponent === true ?  <SignUpForm></SignUpForm> :      <UpdateForm></UpdateForm> 
+}
+       
     </div>
   );
 };
