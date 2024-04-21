@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from "js-cookie";
 import Navbar from './Navbar';
+import { useAuth } from '../context/AuthContext';
 
 const UpdateForm = () => {
-  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const token = Cookies.get('token'); // Obtenha o token do cookie
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
   const [formData, setFormData] = useState({
@@ -21,12 +22,12 @@ const UpdateForm = () => {
     city: '',
     state: ''
   });
+  console.log('formData:', formData);
 
   useEffect(() => {
     
     const fetchUserData = async () => {
       try {
-        const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
         const token = Cookies.get('token'); // Obtenha o token do cookie
 
@@ -38,10 +39,10 @@ const UpdateForm = () => {
           },
         });
         const userData = response.data;
-
+       
         setFormData((prevFormData) => ({
           ...prevFormData,
-          name: userData.name,
+          name: userData.name ,
           cpfCnpj: userData.cpfCnpj,
           email: userData.email,
           mobilePhone: userData.mobilePhone,
@@ -53,6 +54,8 @@ const UpdateForm = () => {
           city: userData.city,
           state: userData.state,
         }));
+
+
       } catch (error) {
         console.error('Erro ao buscar informações do usuário:', error);
       }
@@ -76,7 +79,7 @@ const UpdateForm = () => {
  
         },
       }, formData);
-      console.log(response.data);
+
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
       console.error('Erro ao enviar informações do usuário:', error);
@@ -125,11 +128,11 @@ const UpdateForm = () => {
     
     
     
-    
-    
-    <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column"}}>
+   {loggedIn === true && <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column"}}>
+      
       <label>
         Nome completo:
+        
         <input type="text" name="name" onChange={handleChange} value={formData.name} />
       </label>
 
@@ -184,7 +187,8 @@ const UpdateForm = () => {
       </label>
       
       <button type="submit">Atualizar</button>
-    </form>
+    </form> }   
+    
     </>
   );
 };
