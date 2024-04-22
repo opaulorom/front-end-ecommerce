@@ -38,21 +38,21 @@ const UpdateForm = () => {
          
           },
         });
-        const userData = response.data.customers;
+        const userData = response.data || response.data.customers;
        
         setFormData((prevFormData) => ({
           ...prevFormData,
-          name: userData.name ,
-          cpfCnpj: userData.cpfCnpj,
-          email: userData.email,
-          mobilePhone: userData.mobilePhone,
-          postalCode: userData.postalCode,
-          address: userData.address,
-          addressNumber: userData.addressNumber,
-          complement: userData.complement,
-          province: userData.province,
-          city: userData.city,
-          state: userData.state,
+          name: userData.name || '',
+          cpfCnpj: userData.cpfCnpj || '',
+          email: userData.email || '',
+          mobilePhone: userData.mobilePhone || '',
+          postalCode: userData.postalCode || '',
+          address: userData.address || '',
+          addressNumber: userData.addressNumber || '',
+          complement: userData.complement || '',
+          province: userData.province || '',
+          city: userData.city || '',
+          state: userData.state || '',
         }));
 
 
