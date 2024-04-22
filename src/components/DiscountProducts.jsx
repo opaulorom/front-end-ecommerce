@@ -18,7 +18,11 @@ const DiscountProducts = () => {
     };
 
     fetchData();
-  }, [discount]);
+  }, [discount]); 
+   const formatPrice = (price) => {
+    // Formatar o preço para adicionar o traço sobre ele
+    return price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  };
 
   return (
     <div>
@@ -28,7 +32,7 @@ const DiscountProducts = () => {
           <p>{product.description}</p>
           <p>Desconto: {product.discountPercentage}%</p>
           <p>Preço: R${product.price.toFixed(2)}</p>
-          <p>Preço anterior: R${product.previousPrice.toFixed(2)}</p>
+          <p>Preço anterior: <span style={{ textDecoration: 'line-through', color: '#8c8c8c' }}>{formatPrice(product.previousPrice)}</span></p>
           <img src={product.variations[0].urls[0]} alt={product.name} />
         </div>
       ))}
