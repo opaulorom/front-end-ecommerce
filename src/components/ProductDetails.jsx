@@ -16,7 +16,7 @@ import CircularIndeterminate from "./CircularIndeterminate";
 
 const ProductDetails = () => {
   const { productId } = useParams();
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState({ variations: [] });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [sizesFromDatabase, setSizesFromDatabase] = useState([]);
   const [selectedSize, setSelectedSize] = useState("");
@@ -140,18 +140,6 @@ const ProductDetails = () => {
   }, [openCartModal, openSecondCartModal]);
   
 
-  if (!product) {
-    return
-    <div style={{
-      display:"flex",
-      justifyContent:"center",
-      marginTop:"15rem"
-
-    }}>
-    <CircularIndeterminate/>;
-    </div>
-  }
-  
 
   const handleThumbnailClick = (color, index) => {
     const colorVariations = product.variations.filter(
@@ -263,6 +251,7 @@ const ProductDetails = () => {
     
   };
   
+
 
   return (
     <>

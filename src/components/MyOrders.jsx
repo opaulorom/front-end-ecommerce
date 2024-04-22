@@ -5,49 +5,9 @@ import Navbar from "./Navbar";
 import { useAuth } from "../context/AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { styled } from "@mui/material/styles";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import MuiAccordion from "@mui/material/Accordion";
-import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
+
 import ImageComponent from "./ImageComponent";
 
-const Accordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  "&:not(:last-child)": {
-    borderBottom: 0,
-  },
-  "&::before": {
-    display: "none",
-  },
-}));
-
-const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
-    {...props}
-  />
-))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? "rgba(255, 255, 255, .05)"
-      : "rgba(0, 0, 0, .03)",
-  flexDirection: "row-reverse",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
-  },
-  "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
-  },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "1px solid rgba(0, 0, 0, .125)",
-}));
 
 const MyOrders = () => {
   const userId = Cookies.get("userId");
@@ -56,20 +16,22 @@ const MyOrders = () => {
   const [pix, setPix] = useState([]);
   const [creditCard, setCreditCard] = useState([]);
 
-  const [expanded, setExpanded] = React.useState("panel1");
+  const [expanded, setExpanded] = useState({});
 
   const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
+    setExpanded((prevExpanded) => ({
+      ...prevExpanded,
+      [panel]: newExpanded ? panel : false,
+    }));
   };
-  const [status, setStatus] = useState("copiar");
 
   useEffect(() => {
     if (loggedIn) {
       axios
         .get(`http://localhost:3001/api/allOrders/${userId}`)
         .then((response) => {
-          setBoletos(response.data.boleto); // Assuming 'boleto' is the key containing
-          setPix(response.data.pix); // Assuming 'boleto' is the key containing orders
+          setBoletos(response.data.boleto);
+          setPix(response.data.pix);
           setCreditCard(response.data.creditCard);
         })
         .catch((error) => {
@@ -77,68 +39,64 @@ const MyOrders = () => {
         });
     }
   }, [loggedIn, userId]);
-  //  pix copia e cola
 
   const handleClick = (payload) => {
     navigator.clipboard.writeText(payload);
   };
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  };
+
+  const tabStyle = {
+    backgroundColor: "#ccc", // Cor de fundo das tabs ativas
+    // Outros estilos conforme necessário
+  };
 
   return (
     <>
-      <Header></Header>
-      <Navbar></Navbar>
-      {boletos.map((order, index) => (
-        <div key={index} style={{ marginTop: "15rem" }}>
-          <div key={index} style={{ marginTop: "15rem" }}>
-            {index}
-          </div>
+      <Header />
+      <Navbar />
 
+      {boletos && boletos.map((order, index) => (
+        <div key={index} style={{ marginTop: "15rem" }}>
           <span>{order.billingType}</span>
-
           <div>
-            {order.products.map((order, prodIndex) => (
-              <div key={prodIndex}>
-                <img
-                  src={order.image}
-                  alt={`Produto ${order.productId}`}
-                  style={{ width: "10vw" }}
-                />
-                <div>{order.status}</div>
-                <div>{order.trackingCode}</div>
+            <div className="tab-buttons">
+              <button
+                style={activeTab === 0 ? tabStyle : {}}
+                onClick={() => handleTabClick(0)}
+              >
+                Pagar Boleto
+              </button>
+              <button
+                style={activeTab === 1 ? tabStyle : {}}
+                onClick={() => handleTabClick(1)}
+              >
+                Tab 2
+              </button>
+              <button
+                style={activeTab === 2 ? tabStyle : {}}
+                onClick={() => handleTabClick(2)}
+              >
+                Tab 3
+              </button>
+            </div>
+            <div className="tab-content">
+              {activeTab === 0 && (
                 <div>
-                  <Accordion
-                    expanded={expanded === "panel1"}
-                    onChange={handleChange("panel1")}
-                  >
-                    <AccordionSummary
-                      aria-controls="panel1d-content"
-                      id="panel1d-header"
-                    >
-                      <Typography>Pagar com boleto</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography>
-                        {boletos.map((order, index) => (
-                          <div key={index} style={{}}>
-                           
-
-                            <span>{order.billingType}</span>
-                            <Link to={order.bankSlipUrl}>
-                              {order.bankSlipUrl}
-                            </Link>
-                          </div>
-                        ))}
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
+                  {" "}
+                  <div>
+                    {order._id}
+                    <Link to={order.bankSlipUrl}>{order.bankSlipUrl}</Link>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )}
+              {activeTab === 1 && <div>Conteúdo da aba 2</div>}
+              {activeTab === 2 && <div>Conteúdo da aba 3</div>}
+            </div>
           </div>
-        </div>
-      ))}
-      {pix.map((order, index) => (
-        <div key={index} style={{ marginTop: "15rem" }}>
           <div>
             {order.products.map((product, prodIndex) => (
               <div key={prodIndex}>
@@ -149,55 +107,78 @@ const MyOrders = () => {
                 />
                 <div>{order.status}</div>
                 <div>{order.trackingCode}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      {pix && pix.map((order, index) => (
+        <div key={index} style={{ marginTop: "15rem" }}>
+          <div>
+            <div className="tab-buttons">
+              <button
+                style={activeTab === 0 ? tabStyle : {}}
+                onClick={() => handleTabClick(0)}
+              >
+                Pagar Pix
+              </button>
+              <button
+                style={activeTab === 1 ? tabStyle : {}}
+                onClick={() => handleTabClick(1)}
+              >
+                Tab 2
+              </button>
+              <button
+                style={activeTab === 2 ? tabStyle : {}}
+                onClick={() => handleTabClick(2)}
+              >
+                Tab 3
+              </button>
+            </div>
+            <div className="tab-content">
+              {order._id}
+
+              {activeTab === 0 && (
                 <div>
-                  <Accordion
-                    expanded={expanded === "panel1"}
-                    onChange={handleChange("panel1")}
-                  >
-                    <AccordionSummary
-                      aria-controls="panel1d-content"
-                      id="panel1d-header"
-                    >
-                      <Typography>Pagar com Qr code</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography>
-                        {pix.map((order, index) => (
-                          <div key={index} style={{}}>
-                            <div>
-                              {order.encodedImage && (
-                                <ImageComponent
-                                  encodedImage={order.encodedImage}
-                                />
-                              )}
-                              {order.encodedImage && (
-                                <>
-                                  <p style={{ width: "10vw" }}>
-                                    {order.payload}
-                                  </p>
-                                  <div>
-                                    <button
-                                      onClick={() => handleClick(order.payload)}
-                                    >
-                                      Copiar
-                                    </button>
-                                  </div>
-                                </>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
+                  {" "}
+                  <div>
+                    {order.encodedImage && (
+                      <ImageComponent encodedImage={order.encodedImage} />
+                    )}
+                    {order.encodedImage && (
+                      <>
+                        <p style={{ width: "10vw" }}>{order.payload}</p>
+                        <div>
+                          <button onClick={() => handleClick(order.payload)}>
+                            Copiar
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>{" "}
                 </div>
+              )}
+              {activeTab === 1 && <div>Conteúdo da aba 2</div>}
+              {activeTab === 2 && <div>Conteúdo da aba 3</div>}
+            </div>
+          </div>
+          <div>
+            {order.products.map((product, prodIndex) => (
+              <div key={prodIndex}>
+                <img
+                  src={product.image}
+                  alt={`Produto ${product.productId}`}
+                  style={{ width: "10vw" }}
+                />
+                <div>{order.status}</div>
+                <div>{order.trackingCode}</div>
               </div>
             ))}
           </div>
         </div>
       ))}
 
-      {creditCard.map((order, index) => (
+      {creditCard && creditCard.map((order, index) => (
         <div key={index} style={{ marginTop: "15rem" }}>
           <div>
             {order.products.map((product, prodIndex) => (

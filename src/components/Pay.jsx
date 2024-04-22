@@ -50,7 +50,6 @@ const Pay = () => {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
           },
         }
       );
@@ -75,7 +74,6 @@ const Pay = () => {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
           },
         }
       );
