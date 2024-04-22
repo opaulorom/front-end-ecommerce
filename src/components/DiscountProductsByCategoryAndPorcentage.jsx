@@ -23,6 +23,10 @@ const DiscountProductsByCategoryAndPorcentage = () => {
     fetchData();
   }, [discount, category]);
 
+  const formatPrice = (price) => {
+    // Arredonda o preço para duas casas decimais e formata como moeda brasileira
+    return parseFloat(price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  };
   return (
     <div>
       <Header/>
@@ -36,7 +40,7 @@ const DiscountProductsByCategoryAndPorcentage = () => {
               <p>{product.description}</p>
               <p>Desconto: {product.discountPercentage}%</p>
               <p>Preço: R${product.price.toFixed(2)}</p>
-              <p>Preço anterior: R${product.previousPrice.toFixed(2)}</p>
+              <p style={{ textDecoration: 'line-through', color: '#8c8c8c' }}>Preço anterior: {formatPrice(product.previousPrice.toFixed(2))}</p>
             </Link>
           </div>
         ))}
