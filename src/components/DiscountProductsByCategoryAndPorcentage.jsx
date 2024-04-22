@@ -34,14 +34,17 @@ const DiscountProductsByCategoryAndPorcentage = () => {
       {Array.isArray(products) &&
         products.map((product) => (
           <div key={product._id}>
+            <Header></Header>
+            <Navbar></Navbar>
             <Link to={`/products/${product._id}`}>
               <img src={product.variations[0].urls[0]} alt={product.name} />
               <h2>{product.name}</h2>
-              <p>{product.description}</p>
+             
+            </Link>
+            <p>{product.description}</p>
               <p>Desconto: {product.discountPercentage}%</p>
               <p>Preço: R${product.price.toFixed(2)}</p>
               <p style={{ textDecoration: 'line-through', color: '#8c8c8c' }}>Preço anterior: {formatPrice(product.previousPrice.toFixed(2))}</p>
-            </Link>
           </div>
         ))}
     </div>
