@@ -9,23 +9,19 @@ import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
 import NewArrivals from "./NewArrivals";
 
 const Home = () => {
-
- 
   return (
     <div>
       <DiscountImageCarousel />
       <Categories />
       <CategoryCarousel />
       <Header />
-      <h1 style={{ marginTop: "10rem" }}>Ofertas</h1>
-      <div style={{ display: "flex", marginTop: "5rem" }}>
-        <DiscountImageLinkPerPercentage />
+      <div style={{ display: "flex", marginTop: "3rem", flexDirection:"column" }}>
+      <h1 style={{ marginTop: "1rem" }}>Novidades</h1>
+
+        <NewArrivals />{" "}
       </div>
 
-      <NewArrivals/>
       <Navbar></Navbar>
-
-     
     </div>
   );
 };
