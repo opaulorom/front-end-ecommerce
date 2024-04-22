@@ -21,7 +21,7 @@ const CategoriesList = () => {
           const uniqueCategories = Array.from(uniqueCategoriesSet).map(category => ({ category }));
   
           // Limit the number of categories to 5
-          const limitedCategories = uniqueCategories.slice(0, 6);
+          const limitedCategories = uniqueCategories.slice(0, 7);
   
           return limitedCategories;
         });
@@ -107,12 +107,12 @@ const CategoriesList = () => {
             </Link>
           </li>
         ))}
-        <li>
+        {/* <li>
           <Link to={"/whatsNew"} style={{ color: 'white', textDecoration: 'none' }}>
 
           <span style={{fontSize:"1rem"}}>Promoções</span>
           </Link>
-        </li>
+        </li> */}
         <li>
         <Link to={"/newArrivals"} style={{ color: 'white', textDecoration: 'none' }}>
 
