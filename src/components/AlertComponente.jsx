@@ -76,9 +76,7 @@ const AlertComponente = () => {
                 {order.products.slice(0, 1).map((product, prodIndex) => (
                   <div
                     key={prodIndex}
-                    style={{
-                      marginBottom: "10rem",
-                    }}
+                 
                   >
                     <Link to={`/order/${order.custumerId}/${order._id}`}>
                       produto
@@ -86,35 +84,12 @@ const AlertComponente = () => {
                   </div>
                 ))}
               </div>
-              <div>
-                {" "}
-                <span>{order.billingType}</span>
-                <span>{order.value}</span>{" "}
-              </div>
 
               <div></div>
-              <div>
-                <span>Status</span>
-                <span>
-                  {" "}
-                  {(() => {
-                    switch (order.status) {
-                      case "RECEIVED":
-                        return "pago";
-                      case "CONFIRMED":
-                        return "Cobrança confirmada";
-                      case "PENDING":
-                        return "Pendente";
-                      case "OVERDUE":
-                        return "Cobrança vencida";
-                      default:
-                        return;
-                    }
-                  })()}
-                </span>
-              </div>
 
               <div>
+                <span>código de rastreio</span>
+
                 <div>{order.trackingCode}</div>
               </div>
             </div>
@@ -138,34 +113,7 @@ const AlertComponente = () => {
                 ))}
               </div>
               <div>
-                {" "}
-                <span>{order.billingType}</span>
-                <span>{order.value}</span>{" "}
-              </div>
-
-              <div></div>
-              <div>
-                <span>Status</span>
-                <span>
-                  {" "}
-                  {(() => {
-                    switch (order.status) {
-                      case "RECEIVED":
-                        return "pago";
-                      case "CONFIRMED":
-                        return "Cobrança confirmada";
-                      case "PENDING":
-                        return "Pendente";
-                      case "OVERDUE":
-                        return "Cobrança vencida";
-                      default:
-                        return;
-                    }
-                  })()}
-                </span>
-              </div>
-
-              <div>
+                <span>código de rastreio</span>
                 <div>{order.trackingCode}</div>
               </div>
             </div>
@@ -174,7 +122,7 @@ const AlertComponente = () => {
         {creditCard &&
           creditCard.slice(0, 1).map((order, index) => (
             <div key={index}>
-              <div style={{ padding: "7rem 3rem" }}>
+              <div >
                 {order.products.slice(0, 1).map((product, prodIndex) => (
                   <div key={prodIndex}>
                     <Link to={`/order/${order.custumerId}/${order._id}`}>
@@ -182,35 +130,6 @@ const AlertComponente = () => {
                     </Link>
                   </div>
                 ))}
-              </div>
-              <div>
-                {" "}
-                <span>
-                  {order.billingType === "CREDIT_CARD" && "Cartão de Crédito"}
-                </span>
-                <span>{order.value}</span>{" "}
-              </div>
-
-              <div></div>
-              <div>
-                <span>Status</span>
-                <span>
-                  {" "}
-                  {(() => {
-                    switch (order.status) {
-                      case "RECEIVED":
-                        return "pago";
-                      case "CONFIRMED":
-                        return "Cobrança confirmada";
-                      case "PENDING":
-                        return "Pendente";
-                      case "OVERDUE":
-                        return "Cobrança vencida";
-                      default:
-                        return;
-                    }
-                  })()}
-                </span>
               </div>
 
               <div>
