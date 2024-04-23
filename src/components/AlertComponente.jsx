@@ -4,12 +4,28 @@ import { useAuth } from "../context/AuthContext";
 import axios from "axios"; // Corrigindo a importação do Axios
 import styles from "./AlertComponente.module.css";
 import { useUnreadCount } from "../context/UnreadContext";
+import { Link } from "react-router-dom";
 const AlertComponente = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
   const [orders, setOrders] = useState([]);
   const { updateUnreadCount } = useUnreadCount(); // Obter função para atualizar o estado do contexto
 
+  const [boletos, setBoletos] = useState([]);
+  const [pix, setPix] = useState([]);
+  const [creditCard, setCreditCard] = useState([]);
+  const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
+
+  const token = Cookies.get("token"); // Obtenha o token do cookie
+  const [expanded, setExpanded] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded((prevExpanded) => ({
+      ...prevExpanded,
+      [panel]: newExpanded ? panel : false,
+    }));
+  };
   useEffect(() => {
     if (loggedIn) {
       axios
@@ -29,9 +45,183 @@ const AlertComponente = () => {
     }
   }, [loggedIn, userId]);
 
+  useEffect(() => {
+    if (loggedIn) {
+      axios
+        .get(`http://localhost:3001/api/allOrders/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
+          },
+        })
+        .then((response) => {
+          setBoletos(response.data.boleto);
+          setPix(response.data.pix);
+          setCreditCard(response.data.creditCard);
+        })
+        .catch((error) => {
+          console.error("Erro ao obter os pedidos:", error);
+        });
+    }
+  }, [loggedIn, userId]);
+
   return (
     //     border-top: 1px solid rgb(206, 212, 218);
     <div className={styles.ordersContainer}>
+      <div>
+        {boletos &&
+          boletos.map((order, index) => (
+            <div key={index}>
+              <div>
+                {order.products.slice(0, 1).map((product, prodIndex) => (
+                  <div
+                    key={prodIndex}
+                    style={{
+                      marginBottom: "10rem",
+                    }}
+                  >
+                    <Link to={`/order/${order.custumerId}/${order._id}`}>
+                      produto
+                    </Link>
+                  </div>
+                ))}
+              </div>
+              <div>
+                {" "}
+                <span>{order.billingType}</span>
+                <span>{order.value}</span>{" "}
+              </div>
+
+              <div></div>
+              <div>
+                <span>Status</span>
+                <span>
+                  {" "}
+                  {(() => {
+                    switch (order.status) {
+                      case "RECEIVED":
+                        return "pago";
+                      case "CONFIRMED":
+                        return "Cobrança confirmada";
+                      case "PENDING":
+                        return "Pendente";
+                      case "OVERDUE":
+                        return "Cobrança vencida";
+                      default:
+                        return;
+                    }
+                  })()}
+                </span>
+              </div>
+
+              <div>
+                <div>{order.trackingCode}</div>
+              </div>
+            </div>
+          ))}
+
+        {pix &&
+          pix.map((order, index) => (
+            <div key={index}>
+              <div style={{}}>
+                {order.products.slice(0, 1).map((product, prodIndex) => (
+                  <div
+                    key={prodIndex}
+                    style={{
+                      marginBottom: "10rem",
+                    }}
+                  >
+                    <Link to={`/order/${order.custumerId}/${order._id}`}>
+                      produto
+                    </Link>
+                  </div>
+                ))}
+              </div>
+              <div>
+                {" "}
+                <span>{order.billingType}</span>
+                <span>{order.value}</span>{" "}
+              </div>
+
+              <div></div>
+              <div>
+                <span>Status</span>
+                <span>
+                  {" "}
+                  {(() => {
+                    switch (order.status) {
+                      case "RECEIVED":
+                        return "pago";
+                      case "CONFIRMED":
+                        return "Cobrança confirmada";
+                      case "PENDING":
+                        return "Pendente";
+                      case "OVERDUE":
+                        return "Cobrança vencida";
+                      default:
+                        return;
+                    }
+                  })()}
+                </span>
+              </div>
+
+              <div>
+                <div>{order.trackingCode}</div>
+              </div>
+            </div>
+          ))}
+
+        {creditCard &&
+          creditCard.slice(0, 1).map((order, index) => (
+            <div key={index}>
+              <div style={{ padding: "7rem 3rem" }}>
+                {order.products.slice(0, 1).map((product, prodIndex) => (
+                  <div key={prodIndex}>
+                    <Link to={`/order/${order.custumerId}/${order._id}`}>
+                      produto
+                    </Link>
+                  </div>
+                ))}
+              </div>
+              <div>
+                {" "}
+                <span>
+                  {order.billingType === "CREDIT_CARD" && "Cartão de Crédito"}
+                </span>
+                <span>{order.value}</span>{" "}
+              </div>
+
+              <div></div>
+              <div>
+                <span>Status</span>
+                <span>
+                  {" "}
+                  {(() => {
+                    switch (order.status) {
+                      case "RECEIVED":
+                        return "pago";
+                      case "CONFIRMED":
+                        return "Cobrança confirmada";
+                      case "PENDING":
+                        return "Pendente";
+                      case "OVERDUE":
+                        return "Cobrança vencida";
+                      default:
+                        return;
+                    }
+                  })()}
+                </span>
+              </div>
+
+              <div>
+                <div>
+                  <span>código de rastreio</span>
+                  <span>{order.trackingCode}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
       {orders &&
         orders.map((order, index) => (
           <div key={index} className={styles.ordersContent}>
