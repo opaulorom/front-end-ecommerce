@@ -32,7 +32,7 @@ const MyOrders = () => {
           setBoletos(response.data.boleto);
           setPix(response.data.pix);
           setCreditCard(response.data.creditCard);
-          console.log("creditCard",response.data.creditCard)
+          console.log("creditCard", response.data.creditCard);
         })
         .catch((error) => {
           console.error("Erro ao obter os pedidos:", error);
@@ -61,114 +61,281 @@ const MyOrders = () => {
 
       {boletos &&
         boletos.map((order, index) => (
-          <div key={index} style={{ marginTop: "15rem" }}>
-            
-            <span>{order.billingType}</span>
-            {(() => {
-                                  switch (order.status) {
-                                    case "RECEIVED":
-                                      return "pago";
-                                    case "CONFIRMED":
-                                      return "Cobrança confirmada";
-                                    case "PENDING":
-                                      return "Pendente";
-                                    case "OVERDUE":
-                                      return "Cobrança vencida";
-                                    default:
-                                      return;
-                                  }
-                                })()}
-
-<div>{order.trackingCode}</div>
-
-            <div>
+          <div
+            key={index}
+            style={{
+              position: "reative",
+              display: "flex",
+              margin: "0 auto",
+              marginTop: "15rem",
+              marginBottom: "15rem",
+              border: "1px solid rgba(0, 0, 0, 0.10)",
+              width: "60vw",
+              height: "50vh",
+            }}
+          >
+            <div style={{ padding: "7rem 3rem" }}>
               {order.products.slice(0, 1).map((product, prodIndex) => (
-                <div key={prodIndex}>
+                <div
+                  key={prodIndex}
+                  style={{
+                    marginBottom: "10rem",
+                  }}
+                >
                   <Link to={`/order/${order.custumerId}/${order._id}`}>
                     <img
                       src={product.image}
                       alt={`Produto ${product.productId}`}
-                      style={{ width: "10vw" }}
+                      style={{ width: "8vw" }}
                     />
                   </Link>
-           
                 </div>
               ))}
             </div>
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "3rem",
+                gap: "2rem",
+              }}
+            >
+              {" "}
+              <span>{order.billingType}</span>
+              <span>{order.value}</span>{" "}
+            </div>
+
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "8rem",
+              }}
+            ></div>
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "5rem",
+              }}
+            >
+              <span>Status</span>
+              <span>
+                {" "}
+                {(() => {
+                  switch (order.status) {
+                    case "RECEIVED":
+                      return "pago";
+                    case "CONFIRMED":
+                      return "Cobrança confirmada";
+                    case "PENDING":
+                      return "Pendente";
+                    case "OVERDUE":
+                      return "Cobrança vencida";
+                    default:
+                      return;
+                  }
+                })()}
+              </span>
+            </div>
+
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "15rem",
+              }}
+            >
+              <div>{order.trackingCode}</div>
+            </div>
           </div>
         ))}
+
       {pix &&
         pix.map((order, index) => (
-          <div key={index} style={{ marginTop: "15rem" }}>
-            {order.billingType}
-            {(() => {
-                                  switch (order.status) {
-                                    case "RECEIVED":
-                                      return "pago";
-                                    case "CONFIRMED":
-                                      return "Cobrança confirmada";
-                                    case "PENDING":
-                                      return "Pendente";
-                                    case "OVERDUE":
-                                      return "Cobrança vencida";
-                                    default:
-                                      return;
-                                  }
-                                })()}
-
-            <div>
+          <div
+            key={index}
+            style={{
+              position: "reative",
+              display: "flex",
+              margin: "0 auto",
+              marginTop: "15rem",
+              marginBottom: "15rem",
+              border: "1px solid rgba(0, 0, 0, 0.10)",
+              width: "60vw",
+              height: "50vh",
+            }}
+          >
+            <div style={{ padding: "7rem 3rem" }}>
               {order.products.slice(0, 1).map((product, prodIndex) => (
-                <div key={prodIndex}>
+                <div
+                  key={prodIndex}
+                  style={{
+                    marginBottom: "10rem",
+                  }}
+                >
                   <Link to={`/order/${order.custumerId}/${order._id}`}>
                     <img
                       src={product.image}
                       alt={`Produto ${product.productId}`}
-                      style={{ width: "10vw" }}
+                      style={{ width: "8vw" }}
                     />
                   </Link>
-                 
                 </div>
               ))}
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "3rem",
+                gap: "2rem",
+              }}
+            >
+              {" "}
+              <span>{order.billingType}</span>
+              <span>{order.value}</span>{" "}
+            </div>
+
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "8rem",
+              }}
+            ></div>
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "5rem",
+              }}
+            >
+              <span>Status</span>
+              <span>
+                {" "}
+                {(() => {
+                  switch (order.status) {
+                    case "RECEIVED":
+                      return "pago";
+                    case "CONFIRMED":
+                      return "Cobrança confirmada";
+                    case "PENDING":
+                      return "Pendente";
+                    case "OVERDUE":
+                      return "Cobrança vencida";
+                    default:
+                      return;
+                  }
+                })()}
+              </span>
+            </div>
+
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "15rem",
+              }}
+            >
+              <div>{order.trackingCode}</div>
             </div>
           </div>
         ))}
 
       {creditCard &&
         creditCard.slice(0, 1).map((order, index) => (
-          <div key={index} style={{ marginTop: "15rem" }}>
-{order.billingType === "CREDIT_CARD" &&
-                                  "Cartão de Crédito"}                       
-                  <div>{order.trackingCode}</div>
-                  {(() => {
-                                  switch (order.status) {
-                                    case "RECEIVED":
-                                      return "pago";
-                                    case "CONFIRMED":
-                                      return "Cobrança confirmada";
-                                    case "PENDING":
-                                      return "Pendente";
-                                    case "OVERDUE":
-                                      return "Cobrança vencida";
-                                    default:
-                                      return;
-                                  }
-                                })()}
-            <div>
+          <div
+            key={index}
+            style={{
+              position: "reative",
+              display: "flex",
+              margin: "0 auto",
+              marginTop: "15rem",
+              marginBottom: "15rem",
+              border: "1px solid rgba(0, 0, 0, 0.10)",
+              width: "60vw",
+              height: "50vh",
+            }}
+          >
+            <div style={{ padding: "7rem 3rem" }}>
               {order.products.slice(0, 1).map((product, prodIndex) => (
-                <div key={prodIndex} style={{
-                  marginBottom:"10rem"
-                }}>
+                <div
+                  key={prodIndex}
+                  style={{
+                    marginBottom: "10rem",
+                  }}
+                >
                   <Link to={`/order/${order.custumerId}/${order._id}`}>
                     <img
                       src={product.image}
                       alt={`Produto ${product.productId}`}
-                      style={{ width: "10vw" }}
+                      style={{ width: "8vw" }}
                     />
-                    
                   </Link>
-               
                 </div>
               ))}
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "3rem",
+                gap: "2rem",
+              }}
+            >
+              {" "}
+              <span>
+                {order.billingType === "CREDIT_CARD" && "Cartão de Crédito"}
+              </span>
+              <span>{order.value}</span>{" "}
+            </div>
+
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "8rem",
+              }}
+            ></div>
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "5rem",
+              }}
+            >
+              <span>Status</span>
+              <span>
+                {" "}
+                {(() => {
+                  switch (order.status) {
+                    case "RECEIVED":
+                      return "pago";
+                    case "CONFIRMED":
+                      return "Cobrança confirmada";
+                    case "PENDING":
+                      return "Pendente";
+                    case "OVERDUE":
+                      return "Cobrança vencida";
+                    default:
+                      return;
+                  }
+                })()}
+              </span>
+            </div>
+
+            <div
+              style={{
+                position: "absolute",
+                right: "22rem",
+                marginTop: "15rem",
+              }}
+            >
+              <div>
+                <span>código de rastreio</span>
+                <span>{order.trackingCode}</span>
+              </div>
             </div>
           </div>
         ))}
