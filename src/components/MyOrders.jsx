@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import { useAuth } from "../context/AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
+import CircularIndeterminate from "./CircularIndeterminate";
 
 
 const MyOrders = () => {
@@ -17,6 +18,7 @@ const MyOrders = () => {
 
       const token = Cookies.get('token'); // Obtenha o token do cookie
   const [expanded, setExpanded] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded((prevExpanded) => ({
@@ -39,7 +41,8 @@ const MyOrders = () => {
           setBoletos(response.data.boleto);
           setPix(response.data.pix);
           setCreditCard(response.data.creditCard);
-          console.log("creditCard", response.data.creditCard);
+          setLoading(false); // Configura o estado de carregamento para false após receber os dados
+
         })
         .catch((error) => {
           console.error("Erro ao obter os pedidos:", error);
@@ -65,7 +68,19 @@ const MyOrders = () => {
     <>
       <Header />
       <Navbar />
-
+      {loading ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop: "20rem",
+                    }}
+                  >
+                    <CircularIndeterminate />;
+                  </div>
+                ) : (<>
+                
+                
       {boletos &&
         boletos.map((order, index) => (
           <div
@@ -346,6 +361,7 @@ const MyOrders = () => {
             </div>
           </div>
         ))}
+                </>)}
     </>
   );
 };

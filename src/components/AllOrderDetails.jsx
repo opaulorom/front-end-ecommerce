@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 
 import ImageComponent from "./ImageComponent";
+import CircularIndeterminate from "./CircularIndeterminate";
 
 const AllOrderDetails = () => {
   const userId = Cookies.get("userId");
@@ -14,13 +15,14 @@ const AllOrderDetails = () => {
   const [boletos, setBoletos] = useState([]);
   const [pix, setPix] = useState([]);
   const [creditCard, setCreditCard] = useState([]);
-  const [paymentMethod, setPaymentMethod] = useState(""); // State para armazenar o método de pagamento selecionado
   const { id } = useParams(); // Certifique-se de que o parâmetro corresponde ao nome na URL
 
   const [expanded, setExpanded] = useState({});
   const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
   const token = Cookies.get('token'); // Obtenha o token do cookie
+  const [loading, setLoading] = useState(true);
+
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded((prevExpanded) => ({
       ...prevExpanded,
@@ -29,6 +31,8 @@ const AllOrderDetails = () => {
   };
 
   useEffect(() => {
+    setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
+
     if (loggedIn) {
       axios
         .get(`http://localhost:3001/api/allOrders/${userId}/${id}`,
@@ -42,6 +46,8 @@ const AllOrderDetails = () => {
           setBoletos(response.data.boleto);
           setPix(response.data.pix);
           setCreditCard(response.data.creditCard);
+          setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
+
         })
         .catch((error) => {
           console.error("Erro ao obter os pedidos:", error);
@@ -52,31 +58,26 @@ const AllOrderDetails = () => {
   const handleClick = (payload) => {
     navigator.clipboard.writeText(payload);
   };
-  const [activeTab, setActiveTab] = useState(0);
+  
 
-  const handleTabClick = (index) => {
-    setActiveTab(index);
-    // Definir o método de pagamento selecionado com base no índice da aba clicada
-    if (index === 0) {
-      setPaymentMethod("boleto");
-    } else if (index === 1) {
-      setPaymentMethod("pix");
-    } else {
-      setPaymentMethod(""); // Limpar o método de pagamento se nenhuma aba for selecionada
-    }
-  };
-
-  const tabStyle = {
-    color: "#ccc", // Cor de fundo das tabs ativas
-    // Outros estilos conforme necessário
-  };
 
   return (
     <>
       <Header />
       <Navbar />
-
-      {boletos &&
+      {loading ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop: "20rem",
+                    }}
+                  >
+                    <CircularIndeterminate />;
+                  </div>
+                ) :(<>
+             
+                {boletos &&
         boletos.map((order, index) => (
           <div
             key={index}
@@ -245,6 +246,11 @@ const AllOrderDetails = () => {
             </div>
           </div>
         ))}
+                
+                
+                
+                </>)}
+     
     </>
   );
 };
