@@ -32,6 +32,7 @@ const MyOrders = () => {
           setBoletos(response.data.boleto);
           setPix(response.data.pix);
           setCreditCard(response.data.creditCard);
+          console.log("creditCard",response.data.creditCard)
         })
         .catch((error) => {
           console.error("Erro ao obter os pedidos:", error);
@@ -63,9 +64,23 @@ const MyOrders = () => {
           <div key={index} style={{ marginTop: "15rem" }}>
             
             <span>{order.billingType}</span>
-            <div>{order.status}</div>
+            {(() => {
+                                  switch (order.status) {
+                                    case "RECEIVED":
+                                      return "pago";
+                                    case "CONFIRMED":
+                                      return "Cobrança confirmada";
+                                    case "PENDING":
+                                      return "Pendente";
+                                    case "OVERDUE":
+                                      return "Cobrança vencida";
+                                    default:
+                                      return;
+                                  }
+                                })()}
 
-            <div></div>
+<div>{order.trackingCode}</div>
+
             <div>
               {order.products.slice(0, 1).map((product, prodIndex) => (
                 <div key={prodIndex}>
@@ -76,8 +91,7 @@ const MyOrders = () => {
                       style={{ width: "10vw" }}
                     />
                   </Link>
-                  <div>{order.status}</div>
-                  <div>{order.trackingCode}</div>
+           
                 </div>
               ))}
             </div>
@@ -87,7 +101,20 @@ const MyOrders = () => {
         pix.map((order, index) => (
           <div key={index} style={{ marginTop: "15rem" }}>
             {order.billingType}
-            <div>{order.status}</div>
+            {(() => {
+                                  switch (order.status) {
+                                    case "RECEIVED":
+                                      return "pago";
+                                    case "CONFIRMED":
+                                      return "Cobrança confirmada";
+                                    case "PENDING":
+                                      return "Pendente";
+                                    case "OVERDUE":
+                                      return "Cobrança vencida";
+                                    default:
+                                      return;
+                                  }
+                                })()}
 
             <div>
               {order.products.slice(0, 1).map((product, prodIndex) => (
@@ -109,11 +136,23 @@ const MyOrders = () => {
       {creditCard &&
         creditCard.slice(0, 1).map((order, index) => (
           <div key={index} style={{ marginTop: "15rem" }}>
-                        {order.billingType}
-                        {order._id}
-
-                        <div>{order.status}</div>
+{order.billingType === "CREDIT_CARD" &&
+                                  "Cartão de Crédito"}                       
                   <div>{order.trackingCode}</div>
+                  {(() => {
+                                  switch (order.status) {
+                                    case "RECEIVED":
+                                      return "pago";
+                                    case "CONFIRMED":
+                                      return "Cobrança confirmada";
+                                    case "PENDING":
+                                      return "Pendente";
+                                    case "OVERDUE":
+                                      return "Cobrança vencida";
+                                    default:
+                                      return;
+                                  }
+                                })()}
             <div>
               {order.products.slice(0, 1).map((product, prodIndex) => (
                 <div key={prodIndex} style={{
