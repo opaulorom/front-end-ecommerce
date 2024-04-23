@@ -72,89 +72,80 @@ const AlertComponente = () => {
         {boletos &&
           boletos.map((order, index) => (
             <>
-             {order.trackingCode &&    <div key={index}>
-            <div>
-              {order.products.slice(0, 1).map((product, prodIndex) => (
-                <div
-                  key={prodIndex}
-               
-                >
-               
-                  <Link to={`/order/${order.custumerId}/${order._id}`}>
-                    produto
-                  </Link>
+              {order.trackingCode && (
+                <div key={index}>
+                  <div>
+                    {order.products.slice(0, 1).map((product, prodIndex) => (
+                      <div key={prodIndex}>
+                        <Link to={`/order/${order.custumerId}/${order._id}`}>
+                          produto
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div>
+                    <span>código de rastreio</span>
+
+                    <div>{order.trackingCode}</div>
+                  </div>
                 </div>
-              ))}
-            </div>
-
-   
-           
-            <div>
-              <span>código de rastreio</span>
-
-              <div>{order.trackingCode}</div>
-            </div>
-          </div>
-          
-          }
-          
-            
+              )}
             </>
-           
           ))}
 
         {pix &&
           pix.map((order, index) => (
             <>
-            
-            {order.trackingCode && <div key={index}>
-              <div style={{}}>
-                {order.products.slice(0, 1).map((product, prodIndex) => (
-                  <div
-                    key={prodIndex}
-                    style={{
-                      marginBottom: "10rem",
-                    }}
-                  >
-                    <Link to={`/order/${order.custumerId}/${order._id}`}>
-                      produto
-                    </Link>
+              {order.trackingCode && (
+                <div key={index}>
+                  <div style={{}}>
+                    {order.products.slice(0, 1).map((product, prodIndex) => (
+                      <div
+                        key={prodIndex}
+                        style={{
+                          marginBottom: "10rem",
+                        }}
+                      >
+                        <Link to={`/order/${order.custumerId}/${order._id}`}>
+                          produto
+                        </Link>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-              <div>
-                <span>código de rastreio</span>
-                <div>{order.trackingCode}</div>
-              </div>
-            </div>}
+                  <div>
+                    <span>código de rastreio</span>
+                    <div>{order.trackingCode}</div>
+                  </div>
+                </div>
+              )}
             </>
-            
           ))}
 
         {creditCard &&
           creditCard.slice(0, 1).map((order, index) => (
             <>
- {order.trackingCode && 
-<div key={index}>
-              <div >
-                {order.products.slice(0, 1).map((product, prodIndex) => (
-                  <div key={prodIndex}>
-                    <Link to={`/order/${order.custumerId}/${order._id}`}>
-                      produto
-                    </Link>
+              {order.trackingCode && (
+                <div key={index}>
+                  <div>
+                    {order.products.slice(0, 1).map((product, prodIndex) => (
+                      <div key={prodIndex}>
+                        <Link to={`/order/${order.custumerId}/${order._id}`}>
+                          produto
+                        </Link>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
 
-              <div>
-                <div>
-                  <span>código de rastreio</span>
-                  <span>{order.trackingCode}</span>
+                  <div>
+                    <div>
+                      <span>código de rastreio</span>
+                      <span>{order.trackingCode}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>}
+              )}
             </>
-         
           ))}
       </div>
       {orders &&
