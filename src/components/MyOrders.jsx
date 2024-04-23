@@ -8,7 +8,6 @@ import axios from "axios";
 
 import ImageComponent from "./ImageComponent";
 
-
 const MyOrders = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
@@ -59,127 +58,70 @@ const MyOrders = () => {
       <Header />
       <Navbar />
 
-      {boletos && boletos.map((order, index) => (
-        <div key={index} style={{ marginTop: "15rem" }}>
-          <span>{order.billingType}</span>
-          <div>
-            <div className="tab-buttons">
-              <span
-                style={activeTab === 0 ? tabStyle : {}}
-                onClick={() => handleTabClick(0)}
-              >
-                Pagar Boleto
-              </span>
-              
-            </div>
-            <div className="tab-content">
-              {activeTab === 0 && (
-                <div>
-                  {" "}
-                  <div>
-                    <Link to={order.bankSlipUrl}>{order.bankSlipUrl}</Link>
-                  </div>
+      {boletos &&
+        boletos.map((order, index) => (
+          <div key={index} style={{ marginTop: "15rem" }}>
+            <span>{order.billingType}</span>
+            <div></div>
+            <div>
+              {order.products.slice(0, 1).map((product, prodIndex) => (
+                <div key={prodIndex}>
+                  <Link to={`/order/${order.custumerId}/${order._id}`}>
+                    <img
+                      src={product.image}
+                      alt={`Produto ${product.productId}`}
+                      style={{ width: "10vw" }}
+                    />
+                  </Link>
+                  <div>{order.status}</div>
+                  <div>{order.trackingCode}</div>
                 </div>
-              )}
-           
+              ))}
             </div>
           </div>
-          <div>
-            {order.products.slice(0, 1).map((product, prodIndex) => (
-              <div key={prodIndex}>
-
-                <Link to={`/order/${order.custumerId}/${order._id}`}>
-                <img
-                  src={product.image}
-                  alt={`Produto ${product.productId}`}
-                  style={{ width: "10vw" }}
-                />
-                </Link>
-                <div>{order.status}</div>
-                <div>{order.trackingCode}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-      {pix && pix.map((order, index) => (
-        <div key={index} style={{ marginTop: "15rem" }}>
-          <div>
-            <div className="tab-buttons">
-              <span
-                style={activeTab === 0 ? tabStyle : {}}
-                onClick={() => handleTabClick(0)}
-              >
-                Pagar Pix
-              </span>
-          
-            </div>
-            <div className="tab-content">
-
-              {activeTab === 0 && (
-                <div>
-                  {" "}
-                  <div>
-                    {order.encodedImage && (
-                      <ImageComponent encodedImage={order.encodedImage} />
-                    )}
-                    {order.encodedImage && (
-                      <>
-                        <p style={{ width: "10vw" }}>{order.payload}</p>
-                        <div>
-                          <button onClick={() => handleClick(order.payload)}>
-                            Copiar
-                          </button>
-                        </div>
-                      </>
-                    )}
-                  </div>{" "}
+        ))}
+      {pix &&
+        pix.map((order, index) => (
+          <div key={index} style={{ marginTop: "15rem" }}>
+            <div></div>
+            <div>
+              {order.products.slice(0, 1).map((product, prodIndex) => (
+                <div key={prodIndex}>
+                  <Link to={`/order/${order.custumerId}/${order._id}`}>
+                    <img
+                      src={product.image}
+                      alt={`Produto ${product.productId}`}
+                      style={{ width: "10vw" }}
+                    />
+                  </Link>
+                  <div>{order.status}</div>
+                  <div>{order.trackingCode}</div>
                 </div>
-              )}
-             
+              ))}
             </div>
           </div>
-          <div>
-            {order.products.slice(0, 1).map((product, prodIndex) => (
-              <div key={prodIndex}>
-                                <Link to={`/order/${order.custumerId}/${order._id}`}>
+        ))}
 
-
-
-                <img
-                  src={product.image}
-                  alt={`Produto ${product.productId}`}
-                  style={{ width: "10vw" }}
-                />
-                                </Link>
-                <div>{order.status}</div>
-                <div>{order.trackingCode}</div>
-              </div>
-            ))}
+      {creditCard &&
+        creditCard.map((order, index) => (
+          <div key={index} style={{ marginTop: "15rem" }}>
+            <div>
+              {order.products.slice(0, 1).map((product, prodIndex) => (
+                <div key={prodIndex}>
+                  <Link to={`/order/${order.custumerId}/${order._id}`}>
+                    <img
+                      src={product.image}
+                      alt={`Produto ${product.productId}`}
+                      style={{ width: "10vw" }}
+                    />
+                  </Link>
+                  <div>{order.status}</div>
+                  <div>{order.trackingCode}</div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
-
-      {creditCard && creditCard.map((order, index) => (
-        <div key={index} style={{ marginTop: "15rem" }}>
-          <div>
-            {order.products.slice(0, 1).map((product, prodIndex) => (
-              <div key={prodIndex}>
-                                <Link to={`/order/${order.custumerId}/${order._id}`}>
-                                  
-                <img
-                  src={product.image}
-                  alt={`Produto ${product.productId}`}
-                  style={{ width: "10vw" }}
-                />
-                                </Link>
-                <div>{order.status}</div>
-                <div>{order.trackingCode}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+        ))}
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Importe o Link do React Router
+import { Link, useParams } from "react-router-dom"; // Importe o Link do React Router
 import Header from "./Header";
 import Navbar from "./Navbar";
 import { useAuth } from "../context/AuthContext";
@@ -16,6 +16,7 @@ const AllOrderDetails = () => {
   const [pix, setPix] = useState([]);
   const [creditCard, setCreditCard] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState(""); // State para armazenar o método de pagamento selecionado
+  const { id } = useParams(); // Certifique-se de que o parâmetro corresponde ao nome na URL
 
   const [expanded, setExpanded] = useState({});
 
@@ -29,7 +30,7 @@ const AllOrderDetails = () => {
   useEffect(() => {
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/allOrders/${userId}`)
+        .get(`http://localhost:3001/api/allOrders/${userId}/${id}`)
         .then((response) => {
           setBoletos(response.data.boleto);
           setPix(response.data.pix);
@@ -72,55 +73,21 @@ const AllOrderDetails = () => {
         <div key={index} style={{ marginTop: "15rem" }}>
           <span>{order.billingType}</span>
           <div>
-            <div className="tab-buttons">
-              <span
-                style={activeTab === 0 ? tabStyle : {}}
-                onClick={() => handleTabClick(0)}
-              >
-                Pagar Boleto
-              </span>
+
+             
               
-            </div>
-            <div className="tab-content">
-              {activeTab === 0 && (
-                <div>
+          
+
                   {" "}
                   <div>
                     <Link to={order.bankSlipUrl}>{order.bankSlipUrl}</Link>
                   </div>
-                </div>
-              )}
-           
-            </div>
+
+  
             <div>
-            <div className="tab-buttons">
-              <span
-                style={activeTab === 0 ? tabStyle : {}}
-                onClick={() => handleTabClick(0)}
-              >
-                Pagar Boleto
-              </span>
-              <span
-                style={activeTab === 1 ? tabStyle : {}}
-                onClick={() => handleTabClick(1)}
-              >
-                Pagar Pix
-              </span>
-            </div>
-            <div className="tab-content">
-              {/* Renderizar o link de boleto apenas se o pagamento for boleto */}
-              {paymentMethod === "boleto" && (
-                <div>
-                  {" "}
-                  <div>
-                    <Link to={order.bankSlipUrl}>{order.bankSlipUrl}</Link>
-                  </div>
-                </div>
-              )}
-              {/* Renderizar o QR code apenas se o pagamento for pix */}
-              {paymentMethod === "pix" && (
-                <div>
-                  {" "}
+            
+         
+           
                   <div>
                     {order.encodedImage && (
                       <ImageComponent encodedImage={order.encodedImage} />
@@ -135,14 +102,12 @@ const AllOrderDetails = () => {
                         </div>
                       </>
                     )}
-                  </div>{" "}
-                </div>
-              )}
+              
             </div>
           </div>
           </div>
           <div>
-            {order.products.slice(0, 1).map((product, prodIndex) => (
+            {order.products.map((product, prodIndex) => (
               <div key={prodIndex}>
                 <img
                   src={product.image}
@@ -157,22 +122,7 @@ const AllOrderDetails = () => {
         </div>
       ))}
       {pix && pix.map((order, index) => (
-        <div key={index} style={{ marginTop: "15rem" }}>
-          <div>
-            <div className="tab-buttons">
-              <span
-                style={activeTab === 0 ? tabStyle : {}}
-                onClick={() => handleTabClick(0)}
-              >
-                Pagar Pix
-              </span>
-          
-            </div>
-            <div className="tab-content">
-
-              {activeTab === 0 && (
-                <div>
-                  {" "}
+    
                   <div>
                     {order.encodedImage && (
                       <ImageComponent encodedImage={order.encodedImage} />
@@ -187,14 +137,10 @@ const AllOrderDetails = () => {
                         </div>
                       </>
                     )}
-                  </div>{" "}
-                </div>
-              )}
-             
-            </div>
-          </div>
+                
+ 
           <div>
-            {order.products.slice(0, 1).map((product, prodIndex) => (
+            {order.products.map((product, prodIndex) => (
               <div key={prodIndex}>
                 <img
                   src={product.image}
@@ -212,7 +158,7 @@ const AllOrderDetails = () => {
       {creditCard && creditCard.map((order, index) => (
         <div key={index} style={{ marginTop: "15rem" }}>
           <div>
-            {order.products.slice(0, 1).map((product, prodIndex) => (
+            {order.products.map((product, prodIndex) => (
               <div key={prodIndex}>
                 <img
                   src={product.image}
