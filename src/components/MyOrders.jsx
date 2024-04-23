@@ -61,7 +61,10 @@ const MyOrders = () => {
       {boletos &&
         boletos.map((order, index) => (
           <div key={index} style={{ marginTop: "15rem" }}>
+            
             <span>{order.billingType}</span>
+            <div>{order.status}</div>
+
             <div></div>
             <div>
               {order.products.slice(0, 1).map((product, prodIndex) => (
@@ -83,7 +86,9 @@ const MyOrders = () => {
       {pix &&
         pix.map((order, index) => (
           <div key={index} style={{ marginTop: "15rem" }}>
-            <div></div>
+            {order.billingType}
+            <div>{order.status}</div>
+
             <div>
               {order.products.slice(0, 1).map((product, prodIndex) => (
                 <div key={prodIndex}>
@@ -94,8 +99,7 @@ const MyOrders = () => {
                       style={{ width: "10vw" }}
                     />
                   </Link>
-                  <div>{order.status}</div>
-                  <div>{order.trackingCode}</div>
+                 
                 </div>
               ))}
             </div>
@@ -103,20 +107,27 @@ const MyOrders = () => {
         ))}
 
       {creditCard &&
-        creditCard.map((order, index) => (
+        creditCard.slice(0, 1).map((order, index) => (
           <div key={index} style={{ marginTop: "15rem" }}>
+                        {order.billingType}
+                        {order._id}
+
+                        <div>{order.status}</div>
+                  <div>{order.trackingCode}</div>
             <div>
               {order.products.slice(0, 1).map((product, prodIndex) => (
-                <div key={prodIndex}>
+                <div key={prodIndex} style={{
+                  marginBottom:"10rem"
+                }}>
                   <Link to={`/order/${order.custumerId}/${order._id}`}>
                     <img
                       src={product.image}
                       alt={`Produto ${product.productId}`}
                       style={{ width: "10vw" }}
                     />
+                    
                   </Link>
-                  <div>{order.status}</div>
-                  <div>{order.trackingCode}</div>
+               
                 </div>
               ))}
             </div>

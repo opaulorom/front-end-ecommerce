@@ -245,7 +245,6 @@ const ProductDetails = () => {
   
     } else {
       // Se o número de itens exceder três, exiba um alerta
-      toast.error("Você só pode adicionar até 3 produtos por vez ao carrinho.");
     }
    
     
