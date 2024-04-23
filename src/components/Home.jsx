@@ -5,15 +5,13 @@ import Header from "./Header";
 import Categories from "./Categories";
 import CategoryCarousel from "./CategoryCarousel";
 import DiscountImageCarousel from "./DiscountImageCarousel ";
-import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
 import NewArrivals from "./NewArrivals";
-import SliderContent from "./SliderContent";
 import Slider from "../components/Slider";
 
 const Home = () => {
   return (
     <div>
-      <DiscountImageCarousel />
+      <Slider />
       <Categories />
       <CategoryCarousel />
       <Header />
@@ -23,8 +21,7 @@ const Home = () => {
         <h1 style={{ marginTop: "1rem" }}>Novidades</h1>
         <NewArrivals />{" "}
       </div>
-      <SliderContent />
-      <Slider />
+
       <Navbar></Navbar>
     </div>
   );

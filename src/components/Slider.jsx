@@ -1,58 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Link, useNavigate } from 'react-router-dom';
 const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval }) => {
-  const [imageUrls, setImageUrls] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchImageUrls = async () => {
+    const fetchData = async () => {
       try {
-        const response50 = await axios.get('http://localhost:3001/api/sliderByDiscount/50');
-        const response15 = await axios.get('http://localhost:3001/api/sliderByDiscount/15');
-        const response70 = await axios.get('http://localhost:3001/api/sliderByDiscount/70');
+        const response = await axios.get('http://localhost:3001/api/categories');
+        console.log('Categories Response:', response.data);
 
-        setImageUrls([
-          response50.data.sliders[0].image,
-          response15.data.sliders[0].image,
-          response70.data.sliders[0].image,
-        ]);
+        if (response.data.categories && Array.isArray(response.data.categories)) {
+          setCategories(response.data.categories.slice(0, 3)); // Mostrar apenas as primeiras três categorias
+        } else {
+          setCategories([]);
+        }
       } catch (error) {
-        console.error('Error fetching image URLs:', error);
-        // Handle error gracefully, e.g., display a placeholder image or error message
+        console.error('Error fetching categories:', error);
       }
     };
 
-    fetchImageUrls();
+    fetchData();
   }, []);
 
   useEffect(() => {
-    // Função para avançar para a próxima imagem no carrossel
     const nextImage = () => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % categories.length);
     };
 
-    // Configurar o temporizador para avançar automaticamente
     const autoPlayTimer = setInterval(nextImage, autoPlayInterval || 4000);
 
-    // Limpar o temporizador quando o componente for desmontado
     return () => clearInterval(autoPlayTimer);
-  }, [currentIndex, imageUrls, autoPlayInterval]);
-
-  // Estilos CSS
-  const carouselContainerStyle = {
-    position: 'relative',
-    textAlign: 'center',
-  };
-
+  }, [currentIndex, categories, autoPlayInterval]);
   const imageStyle = {
-    width: imageWidth || '100svw',
-    height: imageHeight || '80svh',
-    objectFit: 'cover',
+
+    objectFit: 'contain',
     borderRadius: '8px',
+    marginTop:"8rem",
+    width: "100%",
+    height: "100%",
+    maxWidth:"calc(100% - 24px)",
+    maxHeight: "none",
+    boxSizing: "border-box"
+    
   };
+
+  
 
   const arrowStyle = {
     position: 'absolute',
@@ -63,15 +60,28 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval }) => {
   };
 
   return (
-    <div style={carouselContainerStyle}>
-      <Link to={`/products/discount/${[50, 15, 70][currentIndex]}/category/Feminina`}>
-        <img src={imageUrls[currentIndex]} alt={alt} style={imageStyle} />
-      </Link>
-      <div style={{ ...arrowStyle, left: 0 }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + imageUrls.length) % imageUrls.length)}>
-      <ArrowBackIosIcon style={{fontSize:"2rem"}}/>
+    <div style={{ position: 'relative', textAlign: 'center' }}>
+      {categories.map((category, index) => (
+        <div key={index} style={{ display: index === currentIndex ? 'block' : 'none' }}>
+          {category.images.map((subcategoryImages, subIndex) => (
+            <div key={subIndex}>
+              {subcategoryImages.map((image, imageIndex) => (
+                <div key={imageIndex} style={{ display: 'inline-block', margin: '10px' }}>
+                  <Link to={`/categories/${encodeURIComponent(category.name)}`}>
+                    <img src={image.imageUrl} alt={`Image ${image._id}`}  style={imageStyle} />
+                  </Link>
+                  <div style={{ marginTop: '5px' }}>{category.name}</div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))}
+      <div style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', left: 0, cursor: 'pointer', fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + categories.length) % categories.length)}>
+        <ArrowBackIosIcon style={{ fontSize: '2rem' }} />
       </div>
-      <div style={{ ...arrowStyle, right: 0 }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % imageUrls.length)}>
-        <ArrowForwardIosIcon style={{fontSize:"2rem"}}/>
+      <div style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', right: 0, cursor: 'pointer', fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % categories.length)}>
+        <ArrowForwardIosIcon style={{ fontSize: '2rem' }} />
       </div>
     </div>
   );

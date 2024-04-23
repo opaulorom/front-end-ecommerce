@@ -29,6 +29,8 @@ const SliderContent = () => {
     fetchData();
   }, []);
 
+  
+
   return (
     <div style={{ position: 'relative' }}>
 
