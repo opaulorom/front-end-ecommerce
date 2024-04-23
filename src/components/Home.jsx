@@ -7,6 +7,8 @@ import CategoryCarousel from "./CategoryCarousel";
 import DiscountImageCarousel from "./DiscountImageCarousel ";
 import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
 import NewArrivals from "./NewArrivals";
+import SliderContent from "./SliderContent";
+import Slider from "../components/Slider";
 
 const Home = () => {
   return (
@@ -15,12 +17,14 @@ const Home = () => {
       <Categories />
       <CategoryCarousel />
       <Header />
-      <div style={{ display: "flex", marginTop: "3rem", flexDirection:"column" }}>
-      <h1 style={{ marginTop: "1rem" }}>Novidades</h1>
-
+      <div
+        style={{ display: "flex", marginTop: "3rem", flexDirection: "column" }}
+      >
+        <h1 style={{ marginTop: "1rem" }}>Novidades</h1>
         <NewArrivals />{" "}
       </div>
-
+      <SliderContent />
+      <Slider />
       <Navbar></Navbar>
     </div>
   );

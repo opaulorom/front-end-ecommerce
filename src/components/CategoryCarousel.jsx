@@ -111,6 +111,7 @@ const CategoryCarousel = () => {
         }} >
         {categories.map((category, index) => (
           <div key={category._id} style={{ width: `${100 / categories.length}%`, textAlign: 'center', marginLeft:"1rem" }}>
+            
             {category.images.map((subcategoryImages, index) => (
               subcategoryImages.map(image => (
                 <div key={image._id} style={{ width: '150px', height: '150px', display: 'inline-block' }}>
