@@ -6,7 +6,6 @@ import { useAuth } from "../context/AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
 
-import ImageComponent from "./ImageComponent";
 
 const MyOrders = () => {
   const userId = Cookies.get("userId");
@@ -14,7 +13,9 @@ const MyOrders = () => {
   const [boletos, setBoletos] = useState([]);
   const [pix, setPix] = useState([]);
   const [creditCard, setCreditCard] = useState([]);
+  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
+      const token = Cookies.get('token'); // Obtenha o token do cookie
   const [expanded, setExpanded] = useState({});
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -27,7 +28,13 @@ const MyOrders = () => {
   useEffect(() => {
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/allOrders/${userId}`)
+        .get(`http://localhost:3001/api/allOrders/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
+          },
+        })
         .then((response) => {
           setBoletos(response.data.boleto);
           setPix(response.data.pix);

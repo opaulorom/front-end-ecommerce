@@ -18,7 +18,9 @@ const AllOrderDetails = () => {
   const { id } = useParams(); // Certifique-se de que o parâmetro corresponde ao nome na URL
 
   const [expanded, setExpanded] = useState({});
+  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
+  const token = Cookies.get('token'); // Obtenha o token do cookie
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded((prevExpanded) => ({
       ...prevExpanded,
@@ -29,7 +31,13 @@ const AllOrderDetails = () => {
   useEffect(() => {
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/allOrders/${userId}/${id}`)
+        .get(`http://localhost:3001/api/allOrders/${userId}/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Credentials: credentials,
+          },
+        })
         .then((response) => {
           setBoletos(response.data.boleto);
           setPix(response.data.pix);
