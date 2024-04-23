@@ -71,33 +71,43 @@ const AlertComponente = () => {
       <div>
         {boletos &&
           boletos.map((order, index) => (
-            <div key={index}>
-              <div>
-                {order.products.slice(0, 1).map((product, prodIndex) => (
-                  <div
-                    key={prodIndex}
-                 
-                  >
-                    <Link to={`/order/${order.custumerId}/${order._id}`}>
-                      produto
-                    </Link>
-                  </div>
-                ))}
-              </div>
-
-              <div></div>
-
-              <div>
-                <span>código de rastreio</span>
-
-                <div>{order.trackingCode}</div>
-              </div>
+            <>
+             {order.trackingCode &&    <div key={index}>
+            <div>
+              {order.products.slice(0, 1).map((product, prodIndex) => (
+                <div
+                  key={prodIndex}
+               
+                >
+               
+                  <Link to={`/order/${order.custumerId}/${order._id}`}>
+                    produto
+                  </Link>
+                </div>
+              ))}
             </div>
+
+   
+           
+            <div>
+              <span>código de rastreio</span>
+
+              <div>{order.trackingCode}</div>
+            </div>
+          </div>
+          
+          }
+          
+            
+            </>
+           
           ))}
 
         {pix &&
           pix.map((order, index) => (
-            <div key={index}>
+            <>
+            
+            {order.trackingCode && <div key={index}>
               <div style={{}}>
                 {order.products.slice(0, 1).map((product, prodIndex) => (
                   <div
@@ -116,12 +126,16 @@ const AlertComponente = () => {
                 <span>código de rastreio</span>
                 <div>{order.trackingCode}</div>
               </div>
-            </div>
+            </div>}
+            </>
+            
           ))}
 
         {creditCard &&
           creditCard.slice(0, 1).map((order, index) => (
-            <div key={index}>
+            <>
+ {order.trackingCode && 
+<div key={index}>
               <div >
                 {order.products.slice(0, 1).map((product, prodIndex) => (
                   <div key={prodIndex}>
@@ -138,7 +152,9 @@ const AlertComponente = () => {
                   <span>{order.trackingCode}</span>
                 </div>
               </div>
-            </div>
+            </div>}
+            </>
+         
           ))}
       </div>
       {orders &&
