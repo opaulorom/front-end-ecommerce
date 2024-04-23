@@ -70,35 +70,22 @@ const MyOrders = () => {
               >
                 Pagar Boleto
               </button>
-              <button
-                style={activeTab === 1 ? tabStyle : {}}
-                onClick={() => handleTabClick(1)}
-              >
-                Tab 2
-              </button>
-              <button
-                style={activeTab === 2 ? tabStyle : {}}
-                onClick={() => handleTabClick(2)}
-              >
-                Tab 3
-              </button>
+              
             </div>
             <div className="tab-content">
               {activeTab === 0 && (
                 <div>
                   {" "}
                   <div>
-                    {order._id}
                     <Link to={order.bankSlipUrl}>{order.bankSlipUrl}</Link>
                   </div>
                 </div>
               )}
-              {activeTab === 1 && <div>Conteúdo da aba 2</div>}
-              {activeTab === 2 && <div>Conteúdo da aba 3</div>}
+           
             </div>
           </div>
           <div>
-            {order.products.map((product, prodIndex) => (
+            {order.products.slice(0, 1).map((product, prodIndex) => (
               <div key={prodIndex}>
                 <img
                   src={product.image}
@@ -122,21 +109,9 @@ const MyOrders = () => {
               >
                 Pagar Pix
               </button>
-              <button
-                style={activeTab === 1 ? tabStyle : {}}
-                onClick={() => handleTabClick(1)}
-              >
-                Tab 2
-              </button>
-              <button
-                style={activeTab === 2 ? tabStyle : {}}
-                onClick={() => handleTabClick(2)}
-              >
-                Tab 3
-              </button>
+          
             </div>
             <div className="tab-content">
-              {order._id}
 
               {activeTab === 0 && (
                 <div>
@@ -158,12 +133,11 @@ const MyOrders = () => {
                   </div>{" "}
                 </div>
               )}
-              {activeTab === 1 && <div>Conteúdo da aba 2</div>}
-              {activeTab === 2 && <div>Conteúdo da aba 3</div>}
+             
             </div>
           </div>
           <div>
-            {order.products.map((product, prodIndex) => (
+            {order.products.slice(0, 1).map((product, prodIndex) => (
               <div key={prodIndex}>
                 <img
                   src={product.image}
@@ -181,7 +155,7 @@ const MyOrders = () => {
       {creditCard && creditCard.map((order, index) => (
         <div key={index} style={{ marginTop: "15rem" }}>
           <div>
-            {order.products.map((product, prodIndex) => (
+            {order.products.slice(0, 1).map((product, prodIndex) => (
               <div key={prodIndex}>
                 <img
                   src={product.image}
