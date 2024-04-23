@@ -9,12 +9,13 @@ import axios from "axios";
 import ImageComponent from "./ImageComponent";
 
 
-const MyOrders = () => {
+const AllOrderDetails = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
   const [boletos, setBoletos] = useState([]);
   const [pix, setPix] = useState([]);
   const [creditCard, setCreditCard] = useState([]);
+  const [paymentMethod, setPaymentMethod] = useState(""); // State para armazenar o método de pagamento selecionado
 
   const [expanded, setExpanded] = useState({});
 
@@ -47,6 +48,14 @@ const MyOrders = () => {
 
   const handleTabClick = (index) => {
     setActiveTab(index);
+    // Definir o método de pagamento selecionado com base no índice da aba clicada
+    if (index === 0) {
+      setPaymentMethod("boleto");
+    } else if (index === 1) {
+      setPaymentMethod("pix");
+    } else {
+      setPaymentMethod(""); // Limpar o método de pagamento se nenhuma aba for selecionada
+    }
   };
 
   const tabStyle = {
@@ -83,18 +92,63 @@ const MyOrders = () => {
               )}
            
             </div>
+            <div>
+            <div className="tab-buttons">
+              <span
+                style={activeTab === 0 ? tabStyle : {}}
+                onClick={() => handleTabClick(0)}
+              >
+                Pagar Boleto
+              </span>
+              <span
+                style={activeTab === 1 ? tabStyle : {}}
+                onClick={() => handleTabClick(1)}
+              >
+                Pagar Pix
+              </span>
+            </div>
+            <div className="tab-content">
+              {/* Renderizar o link de boleto apenas se o pagamento for boleto */}
+              {paymentMethod === "boleto" && (
+                <div>
+                  {" "}
+                  <div>
+                    <Link to={order.bankSlipUrl}>{order.bankSlipUrl}</Link>
+                  </div>
+                </div>
+              )}
+              {/* Renderizar o QR code apenas se o pagamento for pix */}
+              {paymentMethod === "pix" && (
+                <div>
+                  {" "}
+                  <div>
+                    {order.encodedImage && (
+                      <ImageComponent encodedImage={order.encodedImage} />
+                    )}
+                    {order.encodedImage && (
+                      <>
+                        <p style={{ width: "10vw" }}>{order.payload}</p>
+                        <div>
+                          <button onClick={() => handleClick(order.payload)}>
+                            Copiar
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>{" "}
+                </div>
+              )}
+            </div>
+          </div>
           </div>
           <div>
             {order.products.slice(0, 1).map((product, prodIndex) => (
               <div key={prodIndex}>
-
-                <Link to={`/order/${order.custumerId}/${order._id}`}>
                 <img
                   src={product.image}
                   alt={`Produto ${product.productId}`}
                   style={{ width: "10vw" }}
                 />
-                </Link>
                 <div>{order.status}</div>
                 <div>{order.trackingCode}</div>
               </div>
@@ -142,16 +196,11 @@ const MyOrders = () => {
           <div>
             {order.products.slice(0, 1).map((product, prodIndex) => (
               <div key={prodIndex}>
-                                <Link to={`/order/${order.custumerId}/${order._id}`}>
-
-
-
                 <img
                   src={product.image}
                   alt={`Produto ${product.productId}`}
                   style={{ width: "10vw" }}
                 />
-                                </Link>
                 <div>{order.status}</div>
                 <div>{order.trackingCode}</div>
               </div>
@@ -165,14 +214,11 @@ const MyOrders = () => {
           <div>
             {order.products.slice(0, 1).map((product, prodIndex) => (
               <div key={prodIndex}>
-                                <Link to={`/order/${order.custumerId}/${order._id}`}>
-                                  
                 <img
                   src={product.image}
                   alt={`Produto ${product.productId}`}
                   style={{ width: "10vw" }}
                 />
-                                </Link>
                 <div>{order.status}</div>
                 <div>{order.trackingCode}</div>
               </div>
@@ -184,4 +230,4 @@ const MyOrders = () => {
   );
 };
 
-export default MyOrders;
+export default AllOrderDetails;

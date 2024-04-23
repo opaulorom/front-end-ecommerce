@@ -42,6 +42,7 @@ import SignUpForm from "./components/SignUpForm";
 import MyOrders from "./components/MyOrders";
 import OrderDetails from "./components/OrderDetails";
 import { UnreadProvider } from "./context/UnreadContext";
+import AllOrderDetails from "./components/AllOrderDetails";
 
 const Root = () => (
   <Routes>
@@ -101,7 +102,7 @@ const Root = () => (
     <Route path="/orders" element={<MyOrders/>} />
     <Route path="/boleto/:id/:customerId" element={<OrderDetails  />} />{" "}
 
-
+    <Route path="/order/:custumerId/:id" element={<AllOrderDetails  />} />{" "}
   </Routes>
 );
 
