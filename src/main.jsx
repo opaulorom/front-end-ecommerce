@@ -43,6 +43,7 @@ import MyOrders from "./components/MyOrders";
 import OrderDetails from "./components/OrderDetails";
 import { UnreadProvider } from "./context/UnreadContext";
 import AllOrderDetails from "./components/AllOrderDetails";
+import SuccessPage from "./components/SuccessPage";
 
 const Root = () => (
   <Routes>
@@ -90,7 +91,8 @@ const Root = () => (
     <Route path="/cart" element={<Cart />} />
     <Route path="/login" element={<LoginForm/>} />
     <Route path="/register" element={<RegisterLink/>} />
-
+    <Route path="/success" element={<SuccessPage/>} />
+    
     <Route path="/register/:token" element={<Register/>} />
     <Route path="/forgotPassword" element={<PasswordResetRequest/>} />
     <Route path="/reset-password/:token" element={<ResetPasswordPage/>} />

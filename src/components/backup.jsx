@@ -17,7 +17,6 @@ const Pay = () => {
   const [getTotal, setGetTotal] = useState({});
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const [buttonClicked, setButtonClicked] = useState(false);
-  const navigate = useNavigate(); // Inicialize o hook useNavigate
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -149,10 +148,7 @@ const Pay = () => {
 
     if (response.data) {
    
-      navigate("/success");
-    }else{
-      navigate("/");
-
+      navigate("/protected");
     }
 
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
