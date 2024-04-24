@@ -33,21 +33,25 @@ const Cart = () => {
   const [shippingFee, setShippingFee] = useState(0);
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
 
-  useEffect(() => {
+  function handleProducts(){
     axios
-      .get(`http://localhost:3001/api/cart/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Credentials: credentials,
-        },
-      })
-      .then((response) => {
-        setGetCart(response.data.cart.products);
-      })
-      .catch((error) => {
-        console.log("Erro ao visualizar frete.", error);
-      });
-  }, [userId]);
+    .get(`http://localhost:3001/api/cart/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+     
+      },
+    })
+    .then((response) => {
+      setGetCart(response.data.cart.products);
+    })
+    .catch((error) => {
+      console.log("Erro ao visualizar frete.", error);
+    });
+  }
+  useEffect(() => {
+    handleProducts()
+  }, []);
+  
 
   const handleDelete = useCallback(
     (productId) => {
@@ -62,12 +66,14 @@ const Cart = () => {
           }
         )
         .then((response) => {
-          console.log(response.data.message);
-          // Atualize o estado do carrinho na sua aplicação, se necessário
-          setGetCart((prevCart) =>
-            prevCart.filter((item) => item.productId._id !== productId)
-          );
-          removeFromCart(); // Chame a função removeFromCart do contexto do carrinho
+          // console.log(response.data.message);
+          // // Atualize o estado do carrinho na sua aplicação, se necessário
+          // setGetCart((prevCart) =>
+          //   prevCart.filter((item) => item.productId._id !== productId)
+          // );
+          // removeFromCart(); // Chame a função removeFromCart do contexto do carrinho
+          handleProducts()
+
         })
         .catch((error) => {
           console.error("Erro ao remover produto do carrinho:", error);
