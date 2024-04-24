@@ -7,19 +7,24 @@ import axios from "axios";
 
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState("pix");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
   const [encodedImage, setEncodedImage] = useState(null);
   const [pixCode, setPixCode] = useState(null);
   const [getCart, setGetCart] = useState([]);
   const [getTotal, setGetTotal] = useState({});
-  const token = Cookies.get('token'); // Obtenha o token do cookie
+  const token = Cookies.get("token"); // Obtenha o token do cookie
+  const [buttonClicked, setButtonClicked] = useState(false);
 
-  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-
+    if (name === "number" && value.replace(/\D/g, "").length < 15) {
+      setErrorMessage("O número do cartão de crédito deve ter 15 dígitos.");
+    } else {
+      setErrorMessage("");
+    }
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
@@ -27,19 +32,16 @@ const Pay = () => {
     }));
   };
 
-
   const handleChangePixAndBoleto = (event) => {
     const { name, value } = event.target;
     setPaymentMethod(value);
-
-  
   };
 
   const handleCreditCardPayment = (event) => {
     const { name, value } = event.target;
     setPaymentMethod(value);
-  }
-  
+  };
+
   // pagar com pix sem checkout transparente
   const handlePixPayment = async () => {
     try {
@@ -87,7 +89,6 @@ const Pay = () => {
     }
   };
 
-
   //  pix copia e cola
   const [status, setStatus] = useState("copiar");
 
@@ -106,25 +107,36 @@ const Pay = () => {
     expiryMonth: "",
     expiryYear: "",
     ccv: "",
-    
   });
+
+
+  const formatCreditCardNumber = (value) => {
+    const formattedValue = value.replace(/\D/g, "");
+    const maskedValue = formattedValue.replace(/(\d{4})(?=\d)/g, "$1 ");
+    return maskedValue;
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    setButtonClicked(true); // Define o estado como true quando o botão é clicado
+
     try {
+        // Verifica se o número do cartão tem 15 dígitos
+        if (formData.number.replace(/\D/g, "").length !== 15) {
+          throw new Error("O número do cartão de crédito deve ter 15 dígitos.");
+        }
       const updatedFormData = {
         ...formData,
         installmentCount: formData.pacelas,
       };
-  
+
       const response = await axios.post(
         `http://localhost:3001/api/creditCardWithoutTokenization/${userId}`,
         updatedFormData, // Aqui está o corpo da requisição
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            // Remova 'Credentials: credentials'
           },
         }
       );
@@ -135,19 +147,14 @@ const Pay = () => {
       // Trate erros aqui, como exibir uma mensagem para o usuário
     }
   };
-  
-
-
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/cart/${userId}/total-price`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Credentials: credentials,
-          },
-        })
+      .get(`http://localhost:3001/api/cart/${userId}/total-price`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log(response.data); // Verifique se o valor totalAmount está presente na resposta
         if (response.data.totalAmount !== getTotal.totalAmount) {
@@ -176,7 +183,7 @@ const Pay = () => {
         >
           Escolha o método de pagamento:
         </h1>
-     
+
         <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
           <input
             type="radio"
@@ -273,7 +280,7 @@ const Pay = () => {
                 {encodedImage && <ImageComponent encodedImage={encodedImage} />}
                 {encodedImage && (
                   <>
-                    <p style={{width:"10vw"}}>{pixCode}</p>
+                    <p style={{ width: "10vw" }}>{pixCode}</p>
                     <div>
                       <button onClick={handleClick}>
                         {status === "copiar" ? "Copiar" : "Copiado"}
@@ -292,7 +299,6 @@ const Pay = () => {
           )}
           {paymentMethod === "cartao" && (
             <>
-         
               <form
                 onSubmit={handleSubmit}
                 style={{
@@ -303,8 +309,9 @@ const Pay = () => {
                   fontSize: "1.1rem",
                   marginBottom: "1rem",
                 }}
-                
               >
+                        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+
                 <label style={{ display: "flex", flexDirection: "column" }}>
                   nome do titular:
                   <input
@@ -312,7 +319,12 @@ const Pay = () => {
                     name="holderName"
                     onChange={handleChange}
                     value={formData.holderName}
-                    
+                    style={{
+                      border:
+                        !formData.holderName.trim() && buttonClicked
+                          ? "1px solid red"
+                          : "1px solid #ccc",
+                    }}
                   />
                 </label>
 
@@ -323,6 +335,13 @@ const Pay = () => {
                     name="number"
                     onChange={handleChange}
                     value={formData.number}
+                    style={{
+                      border:
+                        !formData.number.trim() && buttonClicked
+                          ? "1px solid red"
+                          : "1px solid #ccc",
+                    }}
+                    placeholder=""
                   />
                 </label>
 
@@ -333,6 +352,12 @@ const Pay = () => {
                     name="expiryMonth"
                     onChange={handleChange}
                     value={formData.expiryMonth}
+                    style={{
+                      border:
+                        !formData.expiryMonth.trim() && buttonClicked
+                          ? "1px solid red"
+                          : "1px solid #ccc",
+                    }}
                   />
                 </label>
 
@@ -343,8 +368,15 @@ const Pay = () => {
                     name="expiryYear"
                     onChange={handleChange}
                     value={formData.expiryYear}
+                    style={{
+                      border:
+                        !formData.expiryYear.trim() && buttonClicked
+                          ? "1px solid red"
+                          : "1px solid #ccc",
+                    }}
                   />
                 </label>
+
                 <label style={{ display: "flex", flexDirection: "column" }}>
                   CVV:
                   <input
@@ -352,6 +384,12 @@ const Pay = () => {
                     name="ccv"
                     onChange={handleChange}
                     value={formData.ccv}
+                    style={{
+                      border:
+                        !formData.ccv.trim() && buttonClicked
+                          ? "1px solid red"
+                          : "1px solid #ccc",
+                    }}
                   />
                 </label>
 
@@ -381,7 +419,6 @@ const Pay = () => {
           )}
         </div>
       </div>
-      
     </div>
   );
 };
