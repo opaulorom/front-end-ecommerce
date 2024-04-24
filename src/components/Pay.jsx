@@ -42,6 +42,7 @@ const Pay = () => {
     setPaymentMethod(value);
   };
 
+  
   // pagar com pix sem checkout transparente
   const handlePixPayment = async () => {
     try {
