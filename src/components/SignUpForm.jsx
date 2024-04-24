@@ -8,6 +8,7 @@ const SignUpForm = () => {
 
 
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
+  const [showCEP, setShowCEP] = useState(false)
   const [formData, setFormData] = useState({
 
     custumerId: userId, // Usando o userId do usuário logado
@@ -45,7 +46,7 @@ const SignUpForm = () => {
   
 
   const handleCepChange = async (event) => {
-    const newCep = event.target.value;
+    const newCep = event.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
     setFormData({ ...formData, postalCode: newCep });
 
     if (newCep.length === 8) {
@@ -63,6 +64,8 @@ const SignUpForm = () => {
           city: data.localidade,
           state: data.uf,
         }));
+        setShowCEP(true)
+
       } catch (error) {
         console.error('Erro ao buscar endereço:', error);
         // Trate erros aqui, como exibir uma mensagem para o usuário
@@ -70,6 +73,18 @@ const SignUpForm = () => {
     }
   };
 
+  const formatCep = (cep) => {
+    // Remove todos os caracteres não numéricos
+    const numericCep = cep.replace(/\D/g, '');
+  
+    // Aplica a máscara
+    if (numericCep.length > 5) {
+      return `${numericCep.slice(0, 5)}-${numericCep.slice(5, 8)}`;
+    } else {
+      return numericCep;
+    }
+  };
+  
   return (
     <>
     <Header/>    
@@ -98,10 +113,16 @@ const SignUpForm = () => {
 
       <label>
         Postcode:
-        <input type="text" name="postalCode" onChange={handleCepChange} value={formData.postalCode}  placeholder='digite sem caracteres ex. 01001000  '/>
+        <input
+  type="text"
+  name="postalCode"
+  onChange={handleCepChange}
+  value={formatCep(formData.postalCode)}
+  placeholder="Digite o CEP"
+/>
       </label>
-
-      <label>
+      {showCEP && <>
+        <label>
         Address:
         <input type="text" name="address" onChange={handleChange} value={formData.address} />
       </label>
@@ -131,6 +152,8 @@ const SignUpForm = () => {
         <input type="text" name="state" onChange={handleChange} value={formData.state} />
       </label>
       
+     
+      </>}
      
       <button type="submit">Submit</button>
     </form>

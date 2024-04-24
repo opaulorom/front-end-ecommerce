@@ -18,7 +18,6 @@ const AllOrderDetails = () => {
   const { id } = useParams(); // Certifique-se de que o parâmetro corresponde ao nome na URL
 
   const [expanded, setExpanded] = useState({});
-  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
   const token = Cookies.get('token'); // Obtenha o token do cookie
   const [loading, setLoading] = useState(true);
@@ -39,7 +38,7 @@ const AllOrderDetails = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
+    
           },
         })
         .then((response) => {

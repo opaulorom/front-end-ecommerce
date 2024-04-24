@@ -14,7 +14,6 @@ const AlertComponente = () => {
   const [boletos, setBoletos] = useState([]);
   const [pix, setPix] = useState([]);
   const [creditCard, setCreditCard] = useState([]);
-  const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
 
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const [expanded, setExpanded] = useState({});
@@ -51,7 +50,7 @@ const AlertComponente = () => {
         .get(`http://localhost:3001/api/allOrders/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
+     
           },
         })
         .then((response) => {

@@ -57,7 +57,7 @@ const Cart = () => {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              Credentials: credentials,
+    
             },
           }
         )
@@ -75,6 +75,7 @@ const Cart = () => {
     },
     [userId, removeFromCart]
   );
+
 
   const handleQuantityChange = useCallback(
     (productId, newQuantity) => {
