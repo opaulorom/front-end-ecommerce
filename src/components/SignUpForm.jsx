@@ -3,12 +3,15 @@ import axios from 'axios';
 import Cookies from "js-cookie";
 import Navbar from './Navbar';
 import Header from './Header';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const SignUpForm = () => {
 
 
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
   const [showCEP, setShowCEP] = useState(false)
+  const [formComplete, setFormComplete] = useState(false);
+
   const [formData, setFormData] = useState({
 
     custumerId: userId, // Usando o userId do usuário logado
@@ -25,15 +28,30 @@ const SignUpForm = () => {
     state: '',
     
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  
+    // Verifica se todos os campos obrigatórios estão preenchidos
+    const requiredFields = ['name', 'cpfCnpj', 'email', 'mobilePhone', 'postalCode', 'address', 'addressNumber', 'province', 'city', 'state'];
+    const isComplete = requiredFields.every(field => formData[field]);
+    setFormComplete(isComplete);
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
+    // Verifica se todos os campos obrigatórios estão preenchidos
+    const requiredFields = ['name', 'cpfCnpj', 'email', 'mobilePhone', 'postalCode', 'address', 'addressNumber', 'province', 'city', 'state'];
+    const isComplete = requiredFields.every(field => formData[field]);
+    
+    if (!isComplete) {
+      toast.error("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+    toast.success("Usuario cadastrado com sucesso.");
+
     try {
       const response = await axios.post('http://localhost:3001/api/signup', formData);
       console.log('Dados enviados com sucesso:', response.data);
@@ -85,80 +103,155 @@ const SignUpForm = () => {
     }
   };
   
+  const inputStyle = {
+    border: Object.values(formData).some(val => val !== '') ? '1px solid #ccc' : '1px solid red',
+  };
   return (
     <>
-    <Header/>    
-    <Navbar/>
-    
-    <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column", marginTop:"15rem"}}>
-      <label>
-        nome completo:
-        <input type="text" name="name" onChange={handleChange} value={formData.name} />
-      </label>
-
-      <label>
-      cpf:
-        <input type="number" name="cpfCnpj" onChange={handleChange} value={formData.cpfCnpj} />
-      </label>
-
-      <label>
-        Email:
-        <input type="email" name="email" onChange={handleChange} value={formData.email} />
-      </label>
-
-      <label>
-        Telephone:
-        <input type="text" name="mobilePhone" onChange={handleChange} value={formData.mobilePhone} />
-      </label>
-
-      <label>
-        Postcode:
-        <input
-  type="text"
-  name="postalCode"
-  onChange={handleCepChange}
-  value={formatCep(formData.postalCode)}
-  placeholder="Digite o CEP"
-/>
-      </label>
-      {showCEP && <>
+      <Header/>    
+      <Navbar/>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{marginTop:"8rem"}}
+      />
+      <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column", marginTop:"15rem"}}>
         <label>
-        Address:
-        <input type="text" name="address" onChange={handleChange} value={formData.address} />
-      </label>
-
-      <label>
-        Address  Number:
-        <input type="text" name="addressNumber" onChange={handleChange} value={formData.addressNumber} />
-      </label>
-
-      <label>
-        Complement:
-        <input type="text" name="complement" onChange={handleChange} value={formData.complement} />
-      </label>
-
-      <label>
-        province:
-        <input type="text" name="province" onChange={handleChange} value={formData.province} />
-      </label>
-
-      <label>
-        Address City:
-        <input type="text" name="city" onChange={handleChange} value={formData.city} />
-      </label>
-
-      <label>
-        Address State:
-        <input type="text" name="state" onChange={handleChange} value={formData.state} />
-      </label>
-      
-     
-      </>}
-     
-      <button type="submit">Submit</button>
-    </form>
+          nome completo:
+          <input
+            type="text"
+            name="name"
+            onChange={handleChange}
+            value={formData.name}
+            style={ inputStyle}
+          />
+        </label>
+  
+        <label>
+          cpf:
+          <input
+            type="number"
+            name="cpfCnpj"
+            onChange={handleChange}
+            value={formData.cpfCnpj}
+            style={inputStyle}
+          />
+        </label>
+  
+        <label>
+          Email:
+          <input
+            type="email"
+            name="email"
+            onChange={handleChange}
+            value={formData.email}
+            style={inputStyle}
+          />
+        </label>
+  
+        <label>
+          Telephone:
+          <input
+            type="text"
+            name="mobilePhone"
+            onChange={handleChange}
+            value={formData.mobilePhone}
+            style={inputStyle}
+          />
+        </label>
+  
+        <label>
+          Postcode:
+          <input
+            type="text"
+            name="postalCode"
+            onChange={handleCepChange}
+            value={formatCep(formData.postalCode)}
+            placeholder="Digite o CEP"
+            style={inputStyle}
+          />
+        </label>
+        {showCEP && <>
+          <label>
+            Address:
+            <input
+              type="text"
+              name="address"
+              onChange={handleChange}
+              value={formData.address}
+              style={inputStyle}
+            />
+          </label>
+  
+          <label>
+            Address  Number:
+            <input
+              type="text"
+              name="addressNumber"
+              onChange={handleChange}
+              value={formData.addressNumber}
+              style={inputStyle}
+            />
+          </label>
+  
+          <label>
+            Complement:
+            <input
+              type="text"
+              name="complement"
+              onChange={handleChange}
+              value={formData.complement}
+            />
+          </label>
+  
+          <label>
+            province:
+            <input
+              type="text"
+              name="province"
+              onChange={handleChange}
+              value={formData.province}
+              style={inputStyle}
+            />
+          </label>
+  
+          <label>
+            Address City:
+            <input
+              type="text"
+              name="city"
+              onChange={handleChange}
+              value={formData.city}
+              style={inputStyle}
+            />
+          </label>
+  
+          <label>
+            Address State:
+            <input
+              type="text"
+              name="state"
+              onChange={handleChange}
+              value={formData.state}
+              style={inputStyle}
+            />
+          </label>
+        </>}
+        {Object.values(formData).filter(val => val !== '').length > 1 && (
+          <button type="submit">Submit</button>
+        )}
+      </form>
     </>
   );
+  
 };
 
 export default SignUpForm;
