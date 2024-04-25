@@ -22,7 +22,17 @@ const CategorySubcategories = () => {
   const [openFilterModal, setOpenFilterModal] = useState(false);
   const modalRef = useRef(null);
   const [loading, setLoading] = useState(true);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedPrice, setSelectedPrice] = useState(null);
 
+  const handlePriceClick = (range) => {
+    setSelectedPrice(range);
+  };
+
+  const handleSizeClick = (size) => {
+    setSelectedSize(size);
+  };
+  
   const fetchMixedProducts = async (page, filters) => {
     setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
 
@@ -204,6 +214,8 @@ const CategorySubcategories = () => {
   const handleClickCloseModal = () => {
     setOpenFilterModal(false);
   };
+
+  
 
   return (
     <div
@@ -475,14 +487,19 @@ const CategorySubcategories = () => {
                         width: "40px",
                         height: "40px",
                         border: "1px solid rgb(114, 114, 114)",
-                        backgroundColor: "rgb(255, 255, 255)",
+                        backgroundColor: selectedSize === size ? "#333" : "rgb(255, 255, 255)",
+                        color: selectedSize === size ? "white" : "black",
                         marginLeft: "8px",
                         marginTop: "8px",
                         cursor: "pointer",
+                      
                       }}
+                      onClick={() => handleSizeClick(size)}
+
                     >
                       {" "}
-                      {size}
+                      <span style={{  fontSize:".8rem"}}>       {size}</span>
+               
                     </button>
                   </div>
                 ))}
@@ -502,14 +519,16 @@ const CategorySubcategories = () => {
                 {priceRanges.map((range, index) => (
                   <div
                     key={index}
-                    onClick={() => handleFilterClick("priceRange", range)}
+                    onClick={() => {handlePriceClick(range) , handleFilterClick("priceRange", range)}}
                     style={{
                       cursor: "pointer",
                       fontFamily: "Montserrat, arial, sans-serif",
-                      fontWeight: "400",
-                      fontSize: "1rem",
-                      color: "rgb(52, 52, 54)",
+                      fontWeight:selectedPrice === range ? "600" : "400",
+                      fontSize:  selectedPrice === range ? "1.1rem" : "1rem",
+                      color: selectedPrice === range ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
+                      
                     }}
+            
                   >
                     {range}
                   </div>
