@@ -7,6 +7,7 @@ import IconToggle from "./IconToggle";
 import styles from "./CategorySubcategories.module.css";
 import TuneIcon from "@mui/icons-material/Tune";
 import CircularIndeterminate from "./CircularIndeterminate";
+import { green } from "@mui/material/colors";
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -24,6 +25,11 @@ const CategorySubcategories = () => {
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
+
+  const handleColorClick = (color) => {
+    setSelectedColor(color);
+  };
 
   const handlePriceClick = (range) => {
     setSelectedPrice(range);
@@ -330,10 +336,11 @@ const CategorySubcategories = () => {
                       {colors.map((color, index) => (
                         <div
                           key={index}
-                          onClick={() => handleFilterClick("color", color)}
-                          style={{ cursor: "pointer" }}
+                          onClick={() => {handleColorClick(color), handleFilterClick("color", color)}}
+                          style={{ cursor: "pointer", }}
                         >
                           {color}
+                
                         </div>
                       ))}
                     </div>
@@ -450,11 +457,18 @@ const CategorySubcategories = () => {
                 >
                   Cores
                 </h3>
+              
                 {colors.map((color, index) => (
                   <div
                     key={index}
-                    onClick={() => handleFilterClick("color", color)}
-                    style={{ cursor: "pointer" }}
+                    onClick={() => { handleColorClick(color), handleFilterClick("color", color)}}
+                    style={{ 
+                      cursor: "pointer",
+                       fontWeight: selectedColor === color ? "600" : "400",
+                       fontSize:  selectedColor === color ? "1.1rem" : "1rem",
+                       fontFamily: "Montserrat, arial, sans-serif",
+
+                      }}
                   >
                     {color}
                   </div>
