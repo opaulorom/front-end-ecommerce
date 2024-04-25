@@ -6,6 +6,7 @@ import Header from "./Header";
 import IconToggle from "./IconToggle";
 import styles from "./CategorySubcategories.module.css";
 import TuneIcon from "@mui/icons-material/Tune";
+import CircularIndeterminate from "./CircularIndeterminate";
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -20,9 +21,13 @@ const CategorySubcategories = () => {
   const [uniqueSizes, setUniqueSizes] = useState(new Set());
   const [openFilterModal, setOpenFilterModal] = useState(false);
   const modalRef = useRef(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchMixedProducts = async (page, filters) => {
+    setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
+
     try {
+
       const queryString = Object.entries(filters)
         .map(([key, value]) => `${key}=${value}`)
         .join("&");
@@ -33,26 +38,34 @@ const CategorySubcategories = () => {
       const data = await response.json();
       setMixedProducts(data.mixedProducts);
       setTotalPages(data.totalPages);
+      setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
     } catch (error) {
       console.error("Erro ao obter produtos misturados:", error);
     }
   };
 
   useEffect(() => {
+    setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
+
     const fetchSubcategories = async () => {
       try {
+
         const response = await fetch(
           `http://localhost:3001/api/subcategories/${category}`
         );
         const data = await response.json();
         setSubcategories(data);
+        setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
       } catch (error) {
         console.error("Erro ao obter subcategorias:", error);
       }
     };
 
     const fetchFilters = async () => {
+      setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
+
       try {
+
         // Alterações nas chamadas de API para obter cores, tamanhos e faixas de preço específicos
         const colorsResponse = await fetch(
           `http://localhost:3001/api/categories/${category}/colors`
@@ -71,6 +84,7 @@ const CategorySubcategories = () => {
         setColors(colorsData);
         setSizes(sizesData);
         setPriceRanges(priceRangesData);
+        setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
 
         // Atualizar o conjunto único de tamanhos
         const allSizes = sizesData.reduce((acc, size) => {
@@ -84,13 +98,17 @@ const CategorySubcategories = () => {
     };
 
     const fetchOriginalProducts = async () => {
+
       try {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
         // Alteração na chamada de API para obter produtos misturados específicos
         const response = await fetch(
           `http://localhost:3001/api/categories/${category}/mixedProducts`
         );
         const data = await response.json();
         setOriginalProducts(data.mixedProducts);
+        setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
       } catch (error) {
         console.error("Erro ao obter produtos misturados:", error);
       }
@@ -186,6 +204,7 @@ const CategorySubcategories = () => {
   const handleClickCloseModal = () => {
     setOpenFilterModal(false);
   };
+
   return (
     <div
       style={{
@@ -197,55 +216,192 @@ const CategorySubcategories = () => {
         <Header />
       </div>
 
-      <div
-        style={{
-          marginLeft: "5rem",
-          marginRight: "5rem",
-          marginTop: "-2rem",
-        }}
-      >
-        <div className={styles.DesktopFilter}>
+      {loading ? (
+        <div
+          style={{
+            display: "flex",
+            margin: "0 auto",
+            marginTop:"10rem"
+          }}
+        >
+          <CircularIndeterminate />;
+        </div>
+      ) : (
+        <>
           <div
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              marginBottom: "2rem",
-              fontFamily: "Montserrat, arial, sans-serif",
-              fontWeight: "400",
-              fontSize: "1.3rem",
-              color: "rgb(52, 52, 54)",
+              marginLeft: "5rem",
+              marginRight: "5rem",
+              marginTop: "-2rem",
             }}
           >
-            Filtros
-          </div>
-        </div>
-        <div className={styles.MobileFilter}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              marginBottom: "2rem",
-              fontFamily: "Montserrat, arial, sans-serif",
-              fontWeight: "400",
-              fontSize: "1.3rem",
-              color: "rgb(52, 52, 54)",
-              cursor: "pointer",
-            }}
-            onClick={handleOpenModal}
-          >
-            <TuneIcon />
-            Filtros
-          </div>
-        </div>
-        {openFilterModal && (
-          <div className={styles.FilterModal}>
-            <div ref={modalRef} className={styles.FilterModalContent}>
-              <span
-                className={styles.FilterClose}
-                onClick={handleClickCloseModal}
+            <div className={styles.DesktopFilter}>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  marginBottom: "2rem",
+                  fontFamily: "Montserrat, arial, sans-serif",
+                  fontWeight: "400",
+                  fontSize: "1.3rem",
+                  color: "rgb(52, 52, 54)",
+                }}
               >
-                &times;
-              </span>
+                Filtros
+              </div>
+            </div>
+            <div className={styles.MobileFilter}>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  marginBottom: "2rem",
+                  fontFamily: "Montserrat, arial, sans-serif",
+                  fontWeight: "400",
+                  fontSize: "1.3rem",
+                  color: "rgb(52, 52, 54)",
+                  cursor: "pointer",
+                }}
+                onClick={handleOpenModal}
+              >
+                <TuneIcon />
+                Filtros
+              </div>
+            </div>
+            {openFilterModal && (
+              <div className={styles.FilterModal}>
+                <div ref={modalRef} className={styles.FilterModalContent}>
+                  <span
+                    className={styles.FilterClose}
+                    onClick={handleClickCloseModal}
+                  >
+                    &times;
+                  </span>
+                  <p
+                    style={{
+                      fontFamily: "Montserrat, arial, sans-serif",
+                      fontWeight: "600",
+                      fontSize: "1.2rem",
+                      color: "rgb(52, 52, 54)",
+                    }}
+                  >
+                    Categorias
+                  </p>
+                  <div onClick={handleClickCloseModal}>
+                    <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
+                      {subcategories.map((subcategory, index) => (
+                        <li
+                          key={index}
+                          style={{ marginLeft: "-2.5rem" }}
+                          className={styles.myLinks}
+                        >
+                          <Link to={`/categories/${category}/${subcategory}`}>
+                            {subcategory}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div style={{ marginBottom: "3rem" }}>
+                    <h3
+                      style={{
+                        fontFamily: "Montserrat, arial, sans-serif",
+                        fontWeight: "600",
+                        fontSize: "1.2rem",
+                        color: "rgb(52, 52, 54)",
+                      }}
+                    >
+                      Cores
+                    </h3>
+                    <div onClick={handleClickCloseModal}>
+                      {colors.map((color, index) => (
+                        <div
+                          key={index}
+                          onClick={() => handleFilterClick("color", color)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          {color}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <h3
+                    style={{
+                      fontFamily: "Montserrat, arial, sans-serif",
+                      fontWeight: "600",
+                      fontSize: "1.2rem",
+                      color: "rgb(52, 52, 54)",
+                    }}
+                  >
+                    Tamanhos
+                  </h3>
+                  <div onClick={handleClickCloseModal}>
+                    <div
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(4, 1fr)",
+                      }}
+                    >
+                      {Array.from(uniqueSizes).map((size, index) => (
+                        <div
+                          key={index}
+                          onClick={() => handleFilterClick("size", size)}
+                        >
+                          <button
+                            style={{
+                              borderRadius: "20px",
+                              width: "40px",
+                              height: "40px",
+                              border: "1px solid rgb(114, 114, 114)",
+                              backgroundColor: "rgb(255, 255, 255)",
+                              marginLeft: "8px",
+                              marginTop: "8px",
+                              cursor: "pointer",
+                            }}
+                          >
+                            {" "}
+                            {size}
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: "3rem" }}>
+                    <h3
+                      style={{
+                        fontFamily: "Montserrat, arial, sans-serif",
+                        fontWeight: "600",
+                        fontSize: "1.2rem",
+                        color: "rgb(52, 52, 54)",
+                      }}
+                    >
+                      Faixas de Preços
+                    </h3>
+                    <div onClick={handleClickCloseModal}>
+                      {priceRanges.map((range, index) => (
+                        <div
+                          key={index}
+                          onClick={() => handleFilterClick("priceRange", range)}
+                          style={{
+                            cursor: "pointer",
+                            fontFamily: "Montserrat, arial, sans-serif",
+                            fontWeight: "400",
+                            fontSize: "1rem",
+                            color: "rgb(52, 52, 54)",
+                          }}
+                        >
+                          {range}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className={styles.DesktopFilter}>
               <p
                 style={{
                   fontFamily: "Montserrat, arial, sans-serif",
@@ -256,21 +412,20 @@ const CategorySubcategories = () => {
               >
                 Categorias
               </p>
-              <div onClick={handleClickCloseModal}>
-                <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
-                  {subcategories.map((subcategory, index) => (
-                    <li
-                      key={index}
-                      style={{ marginLeft: "-2.5rem" }}
-                      className={styles.myLinks}
-                    >
-                      <Link to={`/categories/${category}/${subcategory}`}>
-                        {subcategory}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+
+              <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
+                {subcategories.map((subcategory, index) => (
+                  <li
+                    key={index}
+                    style={{ marginLeft: "-2.5rem" }}
+                    className={styles.myLinks}
+                  >
+                    <Link to={`/categories/${category}/${subcategory}`}>
+                      {subcategory}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
 
               <div style={{ marginBottom: "3rem" }}>
                 <h3
@@ -283,17 +438,15 @@ const CategorySubcategories = () => {
                 >
                   Cores
                 </h3>
-                <div onClick={handleClickCloseModal}>
-                  {colors.map((color, index) => (
-                    <div
-                      key={index}
-                      onClick={() => handleFilterClick("color", color)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {color}
-                    </div>
-                  ))}
-                </div>
+                {colors.map((color, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleFilterClick("color", color)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {color}
+                  </div>
+                ))}
               </div>
               <h3
                 style={{
@@ -305,36 +458,34 @@ const CategorySubcategories = () => {
               >
                 Tamanhos
               </h3>
-              <div onClick={handleClickCloseModal}>
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(4, 1fr)",
-                  }}
-                >
-                  {Array.from(uniqueSizes).map((size, index) => (
-                    <div
-                      key={index}
-                      onClick={() => handleFilterClick("size", size)}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(4, 1fr)",
+                }}
+              >
+                {Array.from(uniqueSizes).map((size, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleFilterClick("size", size)}
+                  >
+                    <button
+                      style={{
+                        borderRadius: "20px",
+                        width: "40px",
+                        height: "40px",
+                        border: "1px solid rgb(114, 114, 114)",
+                        backgroundColor: "rgb(255, 255, 255)",
+                        marginLeft: "8px",
+                        marginTop: "8px",
+                        cursor: "pointer",
+                      }}
                     >
-                      <button
-                        style={{
-                          borderRadius: "20px",
-                          width: "40px",
-                          height: "40px",
-                          border: "1px solid rgb(114, 114, 114)",
-                          backgroundColor: "rgb(255, 255, 255)",
-                          marginLeft: "8px",
-                          marginTop: "8px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        {" "}
-                        {size}
-                      </button>
-                    </div>
-                  ))}
-                </div>
+                      {" "}
+                      {size}
+                    </button>
+                  </div>
+                ))}
               </div>
 
               <div style={{ marginTop: "3rem" }}>
@@ -348,264 +499,157 @@ const CategorySubcategories = () => {
                 >
                   Faixas de Preços
                 </h3>
-                <div onClick={handleClickCloseModal}>
-                  {priceRanges.map((range, index) => (
-                    <div
-                      key={index}
-                      onClick={() => handleFilterClick("priceRange", range)}
-                      style={{
-                        cursor: "pointer",
-                        fontFamily: "Montserrat, arial, sans-serif",
-                        fontWeight: "400",
-                        fontSize: "1rem",
-                        color: "rgb(52, 52, 54)",
-                      }}
-                    >
-                      {range}
-                    </div>
-                  ))}
-                </div>
+                {priceRanges.map((range, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleFilterClick("priceRange", range)}
+                    style={{
+                      cursor: "pointer",
+                      fontFamily: "Montserrat, arial, sans-serif",
+                      fontWeight: "400",
+                      fontSize: "1rem",
+                      color: "rgb(52, 52, 54)",
+                    }}
+                  >
+                    {range}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        )}
 
-        <div className={styles.DesktopFilter}>
-          <p
-            style={{
-              fontFamily: "Montserrat, arial, sans-serif",
-              fontWeight: "600",
-              fontSize: "1.2rem",
-              color: "rgb(52, 52, 54)",
-            }}
-          >
-            Categorias
-          </p>
-
-          <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
-            {subcategories.map((subcategory, index) => (
-              <li
-                key={index}
-                style={{ marginLeft: "-2.5rem" }}
-                className={styles.myLinks}
-              >
-                <Link to={`/categories/${category}/${subcategory}`}>
-                  {subcategory}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <div style={{ marginBottom: "3rem" }}>
-            <h3
-              style={{
-                fontFamily: "Montserrat, arial, sans-serif",
-                fontWeight: "600",
-                fontSize: "1.2rem",
-                color: "rgb(52, 52, 54)",
-              }}
-            >
-              Cores
-            </h3>
-            {colors.map((color, index) => (
+          <div>
+            {mixedProducts.length === 0  && (
               <div
-                key={index}
-                onClick={() => handleFilterClick("color", color)}
-                style={{ cursor: "pointer" }}
-              >
-                {color}
-              </div>
-            ))}
-          </div>
-          <h3
-            style={{
-              fontFamily: "Montserrat, arial, sans-serif",
-              fontWeight: "600",
-              fontSize: "1.2rem",
-              color: "rgb(52, 52, 54)",
-            }}
-          >
-            Tamanhos
-          </h3>
-          <div
-            style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}
-          >
-            {Array.from(uniqueSizes).map((size, index) => (
-              <div key={index} onClick={() => handleFilterClick("size", size)}>
-                <button
-                  style={{
-                    borderRadius: "20px",
-                    width: "40px",
-                    height: "40px",
-                    border: "1px solid rgb(114, 114, 114)",
-                    backgroundColor: "rgb(255, 255, 255)",
-                    marginLeft: "8px",
-                    marginTop: "8px",
-                    cursor: "pointer",
-                  }}
-                >
-                  {" "}
-                  {size}
-                </button>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ marginTop: "3rem" }}>
-            <h3
-              style={{
-                fontFamily: "Montserrat, arial, sans-serif",
-                fontWeight: "600",
-                fontSize: "1.2rem",
-                color: "rgb(52, 52, 54)",
-              }}
-            >
-              Faixas de Preços
-            </h3>
-            {priceRanges.map((range, index) => (
-              <div
-                key={index}
-                onClick={() => handleFilterClick("priceRange", range)}
                 style={{
-                  cursor: "pointer",
-                  fontFamily: "Montserrat, arial, sans-serif",
-                  fontWeight: "400",
-                  fontSize: "1rem",
-                  color: "rgb(52, 52, 54)",
+                  position: "absolute",
+                  display: "flex",
+                  flexDirection: "column",
+                  top: "15rem",
+                  left: "35rem",
                 }}
               >
-                {range}
+                <img
+                  src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
+                  alt=""
+                />
+                <span>
+                  O Produto que Você Procura Não Está Disponível no momento.
+                </span>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div>
-        {mixedProducts.length === 0 && (
-          <div
-            style={{
-              position: "absolute",
-              display: "flex",
-              flexDirection: "column",
-              top: "15rem",
-              left: "35rem",
-            }}
-          >
-            <img
-              src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
-              alt=""
-            />
-            <span>
-              O Produto que Você Procura Não Está Disponível no momento.
-            </span>
-          </div>
-        )}
-        <ul
-          style={{
-            listStyleType: "none",
-            padding: 0,
-            margin: 0,
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "1rem",
-          }}
-        >
-          {mixedProducts &&
-            mixedProducts.map((product) => (
-              <>
-                <li
-                  key={product._id || "undefined"}
-                  style={{ position: "relative" }}
-                >
-                  <Link
-                    to={`/products/${product._id}`}
-                    style={{ color: "black", textDecoration: "none" }}
-                  >
-                    {product.variations &&
-                    product.variations.length > 0 &&
-                    product.variations[0].urls &&
-                    product.variations[0].urls.length > 0 ? (
-                      <img
-                        src={product.variations[0].urls[0]}
-                        alt={product.name}
-                        style={{
-                          width: "15vw",
-                          marginTop: "-2rem",
-                          zIndex: "-1",
-                          marginLeft: "1rem",
-                        }}
-                      />
-                    ) : null}
-
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        marginBottom: "4rem",
-                        marginLeft: "1rem",
-                      }}
+            )}
+            <ul
+              style={{
+                listStyleType: "none",
+                padding: 0,
+                margin: 0,
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                gap: "1rem",
+              }}
+            >
+              {mixedProducts &&
+                mixedProducts.map((product) => (
+                  <>
+                    <li
+                      key={product._id || "undefined"}
+                      style={{ position: "relative" }}
                     >
-                      <span
+                      <Link
+                        to={`/products/${product._id}`}
+                        style={{ color: "black", textDecoration: "none" }}
+                      >
+                        {product.variations &&
+                        product.variations.length > 0 &&
+                        product.variations[0].urls &&
+                        product.variations[0].urls.length > 0 ? (
+                          <img
+                            src={product.variations[0].urls[0]}
+                            alt={product.name}
+                            style={{
+                              width: "15vw",
+                              marginTop: "-2rem",
+                              zIndex: "-1",
+                              marginLeft: "1rem",
+                            }}
+                          />
+                        ) : null}
+
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            marginBottom: "4rem",
+                            marginLeft: "1rem",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: "1rem",
+                              fontWeight: "700",
+                              fontFamily: "poppins, sans-serif",
+                            }}
+                          >
+                            R${" "}
+                            {Number(product.price).toFixed(2).padStart(5, "0")}
+                          </span>
+                          <span
+                            style={{
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                              width: "15vw",
+                              color: "rgb(114, 114, 114)",
+                              fontSize: ".8rem",
+                            }}
+                          >
+                            {product.name}
+                          </span>
+                        </div>
+                      </Link>
+                      <div
                         style={{
-                          fontSize: "1rem",
-                          fontWeight: "700",
-                          fontFamily: "poppins, sans-serif",
+                          position: "absolute",
+                          top: "-5%",
+                          right: "0",
+                          zIndex: 9999,
+                          marginBottom: "5rem",
+                          width: "3rem",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
-                        R$ {Number(product.price).toFixed(2).padStart(5, "0")}
-                      </span>
-                      <span
-                        style={{
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          width: "15vw",
-                          color: "rgb(114, 114, 114)",
-                          fontSize: ".8rem",
-                        }}
-                      >
-                        {product.name}
-                      </span>
-                    </div>
-                  </Link>
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "-5%",
-                      right: "0",
-                      zIndex: 9999,
-                      marginBottom: "5rem",
-                      width: "3rem",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <IconToggle
-                      productId={product._id}
-                      isFavorite={favorites[product._id]}
-                    />
-                  </div>
-                </li>
+                        <IconToggle
+                          productId={product._id}
+                          isFavorite={favorites[product._id]}
+                        />
+                      </div>
+                    </li>
+                  </>
+                ))}
+            </ul>
+            {mixedProducts.length > 0 && (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  <CustomPagination
+                    totalPages={totalPages}
+                    currentPage={currentPage}
+                    onChangePage={handlePageChange}
+                  />
+                </div>
               </>
-            ))}
-        </ul>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: "2rem",
-          }}
-        >
-          <CustomPagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onChangePage={handlePageChange}
-          />
-        </div>
-      </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
