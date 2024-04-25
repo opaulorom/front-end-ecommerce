@@ -4,6 +4,7 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 import Header from "./Header";
+import IconToggle from "./IconToggle";
 
 const SearchResults = () => {
   const { query } = useParams();
@@ -48,6 +49,7 @@ const SearchResults = () => {
     <div>
       <Header />
 
+      <div ></div>
       <div style={{ marginTop: "10rem" }}>
         <ul
           style={{
@@ -60,6 +62,7 @@ const SearchResults = () => {
             marginTop: "13rem",
           }}
         >
+     
 
           {searchResults.map((product) => (
             <li key={product._id}>
@@ -74,6 +77,9 @@ const SearchResults = () => {
                   textDecoration: 'none'
                 }}
               >
+                 <IconToggle
+                      productId={product._id}
+                    />
                 <img
                   src={product.variations[0].urls[0]}
                   alt=""

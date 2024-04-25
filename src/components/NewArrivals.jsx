@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useAuth } from "../context/AuthContext";
+import IconToggle from "./IconToggle";
 
 const NewArrivals = () => {
   const [newArrivals, setNewArrivals] = useState([]);
@@ -66,6 +67,10 @@ const NewArrivals = () => {
                   textDecoration: "none",
                 }}
               >
+                   <IconToggle
+                      productId={product._id}
+                     
+                    />
                 {product.variations &&
                   product.variations[0] &&
                   product.variations[0].urls && (
