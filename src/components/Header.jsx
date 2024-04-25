@@ -350,18 +350,18 @@ const Header = () => {
           <Link
             to={"/favoritos"}
             style={{
-              cursor: "pointer",
+              cursor: "pointer", color:"white" 
             }}
           >
             <FavoriteBorderIcon style={{ fontSize: "1.8rem" }} />
           </Link>
           <Link to={"/perfil"}>
-            <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem" }} />
+            <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem", color:"white" }} />
           </Link>
 
           <Link
             to={"/cart"}
-            style={{ position: "relative", display: "inline-block" }}
+            style={{ position: "relative", display: "inline-block", color:"white"  }}
           >
             <span
               style={{
@@ -382,7 +382,7 @@ const Header = () => {
             >
               {loggedIn ? localCartItemCount : 0}
             </span>
-            <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem" }} />
+            <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem", color:"white"  }} />
           </Link>
         </div>
         <div

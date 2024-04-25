@@ -45,7 +45,8 @@ const colorMap = {
     azulMédio: "#0000CD",
     violetaClaro: "#E6E6FA",
     prataClaro: "#D3D3D3",
-    Salmão:"#FA8072"
+    Salmão:"#FA8072",
+    rosaFloral: "#FFC0CB", // Exemplo de definição da cor rosa floral
   };
   
   export default colorMap;

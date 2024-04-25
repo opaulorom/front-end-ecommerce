@@ -2,11 +2,26 @@
 
 
 @media (max-width: 600px) { 
-    .CategoriesList{
-        display: none;
-    }
+    
 }
 
+@media (max-width: 800px) and (orientation: portrait) {
+  .CategoriesList{
+    display: none;
+}
+}
+
+@media (max-width: 834px) and (orientation: portrait) {
+  .CategoriesList{
+    display: none;
+}
+}
+
+@media (max-width: 1024px) and (orientation: portrait) {
+  .CategoriesList{
+    display: none;
+}
+}
 .modal {
     position: fixed;
     top: 0;

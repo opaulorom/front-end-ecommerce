@@ -58,6 +58,19 @@ body {
   }
 }
 
+@media (max-width: 800px) and (orientation: portrait) {
+  
+}
+@media (max-width: 834px) and (orientation: portrait) {
+  
+}
+
+@media (max-width: 1024px) and (orientation: portrait) {
+ 
+}
+
+
+
 .modal {
   position: fixed;
   top: 0;
@@ -70,6 +83,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 
 .modalContent {
   background-color: white;
