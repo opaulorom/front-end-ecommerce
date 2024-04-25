@@ -63,7 +63,25 @@ const SearchResults = () => {
           }}
         >
      
-
+     {searchResults.length === 0 && (
+          <div
+            style={{
+              position: "absolute",
+              display: "flex",
+              flexDirection: "column",
+              top: "15rem",
+              left: "35rem",
+            }}
+          >
+            <img
+              src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
+              alt=""
+            />
+            <span>
+              O Produto que Você Procura Não Está Disponível no momento.
+            </span>
+          </div>
+        )}
           {searchResults.map((product) => (
             <li key={product._id}>
               <Link
