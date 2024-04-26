@@ -8,6 +8,7 @@ import styles from "./CategorySubcategories.module.css";
 import TuneIcon from "@mui/icons-material/Tune";
 import CircularIndeterminate from "./CircularIndeterminate";
 import colorMap from "./colorMap";
+import Navbar from "./Navbar";
 
 const CategorySubcategories = () => {
   const { category } = useParams();
@@ -269,348 +270,333 @@ const CategorySubcategories = () => {
               </div>
             </div>
             <div className={styles.Filter}>
+            <div style={{width:"100vw",  borderBottom:"1px solid gray",top:"7rem", right:"-5px", position:"absolute"}}  className={styles.FilterContainer} >
+            <div
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyItems:"center",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: "400",
+                    fontSize: "1.3rem",
+                    color: "rgb(52, 52, 54)",
+                    cursor: "pointer",
+                    marginLeft:'2rem',
+       
+                  
+                  }}
+                  onClick={handleOpenModal}
+                >
+                  <TuneIcon />
+                  Filtros
+                </div>
 
-
-            <div className={styles.MobileFilter}>
-            
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-  
-                  fontFamily: "Montserrat, arial, sans-serif",
-                  fontWeight: "400",
-                  fontSize: "1.3rem",
-                  color: "rgb(52, 52, 54)",
-                  cursor: "pointer",
-
-                
-                }}
-                onClick={handleOpenModal}
-              >
-                <TuneIcon />
-                Filtros
-              </div>
             </div>
 
-            <div>
+              <div className={styles.MobileFilter}>
+      
+              </div>
+              <div>
+                {openFilterModal && (
+                  <div className={styles.FilterModal}>
+                    <div ref={modalRef} className={styles.FilterModalContent}>
+                      <span
+                        className={styles.FilterClose}
+                        onClick={handleClickCloseModal}
+                      >
+                        &times;
+                      </span>
+                      <p
+                        style={{
+                          fontFamily: "Montserrat, arial, sans-serif",
+                          fontWeight: "600",
+                          fontSize: "1.2rem",
+                          color: "rgb(52, 52, 54)",
+                        }}
+                      >
+                        Categorias
+                      </p>
+                      <div onClick={handleClickCloseModal}>
+                        <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
+                          {subcategories.map((subcategory, index) => (
+                            <li
+                              key={index}
+                              style={{ marginLeft: "-2.5rem" }}
+                              className={styles.myLinks}
+                            >
+                              <Link
+                                to={`/categories/${category}/${subcategory}`}
+                              >
+                                {subcategory}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
 
-            {openFilterModal && (
-              <div className={styles.FilterModal}>
-                <div ref={modalRef} className={styles.FilterModalContent}>
-                  <span
-                    className={styles.FilterClose}
-                    onClick={handleClickCloseModal}
-                  >
-                    &times;
-                  </span>
-                  <p
-                    style={{
-                      fontFamily: "Montserrat, arial, sans-serif",
-                      fontWeight: "600",
-                      fontSize: "1.2rem",
-                      color: "rgb(52, 52, 54)",
-                    }}
-                  >
-                    Categorias
-                  </p>
-                  <div onClick={handleClickCloseModal}>
-                    <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
-                      {subcategories.map((subcategory, index) => (
-                        <li
-                          key={index}
-                          style={{ marginLeft: "-2.5rem" }}
-                          className={styles.myLinks}
+                      <div style={{ marginBottom: "3rem" }}>
+                        <h3
+                          style={{
+                            fontFamily: "Montserrat, arial, sans-serif",
+                            fontWeight: "600",
+                            fontSize: "1.2rem",
+                            color: "rgb(52, 52, 54)",
+                          }}
                         >
-                          <Link to={`/categories/${category}/${subcategory}`}>
-                            {subcategory}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                          Cores
+                        </h3>
+                        <div onClick={handleClickCloseModal}>
+                          {colors.map((color, index) => (
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyItems: "center",
+                                marginTop: "1rem",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: "20px",
+                                  height: "20px",
+                                  borderRadius: "50%",
+                                  backgroundColor: colorMap[color],
+                                  marginRight: "10px",
+                                  border: "1px solid gray",
+                                }}
+                              ></div>
+                              <div
+                                key={index}
+                                onClick={() => {
+                                  handleColorClick(color),
+                                    handleFilterClick("color", color);
+                                }}
+                                style={{
+                                  cursor: "pointer",
+                                  fontWeight:
+                                    selectedColor === color ? "600" : "400",
+                                  fontSize:
+                                    selectedColor === color ? "1.1rem" : "1rem",
+                                  fontFamily: "Montserrat, arial, sans-serif",
+                                }}
+                              >
+                                {color}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <h3
+                        style={{
+                          fontFamily: "Montserrat, arial, sans-serif",
+                          fontWeight: "600",
+                          fontSize: "1.2rem",
+                          color: "rgb(52, 52, 54)",
+                        }}
+                      >
+                        Tamanhos
+                      </h3>
+                      <div onClick={handleClickCloseModal}>
+                        <div
+                          style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(4, 1fr)",
+                          }}
+                        >
+                          {Array.from(uniqueSizes).map((size, index) => (
+                            <div
+                              key={index}
+                              onClick={() => handleFilterClick("size", size)}
+                            >
+                              <button
+                                style={{
+                                  borderRadius: "20px",
+                                  width: "40px",
+                                  height: "40px",
+                                  border: "1px solid rgb(114, 114, 114)",
+                                  backgroundColor:
+                                    selectedSize === size
+                                      ? "#333"
+                                      : "rgb(255, 255, 255)",
+                                  color:
+                                    selectedSize === size ? "white" : "black",
+                                  marginLeft: "8px",
+                                  marginTop: "8px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => handleSizeClick(size)}
+                              >
+                                {" "}
+                                <span style={{ fontSize: ".8rem" }}>
+                                  {" "}
+                                  {size}
+                                </span>
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
 
-                  <div style={{ marginBottom: "3rem" }}>
-                    <h3
-                      style={{
-                        fontFamily: "Montserrat, arial, sans-serif",
-                        fontWeight: "600",
-                        fontSize: "1.2rem",
-                        color: "rgb(52, 52, 54)",
-                      }}
-                    >
-                      Cores
-                    </h3>
-                    <div onClick={handleClickCloseModal}>
-                      {colors.map((color, index) => (
+                      <div style={{ marginTop: "3rem" }}>
+                        <h3
+                          style={{
+                            fontFamily: "Montserrat, arial, sans-serif",
+                            fontWeight: "600",
+                            fontSize: "1.2rem",
+                            color: "rgb(52, 52, 54)",
+                          }}
+                        >
+                          Faixas de Preços
+                        </h3>
+                        <div onClick={handleClickCloseModal}>
+                          {priceRanges.map((range, index) => (
+                            <div
+                              key={index}
+                              onClick={() => {
+                                handlePriceClick(range),
+                                  handleFilterClick("priceRange", range);
+                              }}
+                              style={{
+                                cursor: "pointer",
+                                fontFamily: "Montserrat, arial, sans-serif",
+                                fontWeight:
+                                  selectedPrice === range ? "600" : "400",
+                                fontSize:
+                                  selectedPrice === range ? "1.1rem" : "1rem",
+                                color:
+                                  selectedPrice === range
+                                    ? "rgb(52, 52, 54)"
+                                    : "rgb(52, 52, 54)",
+                              }}
+                            >
+                              {range}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.ProductsMobileContainer}>
+                {mixedProducts.length === 0 && (
+                  <div>
+                    <img
+                      src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
+                      alt=""
+                    />
+                    <span>
+                      O Produto que Você Procura Não Está Disponível no momento.
+                    </span>
+                  </div>
+                )}
+                <ul
+                  style={{
+                    listStyleType: "none",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    alignItems: "center", // Adicionado para centralizar verticalmente
+                    justifyContent: "center", // Adicionado para centralizar horizontalmente
+                    gap: "2rem",
+                    position: "relative",
+                    right: "80px",
+                    top:"-25px"
+                  }}
+                >
+                  {mixedProducts &&
+                    mixedProducts.map((product) => (
+                      <>
                         <div
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            justifyItems: "center",
-                            marginTop: "1rem",
+                            justifyContent: "center",
                           }}
                         >
-                          <div
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              borderRadius: "50%",
-                              backgroundColor: colorMap[color],
-                              marginRight: "10px",
-                              border: "1px solid gray",
-                            }}
-                          ></div>
-                          <div
-                            key={index}
-                            onClick={() => {
-                              handleColorClick(color),
-                                handleFilterClick("color", color);
-                            }}
-                            style={{
-                              cursor: "pointer",
-                              fontWeight:
-                                selectedColor === color ? "600" : "400",
-                              fontSize:
-                                selectedColor === color ? "1.1rem" : "1rem",
-                              fontFamily: "Montserrat, arial, sans-serif",
-                            }}
-                          >
-                            {color}
-                          </div>
+                          <li key={product._id || "undefined"}>
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: "5px",
+                                right: "0",
+                       
+                  
+                                width: "3rem",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <IconToggle
+                                productId={product._id}
+                                isFavorite={favorites[product._id]}
+                              />
+                            </div>
+                            <Link
+                              to={`/products/${product._id}`}
+                              style={{ color: "black", textDecoration: "none" }}
+                            >
+                              {product.variations &&
+                              product.variations.length > 0 &&
+                              product.variations[0].urls &&
+                              product.variations[0].urls.length > 0 ? (
+                                <img
+                                  src={product.variations[0].urls[0]}
+                                  alt={product.name}
+                                  style={{
+                                    width: "35vw",
+                                  }}
+                                />
+                              ) : null}
+
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    fontSize: "1rem",
+                                    fontWeight: "700",
+                                    fontFamily: "poppins, sans-serif",
+                                  }}
+                                >
+                                  R${" "}
+                                  {Number(product.price)
+                                    .toFixed(2)
+                                    .padStart(5, "0")}
+                                </span>
+                                <span>{product.name}</span>
+                              </div>
+                            </Link>
+                          </li>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                  <h3
-                    style={{
-                      fontFamily: "Montserrat, arial, sans-serif",
-                      fontWeight: "600",
-                      fontSize: "1.2rem",
-                      color: "rgb(52, 52, 54)",
-                    }}
-                  >
-                    Tamanhos
-                  </h3>
-                  <div onClick={handleClickCloseModal}>
+                      </>
+                    ))}
+                </ul>
+                {mixedProducts.length > 0 && (
+                  <>
                     <div
                       style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(4, 1fr)",
+                        position: "absolute",
+                        top: "103rem",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
                     >
-                      {Array.from(uniqueSizes).map((size, index) => (
-                        <div
-                          key={index}
-                          onClick={() => handleFilterClick("size", size)}
-                        >
-                          <button
-                            style={{
-                              borderRadius: "20px",
-                              width: "40px",
-                              height: "40px",
-                              border: "1px solid rgb(114, 114, 114)",
-                              backgroundColor:
-                                selectedSize === size
-                                  ? "#333"
-                                  : "rgb(255, 255, 255)",
-                              color: selectedSize === size ? "white" : "black",
-                              marginLeft: "8px",
-                              marginTop: "8px",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => handleSizeClick(size)}
-                          >
-                            {" "}
-                            <span style={{ fontSize: ".8rem" }}> {size}</span>
-                          </button>
-                        </div>
-                      ))}
+                      <CustomPagination
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        onChangePage={handlePageChange}
+                      />
                     </div>
-                  </div>
-
-                  <div style={{ marginTop: "3rem" }}>
-                    <h3
-                      style={{
-                        fontFamily: "Montserrat, arial, sans-serif",
-                        fontWeight: "600",
-                        fontSize: "1.2rem",
-                        color: "rgb(52, 52, 54)",
-                      }}
-                    >
-                      Faixas de Preços
-                    </h3>
-                    <div onClick={handleClickCloseModal}>
-                      {priceRanges.map((range, index) => (
-                        <div
-                          key={index}
-                          onClick={() => {
-                            handlePriceClick(range),
-                              handleFilterClick("priceRange", range);
-                          }}
-                          style={{
-                            cursor: "pointer",
-                            fontFamily: "Montserrat, arial, sans-serif",
-                            fontWeight: selectedPrice === range ? "600" : "400",
-                            fontSize:
-                              selectedPrice === range ? "1.1rem" : "1rem",
-                            color:
-                              selectedPrice === range
-                                ? "rgb(52, 52, 54)"
-                                : "rgb(52, 52, 54)",
-                          }}
-                        >
-                          {range}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-              
-            </div>
-           
-
-                
-
-            <div className={styles.ProductsMobileContainer}>
-            {mixedProducts.length === 0 && (
-              <div
-                style={{
-                  position: "absolute",
-                  display: "flex",
-                  flexDirection: "column",
-                  top: "15rem",
-                  left: "35rem",
-                }}
-              >
-                <img
-                  src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
-                  alt=""
-                />
-                <span>
-                  O Produto que Você Procura Não Está Disponível no momento.
-                </span>
-              </div>
-            )}
-            <ul
-              style={{
-                listStyleType: "none",
-                padding: 0,
-                margin: 0,
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px))",
-                gap: "1rem",
-                marginTop:"5rem"
-              }}
-            >
-              {mixedProducts &&
-                mixedProducts.map((product) => (
-                  <>
-                    <li
-                      key={product._id || "undefined"}
-                      style={{ position: "relative" }}
-                    >
-                      <Link
-                        to={`/products/${product._id}`}
-                        style={{ color: "black", textDecoration: "none" }}
-                      >
-                        {product.variations &&
-                        product.variations.length > 0 &&
-                        product.variations[0].urls &&
-                        product.variations[0].urls.length > 0 ? (
-                          <img
-                            src={product.variations[0].urls[0]}
-                            alt={product.name}
-                            style={{
-                              width: "15vw",
-                              marginTop: "-2rem",
-                              marginLeft: "1rem",
-                              width:"30vw"
-                            }}
-                          />
-                        ) : null}
-
-                        <div
-                         
-                        >
-                          <span
-                            style={{
-                              fontSize: "1rem",
-                              fontWeight: "700",
-                              fontFamily: "poppins, sans-serif",
-                            }}
-                          >
-                            R${" "}
-                            {Number(product.price).toFixed(2).padStart(5, "0")}
-                          </span>
-                          <span
-                            style={{
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                              width: "15vw",
-                              color: "rgb(114, 114, 114)",
-                              fontSize: ".8rem",
-                            }}
-                          >
-                            {product.name}
-                          </span>
-                        </div>
-                      </Link>
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "-5%",
-                          right: "0",
-                          zIndex: 9999,
-                          marginBottom: "5rem",
-                          width: "3rem",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <IconToggle
-                          productId={product._id}
-                          isFavorite={favorites[product._id]}
-                        />
-                      </div>
-                    </li>
                   </>
-                ))}
-            </ul>
-            {mixedProducts.length > 0 && (
-              <>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: "2rem",
-                  }}
-                >
-                  <CustomPagination
-                    totalPages={totalPages}
-                    currentPage={currentPage}
-                    onChangePage={handlePageChange}
-                  />
-                </div>
-              </>
-            )}
-          </div>
-
-
-
-
-
-
-
-
-
-
-</div>
+                )}
+              </div>
+            </div>
             <div className={styles.DesktopFilter}>
               <p
                 style={{
@@ -897,6 +883,7 @@ const CategorySubcategories = () => {
           </div>
         </>
       )}
+      <Navbar/>
     </div>
   );
 };
