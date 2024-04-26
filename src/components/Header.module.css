@@ -55,9 +55,13 @@ body {
   }
 
   .MediewalLogo{
-    width: 30vw;
+    width: 35vw;
     margin-right: 8rem;
     margin-top: 2rem;
+  }
+  .ContainerHeader{
+    height: 10svh;
+
   }
 }
 
@@ -65,8 +69,32 @@ body {
   .MobileHeader {
     display: none;
   }
-}
+  .InputButton{
+    display: none;
 
+  }
+ 
+
+}
+@media (min-width: 700px) and (orientation: portrait){
+  .MobileHeader {
+    display: none;
+  }
+  .ContainerHeader{
+    height: 8svh;
+
+  }
+
+  .InputButton{
+    display: block;
+  }
+
+  .SearchBar{
+    display: none;
+
+  }
+
+}
 @media (max-width: 800px) and (orientation: portrait) {
   
 }

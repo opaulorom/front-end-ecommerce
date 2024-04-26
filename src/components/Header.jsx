@@ -26,7 +26,7 @@ const Header = () => {
   const [openCartModal, setOpenCartModal] = useState(false);
   const [openBellModal, setOpenBellModal] = useState(false);
   const { unreadCount } = useUnreadCount(); // Obter o estado do contexto
-
+  const [showInput, setShowInput] = useState(false);
   useEffect(() => {
     const storedCartItemCount = localStorage.getItem("cartItemCount");
     if (storedCartItemCount !== null) {
@@ -67,10 +67,12 @@ const Header = () => {
       if (
         modalRef.current &&
         !modalRef.current.contains(event.target) &&
-        (openCartModal || openBellModal) // Só fecha se um dos modais estiver aberto
+        (openCartModal || openBellModal || showInput) // Só fecha se um dos modais estiver aberto
       ) {
         setOpenCartModal(false);
         setOpenBellModal(false);
+        setShowInput(false);
+
       }
     };
 
@@ -79,7 +81,7 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [openCartModal, openBellModal]); // Adicionei openCartModal e openBellModal como dependências
+  }, [openCartModal, openBellModal, showInput]); // Adicionei openCartModal e openBellModal como dependências
 
   const handleClickOpenModal = () => {
     setOpenCartModal(true);
@@ -119,6 +121,15 @@ const Header = () => {
     }
   });
 
+  const handleClickCloseInputModal = () => {
+    setShowInput(false)   };
+  const handleClickOpenInputModal = () => {
+    setShowInput(true)  };
+
+
+  const handleOpenInput = () => {
+    handleClickOpenInputModal()
+  }
   return (
     <>
       <div className={styles.ContainerHeader}>
@@ -157,8 +168,13 @@ const Header = () => {
             className={styles.SearchBar}
           >
             <SearchBar />
+          
           </div>
-
+<div>  <button onClick={handleOpenInput} className={styles.InputButton}>input</button>
+           {showInput  && <div ref={modalRef} > 
+          
+             <SearchBar />
+             </div>}</div>
           {loggedIn === true && (
             <div>
               <div
