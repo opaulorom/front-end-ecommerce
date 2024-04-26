@@ -29,7 +29,10 @@ body {
   gap: 1.5rem;
   margin-left: 5rem;
 }
+.MediewalLogo{
+  width: 12vw;
 
+}
 @media (max-width: 600px) {
   .SearchBar {
     display: none;
@@ -45,10 +48,16 @@ body {
   .MobileHeader {
     display: flex;
     flex-direction: row;
-    margin-right: 5rem;
+    margin-right: 3rem;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+  }
+
+  .MediewalLogo{
+    width: 30vw;
+    margin-right: 8rem;
+    margin-top: 2rem;
   }
 }
 

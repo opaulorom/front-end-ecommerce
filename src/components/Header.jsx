@@ -141,7 +141,8 @@ const Header = () => {
             <Link to={"/home"}>
               <img
                 src="https://i.ibb.co/B3xYDzG/Logo-mediewal-1.png"
-                style={{ width: "12vw" }}
+
+                className={styles.MediewalLogo}
               />
             </Link>
           </i>
@@ -353,10 +354,10 @@ const Header = () => {
               cursor: "pointer", color:"white" 
             }}
           >
-            <FavoriteBorderIcon style={{ fontSize: "1.8rem" }} />
+            <FavoriteBorderIcon style={{ fontSize: "2rem" }} />
           </Link>
           <Link to={"/perfil"}>
-            <AccountCircleOutlinedIcon style={{ fontSize: "1.8rem", color:"white" }} />
+            <AccountCircleOutlinedIcon style={{ fontSize: "2rem", color:"white" }} />
           </Link>
 
           <Link
@@ -382,7 +383,7 @@ const Header = () => {
             >
               {loggedIn ? localCartItemCount : 0}
             </span>
-            <ShoppingBagOutlinedIcon style={{ fontSize: "1.8rem", color:"white"  }} />
+            <ShoppingBagOutlinedIcon style={{ fontSize: "2rem", color:"white"  }} />
           </Link>
         </div>
         <div
