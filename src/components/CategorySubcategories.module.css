@@ -71,7 +71,8 @@
 
   .DestopCustomPagination{
     position: absolute;
-    bottom: -200px;
+    bottom: -45rem;
+    margin-left: 3rem;
 
   }
 

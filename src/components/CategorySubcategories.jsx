@@ -272,11 +272,11 @@ const CategorySubcategories = () => {
             <div className={styles.Filter}>
               <div
                 style={{
-                  width: "100vw",
+                  width: "90vw",
                   borderBottom: "1px solid gray",
                   top: "7rem",
-                  right: "-5px",
                   position: "absolute",
+                  left:"10px"
                 }}
                 className={styles.FilterContainer}
               >
