@@ -17,6 +17,7 @@ const Pay = () => {
   const [getTotal, setGetTotal] = useState({});
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const [buttonClicked, setButtonClicked] = useState(false);
+  const navigate = useNavigate(); // Inicialize o hook useNavigate
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -125,10 +126,7 @@ const Pay = () => {
     setButtonClicked(true); // Define o estado como true quando o botão é clicado
 
     try {
-        // Verifica se o número do cartão tem 15 dígitos
-        if (formData.number.replace(/\D/g, "").length !== 15) {
-          throw new Error("O número do cartão de crédito deve ter 15 dígitos.");
-        }
+      
       const updatedFormData = {
         ...formData,
         installmentCount: formData.pacelas,
@@ -146,10 +144,13 @@ const Pay = () => {
       console.log();
       
 
-    if (response.data) {
+    // if (response.data) {
    
-      navigate("/protected");
-    }
+    //   navigate("/success");
+    // }else{
+    //   navigate("/");
+
+    // }
 
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {

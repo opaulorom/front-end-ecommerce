@@ -50,8 +50,38 @@
     display: none;
   }
   .ProductsDesktopContainer {
+   color: #888;
+    display: none;
+    
+  }
+  .TabletContainerProducts{
     display: none;
   }
+ 
+  .ProductsDesktopContainer{
+    margin-left: -5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+
+  .img{
+    width: 30vw;
+  }
+
+  .DestopCustomPagination{
+    position: absolute;
+    bottom: -200px;
+
+  }
+
+  .repeat{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+ 
+
 }
 @media (min-width: 700px) {
   .MobileFilter {
@@ -63,15 +93,46 @@
   .FilterContainer{
     display: none;
   }
+  .TabletContainerProducts{
+    display: none;
+  }
+  .DesktopContainerProducts{
+    display: none;
+
+  }
+  
 }
 
 .Filter {
   display: flex;
   flex-direction: column;
 }
+.DesktopContainerProducts {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
 
 @media (max-width: 800px) and (orientation: portrait) {
- 
+  .DesktopFilter{
+    margin-top: 5rem;
+    margin-left: -3rem;
+  }
+  .TabletContainerProducts {
+    display: block;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .DesktopContainerProducts{
+    display: none;
+  }
+  .DestopCustomPagination{
+    display: none;
+  }
+
 }
+
 
 

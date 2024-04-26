@@ -270,32 +270,36 @@ const CategorySubcategories = () => {
               </div>
             </div>
             <div className={styles.Filter}>
-            <div style={{width:"100vw",  borderBottom:"1px solid gray",top:"7rem", right:"-5px", position:"absolute"}}  className={styles.FilterContainer} >
-            <div
+              <div
+                style={{
+                  width: "100vw",
+                  borderBottom: "1px solid gray",
+                  top: "7rem",
+                  right: "-5px",
+                  position: "absolute",
+                }}
+                className={styles.FilterContainer}
+              >
+                <div
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
-                    justifyItems:"center",
+                    justifyItems: "center",
                     fontFamily: "Montserrat, arial, sans-serif",
                     fontWeight: "400",
                     fontSize: "1.3rem",
                     color: "rgb(52, 52, 54)",
                     cursor: "pointer",
-                    marginLeft:'2rem',
-       
-                  
+                    marginLeft: "2rem",
                   }}
                   onClick={handleOpenModal}
                 >
                   <TuneIcon />
                   Filtros
                 </div>
-
-            </div>
-
-              <div className={styles.MobileFilter}>
-      
               </div>
+
+              <div className={styles.MobileFilter}></div>
               <div>
                 {openFilterModal && (
                   <div className={styles.FilterModal}>
@@ -402,6 +406,7 @@ const CategorySubcategories = () => {
                             display: "grid",
                             gridTemplateColumns: "repeat(4, 1fr)",
                           }}
+                          className={styles.repeat}
                         >
                           {Array.from(uniqueSizes).map((size, index) => (
                             <div
@@ -476,124 +481,6 @@ const CategorySubcategories = () => {
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
-
-              <div className={styles.ProductsMobileContainer}>
-                {mixedProducts.length === 0 && (
-                  <div>
-                    <img
-                      src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
-                      alt=""
-                    />
-                    <span>
-                      O Produto que Você Procura Não Está Disponível no momento.
-                    </span>
-                  </div>
-                )}
-                <ul
-                  style={{
-                    listStyleType: "none",
-                    display: "grid",
-                    gridTemplateColumns: "repeat(2, 1fr)",
-                    alignItems: "center", // Adicionado para centralizar verticalmente
-                    justifyContent: "center", // Adicionado para centralizar horizontalmente
-                    gap: "2rem",
-                    position: "relative",
-                    right: "80px",
-                    top:"-25px"
-                  }}
-                >
-                  {mixedProducts &&
-                    mixedProducts.map((product) => (
-                      <>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <li key={product._id || "undefined"}>
-                            <div
-                              style={{
-                                position: "absolute",
-                                top: "5px",
-                                right: "0",
-                       
-                               
-                                width: "3rem",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <IconToggle
-                                productId={product._id}
-                                isFavorite={favorites[product._id]}
-                              />
-                            </div>
-                            <Link
-                              to={`/products/${product._id}`}
-                              style={{ color: "black", textDecoration: "none" }}
-                            >
-                              {product.variations &&
-                              product.variations.length > 0 &&
-                              product.variations[0].urls &&
-                              product.variations[0].urls.length > 0 ? (
-                                <img
-                                  src={product.variations[0].urls[0]}
-                                  alt={product.name}
-                                  style={{
-                                    width: "35vw",
-                                  }}
-                                />
-                              ) : null}
-
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                }}
-                              >
-                                <span
-                                  style={{
-                                    fontSize: "1rem",
-                                    fontWeight: "700",
-                                    fontFamily: "poppins, sans-serif",
-                                  }}
-                                >
-                                  R${" "}
-                                  {Number(product.price)
-                                    .toFixed(2)
-                                    .padStart(5, "0")}
-                                </span>
-                                <span>{product.name}</span>
-                              </div>
-                            </Link>
-                          </li>
-                        </div>
-                      </>
-                    ))}
-                </ul>
-                {mixedProducts.length > 0 && (
-                  <>
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: "103rem",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <CustomPagination
-                        totalPages={totalPages}
-                        currentPage={currentPage}
-                        onChangePage={handlePageChange}
-                      />
-                    </div>
-                  </>
                 )}
               </div>
             </div>
@@ -683,10 +570,8 @@ const CategorySubcategories = () => {
                 Tamanhos
               </h3>
               <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(4, 1fr)",
-                }}
+        
+                className={styles.MobileFilter}
               >
                 {Array.from(uniqueSizes).map((size, index) => (
                   <div
@@ -771,16 +656,7 @@ const CategorySubcategories = () => {
                 </span>
               </div>
             )}
-            <ul
-              style={{
-                listStyleType: "none",
-                padding: 0,
-                margin: 0,
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: "1rem",
-              }}
-            >
+            <ul className={styles.DesktopContainerProducts}>
               {mixedProducts &&
                 mixedProducts.map((product) => (
                   <>
@@ -871,6 +747,7 @@ const CategorySubcategories = () => {
                     justifyContent: "center",
                     marginBottom: "2rem",
                   }}
+                  className={styles.DestopCustomPagination}
                 >
                   <CustomPagination
                     totalPages={totalPages}
@@ -881,9 +758,146 @@ const CategorySubcategories = () => {
               </>
             )}
           </div>
+
+          <div>
+            <div className={styles.TabletContainerProducts}>
+              {mixedProducts.length === 0 && (
+                <div
+                  style={{
+                    position: "absolute",
+                    display: "flex",
+                    flexDirection: "column",
+                    top: "15rem",
+                    left: "35rem",
+                    backgroundColor: "red",
+                  }}
+                >
+                  <img
+                    src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
+                    alt=""
+                  />
+                  <span>
+                    O Produto que Você Procura Não Está Disponível no momento.
+                  </span>
+                </div>
+              )}
+              <ul
+                style={{
+                  listStyleType: "none",
+                  padding: 0,
+                  margin: 0,
+                  display: "grid",
+                  gridTemplateColumns: "repeat(2, 1fr)",
+                  gap: "1rem",
+                  marginRight: "8rem",
+                }}
+              >
+                {mixedProducts &&
+                  mixedProducts.map((product) => (
+                    <>
+                      <li
+                        key={product._id || "undefined"}
+                        style={{ position: "relative" }}
+                      >
+                        <Link
+                          to={`/products/${product._id}`}
+                          style={{ color: "black", textDecoration: "none" }}
+                        >
+                          {product.variations &&
+                          product.variations.length > 0 &&
+                          product.variations[0].urls &&
+                          product.variations[0].urls.length > 0 ? (
+                            <img
+                              src={product.variations[0].urls[0]}
+                              alt={product.name}
+                              style={{
+                                width: "30vw",
+                                marginTop: "-2rem",
+                                zIndex: "-1",
+                                marginLeft: "1rem",
+                              }}
+                            />
+                          ) : null}
+
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginBottom: "4rem",
+                              marginLeft: "1rem",
+                            }}
+                          >
+                            <span
+                              style={{
+                                fontSize: "1rem",
+                                fontWeight: "700",
+                                fontFamily: "poppins, sans-serif",
+                              }}
+                            >
+                              R${" "}
+                              {Number(product.price)
+                                .toFixed(2)
+                                .padStart(5, "0")}
+                            </span>
+                            <span
+                              style={{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                width: "15vw",
+                                color: "rgb(114, 114, 114)",
+                                fontSize: ".8rem",
+                              }}
+                            >
+                              {product.name}
+                            </span>
+                          </div>
+                        </Link>
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: "-5%",
+                            right: "0",
+                            zIndex: 9999,
+                            marginBottom: "5rem",
+                            width: "3rem",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <IconToggle
+                            productId={product._id}
+                            isFavorite={favorites[product._id]}
+                          />
+                        </div>
+                      </li>
+                    </>
+                  ))}
+              </ul>
+              {mixedProducts.length > 0 && (
+                <>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginBottom: "2rem",
+                    }}
+                  >
+                   dddddddd <CustomPagination
+                      totalPages={totalPages}
+                      currentPage={currentPage}
+                      onChangePage={handlePageChange}
+                    />
+                  </div>
+                </>
+              )}{" "}
+            </div>
+          </div>
         </>
       )}
-      <Navbar/>
+      <Navbar />
     </div>
   );
 };
