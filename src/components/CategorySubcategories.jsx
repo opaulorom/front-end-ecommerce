@@ -521,7 +521,7 @@ const CategorySubcategories = () => {
                                 top: "5px",
                                 right: "0",
                        
-                  
+                               
                                 width: "3rem",
                                 display: "flex",
                                 alignItems: "center",

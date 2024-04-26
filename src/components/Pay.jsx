@@ -127,7 +127,7 @@ const Pay = () => {
 
     try {
         // Verifica se o número do cartão tem 15 dígitos
-        if (formData.number.replace(/\D/g, "").length !== 15) {
+        if (formData.number.replace(/\D/g, "").length !== 16) {
           throw new Error("O número do cartão de crédito deve ter 15 dígitos.");
         }
       const updatedFormData = {
@@ -147,13 +147,13 @@ const Pay = () => {
       console.log();
       
 
-    if (response.data) {
+    // if (response.data) {
    
-      navigate("/success");
-    }else{
-      navigate("/");
+    //   navigate("/success");
+    // }else{
+    //   navigate("/");
 
-    }
+    // }
 
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
