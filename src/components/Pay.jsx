@@ -126,10 +126,7 @@ const Pay = () => {
     setButtonClicked(true); // Define o estado como true quando o botão é clicado
 
     try {
-        // Verifica se o número do cartão tem 15 dígitos
-        if (formData.number.replace(/\D/g, "").length !== 16) {
-          throw new Error("O número do cartão de crédito deve ter 15 dígitos.");
-        }
+      
       const updatedFormData = {
         ...formData,
         installmentCount: formData.pacelas,
