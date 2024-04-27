@@ -24,7 +24,7 @@ background-color: "red";
 .verticalScroll {
     overflow-y: auto;
     overflow-x: hidden; /* Adiciona overflow-x: hidden para esconder a barra de rolagem horizontal */
-    max-height: 300px; /* Defina a altura máxima desejada para a barra de rolagem */
+    max-height: 400px; /* Defina a altura máxima desejada para a barra de rolagem */
   }
   
   .verticalScroll .product {
@@ -34,12 +34,13 @@ background-color: "red";
   }
   
   .verticalScroll::-webkit-scrollbar {
-    width: 12px; /* largura da barra de rolagem */
+    width: 5px; /* largura da barra de rolagem */
   }
   
   .verticalScroll::-webkit-scrollbar-thumb {
     background-color: #888; /* cor do polegar da barra de rolagem */
     border-radius: 6px; /* borda arredondada do polegar da barra de rolagem */
+    
   }
   
   .verticalScroll::-webkit-scrollbar-thumb:hover {
