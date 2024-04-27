@@ -192,7 +192,8 @@ const ProductDetails = () => {
           color: product.variations[currentImageIndex].color,
           quantity: 1,
           image: selectedColorImage, // Envie a URL da imagem selecionada
-       
+          price: product.price // Passando o preço do produto
+
         },
        
       );
@@ -220,6 +221,8 @@ const ProductDetails = () => {
             color: product.variations[currentImageIndex].color,
             quantity: 1,
             image: selectedColorImage,
+            price: product.price // Passando o preço do produto
+
           },
           {
             headers: {
