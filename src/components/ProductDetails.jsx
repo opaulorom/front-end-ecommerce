@@ -76,10 +76,10 @@ const ProductDetails = () => {
         setCustomer(response.data);
         if (!response.data || response.data.length === 0 ) {
           setShowCartButton(true);
-          handleClickOpenModal
+          handleClickOpenModal()
         } else {
           setShowCartButton(false);
-          handleClickOpenCartModal
+          handleClickOpenCartModal()
         }
       })
       .catch((error) => {
@@ -232,6 +232,7 @@ const ProductDetails = () => {
        
         addToCart(); // Atualiza o contexto do carrinho para refletir a adição do novo item
         toast.success("Produto adicionado ao carrinho!");
+        handleClickOpenCartModal()
       } catch (error) {
         console.error("Erro ao adicionar produto ao carrinho:", error);
       }
@@ -438,7 +439,11 @@ const ProductDetails = () => {
                   >
                     &times;
                   </span>
+
+                  <div style={{marginTop:"15rem"}}>
+
                   <CartB/>
+                  </div>
                  
                 </div>
               </div>
