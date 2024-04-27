@@ -272,7 +272,7 @@ const ProductDetails = () => {
           theme="light"
           style={{marginTop:"8rem"}}
         />
-        <div style={{ position: "absolute", zIndex: "9999999" }}>
+        <div style={{ position: "absolute", zIndex:"2"}}>
           <Header />
         </div>
         <div
@@ -299,14 +299,14 @@ const ProductDetails = () => {
                 <div className="arrow" onClick={() => handleArrowClick("prev")}>
                   <img
                     src="https://i.ibb.co/8MqhvFq/left-arrow.png"
-                    style={{ fontSize: "2rem", zIndex: "-1", color: "white" }}
+                    style={{ fontSize: "2rem", zIndex: "-8", color: "white" }}
                   />
                 </div>
 
                 <div className="arrow" onClick={() => handleArrowClick("next")}>
                   <img
                     src="https://i.ibb.co/vDty4Gc/right-arrow-1.png"
-                    style={{ fontSize: "2rem", zIndex: "-1", color: "white" }}
+                    style={{ fontSize: "2rem", zIndex: "-7", color: "white" }}
                   />
                 </div>
               </div>
@@ -436,6 +436,7 @@ const ProductDetails = () => {
              {openSecondCartModal  && (
               <div className={styles.secondCartModal}>
                 <div ref={modalRef} className={styles.secondCartModalContent}>
+                  <img src="" alt="" />
                   <span
                     className={styles.secondCartClose}
                     onClick={handleClickCloseCartModal}
@@ -443,7 +444,7 @@ const ProductDetails = () => {
                     &times;
                   </span>
 
-                  <div style={{marginTop:"15rem"}}>
+                  <div   className={styles.CartB}>
 
                   <CartB/>
                   </div>
