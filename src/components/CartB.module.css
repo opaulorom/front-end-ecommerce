@@ -111,7 +111,36 @@ margin-left: .5rem;
   }
 
 
-  .totalAmount{
-    border: 1px solid #e9e9e9;
-     
+  .totalAmountAndQuantityContainer{
+    border: 1px solid #ededed;
+     position: absolute;
+     left: 50%;
+     transform: translate(-50%);
+     margin-top: 2rem;
+     display: flex;
+     flex-direction: column;
+     width: 20vw;
   }
+
+.totalAmount{
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 5px;
+  color: #212121;
+  font-weight: 600;
+    font-size: .9rem;
+    font-family: "poppins";
+
+}
+
+.TotalQuantity{
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 5px;
+  color: rgba(0, 0, 0, 60%);
+  font-family: "poppins", sans-serif;
+  font-weight: 600;
+  font-size: .9rem;
+
+
+}

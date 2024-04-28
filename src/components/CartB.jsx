@@ -379,7 +379,6 @@ const Cart = () => {
                       Preço: R${item.price.toFixed(2)}
                     </span>
                   </div>
-                 
                 </div>
               </div>
             </div>
@@ -387,13 +386,17 @@ const Cart = () => {
         </div>
       )}
       {getCart.length > 0 && (
-        <div
-          style={{ marginLeft: "14rem", position: "absolute", right: "10px" }}
-        >
+        <div style={{ marginLeft: "14rem" }}>
           {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-            <div  className={styles.totalAmount}>
-              Total: {getTotal.totalAmount.toFixed(2)}
-              quantidade: {getTotal.TotalQuantity}
+            <div className={styles.totalAmountAndQuantityContainer}>
+              <div className={styles.TotalQuantity}>
+                <span >total de <b style={{color:"#212121"}}>{getTotal.TotalQuantity}</b> produto(s) na sacola </span>
+                <span className={styles.TotalQuantity}></span>
+              </div>
+              <div className={styles.totalAmount}>
+                <span className={styles.totalAmount}> Total:</span>
+                <span className={styles.totalAmount}> R${getTotal.totalAmount.toFixed(2)}</span>
+              </div>
             </div>
           )}
         </div>
@@ -408,18 +411,20 @@ const Cart = () => {
                 backgroundColor: "#E94D36",
                 color: "white",
                 border: "none",
+                width:"20vw",
                 padding: ".8rem",
-                borderRadius: "5px",
-                fontWeight: "500",
+       
+                fontWeight: "600",
                 fontFamily: "poppins, sans-serif",
-                cursor: "pointer",
+                fontSize:"1rem"
+,                cursor: "pointer",
                 position: "absolute",
-                marginTop: "3rem",
+                marginTop: "10rem",
                 left: "50%",
                 transform: "translateX(-50%)",
               }}
             >
-              Ir pra a sacola
+              IR PRA SACOLA
             </button>
           </Link>
         </div>
