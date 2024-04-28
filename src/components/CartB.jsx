@@ -405,7 +405,7 @@ const Cart = () => {
             <button
               onClick={handleAddShippingFee}
               style={{
-                backgroundColor: "#5070E3",
+                backgroundColor: "#E94D36",
                 color: "white",
                 border: "none",
                 padding: ".8rem",
