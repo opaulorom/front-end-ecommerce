@@ -397,7 +397,7 @@ const Cart = () => {
                       )?.urls[0]
                     }
                     alt={item.productId.name}
-                    style={{ width: "10%", marginBottom: "10px" }}
+                    style={{ width: "10vw", marginBottom: "10px" }}
                   />
                 )}
                 <div
@@ -484,9 +484,7 @@ const Cart = () => {
                         </ModalDialog>
                       </Modal>
                     </React.Fragment>
-                  </div>
-                </div>
-
+                    
                 <div className={styles.quantityContainer}>
                   <RemoveIcon
                     onClick={() => {
@@ -586,6 +584,9 @@ const Cart = () => {
                     style={{ cursor: "pointer" }}
                   />
                 </div>
+                  </div>
+                </div>
+             <div>R${item.price}</div>
               </div>
             </div>
           ))}
