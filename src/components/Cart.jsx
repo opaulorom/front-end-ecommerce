@@ -32,6 +32,7 @@ const Cart = () => {
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const [shippingFee, setShippingFee] = useState(0);
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+  const [exceededQuantity, setExceededQuantity] = useState(false);
 
   function handleProducts() {
     axios
@@ -254,6 +255,7 @@ const Cart = () => {
       console.error("Error fetching data:", error);
     }
   };
+ 
 
   return (
     <div style={{ position: "relative" }}>
@@ -493,7 +495,6 @@ const Cart = () => {
                         const newCart = [...getCart];
                         newCart[index].quantity = newQuantity;
                         const productId = item.productId._id;
-                        const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
 
                         const token = Cookies.get("token"); // Obtenha o token do cookie
                         axios
@@ -503,8 +504,10 @@ const Cart = () => {
                             {
                               headers: {
                                 Authorization: `Bearer ${token}`,
-                                Credentials: credentials,
+                       
                               },
+                              
+
                             }
                           )
                           .then((response) => {
@@ -549,36 +552,48 @@ const Cart = () => {
                   <AddIcon
                     onClick={() => {
                       const newQuantity = item.quantity + 1;
-                      const newCart = [...getCart];
-                      newCart[index].quantity = newQuantity;
-
                       const productId = item.productId._id;
-                      const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
-
-                      const token = Cookies.get("token"); // Obtenha o token do cookie
-                      axios
-                        .put(
-                          `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
-                          { quantity: newQuantity },
-                          {
-                            headers: {
-                              Authorization: `Bearer ${token}`,
-                              Credentials: credentials,
-                            },
+                      const credentials = Cookies.get("role");
+                      const token = Cookies.get("token");
+                      const url = `http://localhost:3001/api/product/${productId}`;
+                    
+                      axios.get(url)
+                        .then(response => {
+                          const availableQuantity = response.data.quantity; // Obtém a quantidade disponível do produto
+                    
+                          if (newQuantity > availableQuantity) {
+                            console.log("A quantidade no carrinho excede a disponibilidade do produto. Botão desabilitado.");
+                            return; // Não continua com a operação PUT
                           }
-                        )
-                        .then((response) => {
-                          setGetCart((prevCart) => {
-                            const newCart = [...prevCart];
-                            newCart[index].quantity = newQuantity;
-                            return newCart;
+                    
+                          axios.put(
+                            `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
+                            { quantity: newQuantity },
+                            {
+                              headers: {
+                                Authorization: `Bearer ${token}`,
+                              },
+                            }
+                          )
+                          .then((response) => {
+                            if (response.data.exceededQuantity) {
+                              console.log("A quantidade no carrinho excede a disponibilidade do produto. Botão desabilitado.");
+                              return; // Não continua com a atualização do carrinho
+                            }
+                    
+                            // Atualiza o estado apenas se a quantidade for válida
+                            setGetCart((prevCart) => {
+                              const newCart = [...prevCart];
+                              newCart[index].quantity = newQuantity;
+                              return newCart;
+                            });
+                          })
+                          .catch((error) => {
+                            console.log("Erro ao atualizar quantidade do produto no carrinho.", error);
                           });
                         })
-                        .catch((error) => {
-                          console.log(
-                            "Erro ao atualizar quantidade do produto no carrinho.",
-                            error
-                          );
+                        .catch(error => {
+                          console.error('Erro ao obter dados do produto:', error);
                         });
                     }}
                     style={{ cursor: "pointer" }}
