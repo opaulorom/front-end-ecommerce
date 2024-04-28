@@ -33,25 +33,23 @@ const Cart = () => {
   const [shippingFee, setShippingFee] = useState(0);
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
 
-  function handleProducts(){
+  function handleProducts() {
     axios
-    .get(`http://localhost:3001/api/cart/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-     
-      },
-    })
-    .then((response) => {
-      setGetCart(response.data.cart.products);
-    })
-    .catch((error) => {
-      console.log("Erro ao visualizar frete.", error);
-    });
+      .get(`http://localhost:3001/api/cart/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setGetCart(response.data.cart.products);
+      })
+      .catch((error) => {
+        console.log("Erro ao visualizar frete.", error);
+      });
   }
   useEffect(() => {
-    handleProducts()
+    handleProducts();
   }, []);
-  
 
   const handleDelete = useCallback(
     (productId) => {
@@ -61,7 +59,6 @@ const Cart = () => {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-    
             },
           }
         )
@@ -72,8 +69,7 @@ const Cart = () => {
           //   prevCart.filter((item) => item.productId._id !== productId)
           // );
           // removeFromCart(); // Chame a função removeFromCart do contexto do carrinho
-          handleProducts()
-
+          handleProducts();
         })
         .catch((error) => {
           console.error("Erro ao remover produto do carrinho:", error);
@@ -81,7 +77,6 @@ const Cart = () => {
     },
     [userId, removeFromCart]
   );
-
 
   const handleQuantityChange = useCallback(
     (productId, newQuantity) => {
@@ -141,9 +136,6 @@ const Cart = () => {
   useEffect(() => {
     localStorage.setItem("cep", cep);
   }, [cep]);
-
-
-  
 
   useEffect(() => {
     const fetchFrete = async () => {
@@ -217,7 +209,6 @@ const Cart = () => {
       });
 
       setShippingFee(res.data.cart.shippingFee);
-     
     } catch (error) {
       console.error("Error updating shipping fee:", error);
     }
@@ -232,59 +223,42 @@ const Cart = () => {
     }
   };
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-
       // Faz a solicitação POST para obter os dados do frete com o novo CEP
-      await axios.post(`http://localhost:3001/api/frete/${userId}`,  { cep }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-   
-        },
-      }
-     );
+      await axios.post(
+        `http://localhost:3001/api/frete/${userId}`,
+        { cep },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       // Atualiza o estado do frete com os dados do frete da requisição GET
-      const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-         
-        },
-      });
-      console.log('log', userId)
+      const responseGet = await axios.get(
+        `http://localhost:3001/api/frete/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("log", userId);
       setFrete(responseGet.data);
       await axios.get(`http://localhost:3001/api/cart/${userId}/total-price`);
-
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
-
-  
   return (
     <div style={{ position: "relative" }}>
       <Header />
-      {getCart.length > 0 && (
-        <div
-          style={{
-            marginTop: "8rem",
-            display: "flex",
-            marginLeft: "4rem",
-            gap: "2rem",
-            width: "45vw",
-          }}
-        >
-          <h3 className={styles.h1}>Produto</h3>
-          <h3 className={styles.h1}>Tamanho</h3>
-          <h3 className={styles.h1}>Cor</h3>
-          <h3 className={styles.h1}> Quantidade</h3>
-        </div>
-      )}
+
       <Navbar />
       {getCart.length > 0 && (
         <>
@@ -414,196 +388,205 @@ const Cart = () => {
               ) : (
                 <p>Produto esgotado</p>
               )}
-              <div className={styles.linha}></div>
-
-              {item.productId.variations && (
-                <img
-                  src={
-                    item.productId.variations.find(
-                      (variation) => variation.color === item.color
-                    )?.urls[0]
-                  }
-                  alt={item.productId.name}
-                  style={{ width: "10%", marginBottom: "10px" }}
-                />
-              )}
-
-              <div
-                style={{
-                  display: "flex",
-                  gap: "1rem",
-                }}
-              >
-                <span> {item.productId.name}</span>
-                <span> {item.size}</span>
-                <span> {item.color}</span>
-              </div>
-
-              <RemoveIcon
-                onClick={() => {
-                  const newQuantity = item.quantity - 1;
-                  if (newQuantity >= 0) {
-                    const newCart = [...getCart];
-                    newCart[index].quantity = newQuantity;
-                    const productId = item.productId._id;
-                    const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
-
-                    const token = Cookies.get("token"); // Obtenha o token do cookie
-                    axios
-                      .put(
-                        `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
-                        { quantity: newQuantity },
-                        {
-                          headers: {
-                            Authorization: `Bearer ${token}`,
-                            Credentials: credentials,
-                          },
-                        }
-                      )
-                      .then((response) => {
-                        setGetCart((prevCart) => {
-                          const newCart = [...prevCart];
-                          newCart[index].quantity = newQuantity;
-                          return newCart;
-                        });
-                      })
-                      .catch((error) => {
-                        console.log(
-                          "Erro ao atualizar quantidade do produto no carrinho.",
-                          error
-                        );
-                      });
-                  }
-                }}
-                style={{ cursor: "pointer" }}
-              />
-              <input
-                type="number"
-                value={item.quantity}
-                onChange={(e) => {
-                  const newQuantity = parseInt(e.target.value);
-                  const newCart = [...getCart];
-                  newCart[index].quantity = newQuantity;
-                  setGetCart(newCart);
-                  handleQuantityChange(item.productId._id, newQuantity);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    const newQuantity = parseInt(e.target.value);
-                    const newCart = [...getCart];
-                    newCart[index].quantity = newQuantity;
-                    setGetCart(newCart);
-                    handleQuantityChange(item.productId._id, newQuantity);
-                  }
-                }}
-                style={{ width: "2vw" }}
-              />
-
-              <AddIcon
-                onClick={() => {
-                  const newQuantity = item.quantity + 1;
-                  const newCart = [...getCart];
-                  newCart[index].quantity = newQuantity;
-
-                  const productId = item.productId._id;
-                  const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
-
-                  const token = Cookies.get("token"); // Obtenha o token do cookie
-                  axios
-                    .put(
-                      `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
-                      { quantity: newQuantity },
-                      {
-                        headers: {
-                          Authorization: `Bearer ${token}`,
-                          Credentials: credentials,
-                        },
-                      }
-                    )
-                    .then((response) => {
-                      setGetCart((prevCart) => {
-                        const newCart = [...prevCart];
-                        newCart[index].quantity = newQuantity;
-                        return newCart;
-                      });
-                    })
-                    .catch((error) => {
-                      console.log(
-                        "Erro ao atualizar quantidade do produto no carrinho.",
-                        error
-                      );
-                    });
-                }}
-                style={{ cursor: "pointer" }}
-              />
-              <React.Fragment>
-                <Button
-                  variant="outlined"
-                  color="neutral"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setOpen(true);
+              <div className={styles.ProductsContainer}>
+                {item.productId.variations && (
+                  <img
+                    src={
+                      item.productId.variations.find(
+                        (variation) => variation.color === item.color
+                      )?.urls[0]
+                    }
+                    alt={item.productId.name}
+                    style={{ width: "10%", marginBottom: "10px" }}
+                  />
+                )}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "1rem",
                   }}
-                  sx={{
-                    border: "0",
-                  }}
+                  className={styles.textsContainer}
                 >
-                  Excluir
-                </Button>
-                <Modal open={open} onClose={() => setOpen(false)}>
-                  <ModalDialog
-                    aria-labelledby="nested-modal-title"
-                    aria-describedby="nested-modal-description"
-                    sx={(theme) => ({
-                      [theme.breakpoints.only("xs")]: {
-                        top: "unset",
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        borderRadius: 0,
-                        transform: "none",
-                        maxWidth: "unset",
-                      },
-                    })}
-                  >
-                    <Typography id="nested-modal-title" level="h2">
-                      Você tem certeza que quer excluir o produto do carrinho?
-                    </Typography>
-                    <Typography
-                      id="nested-modal-description"
-                      textColor="text.tertiary"
-                    >
-                      Essa ação não pode ser desfeita.
-                    </Typography>
-                    <Box
-                      sx={{
-                        mt: 1,
-                        display: "flex",
-                        gap: 1,
-                        flexDirection: { xs: "column", sm: "row-reverse" },
-                      }}
-                    >
-                      <Button
-                        type="button" // Adicione esta linha para definir o tipo do botão como "button"
-                        variant="solid"
-                        color="primary"
-                        onClick={() => {
-                          setOpen(false), handleDelete(item.productId._id);
-                        }}
-                      >
-                        Exclui
-                      </Button>
+                  <span> {item.productId.name}</span>
+                  <span> {item.size}</span>
+                  <span> {item.color}</span>
+                  <div>
+                    <React.Fragment>
                       <Button
                         variant="outlined"
                         color="neutral"
-                        onClick={() => setOpen(false)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setOpen(true);
+                        }}
+                        sx={{
+                          border: "0",
+                        }}
                       >
-                        Cancelar
+                        Excluir
                       </Button>
-                    </Box>
-                  </ModalDialog>
-                </Modal>
-              </React.Fragment>
+                      <Modal open={open} onClose={() => setOpen(false)}>
+                        <ModalDialog
+                          aria-labelledby="nested-modal-title"
+                          aria-describedby="nested-modal-description"
+                          sx={(theme) => ({
+                            [theme.breakpoints.only("xs")]: {
+                              top: "unset",
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              borderRadius: 0,
+                              transform: "none",
+                              maxWidth: "unset",
+                            },
+                          })}
+                        >
+                          <Typography id="nested-modal-title" level="h2">
+                            Você tem certeza que quer excluir o produto do
+                            carrinho?
+                          </Typography>
+                          <Typography
+                            id="nested-modal-description"
+                            textColor="text.tertiary"
+                          >
+                            Essa ação não pode ser desfeita.
+                          </Typography>
+                          <Box
+                            sx={{
+                              mt: 1,
+                              display: "flex",
+                              gap: 1,
+                              flexDirection: {
+                                xs: "column",
+                                sm: "row-reverse",
+                              },
+                            }}
+                          >
+                            <Button
+                              type="button" // Adicione esta linha para definir o tipo do botão como "button"
+                              variant="solid"
+                              color="primary"
+                              onClick={() => {
+                                setOpen(false),
+                                  handleDelete(item.productId._id);
+                              }}
+                            >
+                              Exclui
+                            </Button>
+                            <Button
+                              variant="outlined"
+                              color="neutral"
+                              onClick={() => setOpen(false)}
+                            >
+                              Cancelar
+                            </Button>
+                          </Box>
+                        </ModalDialog>
+                      </Modal>
+                    </React.Fragment>
+                  </div>
+                </div>
+
+                <div className={styles.quantityContainer}>
+                  <RemoveIcon
+                    onClick={() => {
+                      const newQuantity = item.quantity - 1;
+                      if (newQuantity >= 0) {
+                        const newCart = [...getCart];
+                        newCart[index].quantity = newQuantity;
+                        const productId = item.productId._id;
+                        const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
+
+                        const token = Cookies.get("token"); // Obtenha o token do cookie
+                        axios
+                          .put(
+                            `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
+                            { quantity: newQuantity },
+                            {
+                              headers: {
+                                Authorization: `Bearer ${token}`,
+                                Credentials: credentials,
+                              },
+                            }
+                          )
+                          .then((response) => {
+                            setGetCart((prevCart) => {
+                              const newCart = [...prevCart];
+                              newCart[index].quantity = newQuantity;
+                              return newCart;
+                            });
+                          })
+                          .catch((error) => {
+                            console.log(
+                              "Erro ao atualizar quantidade do produto no carrinho.",
+                              error
+                            );
+                          });
+                      }
+                    }}
+                    style={{ cursor: "pointer" }}
+                  />
+                  <input
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => {
+                      const newQuantity = parseInt(e.target.value);
+                      const newCart = [...getCart];
+                      newCart[index].quantity = newQuantity;
+                      setGetCart(newCart);
+                      handleQuantityChange(item.productId._id, newQuantity);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        const newQuantity = parseInt(e.target.value);
+                        const newCart = [...getCart];
+                        newCart[index].quantity = newQuantity;
+                        setGetCart(newCart);
+                        handleQuantityChange(item.productId._id, newQuantity);
+                      }
+                    }}
+                    style={{ width: "2vw" }}
+                  />
+
+                  <AddIcon
+                    onClick={() => {
+                      const newQuantity = item.quantity + 1;
+                      const newCart = [...getCart];
+                      newCart[index].quantity = newQuantity;
+
+                      const productId = item.productId._id;
+                      const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
+
+                      const token = Cookies.get("token"); // Obtenha o token do cookie
+                      axios
+                        .put(
+                          `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
+                          { quantity: newQuantity },
+                          {
+                            headers: {
+                              Authorization: `Bearer ${token}`,
+                              Credentials: credentials,
+                            },
+                          }
+                        )
+                        .then((response) => {
+                          setGetCart((prevCart) => {
+                            const newCart = [...prevCart];
+                            newCart[index].quantity = newQuantity;
+                            return newCart;
+                          });
+                        })
+                        .catch((error) => {
+                          console.log(
+                            "Erro ao atualizar quantidade do produto no carrinho.",
+                            error
+                          );
+                        });
+                    }}
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
+              </div>
             </div>
           ))}
         </>
@@ -614,10 +597,10 @@ const Cart = () => {
         >
           <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
           {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-  <div style={{ marginTop: "10rem" }}>
-    total que muda: {getTotal.totalAmount}
-  </div>
-)}
+            <div style={{ marginTop: "10rem" }}>
+              total que muda: {getTotal.totalAmount}
+            </div>
+          )}
 
           <form style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
             <input

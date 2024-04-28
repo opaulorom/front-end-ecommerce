@@ -13,5 +13,10 @@ div h3:nth-last-of-type(3){
 
 
 @media (max-width: 600px) {
-    
+
 }
+
+.ProductsContainer{
+    border: 1px solid #e9e9e9;
+}
+
