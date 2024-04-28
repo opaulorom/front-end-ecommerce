@@ -333,22 +333,33 @@ const Cart = () => {
               key={index}
               className={styles.product}
             >
-              {item.productId.quantity > 0 ? (
-                <p>{`Apenas ${item.productId.quantity} unidades em estoque`}</p>
-              ) : (
-                <p>Produto esgotado</p>
-              )}
+             
+            
               <div
                 style={{
                   border: "1px solid #e9e9e9",
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: "column",
                   width: "20vw",
                   justifyContent: "space-between",
-                  padding:"16px 24px 16px 16px"
+                  padding:"16px 24px 16px 16px",
+                  marginBottom:"3rem"
+               
                 }}
                 
               >
+                 <div className={styles.quantity} >  {item.productId.quantity > 0 ? (
+                <p>{`Apenas ${item.productId.quantity} unidades em estoque`}</p>
+              ) : (
+                <p className={styles.p}>Produto esgotado so temos 1 no estoque</p>
+
+
+                
+              )}
+              </div>
+              <div style={{display:"flex",flexDirection:"row"}}>
+
+
                 <div >
                   {item.productId.variations && (
                     <img
@@ -367,16 +378,15 @@ const Cart = () => {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    gap: "1rem",
                   }}
-                  
+                  className={styles.texts}
+
                 >
-                  <span> {item.productId.name}</span>
-                  <span> Tamanho: {item.size}</span>
-                  <span> Cor:{item.color}</span>
-                  <span> {item.price}</span>
+                  <span  className={styles.spanName}> {item.productId.name}</span>
+                  <span className={styles.spanSize}> Tamanho: {item.size}</span>
+                  <span className={styles.spanColor}> Cor: {item.color}</span>
+                  <span className={styles.spanPrice}> Preço: R${item.price.toFixed(2)}</span>
                 </div>
-               <div className={styles.boxIcons}>
                <div className={styles.deleteIcon}>
                   {" "}
                   <React.Fragment>
@@ -391,7 +401,7 @@ const Cart = () => {
                         border: "0",
                       }}
                     >
-                      <img src="https://i.ibb.co/Wyp4fGk/trash-1.png" alt="" />
+                      <img src="https://i.ibb.co/bsZVKbf/trash-2.png" alt="" />
                     </Button>
                     <Modal open={open} onClose={() => setOpen(false)}>
                       <ModalDialog
@@ -548,9 +558,10 @@ const Cart = () => {
                     style={{ cursor: "pointer" }}
                   />
                 </div>
-                
-               </div>
+       
             
+              </div>
+
               </div>
             </div>
           ))}
@@ -560,76 +571,29 @@ const Cart = () => {
         <div
           style={{ marginLeft: "14rem", position: "absolute", right: "10px" }}
         >
-          <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
           {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
             <div style={{ marginTop: "10rem" }}>
               total que muda: {getTotal.totalAmount}
             </div>
           )}
 
-          <form style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            <input
-              type="text"
-              value={cep}
-              onChange={(event) => setCep(event.target.value)}
-              placeholder="Digite pra pesquisar um cep."
-              style={{ height: "4vh" }}
-            />
-
-            <button type="submit" onClick={handleSubmit}>
-              {" "}
-              <SearchIcon /> Buscar{" "}
-            </button>
-          </form>
-
-          {frete && (
-            <div>
-              {frete.map((item, index) => (
-                <div key={index}>
-                  <div>
-                    <input
-                      type="radio"
-                      name="selectedFrete"
-                      value={index}
-                      onClick={() => handleRadioClick(index)}
-                      checked={selectedFreteIndex === index}
-                    />
-                    <img
-                      src={item.logo}
-                      alt="logo das transportadoras"
-                      style={{ width: "10vw" }}
-                    />
-                    <p>{item.nomeTransportadora}</p>
-                    <p>
-                      {" "}
-                      {item.dataPrevistaEntrega
-                        .split("T")[0]
-                        .split("-")
-                        .reverse()
-                        .join("/")}
-                    </p>
-                    <p> {item.prazoEntrega}</p>
-                    <p> valor do frete:{item.valorFrete}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+        
+         
+    
+    
         </div>
       )}
 
       {getCart.length > 0 && (
-        <>
-          {selectedFreteIndex === null && getTotal.totalAmount < 300 && (
-            <p>Por favor, selecione um frete antes de prosseguir.</p>
-          )}
-
+        <div className={styles.buttonCart}>
+         
           <Link
             to={
               selectedFreteIndex !== null || getTotal.totalAmount >= 300
-                ? "/payment"
+                ? "/cart"
                 : "#"
             }
+            
           >
             <button
               onClick={handleAddShippingFee}
@@ -643,7 +607,9 @@ const Cart = () => {
                 fontFamily: "poppins, sans-serif",
                 cursor: "pointer",
                 position: "absolute",
-                right: "10px",
+                marginTop:"3rem",
+                left: "50%",
+                transform: "translateX(-50%)",
                 pointerEvents:
                   selectedFreteIndex !== null || getTotal.totalAmount >= 300
                     ? "auto"
@@ -654,10 +620,10 @@ const Cart = () => {
                     : 0.5,
               }}
             >
-              Fazer Pedido
+              Ir pra a sacola
             </button>
           </Link>
-        </>
+        </div>
       )}
     </div>
   );

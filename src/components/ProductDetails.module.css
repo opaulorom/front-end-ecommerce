@@ -63,6 +63,7 @@
     height: 100%;
     z-index: 999999999;
     text-align: center; /* Alinha o conteúdo ao centro horizontalmente */
+
     
 
   }
@@ -78,6 +79,7 @@
     justify-content: center; /* Alinha o conteúdo à direita */
     align-items: center; /* Centraliza o conteúdo verticalmente */
     margin-left: auto; /* Move o contêiner para a direita */
+    margin-top: 1rem;
 }
 
 
@@ -89,14 +91,15 @@
   margin-top: .1rem;
 }
 
+.IMGContent{
+  position: absolute;
+  top: 0;
+  left: -19rem;
+}
 
 
-
-
-
-
-.secondCartCloseContainer .secondCartClose:hover,
-.secondCartCloseContainer .secondCartClose:focus {
+  .secondCartClose:hover,
+  .secondCartClose:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;

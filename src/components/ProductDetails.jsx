@@ -277,9 +277,11 @@ const ProductDetails = () => {
           {openSecondCartModal  && (
               <div className={styles.secondCartModal}>
                 <div ref={modalRef} className={styles.secondCartModalContent}>
-                  <img src="" alt="" />
-                  <div className={styles.secondCartCloseContainer}>
+    
 
+                  <div className={styles.secondCartCloseContainer}>
+                  <div className={styles.IMGContent}>                <img src="https://i.ibb.co/vhcw8hz/shopping-bag-7.png" alt="logo do carinho de compras" />
+</div>
                   <span
                     className={styles.secondCartClose}
                     onClick={handleClickCloseCartModal}
