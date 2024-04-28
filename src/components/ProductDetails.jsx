@@ -280,7 +280,8 @@ const ProductDetails = () => {
     
 
                   <div className={styles.secondCartCloseContainer}>
-                  <div className={styles.IMGContent}>                <img src="https://i.ibb.co/vhcw8hz/shopping-bag-7.png" alt="logo do carinho de compras" />
+                  <div className={styles.IMGContent}>               
+<span>Pre visualização</span>
 </div>
                   <span
                     className={styles.secondCartClose}

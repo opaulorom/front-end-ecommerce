@@ -95,6 +95,13 @@
   position: absolute;
   top: 0;
   left: -19rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: rgba(0, 0, 0, 60%);
+  font-family: "poppins", sans-serif;
+  font-weight: 500;
+  font-size: .8rem;
 }
 
 
