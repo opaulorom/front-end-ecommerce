@@ -63,25 +63,40 @@
     height: 100%;
     z-index: 999999999;
     text-align: center; /* Alinha o conteúdo ao centro horizontalmente */
+    
 
   }
   
-  .secondCartClose {
-    color: #aaa;
-    float: right;
-    font-size: 30px;
-    font-weight: bold;
-    width: 30px; /* Defina a largura do elemento */
-    height: 30px; /* Defina a altura do elemento */
-    border: 2px solid #aaa; /* Adicione um estilo de borda opcional se desejar */
-    border-radius: 80%; /* Define o raio da borda para torná-la redonda */
-
- 
-
-  }
   
-  .secondCartClose:hover,
-  .secondCartClose:focus {
+  .secondCartCloseContainer {
+    width: 30px; /* Defina a largura do contêiner */
+    height: 30px; /* Defina a altura do contêiner */
+    border: 1px solid #aaa; /* Adiciona uma borda sólida com a cor #aaa */
+    border-radius: 50%; /* Define o raio da borda para torná-la circular */
+    position: relative; /* Define o posicionamento relativo para posicionar o filho absolutamente */
+    display: flex; /* Usa flexbox para alinhamento */
+    justify-content: center; /* Alinha o conteúdo à direita */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    margin-left: auto; /* Move o contêiner para a direita */
+}
+
+
+.secondCartClose {
+  color: #aaa;
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: .1rem;
+}
+
+
+
+
+
+
+
+.secondCartCloseContainer .secondCartClose:hover,
+.secondCartCloseContainer .secondCartClose:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;

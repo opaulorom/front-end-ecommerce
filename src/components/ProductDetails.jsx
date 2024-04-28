@@ -278,12 +278,16 @@ const ProductDetails = () => {
               <div className={styles.secondCartModal}>
                 <div ref={modalRef} className={styles.secondCartModalContent}>
                   <img src="" alt="" />
+                  <div className={styles.secondCartCloseContainer}>
+
                   <span
                     className={styles.secondCartClose}
                     onClick={handleClickCloseCartModal}
                   >
                     &times;
                   </span>
+                  </div>
+
 
                   <div   className={styles.CartB}>
 
