@@ -258,9 +258,9 @@ const Cart = () => {
 
   return (
     <div style={{ position: "relative"}}>
-      <Header />
 
-      <Navbar />
+
+
 
       {getCart.length === 0 && !loggedIn && (
         <>

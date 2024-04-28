@@ -274,6 +274,25 @@ const ProductDetails = () => {
         />
         <div style={{ position: "absolute", zIndex:"2"}}>
           <Header />
+          {openSecondCartModal  && (
+              <div className={styles.secondCartModal}>
+                <div ref={modalRef} className={styles.secondCartModalContent}>
+                  <img src="" alt="" />
+                  <span
+                    className={styles.secondCartClose}
+                    onClick={handleClickCloseCartModal}
+                  >
+                    &times;
+                  </span>
+
+                  <div   className={styles.CartB}>
+
+                  <CartB/>
+                  </div>
+                 
+                </div>
+              </div>
+            )}
         </div>
         <div
           style={{
@@ -433,25 +452,7 @@ const ProductDetails = () => {
                 </div>
               </div>
             )}
-             {openSecondCartModal  && (
-              <div className={styles.secondCartModal}>
-                <div ref={modalRef} className={styles.secondCartModalContent}>
-                  <img src="" alt="" />
-                  <span
-                    className={styles.secondCartClose}
-                    onClick={handleClickCloseCartModal}
-                  >
-                    &times;
-                  </span>
-
-                  <div   className={styles.CartB}>
-
-                  <CartB/>
-                  </div>
-                 
-                </div>
-              </div>
-            )}
+          
             <FreteComponent />
           </div>
         </div>
