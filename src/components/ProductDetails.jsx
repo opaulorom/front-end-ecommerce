@@ -76,10 +76,9 @@ const ProductDetails = () => {
         setCustomer(response.data);
         if (!response.data || response.data.length === 0 ) {
           setShowCartButton(true);
-          handleClickOpenModal
+          handleClickOpenModal()
         } else {
           setShowCartButton(false);
-          handleClickOpenCartModal()
         }
       })
       .catch((error) => {
