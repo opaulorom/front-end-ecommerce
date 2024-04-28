@@ -10,3 +10,8 @@
 div h3:nth-last-of-type(3){
     margin-left: auto;
 }
+
+
+@media (max-width: 600px) {
+    
+}

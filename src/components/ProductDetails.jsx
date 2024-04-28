@@ -76,7 +76,7 @@ const ProductDetails = () => {
         setCustomer(response.data);
         if (!response.data || response.data.length === 0 ) {
           setShowCartButton(true);
-          handleClickOpenModal()
+          handleClickOpenModal
         } else {
           setShowCartButton(false);
           handleClickOpenCartModal()
@@ -235,7 +235,11 @@ const ProductDetails = () => {
        
         addToCart(); // Atualiza o contexto do carrinho para refletir a adição do novo item
         toast.success("Produto adicionado ao carrinho!");
-        handleClickOpenCartModal()
+        
+  
+      handleClickOpenCartModal()
+  
+ 
       } catch (error) {
         console.error("Erro ao adicionar produto ao carrinho:", error);
       }
@@ -244,12 +248,6 @@ const ProductDetails = () => {
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
 
-    if (cartItemCount < 3) {
-      handleAddToCart();
-  
-    } else {
-      // Se o número de itens exceder três, exiba um alerta
-    }
    
     
   };

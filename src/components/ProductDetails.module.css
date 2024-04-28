@@ -37,6 +37,11 @@
 
 
 
+  @media (max-width: 600px) {
+    .secondCartModal{
+      display: none;
+    }
+  }
 
 
   .secondCartModal {
