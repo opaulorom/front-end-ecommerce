@@ -37,12 +37,6 @@
 
 
 
-  @media (max-width: 600px) {
-    .secondCartModal{
-      display: none;
-    }
-  }
-
 
   .secondCartModal {
     display: block;
@@ -73,6 +67,19 @@
 
   }
   
+  @media (max-width: 600px) {
+    .secondCartModal{
+      display: none;
+      
+    }
+
+    .secondCartModalContent{
+      display: none;
+
+    }
+    
+  }
+
   
   .secondCartCloseContainer {
     width: 30px; /* Defina a largura do contêiner */

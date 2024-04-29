@@ -27,40 +27,36 @@ const ProductDetails = () => {
   const { cartItemCount, addToCart } = useCart();
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
   const [openSecondCartModal, setOpenSecondCartModal] = useState(false);
-  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
+  const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
   const [selectedColorImage, setSelectedColorImage] = useState("");
-  const [showCartButton, setShowCartButton] = useState(false)
-  const token = Cookies.get('token'); // Obtenha o token do cookie
-  
+  const [showCartButton, setShowCartButton] = useState(false);
+  const token = Cookies.get("token"); // Obtenha o token do cookie
+
   const handleClickOpenButton = () => {
-    setShowCartButton(true)
-  
-  }
+    setShowCartButton(true);
+  };
   const handleClickCloseButton = () => {
-    setShowCartButton(false)
-  }
-    
+    setShowCartButton(false);
+  };
+
   const handleOpenButton = async () => {
-  
-      handleClickOpenButton()
-  
-   
-  }
+    handleClickOpenButton();
+  };
   const handleClickOpenModal = () => {
     setOpenCartModal(true);
   };
-  
+
   const handleClickCloseModal = () => {
     setOpenCartModal(false);
   };
-  
-  //  modal do carrinho 
-  
+
+  //  modal do carrinho
+
   const handleClickOpenCartModal = () => {
     setOpenSecondCartModal(true);
   };
-  
-  const handleClickCloseCartModal  = () => {
+
+  const handleClickCloseCartModal = () => {
     setOpenSecondCartModal(false);
   };
   useEffect(() => {
@@ -74,9 +70,9 @@ const ProductDetails = () => {
       })
       .then((response) => {
         setCustomer(response.data);
-        if (!response.data || response.data.length === 0 ) {
+        if (!response.data || response.data.length === 0) {
           setShowCartButton(true);
-          handleClickOpenModal()
+          handleClickOpenModal();
         } else {
           setShowCartButton(false);
         }
@@ -85,21 +81,17 @@ const ProductDetails = () => {
         console.log(error);
       });
   }, []);
- 
-
 
   useEffect(() => {
     const fetchProduct = async () => {
       const userId = Cookies.get("userId"); // Obtenha o token do cookie
 
       try {
-
         const response = await axios.get(
           `http://localhost:3001/api/product/${productId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
-          
             },
           }
         );
@@ -111,8 +103,6 @@ const ProductDetails = () => {
         if (response.data.product.variations.length > 0) {
           setSelectedColorImage(response.data.product.variations[0].urls[0]);
         }
-
- 
       } catch (error) {
         console.error("Erro ao obter detalhes do produto:", error);
       }
@@ -123,42 +113,38 @@ const ProductDetails = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        (modalRef.current && !modalRef.current.contains(event.target)) &&
+        modalRef.current &&
+        !modalRef.current.contains(event.target) &&
         (openCartModal || openSecondCartModal)
       ) {
         setOpenCartModal(false);
         setOpenSecondCartModal(false);
       }
     };
-  
+
     document.addEventListener("mousedown", handleClickOutside);
-  
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [openCartModal, openSecondCartModal]);
-  
-
 
   const handleThumbnailClick = (color, index) => {
     const colorVariations = product.variations.filter(
       (variation) => variation.color === color
     );
-  
+
     const firstIndexInColor = product.variations.findIndex(
       (variation) => variation.color === colorVariations[0].color
     );
 
     setCurrentImageIndex(firstIndexInColor);
-  
+
     // Log das URLs de imagem para a cor selecionada
-  
+
     // Atualize o estado com a URL da imagem correspondente à cor selecionada
     setSelectedColorImage(product.variations[firstIndexInColor].urls[0]);
   };
-  
-  
-  
 
   const handleDotClick = (index) => {
     setCurrentImageIndex(index);
@@ -176,25 +162,21 @@ const ProductDetails = () => {
     }
   };
 
-
   const handleAddToCart = async () => {
-
     try {
       const userId = Cookies.get("userId"); // Obtenha o token do cookie
 
       const response = await axios.post(
         `http://localhost:3001/api/add-to-cart/${userId}`,
-      
+
         {
           productId: product._id,
           size: selectedSize, // Aqui está sendo enviado o tamanho selecionado
           color: product.variations[currentImageIndex].color,
           quantity: 1,
           image: selectedColorImage, // Envie a URL da imagem selecionada
-          price: product.price // Passando o preço do produto
-
-        },
-       
+          price: product.price, // Passando o preço do produto
+        }
       );
 
       addToCart(); // Incrementa o número de itens no carrinho
@@ -204,13 +186,10 @@ const ProductDetails = () => {
     }
   };
 
-
-  
   const handleAddToCartAndOpenModal = async () => {
     if (selectedSize && product.variations[currentImageIndex].color) {
       // Verifica se o tamanho e a cor estão selecionados
-  
-  
+
       try {
         const response = await axios.post(
           `http://localhost:3001/api/add-to-cart/${userId}`,
@@ -220,25 +199,19 @@ const ProductDetails = () => {
             color: product.variations[currentImageIndex].color,
             quantity: 1,
             image: selectedColorImage,
-            price: product.price // Passando o preço do produto
-
+            price: product.price, // Passando o preço do produto
           },
           {
             headers: {
               Authorization: `Bearer ${token}`,
-    
             },
-          },
+          }
         );
-     
-       
+
         addToCart(); // Atualiza o contexto do carrinho para refletir a adição do novo item
         toast.success("Produto adicionado ao carrinho!");
-        
-  
-      handleClickOpenCartModal()
-  
- 
+
+        handleClickOpenCartModal();
       } catch (error) {
         console.error("Erro ao adicionar produto ao carrinho:", error);
       }
@@ -246,12 +219,7 @@ const ProductDetails = () => {
       // Se a cor ou o tamanho não foram selecionados, exiba um alerta
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
-
-   
-    
   };
-  
-
 
   return (
     <>
@@ -267,36 +235,31 @@ const ProductDetails = () => {
           draggable
           pauseOnHover
           theme="light"
-          style={{marginTop:"8rem"}}
+          style={{ marginTop: "8rem" }}
         />
-        <div style={{ position: "absolute", zIndex:"2"}}>
+        <div style={{ position: "absolute", zIndex: "2" }}>
           <Header />
-          {openSecondCartModal  && (
-              <div className={styles.secondCartModal}>
-                <div ref={modalRef} className={styles.secondCartModalContent}>
-    
-
-                  <div className={styles.secondCartCloseContainer}>
-                  <div className={styles.IMGContent}>               
-<span>Pre visualização</span>
-</div>
+          {openSecondCartModal && (
+            <div className={styles.secondCartModal}>
+              <div ref={modalRef} className={styles.secondCartModalContent}>
+                <div className={styles.secondCartCloseContainer}>
+                  <div className={styles.IMGContent}>
+                    <span>Pre visualização</span>
+                  </div>
                   <span
                     className={styles.secondCartClose}
                     onClick={handleClickCloseCartModal}
                   >
                     &times;
                   </span>
-                  </div>
+                </div>
 
-
-                  <div   className={styles.CartB}>
-
-                  <CartB/>
-                  </div>
-                 
+                <div className={styles.CartB}>
+                  <CartB />
                 </div>
               </div>
-            )}
+            </div>
+          )}
         </div>
         <div
           style={{
@@ -306,8 +269,6 @@ const ProductDetails = () => {
             marginTop: "10rem",
           }}
         >
-
-
           <div>
             <div key={currentImageIndex} className="image-container">
               {product.variations[currentImageIndex] && (
@@ -402,40 +363,41 @@ const ProductDetails = () => {
                 setIsColorAndSizeSelected(true);
               }}
             />
-            {!showCartButton && <button
-              onClick={handleAddToCartAndOpenModal}
-              style={{
-                backgroundColor: "#5070E3",
-                color: "white",
-                border: "none",
-                padding: ".8rem",
-                borderRadius: "5px",
-                fontWeight: "500",
-                fontFamily: "poppins, sans-serif",
-                cursor:"pointer"
-              }}
-            >
-              Adicionar ao Carrinho
-            </button>}
-             
-            {showCartButton && <button
-              onClick={handleClickOpenModal}
-              style={{
-                backgroundColor: "red",
-                color: "white",
-                border: "none",
-                padding: ".8rem",
-                borderRadius: "5px",
-                fontWeight: "500",
-                fontFamily: "poppins, sans-serif",
-                cursor:"pointer",
-                
-              }}
-            >
-              Adicionar ao Carrinho
-            </button>}
-           
-           
+            {!showCartButton && (
+              <button
+                onClick={handleAddToCartAndOpenModal}
+                style={{
+                  backgroundColor: "#5070E3",
+                  color: "white",
+                  border: "none",
+                  padding: ".8rem",
+                  borderRadius: "5px",
+                  fontWeight: "500",
+                  fontFamily: "poppins, sans-serif",
+                  cursor: "pointer",
+                }}
+              >
+                Adicionar ao Carrinho
+              </button>
+            )}
+
+            {showCartButton && (
+              <button
+                onClick={handleClickOpenModal}
+                style={{
+                  backgroundColor: "red",
+                  color: "white",
+                  border: "none",
+                  padding: ".8rem",
+                  borderRadius: "5px",
+                  fontWeight: "500",
+                  fontFamily: "poppins, sans-serif",
+                  cursor: "pointer",
+                }}
+              >
+                Adicionar ao Carrinho
+              </button>
+            )}
 
             {openCartModal && (
               <div className={styles.cartModal}>
@@ -447,16 +409,16 @@ const ProductDetails = () => {
                     &times;
                   </span>
                   <p>
-                    vc nao ainda nao  cadastrou os dados necessarios pra compra se cadastre 
+                    vc nao ainda nao cadastrou os dados necessarios pra compra
+                    se cadastre
                   </p>
                   <Link to={"/signUp"}>
-                  <button >cadastre-se</button>
-
+                    <button>cadastre-se</button>
                   </Link>
                 </div>
               </div>
             )}
-          
+
             <FreteComponent />
           </div>
         </div>
