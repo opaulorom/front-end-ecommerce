@@ -11,7 +11,7 @@ import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import Cookies from "js-cookie";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+import SearchIcon from "@mui/icons-material/Search";
 import AlertComponente from "./AlertComponente";
 import { useUnreadCount } from "../context/UnreadContext";
 const Header = () => {
@@ -40,7 +40,6 @@ const Header = () => {
         .get(`http://localhost:3001/api/cart/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
-  
           },
         })
         .then((response) => {
@@ -72,7 +71,6 @@ const Header = () => {
         setOpenCartModal(false);
         setOpenBellModal(false);
         setShowInput(false);
-
       }
     };
 
@@ -122,198 +120,178 @@ const Header = () => {
   });
 
   const handleClickCloseInputModal = () => {
-    setShowInput(false)   };
+    setShowInput(false);
+  };
   const handleClickOpenInputModal = () => {
-    setShowInput(true)  };
-
+    setShowInput(true);
+  };
 
   const handleOpenInput = () => {
-    handleClickOpenInputModal()
-  }
+    handleClickOpenInputModal();
+  };
   return (
     <>
       <div className={styles.ContainerHeader}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            position: "relative",
-            marginTop: "-2rem",
-          }}
-        >
-          {/* Ícone à esquerda */}
-          <i
-            style={{
-              position: "absolute",
-              left: "2rem", // Posiciona o elemento no lado esquerdo
-              zIndex: "999999",
-            }}
-          >
-            <Link to={"/home"}>
-              <img
-                src="https://i.ibb.co/B3xYDzG/Logo-mediewal-1.png"
-
-                className={styles.MediewalLogo}
-              />
-            </Link>
-          </i>
-
-          {/* Componente SearchBar à direita */}
-          <div
-            style={{
-              marginRight: "1.5rem",
-              marginLeft: "30rem",
-              zIndex: "9999",
-            }}
-            className={styles.SearchBar}
-          >
-            <SearchBar />
-          
-          </div>
-<div>  <button onClick={handleOpenInput} className={styles.InputButton}>input</button>
-           {showInput  && <div ref={modalRef} > 
-          
-             <SearchBar />
-             </div>}</div>
-          {loggedIn === true && (
-            <div>
-              <div
-                style={{
-                  position: "absolute",
-                  width: "5rem",
-                  zIndex: "99999",
-                  top: "5px",
-                  right: "12.5rem",
-                }}
-              >
-                <img
-                  src="https://i.ibb.co/98L4Hny/bell-6.png"
-                  alt=""
-                  style={{ fontSize: "14rem", cursor: "pointer" }}
-                  onClick={handleOpenBellModal}
-                />
-                <span
-                  style={{
-                    position: "absolute",
-                    top: "-10px",
-                    right: "40px",
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: "#2196f3",
-                    color: "white",
-                    borderRadius: "50%",
-                    fontSize: "13px",
-                    fontWeight: "bold",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {unreadCount}{" "}
-                  {/* Substituir 0 pelo valor do estado do contexto */}
-                </span>
-              </div>
-            </div>
-          )}
-
-          {openBellModal && loggedIn === true && (
-            <div className={styles.HeaderModal}>
-              <div ref={modalRef} className={styles.BellModalContent}>
-                <div className={styles.FirstContainer}>
-                  <h4 className={styles.h4}>Alertas</h4>
-                </div>
-
-                {showButton && (
-                  <>
-                    <div className={styles.scroll}>
-                      <AlertComponente />
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          )}
-
-          {openCartModal && loggedIn === true && (
-            <div className={styles.HeaderModal}>
-              <div ref={modalRef} className={styles.HeaderModalContent}>
-                {showButton && (
-                  <>
-                    <div className={styles.FirstContainer}>
-                      <h4 className={styles.h4}>Configurações</h4>
-                    </div>
-                    <nav className={styles.NavContainer}>
-                      <ul style={{ listStyleType: "none" }}>
-                        <li className={styles.li}>
-                          <Link
-                            to={"/perfil"}
-                            style={{ textDecoration: "none" }}
-                          >
-                            <a
-                              style={{
-                                textDecoration: "none",
-                                color: "rgb(108, 117, 125)",
-                              }}
-                            >
-                              Minha Conta
-                            </a>
-                          </Link>
-                        </li>
-                        <li className={styles.li}>
-                          <Link
-                            to={"/orders"}
-                            style={{ textDecoration: "none" }}
-                          >
-                            <a style={{ color: "rgb(108, 117, 125)" }}>
-                              Historico de Compras
-                            </a>
-                          </Link>
-                        </li>
-                        <li className={styles.li}>
-                          <Link
-                            to={"/forgotPassword"}
-                            style={{ textDecoration: "none" }}
-                          >
-                            <a style={{ color: "rgb(108, 117, 125)" }}>
-                              Alterar senha
-                            </a>
-                          </Link>
-                        </li>
-                      </ul>
-                    </nav>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        color: "red",
-                        position: "absolute",
-                        bottom: "10px",
-                        left: "10px",
-                        gap: ".2rem",
-                        cursor: "pointer",
-                      }}
-                      onClick={logout}
-                    >
-                      <LogoutIcon />
-                      <span
-                        style={{
-                          fontSize: "1rem",
-                          fontFamily: "poppins",
-                          fontWeight: "400",
-                        }}
-                      >
-                        Sair
-                      </span>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          )}
+        <div>
           <div className={styles.desktopContainer}>
-            <Link
+            <div className={styles.child}>
+              <i>
+                <Link to={"/home"}>
+                  <img
+                    src="https://i.ibb.co/B3xYDzG/Logo-mediewal-1.png"
+                    className={styles.MediewalLogo}
+                  />
+                </Link>
+              </i>
+            </div>
+
+            {/* Componente SearchBar à direita */}
+            <div className={styles.child}>
+              <SearchBar />
+            </div>
+
+            <div>
+              
+     
+
+            {openBellModal && loggedIn === true && (
+              <div className={styles.HeaderModal}>
+                <div ref={modalRef} className={styles.BellModalContent}>
+                  <div className={styles.FirstContainer}>
+                    <h4 className={styles.h4}>Alertas</h4>
+                  </div>
+
+                  {showButton && (
+                    <>
+                      <div className={styles.scroll}>
+                        <AlertComponente />
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {openCartModal && loggedIn === true && (
+              <div className={styles.HeaderModal}>
+                <div ref={modalRef} className={styles.HeaderModalContent}>
+                  {showButton && (
+                    <>
+                      <div className={styles.FirstContainer}>
+                        <h4 className={styles.h4}>Configurações</h4>
+                      </div>
+                      <nav className={styles.NavContainer}>
+                        <ul style={{ listStyleType: "none" }}>
+                          <li className={styles.li}>
+                            <Link
+                              to={"/perfil"}
+                              style={{ textDecoration: "none" }}
+                            >
+                              <a
+                                style={{
+                                  textDecoration: "none",
+                                  color: "rgb(108, 117, 125)",
+                                }}
+                              >
+                                Minha Conta
+                              </a>
+                            </Link>
+                          </li>
+                          <li className={styles.li}>
+                            <Link
+                              to={"/orders"}
+                              style={{ textDecoration: "none" }}
+                            >
+                              <a style={{ color: "rgb(108, 117, 125)" }}>
+                                Historico de Compras
+                              </a>
+                            </Link>
+                          </li>
+                          <li className={styles.li}>
+                            <Link
+                              to={"/forgotPassword"}
+                              style={{ textDecoration: "none" }}
+                            >
+                              <a style={{ color: "rgb(108, 117, 125)" }}>
+                                Alterar senha
+                              </a>
+                            </Link>
+                          </li>
+                        </ul>
+                      </nav>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          color: "red",
+                          position: "absolute",
+                          bottom: "10px",
+                          left: "10px",
+                          gap: ".2rem",
+                          cursor: "pointer",
+                        }}
+                        onClick={logout}
+                      >
+                        <LogoutIcon />
+                        <span
+                          style={{
+                            fontSize: "1rem",
+                            fontFamily: "poppins",
+                            fontWeight: "400",
+                          }}
+                        >
+                          Sair
+                        </span>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+           
+
+            <div  className={styles.IconsDesktopContainer}>
+            <div    >
+              {loggedIn === true && (
+                <div>
+                  <div   style={{
+                position: "relative",
+                display: "inline-block",
+                zIndex: "99999",
+              }}>
+                    <img
+                      src="https://i.ibb.co/98L4Hny/bell-6.png"
+                      alt=""
+                      style={{ fontSize: "14rem", cursor: "pointer" }}
+                      onClick={handleOpenBellModal}
+                    />
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "-10px",
+                        right: "-10px",
+                        width: "20px",
+                        height: "20px",
+                        backgroundColor: "#2196f3",
+                        color: "white",
+                        borderRadius: "50%",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {unreadCount}{" "}
+                      {/* Substituir 0 pelo valor do estado do contexto */}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+              <Link
               to={loggedIn === true ? " " : "/perfil"}
-              style={{ zIndex: "99999" }}
+     
             >
               {" "}
               <img
@@ -323,12 +301,10 @@ const Header = () => {
               />
             </Link>
 
+        
             <Link
               to={"/favoritos"}
-              style={{
-                cursor: "pointer",
-                zIndex: "99999",
-              }}
+          
             >
               <img src="https://i.ibb.co/2ZnFQfq/heart-1.png" alt="" />
             </Link>
@@ -361,24 +337,35 @@ const Header = () => {
                 {loggedIn ? localCartItemCount : 0}
               </span>
             </Link>
+            </div>
           </div>
+
+            </div>
+           
         </div>
         <div className={styles.MobileHeader}>
           <Link
             to={"/favoritos"}
             style={{
-              cursor: "pointer", color:"white" 
+              cursor: "pointer",
+              color: "white",
             }}
           >
             <FavoriteBorderIcon style={{ fontSize: "2rem" }} />
           </Link>
           <Link to={"/perfil"}>
-            <AccountCircleOutlinedIcon style={{ fontSize: "2rem", color:"white" }} />
+            <AccountCircleOutlinedIcon
+              style={{ fontSize: "2rem", color: "white" }}
+            />
           </Link>
 
           <Link
             to={"/cart"}
-            style={{ position: "relative", display: "inline-block", color:"white"  }}
+            style={{
+              position: "relative",
+              display: "inline-block",
+              color: "white",
+            }}
           >
             <span
               style={{
@@ -399,14 +386,18 @@ const Header = () => {
             >
               {loggedIn ? localCartItemCount : 0}
             </span>
-            <ShoppingBagOutlinedIcon style={{ fontSize: "2rem", color:"white"  }} />
+            <ShoppingBagOutlinedIcon
+              style={{ fontSize: "2rem", color: "white" }}
+            />
           </Link>
         </div>
+        
         <div
           style={{
             marginTop: "-10rem",
-            zIndex: 1, // Define o z-index para 1
+            zIndex: -1, // Define o z-index para 1
             position: "absolute",
+            
           }}
         >
           <CategoriesList />

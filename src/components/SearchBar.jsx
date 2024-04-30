@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './SearchBar.module.css';
+
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
@@ -17,23 +18,21 @@ const SearchBar = () => {
   };
 
   return (
-    <div >
+    <div className={styles.inputWrapper}>
       <input
         type="text"
         placeholder="Digite o nome do produto"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        onKeyPress={handleKeyPress} // Adiciona o event listener para capturar a tecla pressionada
-        
+        onKeyDown={handleKeyPress} // Adiciona o event listener para capturar a tecla pressionada
         className={styles.inputContainer}
       />
-      <img src='https://i.ibb.co/t4n36kx/loupe-5.png' onClick={handleSearch}
-       style={{
-        position:"absolute",
-        top:".3rem",
-        right:"21rem",
-        cursor:"pointer"
-      }}></img>
+      <img
+        src='https://i.ibb.co/t4n36kx/loupe-5.png'
+        onClick={handleSearch}
+        className={styles.searchIcon}
+        alt="Search"
+      />
     </div>
   );
 };

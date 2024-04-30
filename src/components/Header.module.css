@@ -22,21 +22,26 @@ body {
 
 .desktopContainer {
   display: flex;
-  flex-direction: row;
-  margin-right: 5rem;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  margin-right: 5rem;
+
   gap: 1.5rem;
   margin-left: 5rem;
+  width: 100%;
 }
+
+.DesktopIcons{
+  display: flex;
+  align-items: center;
+}
+
 .MediewalLogo{
   width: 12vw;
 
 }
 @media (max-width: 600px) {
-  .SearchBar {
-    display: none;
-  }
+  
   .desktopContainer {
     display: none;
   }
@@ -69,10 +74,8 @@ body {
   .MobileHeader {
     display: none;
   }
-  .InputButton{
-    display: none;
 
-  }
+ 
  
 
 }
@@ -85,18 +88,21 @@ body {
 
   }
 
-  .InputButton{
-    display: block;
-  }
+ 
 
-  .SearchBar{
-    display: none;
 
-  }
 
 }
+
+
+.SearchBar {
+  margin-right: 1.5rem;
+  margin-left: 30rem;
+  z-index: 9999;
+}
+
 @media (max-width: 800px) and (orientation: portrait) {
-  
+ 
 }
 @media (max-width: 834px) and (orientation: portrait) {
   
@@ -106,8 +112,10 @@ body {
  
 }
 
-
-
+.DesktopContainer{
+  display: flex;
+  align-items: center;
+}
 .modal {
   position: fixed;
   top: 0;
@@ -181,6 +189,23 @@ body {
 
 
 }
+
+.desktopContainer{
+  display: flex;
+  gap: 1rem;
+  z-index: 6;
+}
+
+
+
+.IconsDesktopContainer{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: -6;
+
+}
+
 
 .li{
     display: flex;

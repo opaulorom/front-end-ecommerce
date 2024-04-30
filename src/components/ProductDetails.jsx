@@ -220,7 +220,8 @@ const ProductDetails = () => {
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
   };
-
+  
+  
   return (
     <>
       <div>
