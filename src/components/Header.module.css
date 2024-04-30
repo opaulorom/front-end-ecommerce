@@ -31,88 +31,16 @@ body {
   width: 100%;
 }
 
-.DesktopIcons{
+.DesktopIcons {
   display: flex;
   align-items: center;
 }
 
-.MediewalLogo{
+.MediewalLogo {
   width: 12vw;
-
-}
-@media (max-width: 600px) {
-  
-  .desktopContainer {
-    display: none;
-  }
-
-  .ContainerHeader {
-    height: 8svh;
-  }
-
-  .MobileHeader {
-    display: flex;
-    flex-direction: row;
-    margin-right: 3rem;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
-  .MediewalLogo{
-    width: 35vw;
-    margin-right: 8rem;
-    margin-top: 2rem;
-  }
-  .ContainerHeader{
-    height: 10svh;
-
-  }
 }
 
-@media (min-width: 700px) {
-  .MobileHeader {
-    display: none;
-  }
-
- 
- 
-
-}
-@media (min-width: 700px) and (orientation: portrait){
-  .MobileHeader {
-    display: none;
-  }
-  .ContainerHeader{
-    height: 8svh;
-
-  }
-
- 
-
-
-
-}
-
-
-.SearchBar {
-  margin-right: 1.5rem;
-  margin-left: 30rem;
-  z-index: 9999;
-}
-
-@media (max-width: 800px) and (orientation: portrait) {
- 
-}
-@media (max-width: 834px) and (orientation: portrait) {
-  
-}
-
-@media (max-width: 1024px) and (orientation: portrait) {
- 
-}
-
-.DesktopContainer{
+.DesktopContainer {
   display: flex;
   align-items: center;
 }
@@ -129,20 +57,16 @@ body {
   align-items: center;
 }
 
-
 .modalContent {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
 }
 
-
-
-
 .HeaderModalContent {
   position: absolute;
-  right: 11.5rem;
-  margin-top: 1.5rem;
+  right: 14rem;
+  margin-top: 3rem;
   color: black;
   background-color: white;
   width: 20vw;
@@ -152,7 +76,7 @@ body {
   border-radius: 4px;
 }
 
-.BellModalContent{
+.BellModalContent {
   position: absolute;
   right: 15rem;
   margin-top: 1.5rem;
@@ -168,7 +92,6 @@ body {
   border: 1px solid #ccc;
 }
 
-
 .FirstContainer {
   border-bottom: 1px solid rgb(206, 212, 218);
 
@@ -179,50 +102,137 @@ body {
   margin-left: 1rem;
   font-family: "poppins";
   font-weight: 500;
-
 }
 
 .NavContainer {
-    font-family: "poppins";
-    font-weight: 400;
-    width: 100%;
-
-
+  font-family: "poppins";
+  font-weight: 400;
+  width: 100%;
 }
 
-.desktopContainer{
+.desktopContainer {
   display: flex;
-  gap: 1rem;
+  margin-top: -2rem;
+  gap: 5rem;
   z-index: 6;
 }
 
-
-
-.IconsDesktopContainer{
+.IconsDesktopContainer {
   display: flex;
   align-items: center;
   gap: 1rem;
   z-index: -6;
+}
 
+.li {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.5rem;
+  padding: 0.3rem;
+}
+
+.li:hover {
+  background-color: #e9ecef;
+}
+
+.scroll {
+  color: #05070a;
+}
+
+@media (max-width: 300px) {
+  .MediewalLogoMobile {
+
+  }
+
+  .MobileHeader__icons {
+   margin-right: 5rem;
+   display: flex;
+   align-items: center;
+  }
 }
 
 
-.li{
+@media (max-width: 600px) and (orientation: portrait) {
+  .ContainerHeader {
+    display: none;
+  }
+  .desktopContainer {
+    display: none;
+  }
+  .MobileHeader {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 auto;
+  }
+
+  .MobileHeader__Container {
     display: flex;
     align-items: center;
-    gap: 0.3rem;
-    margin-bottom: 0.5rem;
-    padding: .3rem;
+    flex-direction: row;
+    gap: 10rem;
+  }
+
+  .SearchBarContent {
+    position: absolute;
+    left: 10px;
+  }
+
+  .ContainerHeaderMobile {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    background-color: #05070a;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    height: 10svh;
+ 
+    color: white;
+  }
+
+  .ContainerHeader {
+    height: 10svh;
+  }
+
+  .MediewalLogoMobile {
+    width: 25vw;
+  }
+
+  
+  .MobileHeader__icons {
+display: flex;
+gap: .5rem;
+   }
 }
 
+@media (min-width: 700px) {
+  .MobileHeader {
+    display: none;
+  }
 
-.li:hover{
-    background-color: #E9ECEF;
+  .MobileHeader__Container {
+    display: none;
+  }
 
+  
+}
+@media (min-width: 700px) and (orientation: portrait) {
+  .MobileHeader {
+    display: none;
+  }
+  .ContainerHeader {
+    height: 8svh;
+  }
 }
 
+@media (max-width: 800px) and (orientation: portrait) {
+}
+@media (max-width: 834px) and (orientation: portrait) {
+}
 
-
-.scroll{
-  color: #05070a;
+@media (max-width: 1024px) and (orientation: portrait) {
 }

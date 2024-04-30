@@ -20,3 +20,19 @@
     cursor: pointer;
   }
   
+
+  
+@media (max-width: 600px) and (orientation: portrait) {
+  .inputWrapper {
+    position: relative;
+    width: 60vw; /* ou o tamanho que você deseja */
+    height: auto;
+  
+    top: 90%;
+    transform: translateY(-90%);
+  }
+
+  .inputContainer{
+    height: 5vh;
+  }
+}

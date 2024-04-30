@@ -1,25 +1,16 @@
 import Header from "./Header";
 import Navbar from "./Navbar";
-
+import styles from "./NoMatch.module.css"
 function NoMatch() {
   return (
     <div>
        <Header/>
        <Navbar/>
 
-      <div style={{
-        display:"flex",
-        justifyContent:"center",
-        alignItems:"center",
-        marginTop:"15rem",
-        gap:"1rem"
-      }}>
+      <div  className={styles.container}>
               <img src="https://i.ibb.co/0M09gh3/browser.png" alt="" />
 
-      <h2 style={{
-        fontFamily:"poppins",
-        fontWeight:"500"
-      }}>Pagina não encontrada</h2>
+      <h2 className={styles.title}>Pagina não encontrada!</h2>
 
       </div>
 

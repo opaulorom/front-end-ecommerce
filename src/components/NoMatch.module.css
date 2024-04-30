@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15rem;
+    gap: 1rem;
+  }
+  
+  .title {
+    font-family: poppins;
+    font-weight: 500;
+  }
+  
+  @media (max-width: 600px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+      }
+
+  }
