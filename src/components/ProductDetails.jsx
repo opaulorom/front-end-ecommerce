@@ -31,7 +31,11 @@ const ProductDetails = () => {
   const [selectedColorImage, setSelectedColorImage] = useState("");
   const [showCartButton, setShowCartButton] = useState(false);
   const token = Cookies.get("token"); // Obtenha o token do cookie
-
+  const [showBorder, setShowBorder] = useState(false); // Estado para controlar a borda
+  const handleShowBorder = () =>{
+    setShowBorder(!showBorder);
+    
+  }
   const handleClickOpenButton = () => {
     setShowCartButton(true);
   };
@@ -95,13 +99,22 @@ const ProductDetails = () => {
             },
           }
         );
-        setProduct(response.data.product);
-        const sizesArray = response.data.product.size
-          .split(",")
-          .map((size) => size.trim());
-        setSizesFromDatabase(sizesArray);
-        if (response.data.product.variations.length > 0) {
-          setSelectedColorImage(response.data.product.variations[0].urls[0]);
+        setProduct(response.data);
+        if (response.data.product && response.data.product.variations) {
+          setProduct(response.data.product);
+  
+          // Verifique se há variações disponíveis
+          if (response.data.product.variations.length > 0) {
+            // Defina a imagem da cor selecionada como a primeira imagem da primeira variação
+            setSelectedColorImage(response.data.product.variations[0].urls[0]);
+            // Atualize os tamanhos para a primeira variação
+            const sizesArray = response.data.product.variations[0].map(variation => variation.size);
+            setSizesFromDatabase(sizesArray);
+  
+            // Defina o primeiro tamanho como padrão
+            setSelectedSize(sizesArray[0]);
+            setIsColorAndSizeSelected(true); // Marque como selecionado automaticamente
+          }
         }
       } catch (error) {
         console.error("Erro ao obter detalhes do produto:", error);
@@ -110,6 +123,7 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [productId]);
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -133,17 +147,26 @@ const ProductDetails = () => {
     const colorVariations = product.variations.filter(
       (variation) => variation.color === color
     );
-
+  
     const firstIndexInColor = product.variations.findIndex(
       (variation) => variation.color === colorVariations[0].color
     );
-
+  
     setCurrentImageIndex(firstIndexInColor);
-
-    // Log das URLs de imagem para a cor selecionada
-
-    // Atualize o estado com a URL da imagem correspondente à cor selecionada
+  
     setSelectedColorImage(product.variations[firstIndexInColor].urls[0]);
+    updateSizesForColor(color); // Atualize os tamanhos disponíveis para a cor selecionada
+    
+    // Defina o índice da miniatura clicada para mostrar a borda
+    setShowBorder(index);
+  };
+  
+
+  const updateSizesForColor = (color) => {
+    const sizesArray = product.variations
+      .filter((variation) => variation.color === color)
+      .map((variation) => variation.size);
+    setSizesFromDatabase(sizesArray);
   };
 
   const handleDotClick = (index) => {
@@ -262,6 +285,7 @@ const ProductDetails = () => {
             </div>
           )}
         </div>
+   
         <div
           style={{
             display: "flex",
@@ -308,7 +332,7 @@ const ProductDetails = () => {
               ))}
             </div>
           </div>
-
+   
           <div style={{}}>
             <h1
               style={{
@@ -319,6 +343,7 @@ const ProductDetails = () => {
               }}
             >
               {product.name}
+              
             </h1>
             <p
               style={{
@@ -340,17 +365,14 @@ const ProductDetails = () => {
                 .map((variation, index) => (
                   <div key={index} className="thumbnail-wrapper">
                     <span className="color-name">{`${variation.color}`}</span>
+                    
                     <img
                       src={variation.urls[0]}
                       alt={variation.color}
-                      className={`thumbnail ${
-                        variation.color ===
-                        product.variations[currentImageIndex].color
-                          ? "active"
-                          : ""
-                      }`}
+                      className={index === showBorder ? "thumbnail selected" : "thumbnail"}
                       onClick={() =>
-                        handleThumbnailClick(variation.color, index)
+
+                        {handleShowBorder(); handleThumbnailClick(variation.color, index)}
                       }
                     />
                   </div>

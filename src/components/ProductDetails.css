@@ -44,9 +44,12 @@
   transition: border-color 0.3s ease;
 }
 
-.thumbnail.active {
-  border-color: #007bff;
+/* Atualize a classe para aplicar a borda à miniatura selecionada */
+.thumbnail.selected {
+  border: 2px solid #007bff; /* Adicione os estilos da borda desejados */
 }
+
+
 
 .dot-container {
   display: flex;

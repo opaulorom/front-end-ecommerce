@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 import ImageComponent from "./ImageComponent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import TestePost from "./TestePost";
 
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState("pix");
