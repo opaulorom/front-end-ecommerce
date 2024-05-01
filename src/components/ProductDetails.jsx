@@ -32,10 +32,11 @@ const ProductDetails = () => {
   const [showCartButton, setShowCartButton] = useState(false);
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const [showBorder, setShowBorder] = useState(false); // Estado para controlar a borda
-  const handleShowBorder = () =>{
+  const [currentPrice, setCurrentPrice] = useState(0); // Inicializado com 0 ou outro valor padrão
+
+  const handleShowBorder = () => {
     setShowBorder(!showBorder);
-    
-  }
+  };
   const handleClickOpenButton = () => {
     setShowCartButton(true);
   };
@@ -102,15 +103,18 @@ const ProductDetails = () => {
         setProduct(response.data);
         if (response.data.product && response.data.product.variations) {
           setProduct(response.data.product);
-  
+
           // Verifique se há variações disponíveis
           if (response.data.product.variations.length > 0) {
             // Defina a imagem da cor selecionada como a primeira imagem da primeira variação
             setSelectedColorImage(response.data.product.variations[0].urls[0]);
             // Atualize os tamanhos para a primeira variação
-            const sizesArray = response.data.product.variations[0].map(variation => variation.size);
+            const sizesArray = response.data.product.variations[0].map(
+              (variation) => variation.size
+            );
             setSizesFromDatabase(sizesArray);
-  
+            setCurrentPrice(response.data.product.variations[0].price);
+
             // Defina o primeiro tamanho como padrão
             setSelectedSize(sizesArray[0]);
             setIsColorAndSizeSelected(true); // Marque como selecionado automaticamente
@@ -123,7 +127,7 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [productId]);
-  
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -147,20 +151,20 @@ const ProductDetails = () => {
     const colorVariations = product.variations.filter(
       (variation) => variation.color === color
     );
-  
+
     const firstIndexInColor = product.variations.findIndex(
       (variation) => variation.color === colorVariations[0].color
     );
-  
+
     setCurrentImageIndex(firstIndexInColor);
-  
+
     setSelectedColorImage(product.variations[firstIndexInColor].urls[0]);
     updateSizesForColor(color); // Atualize os tamanhos disponíveis para a cor selecionada
-    
+    setCurrentPrice(product.variations[firstIndexInColor].price);
+
     // Defina o índice da miniatura clicada para mostrar a borda
     setShowBorder(index);
   };
-  
 
   const updateSizesForColor = (color) => {
     const sizesArray = product.variations
@@ -243,8 +247,7 @@ const ProductDetails = () => {
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
   };
-  
-  
+
   return (
     <>
       <div>
@@ -285,7 +288,7 @@ const ProductDetails = () => {
             </div>
           )}
         </div>
-   
+
         <div
           style={{
             display: "flex",
@@ -332,7 +335,7 @@ const ProductDetails = () => {
               ))}
             </div>
           </div>
-   
+
           <div style={{}}>
             <h1
               style={{
@@ -343,7 +346,6 @@ const ProductDetails = () => {
               }}
             >
               {product.name}
-              
             </h1>
             <p
               style={{
@@ -352,7 +354,7 @@ const ProductDetails = () => {
                 fontFamily: "poppins, sans-serif",
               }}
             >
-              R$ {product.price}
+              Preço: R$ {currentPrice}
             </p>
             <p>{product.description}</p>
 
@@ -365,19 +367,24 @@ const ProductDetails = () => {
                 .map((variation, index) => (
                   <div key={index} className="thumbnail-wrapper">
                     <span className="color-name">{`${variation.color}`}</span>
-                    
+
                     <img
                       src={variation.urls[0]}
                       alt={variation.color}
-                      className={index === showBorder ? "thumbnail selected" : "thumbnail"}
-                      onClick={() =>
-
-                        {handleShowBorder(); handleThumbnailClick(variation.color, index)}
+                      className={
+                        index === showBorder
+                          ? "thumbnail selected"
+                          : "thumbnail"
                       }
+                      onClick={() => {
+                        setShowBorder(index);
+                        handleThumbnailClick(variation.color, index);
+                      }}
                     />
                   </div>
                 ))}
             </div>
+
             <ProductSizes
               sizes={sizesFromDatabase}
               selectedSize={selectedSize}
