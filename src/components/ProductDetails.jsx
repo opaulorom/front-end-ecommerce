@@ -226,7 +226,7 @@ const ProductDetails = () => {
             color: product.variations[currentImageIndex].color,
             quantity: 1,
             image: selectedColorImage,
-            price: product.price, // Passando o preço do produto
+            price: currentPrice, // Passando o preço do produto
           },
           {
             headers: {
