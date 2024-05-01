@@ -1,8 +1,10 @@
 import React from 'react'
 
-const TestePost = () => {
+const TestePost = (encodedImage) => {
   return (
-    <div>TestePost</div>
+    <div>
+   
+    </div>
   )
 }
 

@@ -70,7 +70,7 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval }) => {
                   <Link to={`/categories/${encodeURIComponent(category.name)}`}>
                     <img src={image.imageUrl} alt={`Image ${image._id}`}  style={imageStyle} />
                   </Link>
-                  <div style={{ marginTop: '5px' }}>{category.name}</div>
+                 
                 </div>
               ))}
             </div>

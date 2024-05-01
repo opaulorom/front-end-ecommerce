@@ -23,6 +23,8 @@ const Home = () => {
       </div>
 
       <Navbar></Navbar>
+
+      
     </div>
   );
 };
