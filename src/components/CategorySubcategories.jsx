@@ -148,7 +148,8 @@ const CategorySubcategories = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  const handleFilterClick = async (filterType, value) => {
+
+const handleFilterClick = async (filterType, value) => {
     // Atualizar a URL ou executar outras ações conforme necessário
     const filters = {
       [filterType]: value,
@@ -160,29 +161,41 @@ const CategorySubcategories = () => {
 
       if (filterType === "size") {
         filteredProducts = originalProducts.filter((product) => {
-          const productSizes = (product.size || "")
-            .split(",")
-            .map((size) => size.trim());
-          return (
-            productSizes.includes(value) ||
-            productSizes.some((size) => value.includes(size))
-          );
+          const productSizes = product.variations.flatMap(variation => (variation.size || "").split(",").map((size) => size.trim()));
+
+          console.log("Product Sizes Before Filter:", productSizes);
+          console.log("Applying Size Filter:", value);
+
+          const filtered = productSizes.includes(value) || productSizes.some((size) => value.includes(size));
+          console.log("Filtered:", filtered);
+
+          return filtered;
         });
       } else if (filterType === "color") {
         filteredProducts = originalProducts.filter((product) => {
           const productColors = product.variations.map((variation) =>
             (variation.color || "").trim()
           );
-          return productColors.includes(value);
+
+          console.log("Product Colors Before Filter:", productColors);
+          console.log("Applying Color Filter:", value);
+
+          const filtered = productColors.includes(value);
+          console.log("Filtered:", filtered);
+
+          return filtered;
         });
       }
+
+      console.log("Filtered Products:", filteredProducts);
 
       setMixedProducts(filteredProducts);
       setTotalPages(1); // Reiniciar a página para a primeira ao aplicar um novo filtro
     }
 
     fetchMixedProducts(1, filters);
-  };
+};
+
 
   const handleFavoriteClick = (productId) => {
     setMixedProducts((prevProducts) =>
@@ -571,7 +584,10 @@ const CategorySubcategories = () => {
               </h3>
               <div
         
-                className={styles.MobileFilter}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+        }}
               >
                 {Array.from(uniqueSizes).map((size, index) => (
                   <div

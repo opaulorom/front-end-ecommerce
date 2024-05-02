@@ -109,7 +109,7 @@ const SearchResults = () => {
                   }}
                 />
                 <div style={{ display: "flex", flexDirection: "column", marginLeft:"1rem" }}>
-                <span style={{fontSize:"1rem", fontWeight:"700", fontFamily:"poppins, sans-serif"}}>R$ {product.price.toFixed(2)}</span>
+                <span style={{fontSize:"1rem", fontWeight:"700", fontFamily:"poppins, sans-serif"}}>R$ {product.price && product.price.toFixed(2)}</span>
 
                   <span
                     style={{
