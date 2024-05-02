@@ -168,9 +168,10 @@ const Pay = () => {
       })
       .then((response) => {
         console.log(response.data); // Verifique se o valor totalAmount está presente na resposta
-        if (response.data.totalAmount !== getTotal.totalAmount) {
-          setGetTotal(response.data);
-        }
+        // if (response.data.totalAmount !== getTotal.totalAmount) {
+        //   setGetTotal(response.data);
+        // }
+        setGetTotal({totalAmount: 100});
       })
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);

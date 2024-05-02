@@ -43,6 +43,7 @@ const Cart = () => {
       })
       .then((response) => {
         setGetCart(response.data.cart.products);
+        setGetTotal(response.data.cart)
       })
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
@@ -119,7 +120,7 @@ const Cart = () => {
       .get(`http://localhost:3001/api/cart/${userId}/total-price`, {
         headers: {
           Authorization: `Bearer ${token}`,
-          Credentials: credentials,
+       
         },
       })
       .then((response) => {
@@ -184,23 +185,23 @@ const Cart = () => {
       );
       setSelectedFreteIndex(index);
       localStorage.setItem("selectedFreteIndex", index);
-      const response = await axios.get(
-        `http://localhost:3001/api/cart/${userId}/total-price`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            // Remova 'Credentials: credentials'
-          },
-        }
-      );
+      // const response = await axios.get(
+      //   `http://localhost:3001/api/cart/${userId}/total-price`,
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //       // Remova 'Credentials: credentials'
+      //     },
+      //   }
+      // );
 
-      if (
-        response &&
-        response.data &&
-        response.data.totalAmount !== getTotal.totalAmount
-      ) {
-        setGetTotal(response.data);
-      }
+      // if (
+      //   response &&
+      //   response.data &&
+      //   response.data.totalAmount !== getTotal.totalAmount
+      // ) {
+      //   setGetTotal(response.data);
+      // }
 
       const res = await axios.get(`http://localhost:3001/api/cart/${userId}`, {
         headers: {
@@ -210,6 +211,8 @@ const Cart = () => {
       });
 
       setShippingFee(res.data.cart.shippingFee);
+      setGetTotal(res.data.cart)
+
     } catch (error) {
       console.error("Error updating shipping fee:", error);
     }
@@ -611,12 +614,12 @@ const Cart = () => {
         <div
           style={{ marginLeft: "14rem", position: "absolute", right: "10px" }}
         >
-          <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
-          {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-            <div style={{ marginTop: "10rem" }}>
-              total que muda: {getTotal.totalAmount}
-            </div>
-          )}
+   <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
+    {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
+      <div style={{ marginTop: "10rem" }}>
+        Total do Carrinho: R$ {getTotal.totalAmount.toFixed(2)}
+      </div>
+    )}
 
           <form style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
             <input
