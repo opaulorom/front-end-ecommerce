@@ -161,17 +161,14 @@ const Pay = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/cart/${userId}/total-price`, {
+      .get(`http://localhost:3001/api/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log(response.data); // Verifique se o valor totalAmount está presente na resposta
-        // if (response.data.totalAmount !== getTotal.totalAmount) {
-        //   setGetTotal(response.data);
-        // }
-        setGetTotal({totalAmount: 100});
+    
+        setGetTotal(response.data.cart);
       })
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
