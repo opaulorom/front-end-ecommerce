@@ -193,10 +193,13 @@ const Cart = () => {
                       Tamanho: {item.size}
                     </span>
                     <span className={styles.spanColor}> Cor: {item.color}</span>
-                    <span className={styles.spanPrice}>
-                      {" "}
-                      Preço: R${item.productId.variations.find(variation => variation.color === item.color)?.price.toFixed(2)}
-                    </span>
+                    {item.productId.variations && item.productId.variations.find(variation => variation.color === item.color) && (
+  <span className={styles.spanPrice}>
+    Preço: R${item.productId.variations.find(variation => variation.color === item.color).price.toFixed(2)}
+  </span>
+)}
+
+
                   </div>
                 </div>
               </div>

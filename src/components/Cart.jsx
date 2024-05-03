@@ -146,7 +146,6 @@ const Cart = () => {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              Credentials: credentials,
             },
           }
         );
