@@ -15,6 +15,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import styles from "./Cart.module.css";
 import Cookies from "js-cookie";
 import { useAuth } from "../context/AuthContext";
+import { CircularProgress } from "@mui/material";
 
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
@@ -32,7 +33,7 @@ const Cart = () => {
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const [shippingFee, setShippingFee] = useState(0);
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-  const [exceededQuantity, setExceededQuantity] = useState(false);
+  const [loading, setLoading] = useState(true); // Estado para controlar o carregamento
 
   function handleProducts() {
     axios
@@ -44,6 +45,8 @@ const Cart = () => {
       .then((response) => {
         setGetCart(response.data.cart.products);
         setGetTotal(response.data.cart); // Define getTotal com os dados do carrinho
+        setLoading(false); // Após carregar os produtos, definimos o estado de carregamento como falso
+
       })
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
@@ -264,6 +267,14 @@ const Cart = () => {
       <Header />
 
       <Navbar />
+      {loading ? ( // Se estiver carregando, exibimos o CircularProgress
+        <div className={styles.loading}>
+          <CircularProgress />
+        </div>
+      ):(
+        <>
+
+     
       {getCart.length > 0 && (
         <>
           {selectedFreteIndex === null && getTotal.totalAmount < 300 && (
@@ -693,7 +704,11 @@ const Cart = () => {
           )}
         </div>
       )}
+         
+         </>
+      )}
     </div>
+    
   );
 };
 

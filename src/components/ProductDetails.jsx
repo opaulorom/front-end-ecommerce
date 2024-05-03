@@ -11,7 +11,7 @@ import styles from "./ProductDetails.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
-import CartB from "./CartB";
+// import CartB from "./CartB";
 import CircularIndeterminate from "./CircularIndeterminate";
 
 const ProductDetails = () => {
@@ -357,31 +357,36 @@ const ProductDetails = () => {
             <p>{product.description}</p>
 
             <div className="thumbnail-container">
-              {product.variations
-                ?.filter(
-                  (variation, index, self) =>
-                    self.findIndex((v) => v.color === variation.color) === index
-                )
-                .map((variation, index) => (
-                  <div key={index} className="thumbnail-wrapper">
-                    <span className="color-name">{`${variation.color}`}</span>
+  {product.variations
+    ?.reduce((uniqueVariations, variation) => {
+      const color = variation.color.trim(); // Remova espaços extras
+      if (!uniqueVariations.find(v => v.color.trim() === color)) {
+        uniqueVariations.push(variation);
+      }
+      return uniqueVariations;
+    }, [])
+    .map((variation, index) => (
+      <div key={index} className="thumbnail-wrapper">
+        <span className="color-name">{`${variation.color.trim()}`}</span>
 
-                    <img
-                      src={variation.urls[0]}
-                      alt={variation.color}
-                      className={
-                        index === showBorder
-                          ? "thumbnail selected"
-                          : "thumbnail"
-                      }
-                      onClick={() => {
-                        setShowBorder(index);
-                        handleThumbnailClick(variation.color, index);
-                      }}
-                    />
-                  </div>
-                ))}
-            </div>
+        <img
+          src={variation.urls[0]} // Mostrar apenas a primeira imagem de cada variação
+          alt={variation.color}
+          className={
+            index === showBorder
+              ? "thumbnail selected"
+              : "thumbnail"
+          }
+          onClick={() => {
+            setShowBorder(index);
+            handleThumbnailClick(variation.color, index);
+          }}
+        />
+      </div>
+    ))}
+</div>
+
+
 
             <ProductSizes
               sizes={sizesFromDatabase}
