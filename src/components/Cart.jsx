@@ -89,7 +89,6 @@ const Cart = () => {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              Credentials: credentials,
             },
           }
         )
@@ -117,7 +116,7 @@ const Cart = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/cart/${userId}/total-price`, {
+      .get(`http://localhost:3001/api/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
        
@@ -253,7 +252,9 @@ const Cart = () => {
       );
       console.log("log", userId);
       setFrete(responseGet.data);
-      await axios.get(`http://localhost:3001/api/cart/${userId}/total-price`);
+     const response = await axios.get(`http://localhost:3001/api/cart/${userId}`);
+      setGetTotal(response.data.cart)
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }

@@ -52,81 +52,21 @@ const Cart = () => {
     handleProducts();
   }, []);
 
-  const handleDelete = useCallback(
-    (productId) => {
-      axios
-        .delete(
-          `http://localhost:3001/api/remove-from-cart/${userId}/${productId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((response) => {
-          // console.log(response.data.message);
-          // // Atualize o estado do carrinho na sua aplicação, se necessário
-          // setGetCart((prevCart) =>
-          //   prevCart.filter((item) => item.productId._id !== productId)
-          // );
-          // removeFromCart(); // Chame a função removeFromCart do contexto do carrinho
-          handleProducts();
-        })
-        .catch((error) => {
-          console.error("Erro ao remover produto do carrinho:", error);
-        });
-    },
-    [userId, removeFromCart]
-  );
 
-  const handleQuantityChange = useCallback(
-    (productId, newQuantity) => {
-      axios
-        .put(
-          `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
-          { quantity: newQuantity },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              Credentials: credentials,
-            },
-          }
-        )
-        .then((response) => {
-          setGetCart((prevCart) => {
-            const newCart = [...prevCart];
-            const index = newCart.findIndex(
-              (item) => item.productId._id === productId
-            );
-            if (index !== -1) {
-              newCart[index].quantity = newQuantity;
-            }
-            return newCart;
-          });
-        })
-        .catch((error) => {
-          console.log(
-            "Erro ao atualizar quantidade do produto no carrinho.",
-            error
-          );
-        });
-    },
-    [userId]
-  );
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/cart/${userId}/total-price`, {
+      .get(`http://localhost:3001/api/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-          Credentials: credentials,
+
         },
       })
       .then((response) => {
-        console.log(response.data); // Verifique se o valor totalAmount está presente na resposta
-        if (response.data.totalAmount !== getTotal.totalAmount) {
-          setGetTotal(response.data);
-        }
+        setGetCart(response.data.cart.products);
+
+          setGetTotal(response.data.products);
+    
       })
 
       .catch((error) => {
@@ -134,127 +74,6 @@ const Cart = () => {
       });
   }, [userId, getCart, getTotal]);
 
-  useEffect(() => {
-    localStorage.setItem("cep", cep);
-  }, [cep]);
-
-  useEffect(() => {
-    const fetchFrete = async () => {
-      try {
-        const responseGet = await axios.get(
-          `http://localhost:3001/api/frete/${userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              Credentials: credentials,
-            },
-          }
-        );
-        setFrete(responseGet.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchFrete();
-  }, [cep, userId]);
-
-  useEffect(() => {
-    if (frete && frete.length > 0) {
-      setSelectedFreteIndex(
-        +localStorage.getItem("selectedFreteIndex") || null
-      );
-    }
-  }, [frete]);
-
-  const handleRadioClick = async (index) => {
-    try {
-      const freteId = frete[index]._id;
-      await axios.put(
-        `http://localhost:3001/api/cart/${userId}/shippingFee/${freteId}`,
-        {
-          // Remova as linhas de cabeçalho daqui
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            // Remova 'Credentials: credentials'
-          },
-        }
-      );
-      setSelectedFreteIndex(index);
-      localStorage.setItem("selectedFreteIndex", index);
-      const response = await axios.get(
-        `http://localhost:3001/api/cart/${userId}/total-price`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            // Remova 'Credentials: credentials'
-          },
-        }
-      );
-
-      if (
-        response &&
-        response.data &&
-        response.data.totalAmount !== getTotal.totalAmount
-      ) {
-        setGetTotal(response.data);
-      }
-
-      const res = await axios.get(`http://localhost:3001/api/cart/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          // Remova 'Credentials: credentials'
-        },
-      });
-
-      setShippingFee(res.data.cart.shippingFee);
-    } catch (error) {
-      console.error("Error updating shipping fee:", error);
-    }
-  };
-
-  const handleAddShippingFee = () => {
-    if (selectedFreteIndex !== null) {
-      // Verifica se um frete foi selecionado
-      if (getTotal.totalAmount >= 300) {
-      }
-    } else {
-    }
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      // Faz a solicitação POST para obter os dados do frete com o novo CEP
-      await axios.post(
-        `http://localhost:3001/api/frete/${userId}`,
-        { cep },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // Atualiza o estado do frete com os dados do frete da requisição GET
-      const responseGet = await axios.get(
-        `http://localhost:3001/api/frete/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("log", userId);
-      setFrete(responseGet.data);
-      await axios.get(`http://localhost:3001/api/cart/${userId}/total-price`);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
 
   return (
     <div style={{ position: "relative" }}>
@@ -376,7 +195,7 @@ const Cart = () => {
                     <span className={styles.spanColor}> Cor: {item.color}</span>
                     <span className={styles.spanPrice}>
                       {" "}
-                      Preço: R${item.price.toFixed(2)}
+                      Preço: R${item.productId.variations.find(variation => variation.color === item.color)?.price.toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -406,7 +225,6 @@ const Cart = () => {
         <div className={styles.buttonCart}>
           <Link to={"/cart"}>
             <button
-              onClick={handleAddShippingFee}
               style={{
                 backgroundColor: "#E94D36",
                 color: "white",
