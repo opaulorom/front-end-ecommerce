@@ -525,63 +525,66 @@ const Cart = () => {
 
                           <AddIcon
                             onClick={() => {
-                              const newQuantity = item.quantity + 1;
+                              const newQuantity = item.QuantityPerUnit + 1;
                               const productId = item.productId._id;
-                              const credentials = Cookies.get("role");
                               const token = Cookies.get("token");
-                              const url = `http://localhost:3001/api/product/${productId}`;
-
                               axios
-                                .get(url)
-                                .then((response) => {
-                                  const availableQuantity =
-                                    response.data.quantity; // Obtém a quantidade disponível do produto
+  .get(url)
+  .then((response) => {
+    const variations = response.data.product.variations;
 
-                                  if (newQuantity > availableQuantity) {
-                                    console.log(
-                                      "A quantidade no carrinho excede a disponibilidade do produto. Botão desabilitado."
-                                    );
-                                    return; // Não continua com a operação PUT
-                                  }
+    // Verifique a disponibilidade para cada variação
+    let validQuantity = true;
+    variations.forEach(variation => {
+      const availableQuantity = variation.QuantityPerUnit;
 
-                                  axios
-                                    .put(
-                                      `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
-                                      { quantity: newQuantity },
-                                      {
-                                        headers: {
-                                          Authorization: `Bearer ${token}`,
-                                        },
-                                      }
-                                    )
-                                    .then((response) => {
-                                      if (response.data.exceededQuantity) {
-                                        console.log(
-                                          "A quantidade no carrinho excede a disponibilidade do produto. Botão desabilitado."
-                                        );
-                                        return; // Não continua com a atualização do carrinho
-                                      }
+      if (newQuantity > availableQuantity) {
+        console.log(
+          "A quantidade no carrinho excede a disponibilidade do produto. Botão desabilitado."
+        );
+        validQuantity = false;
+      }
+    });
 
-                                      // Atualiza o estado apenas se a quantidade for válida
-                                      setGetCart((prevCart) => {
-                                        const newCart = [...prevCart];
-                                        newCart[index].quantity = newQuantity;
-                                        return newCart;
-                                      });
-                                    })
-                                    .catch((error) => {
-                                      console.log(
-                                        "Erro ao atualizar quantidade do produto no carrinho.",
-                                        error
-                                      );
-                                    });
-                                })
-                                .catch((error) => {
-                                  console.error(
-                                    "Erro ao obter dados do produto:",
-                                    error
-                                  );
-                                });
+    // Se a quantidade for válida para todas as variações, atualize o carrinho
+    if (validQuantity) {
+      axios
+        .put(
+          `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
+          { quantity: newQuantity },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.exceededQuantity) {
+            console.log(
+              "A quantidade no carrinho excede a disponibilidade do produto. Botão desabilitado."
+            );
+            return; // Não continua com a atualização do carrinho
+          }
+
+          // Atualiza o estado apenas se a quantidade for válida
+          setGetCart((prevCart) => {
+            const newCart = [...prevCart];
+            newCart[index].quantity = newQuantity;
+            return newCart;
+          });
+        })
+        .catch((error) => {
+          console.log(
+            "Erro ao atualizar quantidade do produto no carrinho.",
+            error
+          );
+        });
+    }
+  })
+  .catch((error) => {
+    console.error("Erro ao obter dados do produto:", error);
+  });
+
                             }}
                             style={{ cursor: "pointer" }}
                           />

@@ -187,29 +187,7 @@ const ProductDetails = () => {
     }
   };
 
-  const handleAddToCart = async () => {
-    try {
-      const userId = Cookies.get("userId"); // Obtenha o token do cookie
 
-      const response = await axios.post(
-        `http://localhost:3001/api/add-to-cart/${userId}`,
-
-        {
-          productId: product._id,
-          size: selectedSize, // Aqui está sendo enviado o tamanho selecionado
-          color: product.variations[currentImageIndex].color,
-          quantity: 1,
-          image: selectedColorImage, // Envie a URL da imagem selecionada
-          price: product.price, // Passando o preço do produto
-        }
-      );
-
-      addToCart(); // Incrementa o número de itens no carrinho
-      toast.success("Produto adicionado ao carrinho!");
-    } catch (error) {
-      console.error("Erro ao adicionar produto ao carrinho:", error);
-    }
-  };
 
   const handleAddToCartAndOpenModal = async () => {
     if (selectedSize && product.variations[currentImageIndex].color) {
@@ -225,6 +203,8 @@ const ProductDetails = () => {
             quantity: 1,
             image: selectedColorImage,
             price: product.price, // Passando o preço do produto
+            variationId: product.variations[currentImageIndex]._id // Usando o _id da variação selecionada
+
           },
           {
             headers: {
