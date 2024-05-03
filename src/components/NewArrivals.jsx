@@ -89,7 +89,7 @@ const NewArrivals = () => {
                       fontFamily: "poppins, sans-serif",
                     }}
                   >
-                    R$ {product.price}
+                    R$ {product.variations[0].price && product.variations[0].price}
                   </span>
 
                   <span

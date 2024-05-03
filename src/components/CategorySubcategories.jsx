@@ -149,7 +149,7 @@ const CategorySubcategories = () => {
     setCurrentPage(page);
   };
 
-const handleFilterClick = async (filterType, value) => {
+  const handleFilterClick = async (filterType, value) => {
     // Atualizar a URL ou executar outras ações conforme necessário
     const filters = {
       [filterType]: value,
@@ -161,12 +161,16 @@ const handleFilterClick = async (filterType, value) => {
 
       if (filterType === "size") {
         filteredProducts = originalProducts.filter((product) => {
-          const productSizes = product.variations.flatMap(variation => (variation.size || "").split(",").map((size) => size.trim()));
+          const productSizes = product.variations.flatMap((variation) =>
+            (variation.size || "").split(",").map((size) => size.trim())
+          );
 
           console.log("Product Sizes Before Filter:", productSizes);
           console.log("Applying Size Filter:", value);
 
-          const filtered = productSizes.includes(value) || productSizes.some((size) => value.includes(size));
+          const filtered =
+            productSizes.includes(value) ||
+            productSizes.some((size) => value.includes(size));
           console.log("Filtered:", filtered);
 
           return filtered;
@@ -194,8 +198,7 @@ const handleFilterClick = async (filterType, value) => {
     }
 
     fetchMixedProducts(1, filters);
-};
-
+  };
 
   const handleFavoriteClick = (productId) => {
     setMixedProducts((prevProducts) =>
@@ -289,7 +292,7 @@ const handleFilterClick = async (filterType, value) => {
                   borderBottom: "1px solid gray",
                   top: "7rem",
                   position: "absolute",
-                  left:"10px"
+                  left: "10px",
                 }}
                 className={styles.FilterContainer}
               >
@@ -583,11 +586,10 @@ const handleFilterClick = async (filterType, value) => {
                 Tamanhos
               </h3>
               <div
-        
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-        }}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(4, 1fr)",
+                }}
               >
                 {Array.from(uniqueSizes).map((size, index) => (
                   <div
@@ -716,7 +718,7 @@ const handleFilterClick = async (filterType, value) => {
                             }}
                           >
                             R${" "}
-                            {Number(product.price).toFixed(2).padStart(5, "0")}
+                            {Number(product.variations[0].price).toFixed(2).padStart(5, "0")}
                           </span>
                           <span
                             style={{
@@ -901,7 +903,8 @@ const handleFilterClick = async (filterType, value) => {
                       marginBottom: "2rem",
                     }}
                   >
-                   dddddddd <CustomPagination
+                    dddddddd{" "}
+                    <CustomPagination
                       totalPages={totalPages}
                       currentPage={currentPage}
                       onChangePage={handlePageChange}

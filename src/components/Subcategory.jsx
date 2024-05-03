@@ -69,7 +69,7 @@ const Subcategory = () => {
               <IconToggle productId={product._id} isFavorite={product.isFavorite} />
                 
                 <span>{product.name}</span>
-                <span>{Number(product.price).toFixed(2).padStart(5, '0')}</span>
+                <span>{Number(product.variations[0].price && product.variations[0].price).toFixed(2).padStart(5, '0')}</span>
               </div>
             </li>
           </Link>

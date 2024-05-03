@@ -32,14 +32,15 @@ const ProductDetails = () => {
   const [showCartButton, setShowCartButton] = useState(false);
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const [showBorder, setShowBorder] = useState(false); // Estado para controlar a borda
-  const [currentPrice, setCurrentPrice] = useState(0); // Inicializado com 0 ou outro valor padrão
 
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
   };
+
   const handleClickOpenButton = () => {
     setShowCartButton(true);
   };
+
   const handleClickCloseButton = () => {
     setShowCartButton(false);
   };
@@ -47,6 +48,7 @@ const ProductDetails = () => {
   const handleOpenButton = async () => {
     handleClickOpenButton();
   };
+
   const handleClickOpenModal = () => {
     setOpenCartModal(true);
   };
@@ -64,6 +66,7 @@ const ProductDetails = () => {
   const handleClickCloseCartModal = () => {
     setOpenSecondCartModal(false);
   };
+
   useEffect(() => {
     const userId = Cookies.get("userId");
 
@@ -89,7 +92,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const userId = Cookies.get("userId"); // Obtenha o token do cookie
+      const userId = Cookies.get("userId");
 
       try {
         const response = await axios.get(
@@ -113,7 +116,6 @@ const ProductDetails = () => {
               (variation) => variation.size
             );
             setSizesFromDatabase(sizesArray);
-            setCurrentPrice(response.data.product.variations[0].price);
 
             // Defina o primeiro tamanho como padrão
             setSelectedSize(sizesArray[0]);
@@ -160,10 +162,6 @@ const ProductDetails = () => {
 
     setSelectedColorImage(product.variations[firstIndexInColor].urls[0]);
     updateSizesForColor(color); // Atualize os tamanhos disponíveis para a cor selecionada
-    setCurrentPrice(product.variations[firstIndexInColor].price);
-
-    // Defina o índice da miniatura clicada para mostrar a borda
-    setShowBorder(index);
   };
 
   const updateSizesForColor = (color) => {
@@ -226,7 +224,7 @@ const ProductDetails = () => {
             color: product.variations[currentImageIndex].color,
             quantity: 1,
             image: selectedColorImage,
-            price: currentPrice, // Passando o preço do produto
+            price: product.price, // Passando o preço do produto
           },
           {
             headers: {
@@ -354,7 +352,7 @@ const ProductDetails = () => {
                 fontFamily: "poppins, sans-serif",
               }}
             >
-              Preço: R$ {currentPrice}
+              Preço: R$ {product.variations[currentImageIndex]?.price}
             </p>
             <p>{product.description}</p>
 
