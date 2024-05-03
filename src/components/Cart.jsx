@@ -398,13 +398,9 @@ const Cart = () => {
                 gap: "1rem",
               }}
             >
-              {item.productId.quantity > 0 ? (
-                <p>{`Apenas ${item.productId.quantity} unidades em estoque`}</p>
-              ) : (
-                <p>Produto esgotado</p>
-              )}
+             
               <div className={styles.ProductsContainer}>
-                {item.productId.variations && (
+              {item.productId && item.productId.variations && ( // Add null check for productId and variations
                   <img
                     src={
                       item.productId.variations.find(
@@ -422,7 +418,7 @@ const Cart = () => {
                   }}
                   className={styles.textsContainer}
                 >
-                  <span> {item.productId.name}</span>
+<span>{item.productId && item.productId.name}</span>
                   <span> {item.size}</span>
                   <span> {item.color}</span>
                   <div>

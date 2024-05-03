@@ -280,7 +280,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div className={styles.CartB}>
-                  <CartB />
+                  {/* <CartB /> */}
                 </div>
               </div>
             </div>
