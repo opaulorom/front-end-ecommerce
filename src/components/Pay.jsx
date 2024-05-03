@@ -173,7 +173,7 @@ const Pay = () => {
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
       });
-  }, [userId, getCart, getTotal]);
+  }, [userId, getTotal]);
 
   return (
     <div
@@ -192,6 +192,7 @@ const Pay = () => {
         >
           Escolha o método de pagamento:
         </h1>
+  
 
         <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
           <input

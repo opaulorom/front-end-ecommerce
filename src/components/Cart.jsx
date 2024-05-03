@@ -43,7 +43,7 @@ const Cart = () => {
       })
       .then((response) => {
         setGetCart(response.data.cart.products);
-        setGetTotal(response.data.cart)
+        setGetTotal(response.data.cart); // Define getTotal com os dados do carrinho
       })
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
@@ -124,9 +124,8 @@ const Cart = () => {
       })
       .then((response) => {
         console.log(response.data); // Verifique se o valor totalAmount está presente na resposta
-        if (response.data.totalAmount !== getTotal.totalAmount) {
           setGetTotal(response.data);
-        }
+
       })
 
       .catch((error) => {
