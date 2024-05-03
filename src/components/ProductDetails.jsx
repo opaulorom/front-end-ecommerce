@@ -204,7 +204,7 @@ const ProductDetails = () => {
             image: selectedColorImage,
             price: product.price, // Passando o preço do produto
             variationId: product.variations[currentImageIndex]._id, // Usando o _id da variação selecionada
-            QuantityPerUnit: product.variations[currentImageIndex].QuantityPerUnit
+            availableQuantity: product.variations[currentImageIndex].QuantityPerUnit
 
           },
           {
