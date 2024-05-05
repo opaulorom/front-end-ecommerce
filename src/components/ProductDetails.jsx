@@ -32,6 +32,7 @@ const ProductDetails = () => {
   const [showCartButton, setShowCartButton] = useState(false);
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const [showBorder, setShowBorder] = useState(false); // Estado para controlar a borda
+  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
 
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
@@ -111,14 +112,39 @@ const ProductDetails = () => {
           if (response.data.product.variations.length > 0) {
             // Defina a imagem da cor selecionada como a primeira imagem da primeira variação
             setSelectedColorImage(response.data.product.variations[0].urls[0]);
-            // Atualize os tamanhos para a primeira variação
-            const sizesArray = response.data.product.variations[0].map(
-              (variation) => variation.size
+
+            // Extrair todas as cores disponíveis
+            const availableColors = response.data.product.variations.map(
+              (variation) => variation.color
             );
-            setSizesFromDatabase(sizesArray);
+
+            // Mapear tamanhos das variações para todas as cores disponíveis
+            // Mapear tamanhos das variações para todas as cores disponíveis
+            const sizesByColor = availableColors.map((color) => {
+              // Filtrar variações pela cor selecionada
+              const variationsForColor =
+                response.data.product.variations.filter(
+                  (variation) => variation.color === color
+                );
+              // Mapear tamanhos das variações
+              const sizesArray = variationsForColor.map((variation) =>
+                variation.sizes.map((size) => ({
+                  size: size.size,
+                  price: size.price,
+                  quantityAvailable: size.quantityAvailable,
+                }))
+              );
+
+              return { color, sizes: sizesArray };
+            });
+
+            console.log("Tamanhos disponíveis por cor:", sizesByColor);
+
+            // Atualiza o estado com os tamanhos disponíveis para cada cor
+            setSizesFromDatabase(sizesByColor);
 
             // Defina o primeiro tamanho como padrão
-            setSelectedSize(sizesArray[0]);
+            setSelectedSize(sizesByColor[0].sizes[0]);
             setIsColorAndSizeSelected(true); // Marque como selecionado automaticamente
           }
         }
@@ -149,26 +175,40 @@ const ProductDetails = () => {
     };
   }, [openCartModal, openSecondCartModal]);
 
-  const handleThumbnailClick = (color, index) => {
-    const colorVariations = product.variations.filter(
-      (variation) => variation.color === color
-    );
 
-    const firstIndexInColor = product.variations.findIndex(
-      (variation) => variation.color === colorVariations[0].color
-    );
-
-    setCurrentImageIndex(firstIndexInColor);
-
-    setSelectedColorImage(product.variations[firstIndexInColor].urls[0]);
-    updateSizesForColor(color); // Atualize os tamanhos disponíveis para a cor selecionada
+  const handleThumbnailClick = (index) => {
+    console.log("Thumbnail clicked:", index); // Verificar se a função é chamada corretamente
+    setSelectedColorIndex(index);
+    const selectedVariation = product.variations[index];
+    if (selectedVariation) {
+      setSelectedColorImage(selectedVariation.urls[0]);
+      setCurrentImageIndex(index); // Adicionado para mostrar a foto clicada
+    }
   };
+  
 
-  const updateSizesForColor = (color) => {
-    const sizesArray = product.variations
-      .filter((variation) => variation.color === color)
-      .map((variation) => variation.size);
-    setSizesFromDatabase(sizesArray);
+  
+  
+
+  const updateSizesForColor = (selectedColor) => {
+    // Filtra as variações pelo selectedColor
+    const variationsForColor = product.variations.filter(
+      (variation) => variation.color === selectedColor
+    );
+
+    // Se houver variações para a cor selecionada
+    if (variationsForColor.length > 0) {
+      // Mapeia as variações para obter os tamanhos disponíveis
+      const sizesArray = variationsForColor.map((variation) =>
+        variation.sizes.map((size) => size.size)
+      );
+      console.log("Tamanhos disponíveis:", sizesArray);
+      // Atualiza o estado com os tamanhos disponíveis
+      setSizesFromDatabase(sizesArray);
+    } else {
+      // Se não houver variações para a cor selecionada, define os tamanhos como vazio
+      setSizesFromDatabase([]);
+    }
   };
 
   const handleDotClick = (index) => {
@@ -187,8 +227,6 @@ const ProductDetails = () => {
     }
   };
 
-
-
   const handleAddToCartAndOpenModal = async () => {
     if (selectedSize && product.variations[currentImageIndex].color) {
       // Verifica se o tamanho e a cor estão selecionados
@@ -204,8 +242,8 @@ const ProductDetails = () => {
             image: selectedColorImage,
             price: product.price, // Passando o preço do produto
             variationId: product.variations[currentImageIndex]._id, // Usando o _id da variação selecionada
-            availableQuantity: product.variations[currentImageIndex].QuantityPerUnit
-
+            availableQuantity:
+              product.variations[currentImageIndex].QuantityPerUnit,
           },
           {
             headers: {
@@ -260,9 +298,7 @@ const ProductDetails = () => {
                   </span>
                 </div>
 
-                <div className={styles.CartB}>
-                  {/* <CartB /> */}
-                </div>
+                <div className={styles.CartB}>{/* <CartB /> */}</div>
               </div>
             </div>
           )}
@@ -276,44 +312,38 @@ const ProductDetails = () => {
             marginTop: "10rem",
           }}
         >
-          <div>
-            <div key={currentImageIndex} className="image-container">
-              {product.variations[currentImageIndex] && (
-                <img
-                  src={product.variations[currentImageIndex].urls[0]}
-                  alt={product.variations[currentImageIndex].color}
-                  style={{ width: "25vw" }}
-                />
-              )}
+   <div>
+   <div className="image-container">
+   {product.variations[currentImageIndex] && (
+  <img
+    src={product.variations[currentImageIndex].urls[0]} // Alterado para exibir a primeira imagem de cada variação
+    alt={product.variations[currentImageIndex].color}
+    style={{ width: "25vw" }}
+  />
+)}
 
-              <div className="navigation-arrows">
-                <div className="arrow" onClick={() => handleArrowClick("prev")}>
-                  <img
-                    src="https://i.ibb.co/8MqhvFq/left-arrow.png"
-                    style={{ fontSize: "2rem", zIndex: "-8", color: "white" }}
-                  />
-                </div>
 
-                <div className="arrow" onClick={() => handleArrowClick("next")}>
-                  <img
-                    src="https://i.ibb.co/vDty4Gc/right-arrow-1.png"
-                    style={{ fontSize: "2rem", zIndex: "-7", color: "white" }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="dot-container">
-              {product.variations?.map((variation, index) => (
-                <span
-                  key={index}
-                  className={`dot ${
-                    index === currentImageIndex ? "active" : ""
-                  }`}
-                  onClick={() => handleDotClick(index)}
-                />
-              ))}
-            </div>
-          </div>
+  <div className="navigation-arrows">
+    <div className="arrow" onClick={() => handleArrowClick("prev")}>
+      <img
+        src="https://i.ibb.co/8MqhvFq/left-arrow.png"
+        style={{ fontSize: "2rem", zIndex: "-8", color: "white" }}
+      />
+    </div>
+
+    <div className="arrow" onClick={() => handleArrowClick("next")}>
+      <img
+        src="https://i.ibb.co/vDty4Gc/right-arrow-1.png"
+        style={{ fontSize: "2rem", zIndex: "-7", color: "white" }}
+      />
+    </div>
+  </div>
+</div>
+
+
+
+
+</div>
 
           <div style={{}}>
             <h1
@@ -336,47 +366,67 @@ const ProductDetails = () => {
               Preço: R$ {product.variations[currentImageIndex]?.price}
             </p>
             <p>{product.description}</p>
-
-            <div className="thumbnail-container">
-  {product.variations
-    ?.reduce((uniqueVariations, variation) => {
-      const color = variation.color.trim(); // Remova espaços extras
-      if (!uniqueVariations.find(v => v.color.trim() === color)) {
-        uniqueVariations.push(variation);
-      }
-      return uniqueVariations;
-    }, [])
-    .map((variation, index) => (
-      <div key={index} className="thumbnail-wrapper">
-        <span className="color-name">{`${variation.color.trim()}`}</span>
-
-        <img
-          src={variation.urls[0]} // Mostrar apenas a primeira imagem de cada variação
-          alt={variation.color}
-          className={
-            index === showBorder
-              ? "thumbnail selected"
-              : "thumbnail"
-          }
-          onClick={() => {
-            setShowBorder(index);
-            handleThumbnailClick(variation.color, index);
-          }}
-        />
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+  <h2>Todas as fotos:</h2>
+  <div style={{ display: "flex", justifyContent: "center", marginBottom: "1rem" }}>
+    {product.variations.map((variation, index) => (
+      <div key={index}>
+        <h3>{variation.color}</h3>
+        {variation.urls.map((url, urlIndex) => (
+          <img
+            key={urlIndex}
+            src={url}
+            alt={`${variation.color} - ${urlIndex}`}
+            style={{
+              width: "100px",
+              height: "100px",
+              marginRight: "1rem",
+              cursor: "pointer",
+              border: currentImageIndex === index ? "2px solid #5070E3" : "none",
+            }}
+            onClick={() => setCurrentImageIndex(index)}
+          />
+        ))}
       </div>
     ))}
+  </div>
 </div>
 
 
+            {sizesFromDatabase.map((item, index) => (
+              <div key={index}>
+                <div>
+                  <h2>{item.color}</h2>
+                  {selectedColorImage && (
+                    <img
+                      src={selectedColorImage}
+                      alt="Imagem selecionada"
+                      style={{ width: "100px" }}
+                    />
+                  )}
+                </div>
+                <div>
+                  <h3>Tamanhos disponíveis:</h3>
+                  <div>
+                    {item.sizes[0].map((size, sizeIndex) => (
+                      <div key={sizeIndex} style={{ marginLeft: "3rem" }}>
+                        <span
+                          className={`size-button ${
+                            size === selectedSize ? "active" : ""
+                          }`}
+                          
+                        >
+                          Tamanho: {size.size}
+                        </span>
+                        - Preço: R$ {size.price}, Quantidade Disponível:{" "}
+                        {size.quantityAvailable}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
 
-            <ProductSizes
-              sizes={sizesFromDatabase}
-              selectedSize={selectedSize}
-              onSelectSize={(size) => {
-                setSelectedSize(size);
-                setIsColorAndSizeSelected(true);
-              }}
-            />
             {!showCartButton && (
               <button
                 onClick={handleAddToCartAndOpenModal}
