@@ -33,7 +33,7 @@ const ProductDetails = () => {
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const [showBorder, setShowBorder] = useState(false); // Estado para controlar a borda
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
-
+  const [selectedPrice, setSelectedPrice] = useState("");
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
   };
@@ -118,34 +118,21 @@ const ProductDetails = () => {
               (variation) => variation.color
             );
 
-            // Mapear tamanhos das variações para todas as cores disponíveis
-            // Mapear tamanhos das variações para todas as cores disponíveis
-            const sizesByColor = availableColors.map((color) => {
-              // Filtrar variações pela cor selecionada
-              const variationsForColor =
-                response.data.product.variations.filter(
-                  (variation) => variation.color === color
-                );
-              // Mapear tamanhos das variações
-              const sizesArray = variationsForColor.map((variation) =>
-                variation.sizes.map((size) => ({
-                  size: size.size,
-                  price: size.price,
-                  quantityAvailable: size.quantityAvailable,
-                }))
-              );
-
-              return { color, sizes: sizesArray };
-            });
-
-            console.log("Tamanhos disponíveis por cor:", sizesByColor);
-
             // Atualiza o estado com os tamanhos disponíveis para cada cor
-            setSizesFromDatabase(sizesByColor);
+            setSizesFromDatabase(
+              response.data.product.variations.map((variation) => ({
+                color: variation.color,
+                sizes: variation.sizes,
+              }))
+            );
 
             // Defina o primeiro tamanho como padrão
-            setSelectedSize(sizesByColor[0].sizes[0]);
+            setSelectedSize(response.data.product.variations[0].sizes[0].size);
             setIsColorAndSizeSelected(true); // Marque como selecionado automaticamente
+            // Defina o preço do primeiro tamanho como padrão
+            setSelectedPrice(
+              response.data.product.variations[0].sizes[0].price
+            );
           }
         }
       } catch (error) {
@@ -155,6 +142,35 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [productId]);
+
+  // Atualize a função handleColorSelection para extrair os preços de cada tamanho em todas as variações
+  const handleColorSelection = (selectedColor, colorIndex) => {
+    setSelectedColorIndex(colorIndex);
+    // Encontre a variação correspondente à cor selecionada
+    const variation = product.variations.find(
+      (variation) => variation.color === selectedColor
+    );
+    if (variation) {
+      setSelectedColorImage(variation.urls[0]);
+      // Crie uma estrutura de dados para armazenar os preços de cada tamanho em todas as variações
+      const sizesWithPrices = variation.sizes.map((size) => ({
+        size: size.size,
+        price: size.price,
+      }));
+      // Atualize o estado com os tamanhos e preços disponíveis para a cor selecionada
+      setSizesFromDatabase(sizesWithPrices);
+      // Definir o primeiro tamanho como padrão
+      setSelectedSize(sizesWithPrices[0].size);
+      // Definir o preço do primeiro tamanho como padrão
+      setSelectedPrice(sizesWithPrices[0].price);
+    }
+  };
+
+  // Atualize a função handleSizeSelection para atualizar o preço selecionado
+  const handleSizeSelection = (size, price) => {
+    setSelectedSize(size);
+    setSelectedPrice(price);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -175,21 +191,12 @@ const ProductDetails = () => {
     };
   }, [openCartModal, openSecondCartModal]);
 
-
-  const handleThumbnailClick = (index) => {
-    console.log("Thumbnail clicked:", index); // Verificar se a função é chamada corretamente
-    setSelectedColorIndex(index);
-    const selectedVariation = product.variations[index];
-    if (selectedVariation) {
-      setSelectedColorImage(selectedVariation.urls[0]);
-      setCurrentImageIndex(index); // Adicionado para mostrar a foto clicada
-    }
+  const handleThumbnailClick = (colorIndex, urlIndex) => {
+    setSelectedColorIndex(colorIndex);
+    setCurrentImageIndex(urlIndex);
   };
-  
 
-  
-  
-
+  // Função para atualizar os tamanhos disponíveis quando uma cor é selecionada
   const updateSizesForColor = (selectedColor) => {
     // Filtra as variações pelo selectedColor
     const variationsForColor = product.variations.filter(
@@ -264,7 +271,19 @@ const ProductDetails = () => {
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
   };
+  const [currentColorIndex, setCurrentColorIndex] = useState(0);
 
+  const handlePrevColor = () => {
+    setCurrentColorIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : product.variations.length - 1
+    );
+  };
+
+  const handleNextColor = () => {
+    setCurrentColorIndex((prevIndex) =>
+      prevIndex < product.variations.length - 1 ? prevIndex + 1 : 0
+    );
+  };
   return (
     <>
       <div>
@@ -304,128 +323,157 @@ const ProductDetails = () => {
           )}
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-            marginTop: "10rem",
-          }}
-        >
-   <div>
-   <div className="image-container">
-   {product.variations[currentImageIndex] && (
-  <img
-    src={product.variations[currentImageIndex].urls[0]} // Alterado para exibir a primeira imagem de cada variação
-    alt={product.variations[currentImageIndex].color}
-    style={{ width: "25vw" }}
-  />
-)}
+        <div>
 
 
-  <div className="navigation-arrows">
-    <div className="arrow" onClick={() => handleArrowClick("prev")}>
-      <img
-        src="https://i.ibb.co/8MqhvFq/left-arrow.png"
-        style={{ fontSize: "2rem", zIndex: "-8", color: "white" }}
-      />
-    </div>
+          
+        </div>
 
-    <div className="arrow" onClick={() => handleArrowClick("next")}>
-      <img
-        src="https://i.ibb.co/vDty4Gc/right-arrow-1.png"
-        style={{ fontSize: "2rem", zIndex: "-7", color: "white" }}
-      />
-    </div>
-  </div>
-</div>
-
-
-
-
-</div>
-
-          <div style={{}}>
-            <h1
-              style={{
-                fontSize: "1.1rem",
-                color: "black",
-                fontWeight: "400",
-                fontFamily: "poppins",
-              }}
-            >
-              {product.name}
-            </h1>
-            <p
-              style={{
-                fontSize: "1rem",
-                fontWeight: "700",
-                fontFamily: "poppins, sans-serif",
-              }}
-            >
-              Preço: R$ {product.variations[currentImageIndex]?.price}
-            </p>
-            <p>{product.description}</p>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-  <h2>Todas as fotos:</h2>
-  <div style={{ display: "flex", justifyContent: "center", marginBottom: "1rem" }}>
-    {product.variations.map((variation, index) => (
-      <div key={index}>
-        <h3>{variation.color}</h3>
-        {variation.urls.map((url, urlIndex) => (
-          <img
-            key={urlIndex}
-            src={url}
-            alt={`${variation.color} - ${urlIndex}`}
+      
+          <div
             style={{
-              width: "100px",
-              height: "100px",
-              marginRight: "1rem",
-              cursor: "pointer",
-              border: currentImageIndex === index ? "2px solid #5070E3" : "none",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+              marginTop:"10rem"
             }}
-            onClick={() => setCurrentImageIndex(index)}
-          />
-        ))}
-      </div>
-    ))}
-  </div>
-</div>
+          >
+            <div key={currentImageIndex} className="image-container">
+              {product.variations[currentImageIndex] && (
+                <img
+                  src={product.variations[currentImageIndex].urls[0]} // Alterado para exibir a primeira imagem de cada variação
+                  alt={product.variations[currentImageIndex].color}
+                  style={{ width: "25vw" }}
+                />
+              )}
 
-
-            {sizesFromDatabase.map((item, index) => (
-              <div key={index}>
-                <div>
-                  <h2>{item.color}</h2>
-                  {selectedColorImage && (
-                    <img
-                      src={selectedColorImage}
-                      alt="Imagem selecionada"
-                      style={{ width: "100px" }}
-                    />
-                  )}
+              <div className="navigation-arrows">
+                <div className="arrow" onClick={() => handleArrowClick("prev")}>
+                  <img
+                    src="https://i.ibb.co/8MqhvFq/left-arrow.png"
+                    style={{ fontSize: "2rem", zIndex: "-8", color: "white" }}
+                  />
                 </div>
-                <div>
-                  <h3>Tamanhos disponíveis:</h3>
-                  <div>
-                    {item.sizes[0].map((size, sizeIndex) => (
-                      <div key={sizeIndex} style={{ marginLeft: "3rem" }}>
-                        <span
-                          className={`size-button ${
-                            size === selectedSize ? "active" : ""
-                          }`}
-                          
-                        >
-                          Tamanho: {size.size}
-                        </span>
-                        - Preço: R$ {size.price}, Quantidade Disponível:{" "}
-                        {size.quantityAvailable}
-                      </div>
-                    ))}
-                  </div>
+
+                <div className="arrow" onClick={() => handleArrowClick("next")}>
+                  <img
+                    src="https://i.ibb.co/vDty4Gc/right-arrow-1.png"
+                    style={{ fontSize: "2rem", zIndex: "-7", color: "white" }}
+                  />
                 </div>
               </div>
-            ))}
+
+
+            <div className="dot-container">
+              {product.variations?.map((variation, index) => (
+                <span
+                  key={index}
+                  className={`dot ${
+                    index === currentImageIndex ? "active" : ""
+                  }`}
+                  onClick={() => handleDotClick(index)}
+                />
+              ))}
+            </div>
+            </div>
+
+
+            <div style={{
+      
+            }}>  
+              <div>
+                <h1
+                  style={{
+                    fontSize: "1.1rem",
+                    color: "black",
+                    fontWeight: "400",
+                    fontFamily: "poppins",
+                  }}
+                >
+                  {product.name}
+                </h1>
+                <p
+                  style={{
+                    fontSize: "1rem",
+                    fontWeight: "700",
+                    fontFamily: "poppins, sans-serif",
+                  }}
+                >
+                  Preço: R$ {selectedPrice}
+                </p>
+                <p>{product.description}</p>
+
+           
+
+
+              
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <div>
+
+            <div>
+                  <div className="thumbnail-container">
+                    {product.variations
+                      ?.filter(
+                        (variation, index, self) =>
+                          self.findIndex((v) => v.color === variation.color) ===
+                          index
+                      )
+                      .map((variation, index) => (
+                        <div key={index} className="thumbnail-wrapper">
+                          <span className="color-name">{`${variation.color}`}</span>
+
+                          <img
+                            src={variation.urls[0]}
+                            alt={variation.color}
+                            className={
+                              index === showBorder
+                                ? "thumbnail selected"
+                                : "thumbnail"
+                            }
+                            onClick={() => {
+                              setShowBorder(index);
+                              handleThumbnailClick(variation.color, index);
+                            }}
+                          />
+                        </div>
+                      ))}
+                  </div>
+                  <div>
+                    <h3>Tamanhos disponíveis:</h3>
+                    <div>
+                      {sizesFromDatabase[selectedColorIndex]?.sizes.map(
+                        (size, sizeIndex) => (
+                          <div key={sizeIndex} style={{ marginLeft: "3rem" }}>
+                            <span
+                              className={`size-button ${
+                                size.size === selectedSize ? "active" : ""
+                              }`}
+                              onClick={() =>
+                                handleSizeSelection(size.size, size.price)
+                              } // Alterado para passar o preço do tamanho selecionado
+                            >
+                              {size.size}
+                            </span>
+                            - Preço: R$ {size.price}, Quantidade Disponível:{" "}
+                            {size.quantityAvailable}
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+ 
+              </div>
+            </div>
 
             {!showCartButton && (
               <button
