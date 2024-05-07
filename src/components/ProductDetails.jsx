@@ -93,8 +93,6 @@ const ProductDetails = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const userId = Cookies.get("userId");
-
       try {
         const response = await axios.get(
           `http://localhost:3001/api/product/${productId}`,
@@ -104,73 +102,46 @@ const ProductDetails = () => {
             },
           }
         );
-        setProduct(response.data);
-        if (response.data.product && response.data.product.variations) {
-          setProduct(response.data.product);
-
+    
+        if (response.data.product) {
+          const productData = response.data.product;
+    
+          // Defina a imagem da cor selecionada como a primeira imagem da primeira variação
+          setSelectedColorImage(productData.variations[0]?.urls[0] || '');
+    
+          // Atualize o estado do produto com os dados recebidos
+          setProduct(productData);
+    
           // Verifique se há variações disponíveis
-          if (response.data.product.variations.length > 0) {
-            // Defina a imagem da cor selecionada como a primeira imagem da primeira variação
-            setSelectedColorImage(response.data.product.variations[0].urls[0]);
-
-            // Extrair todas as cores disponíveis
-            const availableColors = response.data.product.variations.map(
-              (variation) => variation.color
-            );
-
-            // Atualiza o estado com os tamanhos disponíveis para cada cor
-            setSizesFromDatabase(
-              response.data.product.variations.map((variation) => ({
-                color: variation.color,
-                sizes: variation.sizes,
-              }))
-            );
-
+          if (productData.variations.length > 0) {
+            // Atualize o estado com os tamanhos disponíveis para cada cor
+            setSizesFromDatabase(productData.variations.map((variation) => ({
+              color: variation.color,
+              sizes: variation.sizes,
+            })));
+    
             // Defina o primeiro tamanho como padrão
-            setSelectedSize(response.data.product.variations[0].sizes[0].size);
+            setSelectedSize(productData.variations[0]?.sizes[0]?.size || '');
             setIsColorAndSizeSelected(true); // Marque como selecionado automaticamente
+    
             // Defina o preço do primeiro tamanho como padrão
-            setSelectedPrice(
-              response.data.product.variations[0].sizes[0].price
-            );
+            setSelectedPrice(productData.variations[0]?.sizes[0]?.price || '');
           }
         }
       } catch (error) {
         console.error("Erro ao obter detalhes do produto:", error);
       }
     };
+    
 
     fetchProduct();
   }, [productId]);
 
-  // Atualize a função handleColorSelection para extrair os preços de cada tamanho em todas as variações
-  const handleColorSelection = (selectedColor, colorIndex) => {
-    setSelectedColorIndex(colorIndex);
-    // Encontre a variação correspondente à cor selecionada
-    const variation = product.variations.find(
-      (variation) => variation.color === selectedColor
-    );
-    if (variation) {
-      setSelectedColorImage(variation.urls[0]);
-      // Crie uma estrutura de dados para armazenar os preços de cada tamanho em todas as variações
-      const sizesWithPrices = variation.sizes.map((size) => ({
-        size: size.size,
-        price: size.price,
-      }));
-      // Atualize o estado com os tamanhos e preços disponíveis para a cor selecionada
-      setSizesFromDatabase(sizesWithPrices);
-      // Definir o primeiro tamanho como padrão
-      setSelectedSize(sizesWithPrices[0].size);
-      // Definir o preço do primeiro tamanho como padrão
-      setSelectedPrice(sizesWithPrices[0].price);
-    }
-  };
 
-  // Atualize a função handleSizeSelection para atualizar o preço selecionado
-  const handleSizeSelection = (size, price) => {
-    setSelectedSize(size);
-    setSelectedPrice(price);
-  };
+
+
+
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -191,35 +162,52 @@ const ProductDetails = () => {
     };
   }, [openCartModal, openSecondCartModal]);
 
-  const handleThumbnailClick = (colorIndex, urlIndex) => {
-    setSelectedColorIndex(colorIndex);
-    setCurrentImageIndex(urlIndex);
-  };
 
-  // Função para atualizar os tamanhos disponíveis quando uma cor é selecionada
-  const updateSizesForColor = (selectedColor) => {
-    // Filtra as variações pelo selectedColor
-    const variationsForColor = product.variations.filter(
-      (variation) => variation.color === selectedColor
-    );
+  
+  // Função para lidar com o clique em miniaturas de cores
+const handleThumbnailClick = (colorIndex) => {
+  setSelectedColorIndex(colorIndex); // Definir o índice da cor selecionada
 
-    // Se houver variações para a cor selecionada
-    if (variationsForColor.length > 0) {
-      // Mapeia as variações para obter os tamanhos disponíveis
-      const sizesArray = variationsForColor.map((variation) =>
-        variation.sizes.map((size) => size.size)
-      );
-      console.log("Tamanhos disponíveis:", sizesArray);
-      // Atualiza o estado com os tamanhos disponíveis
-      setSizesFromDatabase(sizesArray);
+  // Verificar se a cor selecionada tem uma imagem associada
+  const selectedVariation = product.variations[colorIndex];
+  if (selectedVariation && selectedVariation.urls.length > 0) {
+    // Atualizar a foto grande com a primeira imagem da cor selecionada
+    setSelectedColorImage(selectedVariation.urls[0]);
+  } else {
+    // Se não houver imagem disponível para a cor selecionada, exibir uma mensagem de erro ou imagem padrão
+    console.error("Nenhuma imagem encontrada para a cor selecionada:", selectedVariation.color);
+    // Definir uma imagem padrão ou exibir uma mensagem de erro
+  }
+};
+
+  
+
+  const updateSizesForColor = (selectedColorIndex) => {
+    const selectedVariation = product.variations[selectedColorIndex]; // Obtém a variação correspondente à cor selecionada
+  
+    if (selectedVariation) {
+      // Atualiza o estado sizesFromDatabase com os tamanhos disponíveis para a cor selecionada
+      setSizesFromDatabase(selectedVariation.sizes);
     } else {
-      // Se não houver variações para a cor selecionada, define os tamanhos como vazio
-      setSizesFromDatabase([]);
+      setSizesFromDatabase([]); // Se não houver variação correspondente, define os tamanhos como vazio
     }
+    console.log("Sizes from database:", sizesFromDatabase);
+console.log("Selected color index:", selectedColorIndex);
+
   };
+  
+
+
+
 
   const handleDotClick = (index) => {
     setCurrentImageIndex(index);
+  };
+
+  // Atualize a função handleSizeSelection para atualizar o preço selecionado
+  const handleSizeSelection = (size, price) => {
+    setSelectedSize(size);
+    setSelectedPrice(price);
   };
 
   const handleArrowClick = (direction) => {
@@ -415,36 +403,33 @@ const ProductDetails = () => {
                             }
                             onClick={() => {
                               setShowBorder(index);
-                              handleThumbnailClick(variation.color, index);
+                              handleThumbnailClick(index);
+                              
                             }}
                           />
                         </div>
                       ))}
                   </div>
                   <div>
-                    <h3>Tamanhos disponíveis:</h3>
-                    <div>
-                      {sizesFromDatabase[selectedColorIndex]?.sizes.map(
-                        (size, sizeIndex) => (
-                          <div key={sizeIndex} style={{ marginLeft: "3rem" }}>
-                            <span
-                              className={`size-button ${
-                                size.size === selectedSize ? "active" : ""
-                              }`}
-                              onClick={() =>
-                                handleSizeSelection(size.size, size.price)
-                              } // Alterado para passar o preço do tamanho selecionado
-                            >
-                              {size.size}
-                            </span>
-                            - Preço: R$ {size.price}, Quantidade Disponível:{" "}
-                            {size.quantityAvailable}
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </div>
- 
+  <h3>Tamanhos disponíveis para {product.variations[selectedColorIndex]?.color}:</h3>
+  <div>
+    {sizesFromDatabase[selectedColorIndex]?.sizes && sizesFromDatabase[selectedColorIndex].sizes.map((size, sizeIndex) => (
+      <div key={sizeIndex} style={{ marginLeft: "3rem" }}>
+        <span
+          className={`size-button ${size.size === selectedSize ? "active" : ""}`}
+          onClick={() => handleSizeSelection(size.size, size.price)}
+        >
+          {size.size}
+        </span>
+        - Preço: R$ {size.price}, Quantidade Disponível: {size.quantityAvailable}
+      </div>
+    ))}
+
+</div>
+
+</div>
+
+
               </div>
             </div>
 

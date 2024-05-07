@@ -1,10 +1,15 @@
 import "./App.css";
+import ErrorBoundary from "./ErrorBoundary";
 import Home from "./components/Home";
 function App() {
   return (
     <>
-    
-      <Home></Home>
+                <ErrorBoundary>
+                <Home></Home>
+       
+                </ErrorBoundary>
+
+
     </>
   );
 }
