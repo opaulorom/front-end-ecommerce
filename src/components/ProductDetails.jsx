@@ -215,31 +215,77 @@ const [selectedSizeId, setSelectedSizeId] = useState("");
 
 
   const handleAddToCartAndOpenModal = async () => {
-    if (selectedSizeId && selectedColorIndex !== null) { // Verifica se um tamanho e uma cor foram selecionados
+    const productId = product._id;
+    const selectedColor = product.variations[selectedColorIndex]?.color; // Obtém a cor selecionada, se existir
+    const selectedSize = selectedSizeId;
+    
+    if (productId && selectedColor && selectedSize) {
       try {
-        console.log("Variation ID:", product.variations[selectedColorIndex]._id);
-        console.log("Size ID:", selectedSizeId);
-        const selectedColor = product.variations[selectedColorIndex].color; // Obtenha o nome da cor selecionada
-  
-        const response = await axios.post(
-          `http://localhost:3001/api/add-to-cart/${userId}`,
-          {
-            productId: product._id,
-            size: selectedSizeId, // Atualizado para size em vez de variationId
-            quantity: 1,
-            image: selectedColorImage,
-            price: selectedPrice,
-            color: selectedColor,
-          },
+        console.log("Dados do produto:", productId, selectedColor, selectedSize);
+        
+        // Verifica se já existe um produto com a mesma cor e tamanho no carrinho
+        const existingProductResponse = await axios.get(
+          `http://localhost:3001/api/cart-product/${userId}/${productId}/${selectedColor}/${selectedSize}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
+        
+        console.log("Resposta do produto existente:", existingProductResponse.data.cart.products);
   
-        addToCart();
-        toast.success("Produto adicionado ao carrinho!");
+        const existingProducts = existingProductResponse.data.cart.products;
+  
+        // Verifica se existe algum produto com o mesmo ID, cor e tamanho
+        const existingProduct = existingProducts.find(product => product.productId === productId && product.color === selectedColor && product.size === selectedSize);
+  
+        if (existingProduct) {
+          // Se o produto já existir no carrinho, atualiza a quantidade
+          console.log("Produto existente no carrinho:", existingProduct);
+        
+          const response = await axios.put(
+            `http://localhost:3001/api/update-quantity-from-cart/${userId}/${productId}/${selectedColor}/${selectedSize}`,
+            {
+              quantity: 1, // Define a quantidade como 1
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        
+          console.log("Resposta da atualização de quantidade:", response.data);
+        
+          toast.success("Quantidade do produto atualizada no carrinho!");
+        } else {
+          // Se o produto não existir no carrinho, adiciona um novo produto
+          console.log("Adicionando novo produto ao carrinho.");
+          const response = await axios.post(
+            `http://localhost:3001/api/add-to-cart/${userId}`,
+            {
+              productId: product._id,
+              size: selectedSizeId,
+              quantity: 1,
+              image: selectedColorImage,
+              price: selectedPrice,
+              color: selectedColor,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        
+          console.log("Resposta ao adicionar novo produto:", response.data);
+        
+          // Adiciona ao carrinho apenas se for um novo produto
+          addToCart();
+          toast.success("Produto adicionado ao carrinho!");
+        }
+        
         handleClickOpenCartModal();
       } catch (error) {
         console.error("Erro ao adicionar produto ao carrinho:", error);
@@ -249,6 +295,7 @@ const [selectedSizeId, setSelectedSizeId] = useState("");
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
   };
+  
   
 // Atualize a função handleSizeSelection para atualizar o estado do tamanho selecionado
 const handleSizeSelection = (sizeId, price) => {
