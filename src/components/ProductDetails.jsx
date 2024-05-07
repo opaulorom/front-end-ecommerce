@@ -335,7 +335,7 @@ const ProductDetails = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-around",
-              marginTop:"10rem"
+              marginTop:"50rem",
             }}
           >
             <div key={currentImageIndex} className="image-container">
@@ -378,36 +378,9 @@ const ProductDetails = () => {
             </div>
 
 
-            <div style={{
-      
-            }}>  
-              <div>
-                <h1
-                  style={{
-                    fontSize: "1.1rem",
-                    color: "black",
-                    fontWeight: "400",
-                    fontFamily: "poppins",
-                  }}
-                >
-                  {product.name}
-                </h1>
-                <p
-                  style={{
-                    fontSize: "1rem",
-                    fontWeight: "700",
-                    fontFamily: "poppins, sans-serif",
-                  }}
-                >
-                  Preço: R$ {selectedPrice}
-                </p>
-                <p>{product.description}</p>
-
-           
-
+            <div >  
 
               
-            </div>
 
 
 
@@ -420,7 +393,7 @@ const ProductDetails = () => {
 
             <div>
 
-            <div>
+            <div style={{marginTop:"-35rem"}}>
                   <div className="thumbnail-container">
                     {product.variations
                       ?.filter(
