@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Header.module.css";
 import SearchBar from "./SearchBar";
-import CategoriesList from "./CategoriesList";
+// import CategoriesList from "./CategoriesList";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
@@ -336,7 +336,7 @@ const Header = () => {
           </div>
         </div>
 
-        <div
+        {/* <div
           style={{
             marginTop: "-10rem",
             zIndex: -1, // Define o z-index para 1
@@ -344,7 +344,7 @@ const Header = () => {
           }}
         >
           <CategoriesList />
-        </div>
+        </div> */}
 
 
       </div>
