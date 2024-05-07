@@ -165,8 +165,11 @@ const ProductDetails = () => {
 
   
   // Função para lidar com o clique em miniaturas de cores
+// Função para lidar com o clique em miniaturas de cores
 const handleThumbnailClick = (colorIndex) => {
-  setSelectedColorIndex(colorIndex); // Definir o índice da cor selecionada
+  // Definir o índice da cor selecionada
+  setSelectedColorIndex(colorIndex);
+  setCurrentImageIndex(colorIndex);
 
   // Verificar se a cor selecionada tem uma imagem associada
   const selectedVariation = product.variations[colorIndex];
@@ -328,11 +331,11 @@ console.log("Selected color index:", selectedColorIndex);
           >
             <div key={currentImageIndex} className="image-container">
               {product.variations[currentImageIndex] && (
-                <img
-                  src={product.variations[currentImageIndex].urls[0]} // Alterado para exibir a primeira imagem de cada variação
-                  alt={product.variations[currentImageIndex].color}
-                  style={{ width: "25vw" }}
-                />
+            <img
+            src={product.variations[currentImageIndex]?.urls[0]} // Use currentImageIndex para selecionar a imagem correspondente
+            alt={product.variations[currentImageIndex]?.color}
+            style={{ width: "25vw" }}
+          />
               )}
 
               <div className="navigation-arrows">
