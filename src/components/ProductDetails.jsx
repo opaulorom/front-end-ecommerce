@@ -34,6 +34,8 @@ const ProductDetails = () => {
   const [showBorder, setShowBorder] = useState(false); // Estado para controlar a borda
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [selectedPrice, setSelectedPrice] = useState("");
+  const [selectedColorId, setSelectedColorId] = useState("");
+const [selectedSizeId, setSelectedSizeId] = useState("");
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
   };
@@ -163,6 +165,7 @@ const ProductDetails = () => {
     // Definir o índice da cor selecionada
     setSelectedColorIndex(colorIndex);
     setCurrentImageIndex(colorIndex);
+    setSelectedColorId(product.variations[colorIndex]._id); // Armazena o ID da cor selecionada
 
     // Verificar se a cor selecionada tem uma imagem associada
     const selectedVariation = product.variations[colorIndex];
@@ -196,11 +199,6 @@ const ProductDetails = () => {
     setCurrentImageIndex(index);
   };
 
-  // Atualize a função handleSizeSelection para atualizar o preço selecionado
-  const handleSizeSelection = (size, price) => {
-    setSelectedSize(size);
-    setSelectedPrice(price);
-  };
 
   const handleArrowClick = (direction) => {
     if (direction === "prev") {
@@ -214,23 +212,24 @@ const ProductDetails = () => {
     }
   };
 
-  const handleAddToCartAndOpenModal = async () => {
-    if (selectedSize && product.variations[currentImageIndex].color) {
-      // Verifica se o tamanho e a cor estão selecionados
 
+
+  const handleAddToCartAndOpenModal = async () => {
+    if (selectedSizeId && selectedColorIndex !== null) { // Verifica se um tamanho e uma cor foram selecionados
       try {
+        console.log("Variation ID:", product.variations[selectedColorIndex]._id);
+        console.log("Size ID:", selectedSizeId);
+        const selectedColor = product.variations[selectedColorIndex].color; // Obtenha o nome da cor selecionada
+  
         const response = await axios.post(
           `http://localhost:3001/api/add-to-cart/${userId}`,
           {
             productId: product._id,
-            size: selectedSize,
-            color: product.variations[currentImageIndex].color,
+            size: selectedSizeId, // Atualizado para size em vez de variationId
             quantity: 1,
             image: selectedColorImage,
-            price: product.price, // Passando o preço do produto
-            variationId: product.variations[currentImageIndex]._id, // Usando o _id da variação selecionada
-            availableQuantity:
-              product.variations[currentImageIndex].QuantityPerUnit,
+            price: selectedPrice,
+            color: selectedColor,
           },
           {
             headers: {
@@ -238,19 +237,26 @@ const ProductDetails = () => {
             },
           }
         );
-
-        addToCart(); // Atualiza o contexto do carrinho para refletir a adição do novo item
+  
+        addToCart();
         toast.success("Produto adicionado ao carrinho!");
-
         handleClickOpenCartModal();
       } catch (error) {
         console.error("Erro ao adicionar produto ao carrinho:", error);
+        toast.error("Erro ao adicionar produto ao carrinho.");
       }
     } else {
-      // Se a cor ou o tamanho não foram selecionados, exiba um alerta
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
   };
+  
+// Atualize a função handleSizeSelection para atualizar o estado do tamanho selecionado
+const handleSizeSelection = (sizeId, price) => {
+  setSelectedSize(sizeId); // Atualize o estado do tamanho selecionado
+  setSelectedSizeId(sizeId); // Atualize o ID do tamanho selecionado
+  setSelectedPrice(price); // Atualize o preço selecionado
+};
+
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
 
   const handlePrevColor = () => {
