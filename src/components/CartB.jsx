@@ -217,7 +217,7 @@ const Cart = () => {
               </div>
               <div className={styles.totalAmount}>
                 <span className={styles.totalAmount}> Total:</span>
-                <span className={styles.totalAmount}>  R${getTotal.totalAmount.toFixed(2)}</span>
+                <span className={styles.totalAmount}>  R${ getTotal.totalAmount && getTotal.totalAmount.toFixed(2)}</span>
               </div>
             </div>
           )}

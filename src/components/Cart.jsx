@@ -83,7 +83,6 @@ const Cart = () => {
     [userId, removeFromCart]
   );
 
-
   useEffect(() => {
     localStorage.setItem("cep", cep);
   }, [cep]);
@@ -489,51 +488,56 @@ const Cart = () => {
                             }}
                             style={{ width: "2vw" }}
                           />
-<AddIcon
-  onClick={() => {
-    const newQuantity = item.quantity + 1;
-    const productId = item.productId._id;
-    const variationId = item.variationId; // Certifique-se de estar obtendo o variationId corretamente
+                          <AddIcon
+                            onClick={() => {
+                              const newQuantity = item.quantity + 1;
+                              const productId = item.productId._id;
+                              const variationId = item.variationId; // Certifique-se de estar obtendo o variationId corretamente
 
-    const token = Cookies.get("token");
+                              const token = Cookies.get("token");
 
-    axios.put(
-      `http://localhost:3001/api/update-quantity/${userId}/${productId}/${variationId}`,
-      { quantity: newQuantity },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-    .then((response) => {
-      if (response.data.exceededQuantity) {
-        console.log(
-          "A quantidade no carrinho excede a disponibilidade do produto. Botão desabilitado."
-        );
-        return; // Não continua com a atualização do carrinho
-      }
+                              axios
+                                .put(
+                                  `http://localhost:3001/api/update-quantity/${userId}/${productId}/${variationId}`,
+                                  { quantity: newQuantity },
+                                  {
+                                    headers: {
+                                      Authorization: `Bearer ${token}`,
+                                    },
+                                  }
+                                )
+                                .then((response) => {
+                                  if (response.data.exceededQuantity) {
+                                    console.log(
+                                      "A quantidade no carrinho excede a disponibilidade do produto. Botão desabilitado."
+                                    );
+                                    return; // Não continua com a atualização do carrinho
+                                  }
 
-      // Atualiza o estado apenas se a quantidade for válida
-      setGetCart((prevCart) => {
-        const newCart = [...prevCart];
-        const productIndex = newCart.findIndex((p) => p.productId._id === productId && p.variationId === variationId); // Certifique-se de verificar também o variationId
-        if (productIndex !== -1) {
-          newCart[productIndex].quantity = newQuantity;
-        }
-        return newCart;
-      });
-    })
-    .catch((error) => {
-      console.log(
-        "Erro ao atualizar quantidade do produto no carrinho.",
-        error
-      );
-    });
-  }}
-  style={{ cursor: "pointer" }}
-/>
-
+                                  // Atualiza o estado apenas se a quantidade for válida
+                                  setGetCart((prevCart) => {
+                                    const newCart = [...prevCart];
+                                    const productIndex = newCart.findIndex(
+                                      (p) =>
+                                        p.productId._id === productId &&
+                                        p.variationId === variationId
+                                    ); // Certifique-se de verificar também o variationId
+                                    if (productIndex !== -1) {
+                                      newCart[productIndex].quantity =
+                                        newQuantity;
+                                    }
+                                    return newCart;
+                                  });
+                                })
+                                .catch((error) => {
+                                  console.log(
+                                    "Erro ao atualizar quantidade do produto no carrinho.",
+                                    error
+                                  );
+                                });
+                            }}
+                            style={{ cursor: "pointer" }}
+                          />
                         </div>
                       </div>
                     </div>

@@ -350,7 +350,7 @@ const handleSizeSelection = (sizeId, price) => {
                   </span>
                 </div>
 
-                <div className={styles.CartB}>{/* <CartB /> */}</div>
+                {/* <div className={styles.CartB}><CartB /></div> */}
               </div>
             </div>
           )}
