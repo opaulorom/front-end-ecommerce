@@ -259,6 +259,7 @@ const [selectedSizeId, setSelectedSizeId] = useState("");
           console.log("Resposta da atualização de quantidade:", response.data);
         
           toast.success("Quantidade do produto atualizada no carrinho!");
+  
         } else {
           // Se o produto não existir no carrinho, adiciona um novo produto
           console.log("Adicionando novo produto ao carrinho.");
@@ -295,6 +296,7 @@ const [selectedSizeId, setSelectedSizeId] = useState("");
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
   };
+  
   
   
 // Atualize a função handleSizeSelection para atualizar o estado do tamanho selecionado
