@@ -518,7 +518,6 @@ const Cart = () => {
                                   // Atualiza o estado apenas se a quantidade for válida
                                   setGetCart((prevCart) => {
                                     const newCart = [...prevCart];
-
                                     
                                     const productIndex = newCart.findIndex(
                                       (product) =>
