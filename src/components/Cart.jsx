@@ -486,7 +486,8 @@ const Cart = () => {
                                 );
                               }
                             }}
-                            style={{ width: "2vw" }}
+                            className={styles.inputContainer}
+                     
                           />
                           <AddIcon
                             onClick={() => {

@@ -33,3 +33,13 @@ div h3:nth-last-of-type(3){
     display: flex;
     justify-content: center;
 }
+
+.inputContainer{
+    width: 2vw;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
