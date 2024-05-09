@@ -426,39 +426,42 @@ const Cart = () => {
 
                         <div className={styles.quantityContainer}>
                           <RemoveIcon
-                            onClick={() => {
-                              const newQuantity = item.quantity - 1;
-                              if (newQuantity >= 0) {
-                                const newCart = [...getCart];
-                                newCart[index].quantity = newQuantity;
-                                const productId = item.productId._id;
-
-                                const token = Cookies.get("token"); // Obtenha o token do cookie
-                                axios
-                                  .put(
-                                    `http://localhost:3001/api/update-quantity/${userId}/${productId}`,
-                                    { quantity: newQuantity },
-                                    {
-                                      headers: {
-                                        Authorization: `Bearer ${token}`,
-                                      },
-                                    }
-                                  )
+                        onClick={() => {
+                          const newQuantity = item.quantity - 1; // Defina newQuantity antes de usá-la
+                          if (newQuantity >= 0) {
+                              const newCart = [...getCart];
+                              newCart[index].quantity = newQuantity;
+                              const productId = item.productId._id;
+                              const color = item.color;
+                              const size = item.size;
+                              const token = Cookies.get("token");
+                      
+                              axios
+                              .put(
+                                `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+                                { quantity: newQuantity },
+                                {
+                                  headers: {
+                                    Authorization: `Bearer ${token}`,
+                                  },
+                                }
+                              )
                                   .then((response) => {
-                                    setGetCart((prevCart) => {
-                                      const newCart = [...prevCart];
-                                      newCart[index].quantity = newQuantity;
-                                      return newCart;
-                                    });
+                                      setGetCart((prevCart) => {
+                                          const newCart = [...prevCart];
+                                          newCart[index].quantity = newQuantity;
+                                          return newCart;
+                                      });
                                   })
                                   .catch((error) => {
-                                    console.log(
-                                      "Erro ao atualizar quantidade do produto no carrinho.",
-                                      error
-                                    );
+                                      console.log(
+                                          "Erro ao atualizar quantidade do produto no carrinho.",
+                                          error
+                                      );
                                   });
-                              }
-                            }}
+                          }
+                      }}
+                      
                             style={{ cursor: "pointer" }}
                           />
                           <input
