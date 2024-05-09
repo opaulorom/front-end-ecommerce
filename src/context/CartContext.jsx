@@ -5,6 +5,7 @@ const CartContext = createContext();
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
+  
   const [cartItemCount, setCartItemCount] = useState(() => {
     const storedCartItemCount = localStorage.getItem("cartItemCount");
     if (storedCartItemCount !== null) {
@@ -17,7 +18,7 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cartItemCount", cartItemCount);
   }, [cartItemCount]);
 
-  const addToCart = () => {
+  const addToCart = (productDetails) => {
     setCartItemCount((prevCount) => prevCount + 1);
   };
 
@@ -25,6 +26,8 @@ export const CartProvider = ({ children }) => {
     setCartItemCount((prevCount) => Math.max(prevCount - 1, 0));
   };
 
+
+  
   return (
     <CartContext.Provider value={{ cartItemCount, addToCart, removeFromCart }}>
       {children}

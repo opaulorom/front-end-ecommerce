@@ -281,6 +281,12 @@ const handleSizeSelection = (sizeId, price) => {
       prevIndex < product.variations.length - 1 ? prevIndex + 1 : 0
     );
   };
+
+
+
+
+
+  
   return (
     <>
       <div>
@@ -429,6 +435,7 @@ const handleSizeSelection = (sizeId, price) => {
             </div>
 
             {!showCartButton && (
+              
               <button
                 onClick={handleAddToCartAndOpenModal}
                 style={{

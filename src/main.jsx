@@ -110,9 +110,10 @@ const Root = () => (
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
+    
     <UnreadProvider>
-
     <CartProvider>
+      
       {" "}
       {/* Envolve toda a aplicação com o CartProvider */}
       <FavoritesProvider>

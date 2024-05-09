@@ -492,13 +492,14 @@ const Cart = () => {
                             onClick={() => {
                               const newQuantity = item.quantity + 1;
                               const productId = item.productId._id;
-                              const variationId = item.variationId; // Certifique-se de estar obtendo o variationId corretamente
+                              const color = item.color; // Certifique-se de estar obtendo o variationId corretamente
+                              const size = item.size; // Certifique-se de estar obtendo o variationId corretamente
 
                               const token = Cookies.get("token");
-
+                                
                               axios
                                 .put(
-                                  `http://localhost:3001/api/update-quantity/${userId}/${productId}/${variationId}`,
+                                  `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
                                   { quantity: newQuantity },
                                   {
                                     headers: {
@@ -517,10 +518,13 @@ const Cart = () => {
                                   // Atualiza o estado apenas se a quantidade for válida
                                   setGetCart((prevCart) => {
                                     const newCart = [...prevCart];
+
+                                    
                                     const productIndex = newCart.findIndex(
-                                      (p) =>
-                                        p.productId._id === productId &&
-                                        p.variationId === variationId
+                                      (product) =>
+                                        product.productId._id === productId &&
+                                      product.color === color &&
+                                      product.size === size
                                     ); // Certifique-se de verificar também o variationId
                                     if (productIndex !== -1) {
                                       newCart[productIndex].quantity =
