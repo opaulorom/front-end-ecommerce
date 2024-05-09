@@ -222,45 +222,7 @@ const [selectedSizeId, setSelectedSizeId] = useState("");
     if (productId && selectedColor && selectedSize) {
       try {
         console.log("Dados do produto:", productId, selectedColor, selectedSize);
-        
-        // Verifica se já existe um produto com a mesma cor e tamanho no carrinho
-        const existingProductResponse = await axios.get(
-          `http://localhost:3001/api/cart-product/${userId}/${productId}/${selectedColor}/${selectedSize}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        
-        console.log("Resposta do produto existente:", existingProductResponse.data.cart.products);
-  
-        const existingProducts = existingProductResponse.data.cart.products;
-  
-        // Verifica se existe algum produto com o mesmo ID, cor e tamanho
-        const existingProduct = existingProducts.find(product => product.productId === productId && product.color === selectedColor && product.size === selectedSize);
-  
-        if (existingProduct) {
-          // Se o produto já existir no carrinho, atualiza a quantidade
-          console.log("Produto existente no carrinho:", existingProduct);
-        
-          const response = await axios.put(
-            `http://localhost:3001/api/update-quantity-from-cart/${userId}/${productId}/${selectedColor}/${selectedSize}`,
-            {
-              quantity: 1, // Define a quantidade como 1
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-        
-          console.log("Resposta da atualização de quantidade:", response.data);
-        
-          toast.success("Quantidade do produto atualizada no carrinho!");
-  
-        } else {
+       
           // Se o produto não existir no carrinho, adiciona um novo produto
           console.log("Adicionando novo produto ao carrinho.");
           const response = await axios.post(
@@ -285,7 +247,7 @@ const [selectedSizeId, setSelectedSizeId] = useState("");
           // Adiciona ao carrinho apenas se for um novo produto
           addToCart();
           toast.success("Produto adicionado ao carrinho!");
-        }
+      
         
         handleClickOpenCartModal();
       } catch (error) {
