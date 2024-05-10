@@ -464,7 +464,7 @@ const Cart = () => {
                       
                             style={{ cursor: "pointer" }}
                           />
-                          <input
+                          <span
                             type="number"
                             value={item.quantity}
                             onChange={(e) => {
@@ -477,21 +477,11 @@ const Cart = () => {
                                 newQuantity
                               );
                             }}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                const newQuantity = parseInt(e.target.value);
-                                const newCart = [...getCart];
-                                newCart[index].quantity = newQuantity;
-                                setGetCart(newCart);
-                                handleQuantityChange(
-                                  item.productId._id,
-                                  newQuantity
-                                );
-                              }
-                            }}
+                       
                             className={styles.inputContainer}
                      
-                          />
+                          >                          {item.quantity}
+                          </span>
                           <AddIcon
                             onClick={() => {
                               const newQuantity = item.quantity + 1;
