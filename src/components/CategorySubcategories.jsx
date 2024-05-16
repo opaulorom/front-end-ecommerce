@@ -168,6 +168,13 @@ const CategorySubcategories = () => {
           });
           return hasMatchingColor;
         });
+      } else if (filterType === "color") {
+          filteredProducts = originalProducts.filter((product) => {
+            const hasMatchingColor = product.variations.some((variation) => {
+              return variation.color === value;
+            });
+            return hasMatchingColor;
+          });
       }
   
       setMixedProducts(filteredProducts);
@@ -673,7 +680,7 @@ const CategorySubcategories = () => {
                             }}
                           >
                             R${" "}
-                            {/* {Number(product.variations[0].sizes[0].price).toFixed(2).padStart(5, "0")} */}
+                            {Number(product.variations[0].sizes[0].price).toFixed(2).padStart(5, "0")}
                           </span>
                           <span
                             style={{
@@ -808,9 +815,9 @@ const CategorySubcategories = () => {
                               }}
                             >
                               R${" "}
-                              {/* {Number(product.variations[0].sizes[0].price)
+                              {Number(product.variations[0].sizes[0].price)
                                 .toFixed(2)
-                                .padStart(5, "0")} */}
+                                .padStart(5, "0")}
                             </span>
                             <span
                               style={{
