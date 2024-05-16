@@ -92,12 +92,16 @@ const CategorySubcategories = () => {
         const sizesResponse = await fetch(
           `http://localhost:3001/api/categories/${category}/sizes`
         );
-    
+        const priceResponse = await fetch(
+          `http://localhost:3001/api/categories/${category}/priceRanges`
+        );
         const colorsData = await colorsResponse.json();
         const sizesData = await sizesResponse.json();
-    
+        const priceData = await priceResponse.json();
+
         setColors(colorsData);
         setSizes(sizesData);
+        setPriceRanges(priceData);
         setLoading(false);
     
         // Atualizar o conjunto único de tamanhos com base nos dados filtrados
