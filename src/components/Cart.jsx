@@ -34,7 +34,10 @@ const Cart = () => {
   const [shippingFee, setShippingFee] = useState(0);
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const [loading, setLoading] = useState(true); // Estado para controlar o carregamento
+  const [updatedQuantity, setUpdatedQuantity] = useState(1);
+  const [exceedAvailability, setExceedAvailability] = useState(1);
 
+  
   function handleProducts() {
     axios
       .get(`http://localhost:3001/api/cart/${userId}`, {
@@ -56,11 +59,15 @@ const Cart = () => {
     handleProducts();
   }, []);
 
+
+
+
+
   const handleDelete = useCallback(
-    (productId) => {
+    (productId, color, size) => {
       axios
         .delete(
-          `http://localhost:3001/api/remove-from-cart/${userId}/${productId}`,
+          `http://localhost:3001/api/remove-from-cart/${userId}/${productId}/${color}/${size}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -74,6 +81,8 @@ const Cart = () => {
           //   prevCart.filter((item) => item.productId._id !== productId)
           // );
           // removeFromCart(); // Chame a função removeFromCart do contexto do carrinho
+        
+         
           handleProducts();
         })
         .catch((error) => {
@@ -82,6 +91,8 @@ const Cart = () => {
     },
     [userId, removeFromCart]
   );
+
+  
 
   useEffect(() => {
     localStorage.setItem("cep", cep);
@@ -407,7 +418,7 @@ const Cart = () => {
                                   color="primary"
                                   onClick={() => {
                                     setOpen(false),
-                                      handleDelete(item.productId._id);
+                                      handleDelete(item.productId._id, item.color, item.size );
                                   }}
                                 >
                                   Exclui
@@ -426,42 +437,41 @@ const Cart = () => {
 
                         <div className={styles.quantityContainer}>
                           <RemoveIcon
-                        onClick={() => {
-                          const newQuantity = item.quantity - 1; // Defina newQuantity antes de usá-la
-                          if (newQuantity >= 0) {
-                              const newCart = [...getCart];
-                              newCart[index].quantity = newQuantity;
-                              const productId = item.productId._id;
-                              const color = item.color;
-                              const size = item.size;
-                              const token = Cookies.get("token");
-                      
-                              axios
-                              .put(
-                                `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
-                                { quantity: newQuantity },
-                                {
-                                  headers: {
-                                    Authorization: `Bearer ${token}`,
-                                  },
-                                }
-                              )
+                            onClick={() => {
+                              const newQuantity = item.quantity - 1; // Defina newQuantity antes de usá-la
+                              if (newQuantity >= 0) {
+                                const newCart = [...getCart];
+                                newCart[index].quantity = newQuantity;
+                                const productId = item.productId._id;
+                                const color = item.color;
+                                const size = item.size;
+                                const token = Cookies.get("token");
+
+                                axios
+                                  .put(
+                                    `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+                                    { quantity: newQuantity },
+                                    {
+                                      headers: {
+                                        Authorization: `Bearer ${token}`,
+                                      },
+                                    }
+                                  )
                                   .then((response) => {
-                                      setGetCart((prevCart) => {
-                                          const newCart = [...prevCart];
-                                          newCart[index].quantity = newQuantity;
-                                          return newCart;
-                                      });
+                                    setGetCart((prevCart) => {
+                                      const newCart = [...prevCart];
+                                      newCart[index].quantity = newQuantity;
+                                      return newCart;
+                                    });
                                   })
                                   .catch((error) => {
-                                      console.log(
-                                          "Erro ao atualizar quantidade do produto no carrinho.",
-                                          error
-                                      );
+                                    console.log(
+                                      "Erro ao atualizar quantidade do produto no carrinho.",
+                                      error
+                                    );
                                   });
-                          }
-                      }}
-                      
+                              }
+                            }}
                             style={{ cursor: "pointer" }}
                           />
                           <span
@@ -477,10 +487,11 @@ const Cart = () => {
                                 newQuantity
                               );
                             }}
-                       
+                            style={{}}
                             className={styles.inputContainer}
-                     
-                          >                          {item.quantity}
+                          >
+                            {" "}
+                            {item.quantity}
                           </span>
                           <AddIcon
                             onClick={() => {
@@ -490,7 +501,7 @@ const Cart = () => {
                               const size = item.size; // Certifique-se de estar obtendo o variationId corretamente
 
                               const token = Cookies.get("token");
-                                
+
                               axios
                                 .put(
                                   `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
@@ -502,22 +513,70 @@ const Cart = () => {
                                   }
                                 )
                                 .then((response) => {
-                                  if (response.data.exceededQuantity) {
+                                  const products = response.data.cart.products;
+
+                                  console.log(
+                                    "Produtos no carrinho:",
+                                    products
+                                  );
+
+                                  // Verifica se a quantidade de algum produto excede a disponibilidade
+                                  const exceedAvailability = products.some(
+                                    (product) => {
+                                      console.log(
+                                        "Excede disponibilidade?",
+                                        product.availableQuantity
+                                        
+                                      );
+                                      setExceedAvailability(product.exceedAvailability)
+
+                                      console.log(
+                                        "Verificando produto:",
+                                        product.productId
+                                      );
+                                      return (
+                                        product.quantity >
+                                        product.availableQuantity
+                                      );
+
+                                    }
+                                  );
+
+                                  console.log(
+                                    "Excede disponibilidade?",
+                                    exceedAvailability
+                                  );
+
+                                  if (exceedAvailability) {
                                     console.log(
-                                      "A quantidade no carrinho excede a disponibilidade do produto. Botão desabilitado."
+                                      "A quantidade no carrinho excede a disponibilidade de algum produto. Botão desabilitado."
                                     );
+                                    // Não continua com a atualização do carrinho
+                                    return;
+                                  }
+
+                                  console.log(
+                                    "Excede disponibilidade?",
+                                    exceedAvailability
+                                  );
+
+                                  if (exceedAvailability) {
+                                    return; // Não continua com a atualização do carrinho
+                                  }
+
+                                  if (exceedAvailability) {
                                     return; // Não continua com a atualização do carrinho
                                   }
 
                                   // Atualiza o estado apenas se a quantidade for válida
                                   setGetCart((prevCart) => {
                                     const newCart = [...prevCart];
-                                    
+
                                     const productIndex = newCart.findIndex(
                                       (product) =>
                                         product.productId._id === productId &&
-                                      product.color === color &&
-                                      product.size === size
+                                        product.color === color &&
+                                        product.size === size
                                     ); // Certifique-se de verificar também o variationId
                                     if (productIndex !== -1) {
                                       newCart[productIndex].quantity =
@@ -532,8 +591,16 @@ const Cart = () => {
                                     error
                                   );
                                 });
+                              setUpdatedQuantity(newQuantity);
+                              console.log("quantidade", newQuantity);
                             }}
-                            style={{ cursor: "pointer" }}
+                            style={{
+                              cursor: "pointer",
+                              // opacity: updatedQuantity === -1 c
+                              // opacity:
+                              // exceedAvailability === -1 
+                              // ? 1 : 0.5
+                            }}
                           />
                         </div>
                       </div>
