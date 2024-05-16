@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import Header from "./Header";
@@ -16,6 +16,8 @@ import styles from "./Cart.module.css";
 import Cookies from "js-cookie";
 import { useAuth } from "../context/AuthContext";
 import { CircularProgress } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
@@ -36,7 +38,33 @@ const Cart = () => {
   const [loading, setLoading] = useState(true); // Estado para controlar o carregamento
   const [updatedQuantity, setUpdatedQuantity] = useState(1);
   const [exceedAvailability, setExceedAvailability] = useState(1);
+  const [openModal, setOpenModal] = useState(false);
+  const modalRef = useRef(null);
 
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleClickCloseModal = () => {
+    setOpenModal(false);
+  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target) &&
+        openModal
+      ) {
+        setOpenModal(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openModal]);
   
   function handleProducts() {
     axios
@@ -367,83 +395,25 @@ const Cart = () => {
                               handleDelete(item._id);
                             }}>teste</button>
                       <div>
-                        <React.Fragment>
-                          <Button
-                            variant="outlined"
-                            color="neutral"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setOpen(true);
-                            }}
-                            sx={{
-                              border: "0",
-                            }}
-                          >
-                            Excluir
-                          </Button>
-                          
-                          <Modal open={open} onClose={() => setOpen(false)}>
-                            <ModalDialog
-                              aria-labelledby="nested-modal-title"
-                              aria-describedby="nested-modal-description"
-                              sx={(theme) => ({
-                                [theme.breakpoints.only("xs")]: {
-                                  top: "unset",
-                                  bottom: 0,
-                                  left: 0,
-                                  right: 0,
-                                  borderRadius: 0,
-                                  transform: "none",
-                                  maxWidth: "unset",
-                                },
-                              })}
-                            >
-                              <Typography id="nested-modal-title" level="h2">
-                                Você tem certeza que quer excluir o produto do
-                                carrinho?
-                                {item._id}
-                              </Typography>
-                              <Typography
-                                id="nested-modal-description"
-                                textColor="text.tertiary"
-                              >
-                                Essa ação não pode ser desfeita.
-                              </Typography>
-                              <Box
-                                sx={{
-                                  mt: 1,
-                                  display: "flex",
-                                  gap: 1,
-                                  flexDirection: {
-                                    xs: "column",
-                                    sm: "row-reverse",
-                                  },
-                                }}
-                              >
-                                <Button
-                                  type="button" // Adicione esta linha para definir o tipo do botão como "button"
-                                  variant="solid"
-                                  color="primary"
-                                  onClick={() => {
-                                    setOpen(false),
-                                      handleDelete(item._id);
-                                  }}
-                                >
-                                  Exclui {item._id}
-                                </Button>
-
-                                <Button
-                                  variant="outlined"
-                                  color="neutral"
-                                  onClick={() => setOpen(false)}
-                                >
-                                  Cancelar
-                                </Button>
-                              </Box>
-                            </ModalDialog>
-                          </Modal>
-                        </React.Fragment>
-
+                       
+                        <div
+                                                style={{
+                                                  display: "flex",
+                                                  alignItems: "center",
+                                                  gap: ".5rem",
+                                                  color: "rgb(236, 62, 62)",
+                                                }}
+                                                onClick={() => {
+                                                  handleClickOpenModal(); // Abre o modal de confirmação
+                                                }}
+                                              >
+                                                <DeleteIcon style={{}} />
+                                                <span
+                                                  style={{ fontWeight: "600" }}
+                                                >
+                                                  Excluir
+                                                </span>
+                                              </div>
                         <div className={styles.quantityContainer}>
                           <RemoveIcon
                             onClick={() => {
@@ -620,6 +590,44 @@ const Cart = () => {
               ))}
             </>
           )}
+
+
+{openModal && (
+                                                <div className={styles.Modal}>
+                                                  <div
+                                                    ref={modalRef}
+                                                    className={
+                                                      styles.ModalContent
+                                                    }
+                                                  >
+                                                    <span
+                                                      className={styles.Close}
+                                                      onClick={handleClickCloseModal}
+                                                    >
+                                                      <CloseIcon  />
+                                                    </span>
+                                                    <h1 style={{ fontSize:'1.5rem'}}>Essa ação e irreversível você quer Excluir essa Cor e todos os tamanhos?</h1>
+                                                    <div style={{
+                                                      display:"flex",
+                                                      justifyContent:"center",
+                                                      gap:"1.5rem",
+                                                      marginTop:"3rem"
+                                                    }}>
+          <button onClick={() =>  handleDelete(item._id)} style={{ backgroundColor: "#14337c", color: "white", border: "none", cursor: "pointer", width: "11vw", padding: "1rem", borderRadius: "5px", fontSize: "1.2rem" }}>SIM</button>
+
+    
+
+                                                      <button type="button" onClick={handleClickCloseModal} style={{ backgroundColor:"#14337c", color:"white", border:"none", cursor:"pointer", width:"11vw", padding:"1rem", borderRadius:"5px", fontSize:"1.2rem"}}>NÃO</button>
+                                                    </div>
+                                                  </div>
+                                                
+                                                </div>
+                                              )}
+
+
+
+
+
           {getCart.length > 0 && (
             <div
               style={{
