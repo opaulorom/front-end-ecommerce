@@ -337,6 +337,7 @@ const Cart = () => {
                     gap: "1rem",
                   }}
                 >
+             
                   <div className={styles.ProductsContainer}>
                     {item.productId &&
                       item.productId.variations && ( // Add null check for productId and variations
@@ -350,6 +351,7 @@ const Cart = () => {
                           style={{ width: "10vw", marginBottom: "10px" }}
                         />
                       )}
+                      
                     <div
                       style={{
                         display: "flex",
@@ -360,6 +362,10 @@ const Cart = () => {
                       <span>{item.productId && item.productId.name}</span>
                       <span> {item.size}</span>
                       <span> {item.color}</span>
+                       <button  onClick={(e) => {
+                              e.preventDefault();
+                              handleDelete(item._id);
+                            }}>teste</button>
                       <div>
                         <React.Fragment>
                           <Button
@@ -375,6 +381,7 @@ const Cart = () => {
                           >
                             Excluir
                           </Button>
+                          
                           <Modal open={open} onClose={() => setOpen(false)}>
                             <ModalDialog
                               aria-labelledby="nested-modal-title"
@@ -394,6 +401,7 @@ const Cart = () => {
                               <Typography id="nested-modal-title" level="h2">
                                 Você tem certeza que quer excluir o produto do
                                 carrinho?
+                                {item._id}
                               </Typography>
                               <Typography
                                 id="nested-modal-description"
@@ -421,7 +429,7 @@ const Cart = () => {
                                       handleDelete(item._id);
                                   }}
                                 >
-                                  Exclui
+                                  Exclui {item._id}
                                 </Button>
 
                                 <Button
