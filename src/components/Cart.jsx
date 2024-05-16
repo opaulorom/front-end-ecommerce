@@ -81,6 +81,7 @@ const Cart = () => {
                     )
                 );
                 handleProducts(); // Atualize outros dados conforme necessário
+                console.log("uniqueId", uniqueId)
             })
             .catch((error) => {
                 console.error("Erro ao remover produto do carrinho:", error);
