@@ -328,7 +328,7 @@ const Cart = () => {
             <>
               {getCart.map((item, index) => (
                 <div
-                key={index} // Use o _id do produto como chave
+                key={item._id} // Use o _id do produto como chave
                 style={{
                     marginTop: "14rem",
                     marginLeft: "3rem",
