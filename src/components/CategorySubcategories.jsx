@@ -718,7 +718,7 @@ const CategorySubcategories = () => {
                             }}
                           >
                             R${" "}
-                            {Number(product.variations[0].price).toFixed(2).padStart(5, "0")}
+                            {Number(product.variations[0].sizes[0].price).toFixed(2).padStart(5, "0")}
                           </span>
                           <span
                             style={{
@@ -853,7 +853,7 @@ const CategorySubcategories = () => {
                               }}
                             >
                               R${" "}
-                              {Number(product.price)
+                              {Number(product.variations[0].sizes[0].price)
                                 .toFixed(2)
                                 .padStart(5, "0")}
                             </span>
