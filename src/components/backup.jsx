@@ -1,478 +1,712 @@
-import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import "./ProductDetails.css";
-import ProductSizes from "./ProductSizes";
+import axios from "axios";
 import Header from "./Header";
-import FreteComponent from "./FreteComponent";
+import Box from "@mui/joy/Box";
+import Button from "@mui/joy/Button";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
+import Typography from "@mui/joy/Typography";
 import { useCart } from "../context/CartContext";
-import styles from "./ProductDetails.module.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import SearchIcon from "@mui/icons-material/Search";
+import styles from "./Cart.module.css";
 import Cookies from "js-cookie";
-// import CartB from "./CartB";
-import CircularIndeterminate from "./CircularIndeterminate";
+import { useAuth } from "../context/AuthContext";
+import { CircularProgress } from "@mui/material";
 
-const ProductDetails = () => {
-  const { productId } = useParams();
-  const [product, setProduct] = useState({ variations: [] });
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [sizesFromDatabase, setSizesFromDatabase] = useState([]);
-  const [selectedSize, setSelectedSize] = useState("");
-  const [openCartModal, setOpenCartModal] = useState(false);
-  const modalRef = useRef(null);
-  const [isColorAndSizeSelected, setIsColorAndSizeSelected] = useState(false);
-  const [customer, setCustomer] = useState([]);
-  const { cartItemCount, addToCart } = useCart();
+const Cart = () => {
+  const [getCart, setGetCart] = useState([]);
+  const [handleDeleteProduct, setHandleDeleteProduct] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
+  const [getTotal, setGetTotal] = useState({});
+  const [selectedFreteIndex, setSelectedFreteIndex] = useState(
+    localStorage.getItem("selectedFreteIndex") || null
+  );
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
-  const [openSecondCartModal, setOpenSecondCartModal] = useState(false);
+  const [cep, setCep] = useState(localStorage.getItem("cep") || "");
+  const [frete, setFrete] = useState(null);
   const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
-  const [selectedColorImage, setSelectedColorImage] = useState("");
-  const [showCartButton, setShowCartButton] = useState(false);
   const token = Cookies.get("token"); // Obtenha o token do cookie
-  const [showBorder, setShowBorder] = useState(false); // Estado para controlar a borda
+  const [shippingFee, setShippingFee] = useState(0);
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+  const [loading, setLoading] = useState(true); // Estado para controlar o carregamento
+  const [updatedQuantity, setUpdatedQuantity] = useState(1);
+  const [exceedAvailability, setExceedAvailability] = useState(1);
 
-  const handleShowBorder = () => {
-    setShowBorder(!showBorder);
-  };
-
-  const handleClickOpenButton = () => {
-    setShowCartButton(true);
-  };
-
-  const handleClickCloseButton = () => {
-    setShowCartButton(false);
-  };
-
-  const handleOpenButton = async () => {
-    handleClickOpenButton();
-  };
-
-  const handleClickOpenModal = () => {
-    setOpenCartModal(true);
-  };
-
-  const handleClickCloseModal = () => {
-    setOpenCartModal(false);
-  };
-
-  //  modal do carrinho
-
-  const handleClickOpenCartModal = () => {
-    setOpenSecondCartModal(true);
-  };
-
-  const handleClickCloseCartModal = () => {
-    setOpenSecondCartModal(false);
-  };
-
-  useEffect(() => {
-    const userId = Cookies.get("userId");
-
+  
+  function handleProducts() {
     axios
-      .get(`http://localhost:3001/api/custumer/${userId}`, {
+      .get(`http://localhost:3001/api/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        setCustomer(response.data);
-        if (!response.data || response.data.length === 0) {
-          setShowCartButton(true);
-          handleClickOpenModal();
-        } else {
-          setShowCartButton(false);
-        }
+        setGetCart(response.data.cart.products);
+        setGetTotal(response.data.cart); // Define getTotal com os dados do carrinho
+        setLoading(false); // Após carregar os produtos, definimos o estado de carregamento como falso
       })
       .catch((error) => {
-        console.log(error);
+        console.log("Erro ao visualizar frete.", error);
       });
+  }
+
+  useEffect(() => {
+    handleProducts();
   }, []);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const userId = Cookies.get("userId");
 
+
+
+
+  const handleDelete = useCallback(
+    (productId, color, size) => {
+      axios
+        .delete(
+          `http://localhost:3001/api/remove-from-cart/${userId}/${productId}/${color}/${size}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          // console.log(response.data.message);
+          // // Atualize o estado do carrinho na sua aplicação, se necessário
+          // setGetCart((prevCart) =>
+          //   prevCart.filter((item) => item.productId._id !== productId)
+          // );
+          // removeFromCart(); // Chame a função removeFromCart do contexto do carrinho
+        
+         
+          handleProducts();
+        })
+        .catch((error) => {
+          console.error("Erro ao remover produto do carrinho:", error);
+        });
+    },
+    [userId, removeFromCart]
+  );
+
+  
+
+  useEffect(() => {
+    localStorage.setItem("cep", cep);
+  }, [cep]);
+
+  useEffect(() => {
+    const fetchFrete = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3001/api/product/${productId}`,
+        const responseGet = await axios.get(
+          `http://localhost:3001/api/frete/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        setProduct(response.data);
-        if (response.data.product && response.data.product.variations) {
-          setProduct(response.data.product);
-
-          // Verifique se há variações disponíveis
-          if (response.data.product.variations.length > 0) {
-            // Defina a imagem da cor selecionada como a primeira imagem da primeira variação
-            setSelectedColorImage(response.data.product.variations[0].urls[0]);
-
-            // Extrair todas as cores disponíveis
-            const availableColors = response.data.product.variations.map(
-              (variation) => variation.color
-            );
-
-            // Mapear tamanhos das variações para todas as cores disponíveis
-            // Mapear tamanhos das variações para todas as cores disponíveis
-            const sizesByColor = availableColors.map((color) => {
-              // Filtrar variações pela cor selecionada
-              const variationsForColor =
-                response.data.product.variations.filter(
-                  (variation) => variation.color === color
-                );
-              // Mapear tamanhos das variações
-              const sizesArray = variationsForColor.map((variation) =>
-                variation.sizes.map((size) => ({
-                  size: size.size,
-                  price: size.price,
-                  quantityAvailable: size.quantityAvailable,
-                }))
-              );
-
-              return { color, sizes: sizesArray };
-            });
-
-            console.log("Tamanhos disponíveis por cor:", sizesByColor);
-
-            // Atualiza o estado com os tamanhos disponíveis para cada cor
-            setSizesFromDatabase(sizesByColor);
-
-            // Defina o primeiro tamanho como padrão
-            setSelectedSize(sizesByColor[0].sizes[0]);
-            setIsColorAndSizeSelected(true); // Marque como selecionado automaticamente
-          }
-        }
+        setFrete(responseGet.data);
       } catch (error) {
-        console.error("Erro ao obter detalhes do produto:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchProduct();
-  }, [productId]);
+    fetchFrete();
+  }, [cep, userId]);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target) &&
-        (openCartModal || openSecondCartModal)
-      ) {
-        setOpenCartModal(false);
-        setOpenSecondCartModal(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [openCartModal, openSecondCartModal]);
-
-  const handleThumbnailClick = (color, index) => {
-    // Encontre as variações de cor correspondentes ao clique na miniatura
-    const colorVariation = product.variations.find(
-      (variation) => variation.color === color
-    );
-
-    // Verifique se a variação de cor foi encontrada
-    if (colorVariation) {
-      // Log para verificar a cor selecionada
-      console.log("Cor selecionada:", color);
-
-      // Atualize o estado para exibir a borda na miniatura clicada
-      setShowBorder(index);
-
-      // Atualize a imagem selecionada com base na variação de cor clicada
-      setSelectedColorImage(colorVariation.urls[0]);
-
-      // Obtenha os tamanhos para a cor selecionada
-      const sizesForColor = colorVariation.sizes.map((size) => size.size);
-
-      console.log("Tamanhos para a cor selecionada:", sizesForColor);
-
-      // Atualize os tamanhos disponíveis para a cor selecionada
-      setAvailableSizes(sizesForColor);
-    }
-  };
-
-  const updateSizesForColor = (selectedColor) => {
-    // Filtra as variações pelo selectedColor
-    const variationsForColor = product.variations.filter(
-      (variation) => variation.color === selectedColor
-    );
-
-    // Se houver variações para a cor selecionada
-    if (variationsForColor.length > 0) {
-      // Mapeia as variações para obter os tamanhos disponíveis
-      const sizesArray = variationsForColor.map((variation) =>
-        variation.sizes.map((size) => size.size)
-      );
-      console.log("Tamanhos disponíveis:", sizesArray);
-      // Atualiza o estado com os tamanhos disponíveis
-      setSizesFromDatabase(sizesArray);
-    } else {
-      // Se não houver variações para a cor selecionada, define os tamanhos como vazio
-      setSizesFromDatabase([]);
-    }
-  };
-
-  const handleDotClick = (index) => {
-    setCurrentImageIndex(index);
-  };
-
-  const handleArrowClick = (direction) => {
-    if (direction === "prev") {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : product.variations.length - 1
-      );
-    } else {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex < product.variations.length - 1 ? prevIndex + 1 : 0
+    if (frete && frete.length > 0) {
+      setSelectedFreteIndex(
+        +localStorage.getItem("selectedFreteIndex") || null
       );
     }
-  };
+  }, [frete]);
 
-  const handleAddToCartAndOpenModal = async () => {
-    if (selectedSize && product.variations[currentImageIndex].color) {
-      // Verifica se o tamanho e a cor estão selecionados
-
-      try {
-        const response = await axios.post(
-          `http://localhost:3001/api/add-to-cart/${userId}`,
-          {
-            productId: product._id,
-            size: selectedSize,
-            color: product.variations[currentImageIndex].color,
-            quantity: 1,
-            image: selectedColorImage,
-            price: product.price, // Passando o preço do produto
-            variationId: product.variations[currentImageIndex]._id, // Usando o _id da variação selecionada
-            availableQuantity:
-              product.variations[currentImageIndex].QuantityPerUnit,
+  const handleRadioClick = async (index) => {
+    try {
+      const freteId = frete[index]._id;
+      await axios.put(
+        `http://localhost:3001/api/cart/${userId}/shippingFee/${freteId}`,
+        {
+          // Remova as linhas de cabeçalho daqui
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Remova 'Credentials: credentials'
           },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        }
+      );
+      setSelectedFreteIndex(index);
+      localStorage.setItem("selectedFreteIndex", index);
+      // After updating the shipping fee, fetch the updated cart data
+      const cartResponse = await axios.get(
+        `http://localhost:3001/api/cart/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-        addToCart(); // Atualiza o contexto do carrinho para refletir a adição do novo item
-        toast.success("Produto adicionado ao carrinho!");
+      // Update the cart products and total in state variables
+      setGetCart(cartResponse.data.cart.products);
+      setGetTotal(cartResponse.data.cart);
 
-        handleClickOpenCartModal();
-      } catch (error) {
-        console.error("Erro ao adicionar produto ao carrinho:", error);
+      setShippingFee(res.data.cart.shippingFee);
+    } catch (error) {
+      console.error("Error updating shipping fee:", error);
+    }
+  };
+
+  const handleAddShippingFee = () => {
+    if (selectedFreteIndex !== null) {
+      // Verifica se um frete foi selecionado
+      if (getTotal.totalAmount >= 300) {
       }
     } else {
-      // Se a cor ou o tamanho não foram selecionados, exiba um alerta
-      toast.error("Por favor, selecione uma cor e um tamanho.");
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      // Faz a solicitação POST para obter os dados do frete com o novo CEP
+      await axios.post(
+        `http://localhost:3001/api/frete/${userId}`,
+        { cep },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Atualiza o estado do frete com os dados do frete da requisição GET
+      const responseGet = await axios.get(
+        `http://localhost:3001/api/frete/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("log", userId);
+      setFrete(responseGet.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   };
 
   return (
-    <>
-      <div>
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          style={{ marginTop: "8rem" }}
-        />
-        <div style={{ position: "absolute", zIndex: "2" }}>
-          <Header />
-          {openSecondCartModal && (
-            <div className={styles.secondCartModal}>
-              <div ref={modalRef} className={styles.secondCartModalContent}>
-                <div className={styles.secondCartCloseContainer}>
-                  <div className={styles.IMGContent}>
-                    <span>Pre visualização</span>
-                  </div>
-                  <span
-                    className={styles.secondCartClose}
-                    onClick={handleClickCloseCartModal}
-                  >
-                    &times;
-                  </span>
-                </div>
+    <div style={{ position: "relative" }}>
+      <Header />
 
-                <div className={styles.CartB}>{/* <CartB /> */}</div>
-              </div>
-            </div>
-          )}
+      <Navbar />
+      {loading ? ( // Se estiver carregando, exibimos o CircularProgress
+        <div className={styles.loading}>
+          <CircularProgress />
         </div>
-
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-            marginTop: "10rem",
-          }}
-        >
-          <div>
-            <div key={currentImageIndex} className="image-container">
-              {product.variations[currentImageIndex] && (
-                <img
-                  src={product.variations[currentImageIndex].urls[0]}
-                  alt={product.variations[currentImageIndex].color}
-                  style={{ width: "25vw" }}
-                />
+      ) : (
+        <>
+          {getCart.length > 0 && (
+            <>
+              {selectedFreteIndex === null && getTotal.totalAmount < 300 && (
+                <p
+                  style={{
+                    position: "absolute",
+                    right: "10px",
+                    top: "10px",
+                    color: "red",
+                  }}
+                >
+                  Por favor, selecione um frete antes de prosseguir.
+                </p>
               )}
 
-              <div className="navigation-arrows">
-                <div className="arrow" onClick={() => handleArrowClick("prev")}>
-                  <img
-                    src="https://i.ibb.co/8MqhvFq/left-arrow.png"
-                    style={{ fontSize: "2rem", zIndex: "-8", color: "white" }}
-                  />
-                </div>
+              <Link
+                to={
+                  selectedFreteIndex !== null || getTotal.totalAmount >= 300
+                    ? "/payment"
+                    : "#"
+                }
+              >
+                <button
+                  onClick={handleAddShippingFee}
+                  style={{
+                    backgroundColor: "#5070E3",
+                    color: "white",
+                    border: "none",
+                    padding: ".8rem",
+                    borderRadius: "5px",
+                    fontWeight: "500",
+                    fontFamily: "poppins, sans-serif",
+                    cursor: "pointer",
+                    position: "absolute",
+                    right: "10px",
+                    pointerEvents:
+                      selectedFreteIndex !== null || getTotal.totalAmount >= 300
+                        ? "auto"
+                        : "none",
+                    opacity:
+                      selectedFreteIndex !== null || getTotal.totalAmount >= 300
+                        ? 1
+                        : 0.5,
+                  }}
+                >
+                  Fazer Pedido
+                </button>
+              </Link>
+            </>
+          )}
 
-                <div className="arrow" onClick={() => handleArrowClick("next")}>
-                  <img
-                    src="https://i.ibb.co/vDty4Gc/right-arrow-1.png"
-                    style={{ fontSize: "2rem", zIndex: "-7", color: "white" }}
-                  />
+          {getCart.length === 0 && !loggedIn && (
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "15rem",
+                }}
+              >
+                <div
+                  style={{
+                    marginTop: "5rem",
+                    fontFamily: "poppins",
+                    fontSize: "1rem",
+                    fontWeight: "400",
+                  }}
+                >
+                  {" "}
+                  Somente os usuários registrados podem acessar esta página faça{" "}
+                  <Link
+                    to={"/perfil"}
+                    style={{ color: "inherit", textDecoration: "none" }}
+                  >
+                    {" "}
+                    <b
+                      style={{
+                        fontFamily: "poppins",
+                        fontWeight: "600",
+                        fontSize: "1.2rem",
+                      }}
+                    >
+                      {" "}
+                      Login
+                    </b>
+                    .
+                  </Link>{" "}
                 </div>
               </div>
+            </>
+          )}
+
+          {getCart.length === 0 && loggedIn === true ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: "15rem",
+              }}
+            >
+              <img
+                src="https://i.ibb.co/x765V9y/bag-4.png"
+                alt=""
+                style={{ width: "15vw" }}
+              />
+              <p>O carrinho está vazio.</p>
             </div>
-            <div className="dot-container">
-              {product.variations?.map((variation, index) => (
-                <span
+          ) : (
+            <>
+              {getCart.map((item, index) => (
+                <div
                   key={index}
-                  className={`dot ${
-                    index === currentImageIndex ? "active" : ""
-                  }`}
-                  onClick={() => handleDotClick(index)}
-                />
-              ))}
-            </div>
-          </div>
+                  style={{
+                    marginTop: "14rem",
+                    marginLeft: "3rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                  }}
+                >
+                  <div className={styles.ProductsContainer}>
+                    {item.productId &&
+                      item.productId.variations && ( // Add null check for productId and variations
+                        <img
+                          src={
+                            item.productId.variations.find(
+                              (variation) => variation.color === item.color
+                            )?.urls[0]
+                          }
+                          alt={item.productId.name}
+                          style={{ width: "10vw", marginBottom: "10px" }}
+                        />
+                      )}
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "1rem",
+                      }}
+                      className={styles.textsContainer}
+                    >
+                      <span>{item.productId && item.productId.name}</span>
+                      <span> {item.size}</span>
+                      <span> {item.color}</span>
+                      <div>
+                        <React.Fragment>
+                          <Button
+                            variant="outlined"
+                            color="neutral"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setOpen(true);
+                            }}
+                            sx={{
+                              border: "0",
+                            }}
+                          >
+                            Excluir
+                          </Button>
+                          <Modal open={open} onClose={() => setOpen(false)}>
+                            <ModalDialog
+                              aria-labelledby="nested-modal-title"
+                              aria-describedby="nested-modal-description"
+                              sx={(theme) => ({
+                                [theme.breakpoints.only("xs")]: {
+                                  top: "unset",
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  borderRadius: 0,
+                                  transform: "none",
+                                  maxWidth: "unset",
+                                },
+                              })}
+                            >
+                              <Typography id="nested-modal-title" level="h2">
+                                Você tem certeza que quer excluir o produto do
+                                carrinho?
+                              </Typography>
+                              <Typography
+                                id="nested-modal-description"
+                                textColor="text.tertiary"
+                              >
+                                Essa ação não pode ser desfeita.
+                              </Typography>
+                              <Box
+                                sx={{
+                                  mt: 1,
+                                  display: "flex",
+                                  gap: 1,
+                                  flexDirection: {
+                                    xs: "column",
+                                    sm: "row-reverse",
+                                  },
+                                }}
+                              >
+                                <Button
+                                  type="button" // Adicione esta linha para definir o tipo do botão como "button"
+                                  variant="solid"
+                                  color="primary"
+                                  onClick={() => {
+                                    setOpen(false),
+                                      handleDelete(item.productId._id, item.color, item.size );
+                                  }}
+                                >
+                                  Exclui
+                                </Button>
+                                <Button
+                                  variant="outlined"
+                                  color="neutral"
+                                  onClick={() => setOpen(false)}
+                                >
+                                  Cancelar
+                                </Button>
+                              </Box>
+                            </ModalDialog>
+                          </Modal>
+                        </React.Fragment>
 
-          <div style={{}}>
-            <h1
-              style={{
-                fontSize: "1.1rem",
-                color: "black",
-                fontWeight: "400",
-                fontFamily: "poppins",
-              }}
-            >
-              {product.name}
-            </h1>
-            <p
-              style={{
-                fontSize: "1rem",
-                fontWeight: "700",
-                fontFamily: "poppins, sans-serif",
-              }}
-            >
-              Preço: R$ {product.variations[currentImageIndex]?.price}
-            </p>
-            <p>{product.description}</p>
+                        <div className={styles.quantityContainer}>
+                          <RemoveIcon
+                            onClick={() => {
+                              const newQuantity = item.quantity - 1; // Defina newQuantity antes de usá-la
+                              if (newQuantity >= 0) {
+                                const newCart = [...getCart];
+                                newCart[index].quantity = newQuantity;
+                                const productId = item.productId._id;
+                                const color = item.color;
+                                const size = item.size;
+                                const token = Cookies.get("token");
 
-            {sizesFromDatabase.map((item, index) => (
-              <div key={index}>
-                <div>
-                  <h2>{item.color}</h2>
-                </div>
-                <div>
-                  <h3>Tamanhos disponíveis:</h3>
-                  <div>
-                    {item.sizes[0].map((size, sizeIndex) => (
-                      <div key={sizeIndex} style={{ marginLeft: "3rem" }}>
-                        <span
-                          className={`size-button ${
-                            size === selectedSize ? "active" : ""
-                          }`}
-                        >
-                          Tamanho: {size.size}
-                        </span>
-                        - Preço: R$ {size.price}, Quantidade Disponível:{" "}
-                        {size.quantityAvailable}
+                                axios
+                                  .put(
+                                    `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+                                    { quantity: newQuantity },
+                                    {
+                                      headers: {
+                                        Authorization: `Bearer ${token}`,
+                                      },
+                                    }
+                                  )
+                                  .then((response) => {
+                                    setGetCart((prevCart) => {
+                                      const newCart = [...prevCart];
+                                      newCart[index].quantity = newQuantity;
+                                      return newCart;
+                                    });
+                                  })
+                                  .catch((error) => {
+                                    console.log(
+                                      "Erro ao atualizar quantidade do produto no carrinho.",
+                                      error
+                                    );
+                                  });
+                              }
+                            }}
+                            style={{ cursor: "pointer" }}
+                          />
+                          <span
+                            type="number"
+                            value={item.quantity}
+                            onChange={(e) => {
+                              const newQuantity = parseInt(e.target.value);
+                              const newCart = [...getCart];
+                              newCart[index].quantity = newQuantity;
+                              setGetCart(newCart);
+                              handleQuantityChange(
+                                item.productId._id,
+                                newQuantity
+                              );
+                            }}
+                            style={{}}
+                            className={styles.inputContainer}
+                          >
+                            {" "}
+                            {item.quantity}
+                          </span>
+                          <AddIcon
+                            onClick={() => {
+                              const newQuantity = item.quantity + 1;
+                              const productId = item.productId._id;
+                              const color = item.color; // Certifique-se de estar obtendo o variationId corretamente
+                              const size = item.size; // Certifique-se de estar obtendo o variationId corretamente
+
+                              const token = Cookies.get("token");
+
+                              axios
+                                .put(
+                                  `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+                                  { quantity: newQuantity },
+                                  {
+                                    headers: {
+                                      Authorization: `Bearer ${token}`,
+                                    },
+                                  }
+                                )
+                                .then((response) => {
+                                  const products = response.data.cart.products;
+
+                                  console.log(
+                                    "Produtos no carrinho:",
+                                    products
+                                  );
+
+                                  // Verifica se a quantidade de algum produto excede a disponibilidade
+                                  const exceedAvailability = products.some(
+                                    (product) => {
+                                      console.log(
+                                        "Excede disponibilidade?",
+                                        product.availableQuantity
+                                        
+                                      );
+                                      setExceedAvailability(product.exceedAvailability)
+
+                                      console.log(
+                                        "Verificando produto:",
+                                        product.productId
+                                      );
+                                      return (
+                                        product.quantity >
+                                        product.availableQuantity
+                                      );
+
+                                    }
+                                  );
+
+                                  console.log(
+                                    "Excede disponibilidade?",
+                                    exceedAvailability
+                                  );
+
+                                  if (exceedAvailability) {
+                                    console.log(
+                                      "A quantidade no carrinho excede a disponibilidade de algum produto. Botão desabilitado."
+                                    );
+                                    // Não continua com a atualização do carrinho
+                                    return;
+                                  }
+
+                                  console.log(
+                                    "Excede disponibilidade?",
+                                    exceedAvailability
+                                  );
+
+                                  if (exceedAvailability) {
+                                    return; // Não continua com a atualização do carrinho
+                                  }
+
+                                  if (exceedAvailability) {
+                                    return; // Não continua com a atualização do carrinho
+                                  }
+
+                                  // Atualiza o estado apenas se a quantidade for válida
+                                  setGetCart((prevCart) => {
+                                    const newCart = [...prevCart];
+
+                                    const productIndex = newCart.findIndex(
+                                      (product) =>
+                                        product.productId._id === productId &&
+                                        product.color === color &&
+                                        product.size === size
+                                    ); // Certifique-se de verificar também o variationId
+                                    if (productIndex !== -1) {
+                                      newCart[productIndex].quantity =
+                                        newQuantity;
+                                    }
+                                    return newCart;
+                                  });
+                                })
+                                .catch((error) => {
+                                  console.log(
+                                    "Erro ao atualizar quantidade do produto no carrinho.",
+                                    error
+                                  );
+                                });
+                              setUpdatedQuantity(newQuantity);
+                              console.log("quantidade", newQuantity);
+                            }}
+                            style={{
+                              cursor: "pointer",
+                              // opacity: updatedQuantity === -1 c
+                              // opacity:
+                              // exceedAvailability === -1 
+                              // ? 1 : 0.5
+                            }}
+                          />
+                        </div>
                       </div>
-                    ))}
+                    </div>
+                    <div>R${item.price}</div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </>
+          )}
+          {getCart.length > 0 && (
+            <div
+              style={{
+                marginLeft: "14rem",
+                position: "absolute",
+                right: "10px",
+              }}
+            >
+              <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
+              {getTotal &&
+                typeof getTotal === "object" &&
+                getTotal.totalAmount && (
+                  <div style={{ marginTop: "10rem" }}>
+                    Total do Carrinho: R$ {getTotal.totalAmount.toFixed(2)}
+                  </div>
+                )}
 
-            {!showCartButton && (
-              <button
-                onClick={handleAddToCartAndOpenModal}
-                style={{
-                  backgroundColor: "#5070E3",
-                  color: "white",
-                  border: "none",
-                  padding: ".8rem",
-                  borderRadius: "5px",
-                  fontWeight: "500",
-                  fontFamily: "poppins, sans-serif",
-                  cursor: "pointer",
-                }}
+              <form
+                style={{ display: "flex", alignItems: "center", gap: "1rem" }}
               >
-                Adicionar ao Carrinho
-              </button>
-            )}
+                <input
+                  type="text"
+                  value={cep}
+                  onChange={(event) => setCep(event.target.value)}
+                  placeholder="Digite pra pesquisar um cep."
+                  style={{ height: "4vh" }}
+                />
 
-            {showCartButton && (
-              <button
-                onClick={handleClickOpenModal}
-                style={{
-                  backgroundColor: "red",
-                  color: "white",
-                  border: "none",
-                  padding: ".8rem",
-                  borderRadius: "5px",
-                  fontWeight: "500",
-                  fontFamily: "poppins, sans-serif",
-                  cursor: "pointer",
-                }}
-              >
-                Adicionar ao Carrinho
-              </button>
-            )}
+                <button
+                  type="submit"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: "#5070E3",
+                    color: "white",
+                    border: "none",
+                    padding: ".4rem",
+                    borderRadius: "5px",
+                    fontWeight: "500",
+                    fontFamily: "poppins, sans-serif",
+                    cursor: "pointer",
+                    width: "8vw",
+                    justifyContent: "center",
+                  }}
+                  onClick={handleSubmit}
+                >
+                  {" "}
+                  <SearchIcon /> Buscar{" "}
+                </button>
+              </form>
 
-            {openCartModal && (
-              <div className={styles.cartModal}>
-                <div ref={modalRef} className={styles.cartModalContent}>
-                  <span
-                    className={styles.cartClose}
-                    onClick={handleClickCloseModal}
-                  >
-                    &times;
-                  </span>
-                  <p>
-                    vc nao ainda nao cadastrou os dados necessarios pra compra
-                    se cadastre
-                  </p>
-                  <Link to={"/signUp"}>
-                    <button>cadastre-se</button>
-                  </Link>
+              {frete && (
+                <div>
+                  {frete.map((item, index) => (
+                    <div key={index}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "1rem",
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          name="selectedFrete"
+                          value={index}
+                          onClick={() => handleRadioClick(index)}
+                          checked={selectedFreteIndex === index}
+                        />
+                        <img
+                          src={item.logo}
+                          alt="logo das transportadoras"
+                          style={{ width: "10vw" }}
+                        />
+                        <p>{item.nomeTransportadora}</p>
+                        <p>
+                          {" "}
+                          {item.dataPrevistaEntrega
+                            .split("T")[0]
+                            .split("-")
+                            .reverse()
+                            .join("/")}
+                        </p>
+                        <p> {item.prazoEntrega}</p>
+                        <p> valor do frete:{item.valorFrete}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            )}
-
-            <FreteComponent />
-          </div>
-        </div>
-        <Navbar />
-      </div>
-    </>
+              )}
+            </div>
+          )}
+        </>
+      )}
+    </div>
   );
 };
 
-export default ProductDetails;
+export default Cart;

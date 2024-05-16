@@ -46,51 +46,50 @@ const Cart = () => {
         },
       })
       .then((response) => {
-        setGetCart(response.data.cart.products);
-        setGetTotal(response.data.cart); // Define getTotal com os dados do carrinho
-        setLoading(false); // Após carregar os produtos, definimos o estado de carregamento como falso
+        setGetCart(response.data.cart.products); // Define os produtos do carrinho
+        setGetTotal(response.data.cart); // Define o total do carrinho
+        setLoading(false); // Define o estado de carregamento como falso
       })
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
       });
   }
+  
 
   useEffect(() => {
     handleProducts();
   }, []);
 
 
-
-
-
   const handleDelete = useCallback(
-    (productId, color, size) => {
-      axios
-        .delete(
-          `http://localhost:3001/api/remove-from-cart/${userId}/${productId}/${color}/${size}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((response) => {
-          // console.log(response.data.message);
-          // // Atualize o estado do carrinho na sua aplicação, se necessário
-          // setGetCart((prevCart) =>
-          //   prevCart.filter((item) => item.productId._id !== productId)
-          // );
-          // removeFromCart(); // Chame a função removeFromCart do contexto do carrinho
-        
-         
-          handleProducts();
-        })
-        .catch((error) => {
-          console.error("Erro ao remover produto do carrinho:", error);
-        });
+    (uniqueId) => {
+        axios
+            .delete(
+                `http://localhost:3001/api/remove-from-cart/${userId}/${uniqueId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log(response.data.message);
+                // Atualize o estado do carrinho na sua aplicação, removendo o item correto
+                setGetCart((prevCart) =>
+                    prevCart.filter((item) =>
+                        item._id !== uniqueId 
+                    )
+                );
+                handleProducts(); // Atualize outros dados conforme necessário
+            })
+            .catch((error) => {
+                console.error("Erro ao remover produto do carrinho:", error);
+            });
     },
     [userId, removeFromCart]
-  );
+);
+
+    
 
   
 
@@ -328,8 +327,8 @@ const Cart = () => {
             <>
               {getCart.map((item, index) => (
                 <div
-                  key={index}
-                  style={{
+                key={index} // Use o _id do produto como chave
+                style={{
                     marginTop: "14rem",
                     marginLeft: "3rem",
                     display: "flex",
@@ -418,11 +417,12 @@ const Cart = () => {
                                   color="primary"
                                   onClick={() => {
                                     setOpen(false),
-                                      handleDelete(item.productId._id, item.color, item.size );
+                                      handleDelete(item._id);
                                   }}
                                 >
                                   Exclui
                                 </Button>
+
                                 <Button
                                   variant="outlined"
                                   color="neutral"
