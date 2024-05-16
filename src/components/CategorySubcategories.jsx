@@ -83,30 +83,24 @@ const CategorySubcategories = () => {
     };
 
     const fetchFilters = async () => {
-      setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
-
+      setLoading(true);
+    
       try {
-        // Alterações nas chamadas de API para obter cores, tamanhos e faixas de preço específicos
         const colorsResponse = await fetch(
           `http://localhost:3001/api/categories/${category}/colors`
         );
         const sizesResponse = await fetch(
           `http://localhost:3001/api/categories/${category}/sizes`
         );
-        const priceRangesResponse = await fetch(
-          `http://localhost:3001/api/categories/${category}/priceRanges`
-        );
-
+    
         const colorsData = await colorsResponse.json();
         const sizesData = await sizesResponse.json();
-        const priceRangesData = await priceRangesResponse.json();
-
+    
         setColors(colorsData);
         setSizes(sizesData);
-        setPriceRanges(priceRangesData);
-        setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
-
-        // Atualizar o conjunto único de tamanhos
+        setLoading(false);
+    
+        // Atualizar o conjunto único de tamanhos com base nos dados filtrados
         const allSizes = sizesData.reduce((acc, size) => {
           size.split(",").forEach((s) => acc.add(s.trim()));
           return acc;
@@ -116,7 +110,9 @@ const CategorySubcategories = () => {
         console.error("Erro ao obter opções de filtros:", error);
       }
     };
-
+    
+   
+    
     const fetchOriginalProducts = async () => {
       try {
         await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -149,56 +145,36 @@ const CategorySubcategories = () => {
     setCurrentPage(page);
   };
 
+ 
   const handleFilterClick = async (filterType, value) => {
-    // Atualizar a URL ou executar outras ações conforme necessário
     const filters = {
       [filterType]: value,
     };
-
-    // Se o filtro for cor ou tamanho, encontrar todos os produtos com a mesma cor ou tamanho
+  
     if (filterType === "color" || filterType === "size") {
       let filteredProducts = originalProducts;
-
+  
       if (filterType === "size") {
         filteredProducts = originalProducts.filter((product) => {
-          const productSizes = product.variations.flatMap((variation) =>
-            (variation.size || "").split(",").map((size) => size.trim())
-          );
-
-          console.log("Product Sizes Before Filter:", productSizes);
-          console.log("Applying Size Filter:", value);
-
-          const filtered =
-            productSizes.includes(value) ||
-            productSizes.some((size) => value.includes(size));
-          console.log("Filtered:", filtered);
-
-          return filtered;
+          const hasMatchingSize = product.variations.some((variation) => {
+            return variation.sizes.some((sizeObj) => sizeObj.size === value);
+          });
+          return hasMatchingSize;
         });
       } else if (filterType === "color") {
         filteredProducts = originalProducts.filter((product) => {
-          const productColors = product.variations.map((variation) =>
-            (variation.color || "").trim()
-          );
-
-          console.log("Product Colors Before Filter:", productColors);
-          console.log("Applying Color Filter:", value);
-
-          const filtered = productColors.includes(value);
-          console.log("Filtered:", filtered);
-
-          return filtered;
+          const hasMatchingColor = product.variations.some((variation) => {
+            return variation.color === value;
+          });
+          return hasMatchingColor;
         });
       }
-
-      console.log("Filtered Products:", filteredProducts);
-
+  
       setMixedProducts(filteredProducts);
-      setTotalPages(1); // Reiniciar a página para a primeira ao aplicar um novo filtro
+      setTotalPages(1);
     }
-
-    fetchMixedProducts(1, filters);
   };
+  
 
   const handleFavoriteClick = (productId) => {
     setMixedProducts((prevProducts) =>
@@ -406,57 +382,36 @@ const CategorySubcategories = () => {
                           ))}
                         </div>
                       </div>
-                      <h3
-                        style={{
-                          fontFamily: "Montserrat, arial, sans-serif",
-                          fontWeight: "600",
-                          fontSize: "1.2rem",
-                          color: "rgb(52, 52, 54)",
-                        }}
-                      >
-                        Tamanhos
-                      </h3>
-                      <div onClick={handleClickCloseModal}>
-                        <div
-                          style={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(4, 1fr)",
-                          }}
-                          className={styles.repeat}
-                        >
-                          {Array.from(uniqueSizes).map((size, index) => (
-                            <div
-                              key={index}
-                              onClick={() => handleFilterClick("size", size)}
-                            >
-                              <button
-                                style={{
-                                  borderRadius: "20px",
-                                  width: "40px",
-                                  height: "40px",
-                                  border: "1px solid rgb(114, 114, 114)",
-                                  backgroundColor:
-                                    selectedSize === size
-                                      ? "#333"
-                                      : "rgb(255, 255, 255)",
-                                  color:
-                                    selectedSize === size ? "white" : "black",
-                                  marginLeft: "8px",
-                                  marginTop: "8px",
-                                  cursor: "pointer",
-                                }}
-                                onClick={() => handleSizeClick(size)}
-                              >
-                                {" "}
-                                <span style={{ fontSize: ".8rem" }}>
-                                  {" "}
-                                  {size}
-                                </span>
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                      <div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(4, 1fr)",
+  }}
+  className={styles.repeat}
+>
+  {Array.from(uniqueSizes).map((size, index) => (
+    <div key={index} onClick={() => handleFilterClick("size", size)}>
+      <button
+        style={{
+          borderRadius: "20px",
+          width: "40px",
+          height: "40px",
+          border: "1px solid rgb(114, 114, 114)",
+          backgroundColor: selectedSize === size ? "#333" : "rgb(255, 255, 255)",
+          color: selectedSize === size ? "white" : "black",
+          marginLeft: "8px",
+          marginTop: "8px",
+          cursor: "pointer",
+        }}
+        onClick={() => handleSizeClick(size)}
+      >
+        <span style={{ fontSize: ".8rem" }}> {size}</span>
+      </button>
+    </div>
+  ))}
+</div>
+
+              
 
                       <div style={{ marginTop: "3rem" }}>
                         <h3
@@ -718,7 +673,7 @@ const CategorySubcategories = () => {
                             }}
                           >
                             R${" "}
-                            {Number(product.variations[0].sizes[0].price).toFixed(2).padStart(5, "0")}
+                            {/* {Number(product.variations[0].sizes[0].price).toFixed(2).padStart(5, "0")} */}
                           </span>
                           <span
                             style={{
@@ -853,9 +808,9 @@ const CategorySubcategories = () => {
                               }}
                             >
                               R${" "}
-                              {Number(product.variations[0].sizes[0].price)
+                              {/* {Number(product.variations[0].sizes[0].price)
                                 .toFixed(2)
-                                .padStart(5, "0")}
+                                .padStart(5, "0")} */}
                             </span>
                             <span
                               style={{
