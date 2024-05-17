@@ -10,8 +10,7 @@ import styles from "./ProductDetails.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
-// import CartB from "./CartB";
-import CircularIndeterminate from "./CircularIndeterminate";
+import CartB from "./CartB";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -312,7 +311,7 @@ const ProductDetails = () => {
                   </span>
                 </div>
 
-                {/* <div className={styles.CartB}><CartB /></div> */}
+                <div className={styles.CartB}><CartB /></div>
               </div>
             </div>
           )}

@@ -1,40 +1,20 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import Navbar from "./Navbar";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import Header from "./Header";
-import Box from "@mui/joy/Box";
-import Button from "@mui/joy/Button";
-import Modal from "@mui/joy/Modal";
-import ModalDialog from "@mui/joy/ModalDialog";
-import Typography from "@mui/joy/Typography";
-import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import SearchIcon from "@mui/icons-material/Search";
-import styles from "./CartB.module.css";
 import Cookies from "js-cookie";
+import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import styles from "./CartB.module.css";
 
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
-  const [handleDeleteProduct, setHandleDeleteProduct] = useState(false);
-  const [open, setOpen] = React.useState(false);
-  const { removeFromCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
   const [getTotal, setGetTotal] = useState({});
-  const [selectedFreteIndex, setSelectedFreteIndex] = useState(
-    localStorage.getItem("selectedFreteIndex") || null
-  );
-  const userId = Cookies.get("userId"); // Obtenha o token do cookie
-  const [cep, setCep] = useState(localStorage.getItem("cep") || "");
-  const [frete, setFrete] = useState(null);
-  const credentials = Cookies.get("role"); // Obtenha as credenciais do cookie
-  const token = Cookies.get("token"); // Obtenha o token do cookie
-  const [shippingFee, setShippingFee] = useState(0);
-  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+  const userId = Cookies.get("userId");
+  const token = Cookies.get("token");
+  const { logout, loggedIn } = useAuth();
   const productsContainerRef = useRef(null);
 
-  function handleProducts() {
+  useEffect(() => {
     axios
       .get(`http://localhost:3001/api/cart/${userId}`, {
         headers: {
@@ -43,37 +23,12 @@ const Cart = () => {
       })
       .then((response) => {
         setGetCart(response.data.cart.products);
+        setGetTotal(response.data.cart);
       })
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
       });
-  }
-  useEffect(() => {
-    handleProducts();
-  }, []);
-
-
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3001/api/cart/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-
-        },
-      })
-      .then((response) => {
-        setGetCart(response.data.cart.products);
-
-          setGetTotal(response.data.products);
-    
-      })
-
-      .catch((error) => {
-        console.log("Erro ao visualizar frete.", error);
-      });
-  }, [userId, getCart, getTotal]);
-
+  }, [userId, token]);
 
   return (
     <div style={{ position: "relative" }}>
@@ -120,7 +75,7 @@ const Cart = () => {
         </>
       )}
 
-      {getCart.length === 0 && loggedIn === true ? (
+      {getCart.length === 0 && loggedIn ? (
         <div
           style={{
             display: "flex",
@@ -193,13 +148,20 @@ const Cart = () => {
                       Tamanho: {item.size}
                     </span>
                     <span className={styles.spanColor}> Cor: {item.color}</span>
-                    {item.productId.variations && item.productId.variations.find(variation => variation.color === item.color) && (
-  <span className={styles.spanPrice}>
-    Preço: R${item.productId.variations.find(variation => variation.color === item.color).price.toFixed(2)}
-  </span>
-)}
-
-
+                    {item.productId.variations &&
+                      item.productId.variations.find(
+                        (variation) => variation.color === item.color
+                      )?.sizes.find(
+                        (size) => size.size === item.size
+                      ) && (
+                        <span className={styles.spanPrice}>
+                          Preço: R${item.productId.variations.find(
+                            (variation) => variation.color === item.color
+                          )?.sizes.find(
+                            (size) => size.size === item.size
+                          )?.price.toFixed(2)}
+                        </span>
+                      )}
                   </div>
                 </div>
               </div>
@@ -207,17 +169,26 @@ const Cart = () => {
           ))}
         </div>
       )}
+
       {getCart.length > 0 && (
         <div style={{ marginLeft: "14rem" }}>
           {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
             <div className={styles.totalAmountAndQuantityContainer}>
               <div className={styles.TotalQuantity}>
-                <span >total de <b style={{color:"#212121"}}>{getTotal.TotalQuantity}</b> produto(s) na sacola </span>
+                <span>
+                  total de{" "}
+                  <b style={{ color: "#212121" }}>{getTotal.TotalQuantity}</b>{" "}
+                  produto(s) na sacola{" "}
+                </span>
                 <span className={styles.TotalQuantity}></span>
               </div>
               <div className={styles.totalAmount}>
                 <span className={styles.totalAmount}> Total:</span>
-                <span className={styles.totalAmount}>  R${ getTotal.totalAmount && getTotal.totalAmount.toFixed(2)}</span>
+                <span className={styles.totalAmount}>
+                  {" "}
+                  R${getTotal.totalAmount &&
+                    getTotal.totalAmount.toFixed(2)}
+                </span>
               </div>
             </div>
           )}
@@ -232,13 +203,12 @@ const Cart = () => {
                 backgroundColor: "#E94D36",
                 color: "white",
                 border: "none",
-                width:"20vw",
+                width: "20vw",
                 padding: ".8rem",
-       
                 fontWeight: "600",
                 fontFamily: "poppins, sans-serif",
-                fontSize:"1rem"
-,                cursor: "pointer",
+                fontSize: "1rem",
+                cursor: "pointer",
                 position: "absolute",
                 marginTop: "10rem",
                 left: "50%",
