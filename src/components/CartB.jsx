@@ -109,14 +109,25 @@ const Cart = () => {
               >
                 <div className={styles.quantity}>
                   {" "}
-                  {item.productId.quantity > 0 ? (
-                    <p>{`Apenas ${item.productId.quantity} unidades em estoque`}</p>
+                  {item.productId.variations &&
+                  item.productId.variations.some((variation) =>
+                    variation.sizes.some((size) => size.quantityAvailable > 0)
+                  ) ? (
+                    <p>{`Apenas ${
+                      item.productId.variations
+                        .find((variation) =>
+                          variation.sizes.some(
+                            (size) => size.quantityAvailable > 0
+                          )
+                        )
+                        .sizes.find((size) => size.quantityAvailable > 0)
+                        .quantityAvailable
+                    } unidades em estoque`}</p>
                   ) : (
-                    <p className={styles.p}>
-                      Produto esgotado so temos 1 no estoque
-                    </p>
+                    <p className={styles.p}>0 unidades em estoque</p>
                   )}
                 </div>
+
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <div>
                     {item.productId.variations && (
@@ -149,19 +160,18 @@ const Cart = () => {
                     </span>
                     <span className={styles.spanColor}> Cor: {item.color}</span>
                     {item.productId.variations &&
-                      item.productId.variations.find(
-                        (variation) => variation.color === item.color
-                      )?.sizes.find(
-                        (size) => size.size === item.size
-                      ) && (
-                        <span className={styles.spanPrice}>
-                          Preço: R${item.productId.variations.find(
-                            (variation) => variation.color === item.color
-                          )?.sizes.find(
-                            (size) => size.size === item.size
-                          )?.price.toFixed(2)}
-                        </span>
-                      )}
+                      item.productId.variations
+                        .find((variation) => variation.color === item.color)
+                        ?.sizes.map(
+                          (size) =>
+                            size.size === item.size && (
+                              <div key={size.size}>
+                                <span className={styles.spanPrice}>
+                                  Preço: R${size.price.toFixed(2)}
+                                </span>
+                              </div>
+                            )
+                        )}
                   </div>
                 </div>
               </div>
@@ -186,8 +196,7 @@ const Cart = () => {
                 <span className={styles.totalAmount}> Total:</span>
                 <span className={styles.totalAmount}>
                   {" "}
-                  R${getTotal.totalAmount &&
-                    getTotal.totalAmount.toFixed(2)}
+                  R${getTotal.totalAmount && getTotal.totalAmount.toFixed(2)}
                 </span>
               </div>
             </div>
