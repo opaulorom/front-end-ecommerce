@@ -125,7 +125,6 @@ const [selectedSizeId, setSelectedSizeId] = useState("");
             );
 
             // Defina o primeiro tamanho como padrão
-            setSelectedSize(productData.variations[0]?.sizes[0]?.size || "");
             setIsColorAndSizeSelected(true); // Marque como selecionado automaticamente
 
             // Defina o preço do primeiro tamanho como padrão
