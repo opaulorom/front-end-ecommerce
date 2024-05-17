@@ -385,14 +385,7 @@ const Cart = () => {
                       <span>{item.productId && item.productId.name}</span>
                       <span> {item.size}</span>
                       <span> {item.color}</span>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleDelete(item._id);
-                        }}
-                      >
-                        teste
-                      </button>
+                
                       <div>
                         <div
                           style={{
@@ -400,6 +393,7 @@ const Cart = () => {
                             alignItems: "center",
                             gap: ".5rem",
                             color: "rgb(236, 62, 62)",
+                            cursor:"pointer"
                           }}
                           onClick={() => handleClickOpenModal(item._id)}
                         >
