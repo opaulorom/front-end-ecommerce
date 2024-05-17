@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./ProductDetails.css";
-import ProductSizes from "./ProductSizes";
 import Header from "./Header";
 import FreteComponent from "./FreteComponent";
 import { useCart } from "../context/CartContext";
@@ -35,7 +34,7 @@ const ProductDetails = () => {
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedColorId, setSelectedColorId] = useState("");
-const [selectedSizeId, setSelectedSizeId] = useState("");
+  const [selectedSizeId, setSelectedSizeId] = useState("");
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
   };
@@ -198,7 +197,6 @@ const [selectedSizeId, setSelectedSizeId] = useState("");
     setCurrentImageIndex(index);
   };
 
-
   const handleArrowClick = (direction) => {
     if (direction === "prev") {
       setCurrentImageIndex((prevIndex) =>
@@ -211,43 +209,45 @@ const [selectedSizeId, setSelectedSizeId] = useState("");
     }
   };
 
-
-
   const handleAddToCartAndOpenModal = async () => {
     const productId = product._id;
     const selectedColor = product.variations[selectedColorIndex]?.color; // Obtém a cor selecionada, se existir
     const selectedSize = selectedSizeId;
-    
+
     if (productId && selectedColor && selectedSize) {
       try {
-        console.log("Dados do produto:", productId, selectedColor, selectedSize);
-       
-          // Se o produto não existir no carrinho, adiciona um novo produto
-          console.log("Adicionando novo produto ao carrinho.");
-          const response = await axios.post(
-            `http://localhost:3001/api/add-to-cart/${userId}`,
-            {
-              productId: product._id,
-              size: selectedSizeId,
-              quantity: 1,
-              image: selectedColorImage,
-              price: selectedPrice,
-              color: selectedColor,
+        console.log(
+          "Dados do produto:",
+          productId,
+          selectedColor,
+          selectedSize
+        );
+
+        // Se o produto não existir no carrinho, adiciona um novo produto
+        console.log("Adicionando novo produto ao carrinho.");
+        const response = await axios.post(
+          `http://localhost:3001/api/add-to-cart/${userId}`,
+          {
+            productId: product._id,
+            size: selectedSizeId,
+            quantity: 1,
+            image: selectedColorImage,
+            price: selectedPrice,
+            color: selectedColor,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-        
-          console.log("Resposta ao adicionar novo produto:", response.data);
-        
-          // Adiciona ao carrinho apenas se for um novo produto
-          addToCart();
-          toast.success("Produto adicionado ao carrinho!");
-      
-        
+          }
+        );
+
+        console.log("Resposta ao adicionar novo produto:", response.data);
+
+        // Adiciona ao carrinho apenas se for um novo produto
+        addToCart();
+        toast.success("Produto adicionado ao carrinho!");
+
         handleClickOpenCartModal();
       } catch (error) {
         console.error("Erro ao adicionar produto ao carrinho:", error);
@@ -257,15 +257,13 @@ const [selectedSizeId, setSelectedSizeId] = useState("");
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
   };
-  
-  
-  
-// Atualize a função handleSizeSelection para atualizar o estado do tamanho selecionado
-const handleSizeSelection = (sizeId, price) => {
-  setSelectedSize(sizeId); // Atualize o estado do tamanho selecionado
-  setSelectedSizeId(sizeId); // Atualize o ID do tamanho selecionado
-  setSelectedPrice(price); // Atualize o preço selecionado
-};
+
+  // Atualize a função handleSizeSelection para atualizar o estado do tamanho selecionado
+  const handleSizeSelection = (sizeId, price) => {
+    setSelectedSize(sizeId); // Atualize o estado do tamanho selecionado
+    setSelectedSizeId(sizeId); // Atualize o ID do tamanho selecionado
+    setSelectedPrice(price); // Atualize o preço selecionado
+  };
 
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
 
@@ -281,11 +279,6 @@ const handleSizeSelection = (sizeId, price) => {
     );
   };
 
-
-
-
-
-  
   return (
     <>
       <div>
@@ -409,11 +402,19 @@ const handleSizeSelection = (sizeId, price) => {
                     Tamanhos disponíveis para{" "}
                     {product.variations[selectedColorIndex]?.color}:
                   </h3>
-                  <div>
+                  <div style={{ display: "flex", flexDirection: "row", alignItems:"center" }}>
                     {sizesFromDatabase[selectedColorIndex]?.sizes &&
                       sizesFromDatabase[selectedColorIndex].sizes.map(
                         (size, sizeIndex) => (
-                          <div key={sizeIndex} style={{ marginLeft: "3rem" }}>
+                          <div
+                            key={sizeIndex}
+                            style={{
+                              marginLeft: "1rem",
+                              display: "flex",
+                              flexDirection: "column",
+                             
+                            }}
+                          >
                             <span
                               className={`size-button ${
                                 size.size === selectedSize ? "active" : ""
@@ -424,7 +425,8 @@ const handleSizeSelection = (sizeId, price) => {
                             >
                               {size.size}
                             </span>
-                            Quantidade Disponível: {size.quantityAvailable}
+
+                         
                           </div>
                         )
                       )}
@@ -434,7 +436,6 @@ const handleSizeSelection = (sizeId, price) => {
             </div>
 
             {!showCartButton && (
-              
               <button
                 onClick={handleAddToCartAndOpenModal}
                 style={{
