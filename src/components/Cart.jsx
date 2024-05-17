@@ -38,10 +38,14 @@ const Cart = () => {
   const [loading, setLoading] = useState(true); // Estado para controlar o carregamento
   const [updatedQuantity, setUpdatedQuantity] = useState(1);
   const [exceedAvailability, setExceedAvailability] = useState(1);
+  const [deleteProductId, setDeleteProductId] = useState(null);
+
   const [openModal, setOpenModal] = useState(false);
   const modalRef = useRef(null);
 
-  const handleClickOpenModal = () => {
+  const handleClickOpenModal = (uniqueId) => {
+    setDeleteProductId(uniqueId);
+
     setOpenModal(true);
   };
 
@@ -65,7 +69,7 @@ const Cart = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [openModal]);
-  
+
   function handleProducts() {
     axios
       .get(`http://localhost:3001/api/cart/${userId}`, {
@@ -82,45 +86,37 @@ const Cart = () => {
         console.log("Erro ao visualizar frete.", error);
       });
   }
-  
 
   useEffect(() => {
     handleProducts();
   }, []);
 
-
   const handleDelete = useCallback(
     (uniqueId) => {
-        axios
-            .delete(
-                `http://localhost:3001/api/remove-from-cart/${userId}/${uniqueId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            )
-            .then((response) => {
-                console.log(response.data.message);
-                // Atualize o estado do carrinho na sua aplicação, removendo o item correto
-                setGetCart((prevCart) =>
-                    prevCart.filter((item) =>
-                        item._id !== uniqueId 
-                    )
-                );
-                handleProducts(); // Atualize outros dados conforme necessário
-                console.log("uniqueId", uniqueId)
-            })
-            .catch((error) => {
-                console.error("Erro ao remover produto do carrinho:", error);
-            });
+      axios
+        .delete(
+          `http://localhost:3001/api/remove-from-cart/${userId}/${uniqueId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data.message);
+          // Atualize o estado do carrinho na sua aplicação, removendo o item correto
+          setGetCart((prevCart) =>
+            prevCart.filter((item) => item._id !== uniqueId)
+          );
+          handleProducts(); // Atualize outros dados conforme necessário
+          console.log("uniqueId", uniqueId);
+        })
+        .catch((error) => {
+          console.error("Erro ao remover produto do carrinho:", error);
+        });
     },
     [userId, removeFromCart]
-);
-
-    
-
-  
+  );
 
   useEffect(() => {
     localStorage.setItem("cep", cep);
@@ -356,8 +352,8 @@ const Cart = () => {
             <>
               {getCart.map((item, index) => (
                 <div
-                key={item._id} // Use o _id do produto como chave
-                style={{
+                  key={item._id} // Use o _id do produto como chave
+                  style={{
                     marginTop: "14rem",
                     marginLeft: "3rem",
                     display: "flex",
@@ -365,7 +361,6 @@ const Cart = () => {
                     gap: "1rem",
                   }}
                 >
-             
                   <div className={styles.ProductsContainer}>
                     {item.productId &&
                       item.productId.variations && ( // Add null check for productId and variations
@@ -379,7 +374,7 @@ const Cart = () => {
                           style={{ width: "10vw", marginBottom: "10px" }}
                         />
                       )}
-                      
+
                     <div
                       style={{
                         display: "flex",
@@ -390,30 +385,27 @@ const Cart = () => {
                       <span>{item.productId && item.productId.name}</span>
                       <span> {item.size}</span>
                       <span> {item.color}</span>
-                       <button  onClick={(e) => {
-                              e.preventDefault();
-                              handleDelete(item._id);
-                            }}>teste</button>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleDelete(item._id);
+                        }}
+                      >
+                        teste
+                      </button>
                       <div>
-                       
                         <div
-                                                style={{
-                                                  display: "flex",
-                                                  alignItems: "center",
-                                                  gap: ".5rem",
-                                                  color: "rgb(236, 62, 62)",
-                                                }}
-                                                onClick={() => {
-                                                  handleClickOpenModal(); // Abre o modal de confirmação
-                                                }}
-                                              >
-                                                <DeleteIcon style={{}} />
-                                                <span
-                                                  style={{ fontWeight: "600" }}
-                                                >
-                                                  Excluir
-                                                </span>
-                                              </div>
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: ".5rem",
+                            color: "rgb(236, 62, 62)",
+                          }}
+                          onClick={() => handleClickOpenModal(item._id)}
+                        >
+                          <DeleteIcon style={{}} />
+                          <span style={{ fontWeight: "600" }}>Excluir</span>
+                        </div>
                         <div className={styles.quantityContainer}>
                           <RemoveIcon
                             onClick={() => {
@@ -505,9 +497,10 @@ const Cart = () => {
                                       console.log(
                                         "Excede disponibilidade?",
                                         product.availableQuantity
-                                        
                                       );
-                                      setExceedAvailability(product.exceedAvailability)
+                                      setExceedAvailability(
+                                        product.exceedAvailability
+                                      );
 
                                       console.log(
                                         "Verificando produto:",
@@ -517,7 +510,6 @@ const Cart = () => {
                                         product.quantity >
                                         product.availableQuantity
                                       );
-
                                     }
                                   );
 
@@ -577,7 +569,7 @@ const Cart = () => {
                               cursor: "pointer",
                               // opacity: updatedQuantity === -1 c
                               // opacity:
-                              // exceedAvailability === -1 
+                              // exceedAvailability === -1
                               // ? 1 : 0.5
                             }}
                           />
@@ -591,42 +583,63 @@ const Cart = () => {
             </>
           )}
 
+          {openModal && (
+            <div className={styles.Modal}>
+              <div ref={modalRef} className={styles.ModalContent}>
+                <span className={styles.Close} onClick={handleClickCloseModal}>
+                  <CloseIcon />
+                </span>
+                <h1 style={{ fontSize: "1.5rem" }}>
+                  Essa ação e irreversível você quer Excluir essa Cor e todos os
+                  tamanhos?
+                </h1>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "1.5rem",
+                    marginTop: "3rem",
+                  }}
+                >
+                  <button
+                    onClick={() => {
+                      handleDelete(deleteProductId);
+                      handleClickCloseModal();
+                    }}
+                    style={{
+                      backgroundColor: "#14337c",
+                      color: "white",
+                      border: "none",
+                      cursor: "pointer",
+                      width: "11vw",
+                      padding: "1rem",
+                      borderRadius: "5px",
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    SIM
+                  </button>
 
-{openModal && (
-                                                <div className={styles.Modal}>
-                                                  <div
-                                                    ref={modalRef}
-                                                    className={
-                                                      styles.ModalContent
-                                                    }
-                                                  >
-                                                    <span
-                                                      className={styles.Close}
-                                                      onClick={handleClickCloseModal}
-                                                    >
-                                                      <CloseIcon  />
-                                                    </span>
-                                                    <h1 style={{ fontSize:'1.5rem'}}>Essa ação e irreversível você quer Excluir essa Cor e todos os tamanhos?</h1>
-                                                    <div style={{
-                                                      display:"flex",
-                                                      justifyContent:"center",
-                                                      gap:"1.5rem",
-                                                      marginTop:"3rem"
-                                                    }}>
-          <button onClick={() =>  handleDelete(item._id)} style={{ backgroundColor: "#14337c", color: "white", border: "none", cursor: "pointer", width: "11vw", padding: "1rem", borderRadius: "5px", fontSize: "1.2rem" }}>SIM</button>
-
-    
-
-                                                      <button type="button" onClick={handleClickCloseModal} style={{ backgroundColor:"#14337c", color:"white", border:"none", cursor:"pointer", width:"11vw", padding:"1rem", borderRadius:"5px", fontSize:"1.2rem"}}>NÃO</button>
-                                                    </div>
-                                                  </div>
-                                                
-                                                </div>
-                                              )}
-
-
-
-
+                  <button
+                    type="button"
+                    onClick={handleClickCloseModal}
+                    style={{
+                      backgroundColor: "#14337c",
+                      color: "white",
+                      border: "none",
+                      cursor: "pointer",
+                      width: "11vw",
+                      padding: "1rem",
+                      borderRadius: "5px",
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    NÃO
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {getCart.length > 0 && (
             <div
