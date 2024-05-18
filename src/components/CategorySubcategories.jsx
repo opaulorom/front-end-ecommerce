@@ -84,7 +84,7 @@ const CategorySubcategories = () => {
 
     const fetchFilters = async () => {
       setLoading(true);
-    
+
       try {
         const colorsResponse = await fetch(
           `http://localhost:3001/api/categories/${category}/colors`
@@ -103,7 +103,7 @@ const CategorySubcategories = () => {
         setSizes(sizesData);
         setPriceRanges(priceData);
         setLoading(false);
-    
+
         // Atualizar o conjunto único de tamanhos com base nos dados filtrados
         const allSizes = sizesData.reduce((acc, size) => {
           size.split(",").forEach((s) => acc.add(s.trim()));
@@ -114,9 +114,7 @@ const CategorySubcategories = () => {
         console.error("Erro ao obter opções de filtros:", error);
       }
     };
-    
-   
-    
+
     const fetchOriginalProducts = async () => {
       try {
         await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -149,15 +147,14 @@ const CategorySubcategories = () => {
     setCurrentPage(page);
   };
 
- 
   const handleFilterClick = async (filterType, value) => {
     const filters = {
       [filterType]: value,
     };
-  
+
     if (filterType === "color" || filterType === "size") {
       let filteredProducts = originalProducts;
-  
+
       if (filterType === "size") {
         filteredProducts = originalProducts.filter((product) => {
           const hasMatchingSize = product.variations.some((variation) => {
@@ -173,19 +170,18 @@ const CategorySubcategories = () => {
           return hasMatchingColor;
         });
       } else if (filterType === "color") {
-          filteredProducts = originalProducts.filter((product) => {
-            const hasMatchingColor = product.variations.some((variation) => {
-              return variation.color === value;
-            });
-            return hasMatchingColor;
+        filteredProducts = originalProducts.filter((product) => {
+          const hasMatchingColor = product.variations.some((variation) => {
+            return variation.color === value;
           });
+          return hasMatchingColor;
+        });
       }
-  
+
       setMixedProducts(filteredProducts);
       setTotalPages(1);
     }
   };
-  
 
   const handleFavoriteClick = (productId) => {
     setMixedProducts((prevProducts) =>
@@ -394,35 +390,40 @@ const CategorySubcategories = () => {
                         </div>
                       </div>
                       <div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-  }}
-  className={styles.repeat}
->
-  {Array.from(uniqueSizes).map((size, index) => (
-    <div key={index} onClick={() => handleFilterClick("size", size)}>
-      <button
-        style={{
-          borderRadius: "20px",
-          width: "40px",
-          height: "40px",
-          border: "1px solid rgb(114, 114, 114)",
-          backgroundColor: selectedSize === size ? "#333" : "rgb(255, 255, 255)",
-          color: selectedSize === size ? "white" : "black",
-          marginLeft: "8px",
-          marginTop: "8px",
-          cursor: "pointer",
-        }}
-        onClick={() => handleSizeClick(size)}
-      >
-        <span style={{ fontSize: ".8rem" }}> {size}</span>
-      </button>
-    </div>
-  ))}
-</div>
-
-              
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "repeat(4, 1fr)",
+                        }}
+                        className={styles.repeat}
+                      >
+                        {Array.from(uniqueSizes).map((size, index) => (
+                          <div
+                            key={index}
+                            onClick={() => handleFilterClick("size", size)}
+                          >
+                            <button
+                              style={{
+                                borderRadius: "20px",
+                                width: "40px",
+                                height: "40px",
+                                border: "1px solid rgb(114, 114, 114)",
+                                backgroundColor:
+                                  selectedSize === size
+                                    ? "#333"
+                                    : "rgb(255, 255, 255)",
+                                color:
+                                  selectedSize === size ? "white" : "black",
+                                marginLeft: "8px",
+                                marginTop: "8px",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => handleSizeClick(size)}
+                            >
+                              <span style={{ fontSize: ".8rem" }}> {size}</span>
+                            </button>
+                          </div>
+                        ))}
+                      </div>
 
                       <div style={{ marginTop: "3rem" }}>
                         <h3
@@ -684,7 +685,9 @@ const CategorySubcategories = () => {
                             }}
                           >
                             R${" "}
-                            {Number(product.variations[0].sizes[0].price).toFixed(2).padStart(5, "0")}
+                            {Number(product.variations[0].sizes[0].price)
+                              .toFixed(2)
+                              .padStart(5, "0")}
                           </span>
                           <span
                             style={{
