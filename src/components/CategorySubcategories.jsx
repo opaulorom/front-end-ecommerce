@@ -151,38 +151,25 @@ const CategorySubcategories = () => {
     const filters = {
       [filterType]: value,
     };
-
-    if (filterType === "color" || filterType === "size") {
-      let filteredProducts = originalProducts;
-
-      if (filterType === "size") {
-        filteredProducts = originalProducts.filter((product) => {
-          const hasMatchingSize = product.variations.some((variation) => {
-            return variation.sizes.some((sizeObj) => sizeObj.size === value);
-          });
-          return hasMatchingSize;
+  
+    let filteredProducts = originalProducts;
+  
+    if (filterType === "size") {
+      filteredProducts = originalProducts.filter((product) => {
+        return product.variations.some((variation) => {
+          return variation.sizes.some((sizeObj) => sizeObj.size === value);
         });
-      } else if (filterType === "color") {
-        filteredProducts = originalProducts.filter((product) => {
-          const hasMatchingColor = product.variations.some((variation) => {
-            return variation.color === value;
-          });
-          return hasMatchingColor;
-        });
-      } else if (filterType === "color") {
-        filteredProducts = originalProducts.filter((product) => {
-          const hasMatchingColor = product.variations.some((variation) => {
-            return variation.color === value;
-          });
-          return hasMatchingColor;
-        });
-      }
-
-      setMixedProducts(filteredProducts);
-      setTotalPages(1);
+      });
+    } else if (filterType === "color") {
+      filteredProducts = originalProducts.filter((product) => {
+        return product.variations.some((variation) => variation.color === value);
+      });
+      setSelectedColor(value); // Atualiza a cor selecionada no estado
     }
+  
+    setMixedProducts(filteredProducts);
+    setTotalPages(1);
   };
-
   const handleFavoriteClick = (productId) => {
     setMixedProducts((prevProducts) =>
       prevProducts.map((product) =>
@@ -641,90 +628,92 @@ const CategorySubcategories = () => {
                 </span>
               </div>
             )}
-            <ul className={styles.DesktopContainerProducts}>
-              {mixedProducts &&
-                mixedProducts.map((product) => (
-                  <>
-                    <li
-                      key={product._id || "undefined"}
-                      style={{ position: "relative" }}
-                    >
-                      <Link
-                        to={`/products/${product._id}`}
-                        style={{ color: "black", textDecoration: "none" }}
-                      >
-                        {product.variations &&
-                        product.variations.length > 0 &&
-                        product.variations[0].urls &&
-                        product.variations[0].urls.length > 0 ? (
-                          <img
-                            src={product.variations[0].urls[0]}
-                            alt={product.name}
-                            style={{
-                              width: "15vw",
-                              marginTop: "-2rem",
-                              zIndex: "-1",
-                              marginLeft: "1rem",
-                            }}
-                          />
-                        ) : null}
+       <ul>
+  {mixedProducts &&
+    mixedProducts.map((product) => {
+      const selectedColorVariation = selectedColor
+        ? product.variations.find(
+            (variation) => variation.color === selectedColor
+          )
+        : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
 
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            marginBottom: "4rem",
-                            marginLeft: "1rem",
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontSize: "1rem",
-                              fontWeight: "700",
-                              fontFamily: "poppins, sans-serif",
-                            }}
-                          >
-                            R${" "}
-                            {Number(product.variations[0].sizes[0].price)
-                              .toFixed(2)
-                              .padStart(5, "0")}
-                          </span>
-                          <span
-                            style={{
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                              width: "15vw",
-                              color: "rgb(114, 114, 114)",
-                              fontSize: ".8rem",
-                            }}
-                          >
-                            {product.name}
-                          </span>
-                        </div>
-                      </Link>
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "-5%",
-                          right: "0",
-                          zIndex: 9999,
-                          marginBottom: "5rem",
-                          width: "3rem",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <IconToggle
-                          productId={product._id}
-                          isFavorite={favorites[product._id]}
-                        />
-                      </div>
-                    </li>
-                  </>
-                ))}
-            </ul>
+      return (
+        <li key={product._id || "undefined"} style={{ position: "relative" }}>
+          <Link
+            to={`/products/${product._id}`}
+            style={{ color: "black", textDecoration: "none" }}
+          >
+            {selectedColorVariation && selectedColorVariation.urls.length > 0 ? (
+              <img
+                src={selectedColorVariation.urls[0]}
+                alt={product.name}
+                style={{
+                  width: "30vw",
+                  marginTop: "-2rem",
+                  zIndex: "-1",
+                  marginLeft: "1rem",
+                }}
+              />
+            ) : null}
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                marginBottom: "4rem",
+                marginLeft: "1rem",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "1rem",
+                  fontWeight: "700",
+                  fontFamily: "poppins, sans-serif",
+                }}
+              >
+                R${" "}
+                {Number(product.variations[0].sizes[0].price)
+                  .toFixed(2)
+                  .padStart(5, "0")}
+              </span>
+              <span
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  width: "15vw",
+                  color: "rgb(114, 114, 114)",
+                  fontSize: ".8rem",
+                }}
+              >
+                {product.name}
+              </span>
+            </div>
+          </Link>
+          <div
+            style={{
+              position: "absolute",
+              top: "-5%",
+              right: "0",
+              zIndex: 9999,
+              marginBottom: "5rem",
+              width: "3rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <IconToggle
+              productId={product._id}
+              isFavorite={favorites[product._id]}
+            />
+          </div>
+        </li>
+      );
+    })}
+</ul>
+
+
             {mixedProducts.length > 0 && (
               <>
                 <div
