@@ -147,6 +147,8 @@ const CategorySubcategories = () => {
     setCurrentPage(page);
   };
 
+
+
   const handleFilterClick = async (filterType, value) => {
     const filters = {
       [filterType]: value,
@@ -162,14 +164,24 @@ const CategorySubcategories = () => {
       });
     } else if (filterType === "color") {
       filteredProducts = originalProducts.filter((product) => {
-        return product.variations.some((variation) => variation.color === value);
+        return product.variations.some(
+          (variation) => variation.color === value
+        );
       });
       setSelectedColor(value); // Atualiza a cor selecionada no estado
+    } else if (filterType === "price") {
+      // Aqui, filtre os produtos com base no intervalo de preços selecionado
+      const [minPrice, maxPrice] = value.split("-").map(Number);
+      filteredProducts = originalProducts.filter((product) => {
+        const productPrice = Number(product.variations[0].sizes[0].price);
+        return productPrice >= minPrice && productPrice <= maxPrice;
+      });
     }
   
     setMixedProducts(filteredProducts);
     setTotalPages(1);
   };
+  
   const handleFavoriteClick = (productId) => {
     setMixedProducts((prevProducts) =>
       prevProducts.map((product) =>
@@ -447,7 +459,9 @@ const CategorySubcategories = () => {
                               {range}
                             </div>
                           ))}
+                   
                         </div>
+                        
                       </div>
                     </div>
                   </div>
@@ -605,6 +619,75 @@ const CategorySubcategories = () => {
                   </div>
                 ))}
               </div>
+        <div>
+  <div
+    onClick={() => handleFilterClick("price", "")}
+    style={{
+      cursor: "pointer",
+      fontFamily: "Montserrat, arial, sans-serif",
+      fontWeight: selectedPrice === "" ? "600" : "400",
+      fontSize: selectedPrice === "" ? "1.1rem" : "1rem",
+      color: selectedPrice === "" ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
+      margin: "0.5rem",
+    }}
+  >
+    Selecione uma faixa de preço
+  </div>
+  <div
+    onClick={() => handleFilterClick("price", "0-50")}
+    style={{
+      cursor: "pointer",
+      fontFamily: "Montserrat, arial, sans-serif",
+      fontWeight: selectedPrice === "0-50" ? "600" : "400",
+      fontSize: selectedPrice === "0-50" ? "1.1rem" : "1rem",
+      color: selectedPrice === "0-50" ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
+      margin: "0.5rem",
+    }}
+  >
+    R$0 - R$50
+  </div>
+  <div
+    onClick={() => handleFilterClick("price", "50-100")}
+    style={{
+      cursor: "pointer",
+      fontFamily: "Montserrat, arial, sans-serif",
+      fontWeight: selectedPrice === "50-100" ? "600" : "400",
+      fontSize: selectedPrice === "50-100" ? "1.1rem" : "1rem",
+      color: selectedPrice === "50-100" ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
+      margin: "0.5rem",
+    }}
+  >
+    R$50 - R$100
+  </div>
+  <div
+    onClick={() => handleFilterClick("price", "100-200")}
+    style={{
+      cursor: "pointer",
+      fontFamily: "Montserrat, arial, sans-serif",
+      fontWeight: selectedPrice === "100-200" ? "600" : "400",
+      fontSize: selectedPrice === "100-200" ? "1.1rem" : "1rem",
+      color: selectedPrice === "100-200" ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
+      margin: "0.5rem",
+    }}
+  >
+    R$100 - R$200
+  </div>
+  <div
+    onClick={() => handleFilterClick("price", "200-")}
+    style={{
+      cursor: "pointer",
+      fontFamily: "Montserrat, arial, sans-serif",
+      fontWeight: selectedPrice === "200-" ? "600" : "400",
+      fontSize: selectedPrice === "200-" ? "1.1rem" : "1rem",
+      color: selectedPrice === "200-" ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
+      margin: "0.5rem",
+    }}
+  >
+    R$200 ou mais
+  </div>
+</div>
+
+
             </div>
           </div>
 
@@ -628,91 +711,94 @@ const CategorySubcategories = () => {
                 </span>
               </div>
             )}
-       <ul>
-  {mixedProducts &&
-    mixedProducts.map((product) => {
-      const selectedColorVariation = selectedColor
-        ? product.variations.find(
-            (variation) => variation.color === selectedColor
-          )
-        : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
+            <ul>
+              {mixedProducts &&
+                mixedProducts.map((product) => {
+                  const selectedColorVariation = selectedColor
+                    ? product.variations.find(
+                        (variation) => variation.color === selectedColor
+                      )
+                    : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
 
-      return (
-        <li key={product._id || "undefined"} style={{ position: "relative" }}>
-          <Link
-            to={`/products/${product._id}`}
-            style={{ color: "black", textDecoration: "none" }}
-          >
-            {selectedColorVariation && selectedColorVariation.urls.length > 0 ? (
-              <img
-                src={selectedColorVariation.urls[0]}
-                alt={product.name}
-                style={{
-                  width: "30vw",
-                  marginTop: "-2rem",
-                  zIndex: "-1",
-                  marginLeft: "1rem",
-                }}
-              />
-            ) : null}
+                  return (
+                    <li
+                      key={product._id || "undefined"}
+                      style={{ position: "relative" }}
+                    >
+                      <Link
+                        to={`/products/${product._id}`}
+                        style={{ color: "black", textDecoration: "none" }}
+                      >
+                        {selectedColorVariation &&
+                        selectedColorVariation.urls.length > 0 ? (
+                          <img
+                            src={selectedColorVariation.urls[0]}
+                            alt={product.name}
+                            style={{
+                              width: "30vw",
+                              marginTop: "-2rem",
+                              zIndex: "-1",
+                              marginLeft: "1rem",
+                            }}
+                          />
+                        ) : null}
 
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                marginBottom: "4rem",
-                marginLeft: "1rem",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "1rem",
-                  fontWeight: "700",
-                  fontFamily: "poppins, sans-serif",
-                }}
-              >
-                R${" "}
-                {Number(product.variations[0].sizes[0].price)
-                  .toFixed(2)
-                  .padStart(5, "0")}
-              </span>
-              <span
-                style={{
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  width: "15vw",
-                  color: "rgb(114, 114, 114)",
-                  fontSize: ".8rem",
-                }}
-              >
-                {product.name}
-              </span>
-            </div>
-          </Link>
-          <div
-            style={{
-              position: "absolute",
-              top: "-5%",
-              right: "0",
-              zIndex: 9999,
-              marginBottom: "5rem",
-              width: "3rem",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <IconToggle
-              productId={product._id}
-              isFavorite={favorites[product._id]}
-            />
-          </div>
-        </li>
-      );
-    })}
-</ul>
-
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            marginBottom: "4rem",
+                            marginLeft: "1rem",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: "1rem",
+                              fontWeight: "700",
+                              fontFamily: "poppins, sans-serif",
+                            }}
+                          >
+                            R${" "}
+                            {Number(product.variations[0].sizes[0].price)
+                              .toFixed(2)
+                              .padStart(5, "0")}
+                          </span>
+                          <span
+                            style={{
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                              width: "15vw",
+                              color: "rgb(114, 114, 114)",
+                              fontSize: ".8rem",
+                            }}
+                          >
+                            {product.name}
+                          </span>
+                        </div>
+                      </Link>
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "-5%",
+                          right: "0",
+                          zIndex: 9999,
+                          marginBottom: "5rem",
+                          width: "3rem",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <IconToggle
+                          productId={product._id}
+                          isFavorite={favorites[product._id]}
+                        />
+                      </div>
+                    </li>
+                  );
+                })}
+            </ul>
 
             {mixedProducts.length > 0 && (
               <>
