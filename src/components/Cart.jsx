@@ -709,6 +709,7 @@ const Cart = () => {
                           alt="logo das transportadoras"
                           style={{ width: "10vw" }}
                         />
+                          
                         <p>{item.nomeTransportadora}</p>
                         <p>
                           {" "}

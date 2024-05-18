@@ -5,15 +5,19 @@ import Cookies from "js-cookie";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import styles from "./CartB.module.css";
+import AddIcon from "@mui/icons-material/Add";
 
-const Cart = () => {
+import RemoveIcon from "@mui/icons-material/Remove";
+const CartB = () => {
   const [getCart, setGetCart] = useState([]);
   const [getTotal, setGetTotal] = useState({});
   const userId = Cookies.get("userId");
   const token = Cookies.get("token");
   const { logout, loggedIn } = useAuth();
   const productsContainerRef = useRef(null);
+  const [exceedAvailability, setExceedAvailability] = useState(1);
 
+  
   useEffect(() => {
     axios
       .get(`http://localhost:3001/api/cart/${userId}`, {
@@ -30,6 +34,10 @@ const Cart = () => {
       });
   }, [userId, token]);
 
+
+
+
+  
   return (
     <div style={{ position: "relative" }}>
       {getCart.length === 0 && !loggedIn && (
@@ -172,12 +180,189 @@ const Cart = () => {
                               </div>
                             )
                         )}
+                         <div className={styles.quantityContainer}>
+                          <RemoveIcon
+                            onClick={() => {
+                              const newQuantity = item.quantity - 1; // Defina newQuantity antes de usá-la
+                              if (newQuantity >= 0) {
+                                const newCart = [...getCart];
+                                newCart[index].quantity = newQuantity;
+                                const productId = item.productId._id;
+                                const color = item.color;
+                                const size = item.size;
+                                const token = Cookies.get("token");
+
+                                axios
+                                  .put(
+                                    `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+                                    { quantity: newQuantity },
+                                    {
+                                      headers: {
+                                        Authorization: `Bearer ${token}`,
+                                      },
+                                    }
+                                  )
+                                  .then((response) => {
+                                    setGetCart((prevCart) => {
+                                      const newCart = [...prevCart];
+                                      newCart[index].quantity = newQuantity;
+                                      return newCart;
+                                    });
+                                  })
+                                  .catch((error) => {
+                                    console.log(
+                                      "Erro ao atualizar quantidade do produto no carrinho.",
+                                      error
+                                    );
+                                  });
+                              }
+                            }}
+                            style={{ cursor: "pointer" }}
+                          />
+                          <span
+                            type="number"
+                            value={item.quantity}
+                            onChange={(e) => {
+                              const newQuantity = parseInt(e.target.value);
+                              const newCart = [...getCart];
+                              newCart[index].quantity = newQuantity;
+                              setGetCart(newCart);
+                              handleQuantityChange(
+                                item.productId._id,
+                                newQuantity
+                              );
+                            }}
+                            style={{}}
+                            className={styles.inputContainer}
+                          >
+                            {" "}
+                            {item.quantity}
+                          </span>
+                          <AddIcon
+                            onClick={() => {
+                              const newQuantity = item.quantity + 1;
+                              const productId = item.productId._id;
+                              const color = item.color; // Certifique-se de estar obtendo o variationId corretamente
+                              const size = item.size; // Certifique-se de estar obtendo o variationId corretamente
+
+                              const token = Cookies.get("token");
+
+                              axios
+                                .put(
+                                  `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+                                  { quantity: newQuantity },
+                                  {
+                                    headers: {
+                                      Authorization: `Bearer ${token}`,
+                                    },
+                                  }
+                                )
+                                .then((response) => {
+                                  const products = response.data.cart.products;
+
+                                  console.log(
+                                    "Produtos no carrinho:",
+                                    products
+                                  );
+
+                                  // Verifica se a quantidade de algum produto excede a disponibilidade
+                                  const exceedAvailability = products.some(
+                                    (product) => {
+                                      console.log(
+                                        "Excede disponibilidade?",
+                                        product.availableQuantity
+                                      );
+                                      setExceedAvailability(
+                                        product.exceedAvailability
+                                      );
+
+                                      console.log(
+                                        "Verificando produto:",
+                                        product.productId
+                                      );
+                                      return (
+                                        product.quantity >
+                                        product.availableQuantity
+                                      );
+                                    }
+                                  );
+
+                                  console.log(
+                                    "Excede disponibilidade?",
+                                    exceedAvailability
+                                  );
+
+                                  if (exceedAvailability) {
+                                    console.log(
+                                      "A quantidade no carrinho excede a disponibilidade de algum produto. Botão desabilitado."
+                                    );
+                                    // Não continua com a atualização do carrinho
+                                    return;
+                                  }
+
+                                  console.log(
+                                    "Excede disponibilidade?",
+                                    exceedAvailability
+                                  );
+
+                                  if (exceedAvailability) {
+                                    return; // Não continua com a atualização do carrinho
+                                  }
+
+                                  if (exceedAvailability) {
+                                    return; // Não continua com a atualização do carrinho
+                                  }
+
+                                  // Atualiza o estado apenas se a quantidade for válida
+                                  setGetCart((prevCart) => {
+                                    const newCart = [...prevCart];
+
+                                    const productIndex = newCart.findIndex(
+                                      (product) =>
+                                        product.productId._id === productId &&
+                                        product.color === color &&
+                                        product.size === size
+                                    ); // Certifique-se de verificar também o variationId
+                                    if (productIndex !== -1) {
+                                      newCart[productIndex].quantity =
+                                        newQuantity;
+                                    }
+                                    return newCart;
+                                  });
+                                })
+                                .catch((error) => {
+                                  console.log(
+                                    "Erro ao atualizar quantidade do produto no carrinho.",
+                                    error
+                                  );
+                                });
+                              setUpdatedQuantity(newQuantity);
+                              console.log("quantidade", newQuantity);
+                            }}
+                            style={{
+                              cursor: "pointer",
+                              // opacity: updatedQuantity === -1 c
+                              // opacity:
+                              // exceedAvailability === -1
+                              // ? 1 : 0.5
+                            }}
+                          />
+                                            </div>
+
                   </div>
+           
                 </div>
+              
               </div>
+              
             </div>
           ))}
           
+          
+
+             
+        
+ 
         </div>
       )}
 
@@ -234,4 +419,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartB;
