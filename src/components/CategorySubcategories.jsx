@@ -48,6 +48,27 @@ const CategorySubcategories = () => {
     });
     return Array.from(sizesSet);
   };
+// Função para obter o preço de um tamanho específico
+const getPriceForSize = (product, color, size) => {
+  const variation = product.variations.find(variation => variation.color === color);
+  if (variation) {
+    const sizeObj = variation.sizes.find(sizeObj => sizeObj.size === size);
+    if (sizeObj) {
+      return sizeObj.price;
+    }
+  }
+  // Retornar um valor padrão caso o preço não seja encontrado
+  return 0;
+};
+
+// Função para atualizar os preços exibidos com base na cor e tamanho selecionados
+const updateDisplayedPrices = () => {
+  const updatedPrices = filteredProducts.map(product => {
+    const price = selectedColor && selectedSize ? getPriceForSize(product, selectedColor, selectedSize) : product.variations[0].sizes[0].price;
+    return { ...product, displayedPrice: price };
+  });
+  setFilteredProducts(updatedPrices);
+};
 
   // UseEffect para inicializar os tamanhos disponíveis
   useEffect(() => {
@@ -61,6 +82,8 @@ const CategorySubcategories = () => {
       setSelectedColor(null);
       setAvailableSizes(getAllSizes(originalProducts));
       setFilteredProducts(originalProducts);
+      updateDisplayedPrices();
+
     } else {
       // Filtra produtos pela cor selecionada
       const filteredProductsByColor = originalProducts.filter((product) => 
@@ -90,9 +113,9 @@ const CategorySubcategories = () => {
       // Desseleciona o tamanho se já estiver selecionado
       setSelectedSize(null);
       if (selectedColor) {
-        handleColorClick(selectedColor);
+        handleColorClick(selectedColor); // Reaplicar filtragem por cor se uma cor estiver selecionada
       } else {
-        setFilteredProducts(originalProducts);
+        setFilteredProducts(originalProducts); // Restaurar produtos originais se nenhum filtro de cor estiver aplicado
       }
     } else {
       // Filtra produtos pelo tamanho selecionado
@@ -101,12 +124,20 @@ const CategorySubcategories = () => {
           variation.sizes.some((sizeObj) => sizeObj.size === size)
         )
       );
-
+  
       setSelectedSize(size);
-      setFilteredProducts(filteredProductsBySize);
+      
+      // Atualizar o preço exibido de acordo com o tamanho selecionado
+      const updatedFilteredProducts = filteredProductsBySize.map((product) => {
+        const selectedVariation = product.variations.find(variation => variation.sizes.some(sizeObj => sizeObj.size === size));
+        const price = selectedVariation ? selectedVariation.sizes.find(sizeObj => sizeObj.size === size).price : null;
+        return { ...product, price };
+      });
+  
+      setFilteredProducts(updatedFilteredProducts);
     }
   };
-
+  
 
   const handlePriceClick = (range) => {
     setSelectedPrice(range);
@@ -776,6 +807,7 @@ const CategorySubcategories = () => {
               </div>
             )}
             <ul>
+              
             {filteredProducts.map((product) => {
             const selectedColorVariation = selectedColor
               ? product.variations.find(
@@ -822,7 +854,7 @@ const CategorySubcategories = () => {
                             }}
                           >
                             R${" "}
-                            {Number(product.variations[0].sizes[0].price)
+                            {Number(product.price || product.variations[0].sizes[0].price)
                               .toFixed(2)
                               .padStart(5, "0")}
                           </span>
