@@ -809,88 +809,95 @@ const updateDisplayedPrices = () => {
             <ul>
               
             {filteredProducts.map((product) => {
-            const selectedColorVariation = selectedColor
-              ? product.variations.find(
-                  (variation) => variation.color === selectedColor
-                )
-              : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
+  const selectedColorVariation = selectedColor
+    ? product.variations.find(
+        (variation) => variation.color === selectedColor
+      )
+    : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
+
+  // Encontre o preço correto para exibição
+  const displayedPrice = selectedSize
+    ? getPriceForSize(product, selectedColor, selectedSize)
+    : selectedColorVariation
+    ? selectedColorVariation.sizes[0].price // Se nenhum tamanho estiver selecionado, use o preço do primeiro tamanho disponível para a variação selecionada
+    : product.variations[0].sizes[0].price; // Se nenhum tamanho ou variação estiver selecionado, use o preço do primeiro tamanho disponível no primeiro produto
 
                   return (
                     <li
-                      key={product._id || "undefined"}
-                      style={{ position: "relative" }}
+                    key={product._id || "undefined"}
+                    style={{ position: "relative" }}
+                  >
+                    <Link
+                      to={`/products/${product._id}`}
+                      style={{ color: "black", textDecoration: "none" }}
                     >
-                      <Link
-                        to={`/products/${product._id}`}
-                        style={{ color: "black", textDecoration: "none" }}
-                      >
-                        {selectedColorVariation &&
-                        selectedColorVariation.urls.length > 0 ? (
-                          <img
-                            src={selectedColorVariation.urls[0]}
-                            alt={product.name}
-                            style={{
-                              width: "30vw",
-                              marginTop: "-2rem",
-                              zIndex: "-1",
-                              marginLeft: "1rem",
-                            }}
-                          />
-                        ) : null}
-
-                        <div
+                      {selectedColorVariation &&
+                      selectedColorVariation.urls.length > 0 ? (
+                        <img
+                          src={selectedColorVariation.urls[0]}
+                          alt={product.name}
                           style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            marginBottom: "4rem",
+                            width: "30vw",
+                            marginTop: "-2rem",
+                            zIndex: "-1",
                             marginLeft: "1rem",
                           }}
-                        >
-                          <span
-                            style={{
-                              fontSize: "1rem",
-                              fontWeight: "700",
-                              fontFamily: "poppins, sans-serif",
-                            }}
-                          >
-                            R${" "}
-                            {Number(product.price || product.variations[0].sizes[0].price)
-                              .toFixed(2)
-                              .padStart(5, "0")}
-                          </span>
-                          <span
-                            style={{
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                              width: "15vw",
-                              color: "rgb(114, 114, 114)",
-                              fontSize: ".8rem",
-                            }}
-                          >
-                            {product.name}
-                          </span>
-                        </div>
-                      </Link>
+                        />
+                      ) : null}
+              
                       <div
                         style={{
-                          position: "absolute",
-                          top: "-5%",
-                          right: "0",
-                          zIndex: 9999,
-                          marginBottom: "5rem",
-                          width: "3rem",
                           display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
+                          flexDirection: "column",
+                          marginBottom: "4rem",
+                          marginLeft: "1rem",
                         }}
                       >
-                        <IconToggle
-                          productId={product._id}
-                          isFavorite={favorites[product._id]}
-                        />
+                        <span
+                          style={{
+                            fontSize: "1rem",
+                            fontWeight: "700",
+                            fontFamily: "poppins, sans-serif",
+                          }}
+                        >
+                          R${" "}
+                          {Number(displayedPrice || product.price || product.variations[0].sizes[0].price)
+                            .toFixed(2)
+                            .padStart(5, "0")}
+                        </span>
+                        <span
+                          style={{
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            width: "15vw",
+                            color: "rgb(114, 114, 114)",
+                            fontSize: ".8rem",
+                          }}
+                        >
+                          {product.name}
+                        </span>
                       </div>
-                    </li>
+                    </Link>
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "-5%",
+                        right: "0",
+                        zIndex: 9999,
+                        marginBottom: "5rem",
+                        width: "3rem",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <IconToggle
+                        productId={product._id}
+                        isFavorite={favorites[product._id]}
+                      />
+                    </div>
+                  </li>
                   );
                 })}
             </ul>
