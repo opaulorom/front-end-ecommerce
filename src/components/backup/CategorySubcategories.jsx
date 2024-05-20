@@ -28,91 +28,24 @@ const CategorySubcategories = () => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
-  const [availableSizes, setAvailableSizes] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState(originalProducts);
 
   useEffect(() => {
     setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
   }, []);
 
- 
-  // Função para obter todos os tamanhos disponíveis em todos os produtos
-  const getAllSizes = (products) => {
-    const sizesSet = new Set();
-    products.forEach((product) => {
-      product.variations.forEach((variation) => {
-        variation.sizes.forEach((sizeObj) => {
-          sizesSet.add(sizeObj.size);
-        });
-      });
-    });
-    return Array.from(sizesSet);
-  };
-
-  // UseEffect para inicializar os tamanhos disponíveis
-  useEffect(() => {
-    setAvailableSizes(getAllSizes(originalProducts));
-    setFilteredProducts(originalProducts);
-  }, [originalProducts]);
-
   const handleColorClick = (color) => {
-    if (color === selectedColor) {
-      // Desseleciona a cor se já estiver selecionada
-      setSelectedColor(null);
-      setAvailableSizes(getAllSizes(originalProducts));
-      setFilteredProducts(originalProducts);
-    } else {
-      // Filtra produtos pela cor selecionada
-      const filteredProductsByColor = originalProducts.filter((product) => 
-        product.variations.some((variation) => variation.color === color)
-      );
+    setSelectedColor(color);
 
-      // Coleta os tamanhos disponíveis para a cor selecionada
-      const sizesForColor = new Set();
-      filteredProductsByColor.forEach((product) => {
-        product.variations.forEach((variation) => {
-          if (variation.color === color) {
-            variation.sizes.forEach((sizeObj) => {
-              sizesForColor.add(sizeObj.size);
-            });
-          }
-        });
-      });
-
-      setSelectedColor(color);
-      setAvailableSizes(Array.from(sizesForColor));
-      setFilteredProducts(filteredProductsByColor);
-    }
+    // Procurar a cor no colorMap
   };
-
-  const handleSizeClick = (size) => {
-    if (size === selectedSize) {
-      // Desseleciona o tamanho se já estiver selecionado
-      setSelectedSize(null);
-      if (selectedColor) {
-        handleColorClick(selectedColor);
-      } else {
-        setFilteredProducts(originalProducts);
-      }
-    } else {
-      // Filtra produtos pelo tamanho selecionado
-      const filteredProductsBySize = originalProducts.filter((product) => 
-        product.variations.some((variation) => 
-          variation.sizes.some((sizeObj) => sizeObj.size === size)
-        )
-      );
-
-      setSelectedSize(size);
-      setFilteredProducts(filteredProductsBySize);
-    }
-  };
-
-
   const handlePriceClick = (range) => {
     setSelectedPrice(range);
   };
 
- 
+  const handleSizeClick = (size) => {
+    setSelectedSize(size);
+  };
+
   const fetchMixedProducts = async (page, filters) => {
     setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
 
@@ -535,7 +468,6 @@ const CategorySubcategories = () => {
                 )}
               </div>
             </div>
-            desktop
             <div className={styles.DesktopFilter}>
               <p
                 style={{
@@ -561,94 +493,98 @@ const CategorySubcategories = () => {
                   </li>
                 ))}
               </ul>
+
               <div style={{ marginBottom: "3rem" }}>
-      <h3
-        style={{
-          fontFamily: "Montserrat, arial, sans-serif",
-          fontWeight: "600",
-          fontSize: "1.2rem",
-          color: "rgb(52, 52, 54)",
-        }}
-      >
-        Cores
-      </h3>
+                <h3
+                  style={{
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: "600",
+                    fontSize: "1.2rem",
+                    color: "rgb(52, 52, 54)",
+                  }}
+                >
+                  Cores
+                </h3>
 
-      {colors.map((color, index) => (
-        <div
-          key={index}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyItems: "center",
-            marginTop: "1rem",
-          }}
-        >
-          <div
-            style={{
-              width: "20px",
-              height: "20px",
-              borderRadius: "50%",
-              backgroundColor: colorMap[color],
-              marginRight: "10px",
-              border: "1px solid gray",
-            }}
-          ></div>
-          <div
-            onClick={() => handleColorClick(color)}
-            style={{
-              cursor: "pointer",
-              fontWeight: selectedColor === color ? "600" : "400",
-              fontSize: selectedColor === color ? "1.1rem" : "1rem",
-              fontFamily: "Montserrat, arial, sans-serif",
-            }}
-          >
-            {color}
-          </div>
-        </div>
-      ))}
-
-      <h3
-        style={{
-          fontFamily: "Montserrat, arial, sans-serif",
-          fontWeight: "600",
-          fontSize: "1.2rem",
-          color: "rgb(52, 52, 54)",
-        }}
-      >
-        Tamanhos
-      </h3>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-        }}
-      >
-        {availableSizes.map((size, index) => (
-          <div key={index} onClick={() => handleSizeClick(size)}>
-            <button
-              style={{
-                borderRadius: "20px",
-                width: "40px",
-                height: "40px",
-                border: "1px solid rgb(114, 114, 114)",
-                backgroundColor:
-                  selectedSize === size ? "#333" : "rgb(255, 255, 255)",
-                color: selectedSize === size ? "white" : "black",
-                marginLeft: "8px",
-                marginTop: "8px",
-                cursor: "pointer",
-              }}
-            >
-              <span style={{ fontSize: ".8rem" }}>{size}</span>
-            </button>
-          </div>
-        ))}
-      </div>
-
-     
-    
-      </div>
-
+                {colors.map((color, index) => (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyItems: "center",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        borderRadius: "50%",
+                        backgroundColor: colorMap[color],
+                        marginRight: "10px",
+                        border: "1px solid gray",
+                      }}
+                    ></div>
+                    <div
+                      key={index}
+                      onClick={() => {
+                        handleColorClick(color),
+                          handleFilterClick("color", color);
+                      }}
+                      style={{
+                        cursor: "pointer",
+                        fontWeight: selectedColor === color ? "600" : "400",
+                        fontSize: selectedColor === color ? "1.1rem" : "1rem",
+                        fontFamily: "Montserrat, arial, sans-serif",
+                      }}
+                    >
+                      {color}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <h3
+                style={{
+                  fontFamily: "Montserrat, arial, sans-serif",
+                  fontWeight: "600",
+                  fontSize: "1.2rem",
+                  color: "rgb(52, 52, 54)",
+                }}
+              >
+                Tamanhos
+              </h3>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(4, 1fr)",
+                }}
+              >
+                {Array.from(uniqueSizes).map((size, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleFilterClick("size", size)}
+                  >
+                    <button
+                      style={{
+                        borderRadius: "20px",
+                        width: "40px",
+                        height: "40px",
+                        border: "1px solid rgb(114, 114, 114)",
+                        backgroundColor:
+                          selectedSize === size ? "#333" : "rgb(255, 255, 255)",
+                        color: selectedSize === size ? "white" : "black",
+                        marginLeft: "8px",
+                        marginTop: "8px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => handleSizeClick(size)}
+                    >
+                      {" "}
+                      <span style={{ fontSize: ".8rem" }}> {size}</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
 
               <div style={{ marginTop: "3rem" }}>
                 <h3
@@ -776,12 +712,13 @@ const CategorySubcategories = () => {
               </div>
             )}
             <ul>
-            {filteredProducts.map((product) => {
-            const selectedColorVariation = selectedColor
-              ? product.variations.find(
-                  (variation) => variation.color === selectedColor
-                )
-              : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
+              {mixedProducts &&
+                mixedProducts.map((product) => {
+                  const selectedColorVariation = selectedColor
+                    ? product.variations.find(
+                        (variation) => variation.color === selectedColor
+                      )
+                    : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
 
                   return (
                     <li

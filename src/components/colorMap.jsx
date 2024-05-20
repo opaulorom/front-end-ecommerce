@@ -46,7 +46,8 @@ const colorMap = {
     violetaClaro: "#E6E6FA",
     prataClaro: "#D3D3D3",
     Salmão:"#FA8072",
-    rosaFloral: "#FFC0CB", // Exemplo de definição da cor rosa floral
+    rosaFloral: "#FFC0CB", // Exemplo de definição da cor rosa floral,
+    vinho: "#A2011F"
   };
   
   export default colorMap;
