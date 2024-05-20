@@ -35,7 +35,7 @@ const CategorySubcategories = () => {
     setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
   }, []);
 
- 
+
   // Função para obter todos os tamanhos disponíveis em todos os produtos
   const getAllSizes = (products) => {
     const sizesSet = new Set();
@@ -48,20 +48,19 @@ const CategorySubcategories = () => {
     });
     return Array.from(sizesSet);
   };
-// Função para obter o preço de um tamanho específico
-const getPriceForSize = (product, color, size) => {
-  const variation = product.variations.find(variation => variation.color === color);
-  if (variation) {
-    const sizeObj = variation.sizes.find(sizeObj => sizeObj.size === size);
-    if (sizeObj) {
-      return sizeObj.price;
+
+  // Função para obter o preço de um tamanho específico
+  const getPriceForSize = (product, color, size) => {
+    const variation = product.variations.find(variation => variation.color === color);
+    if (variation) {
+      const sizeObj = variation.sizes.find(sizeObj => sizeObj.size === size);
+      if (sizeObj) {
+        return sizeObj.price;
+      }
     }
-  }
-  // Retornar um valor padrão caso o preço não seja encontrado
-  return 0;
-};
-
-
+    // Retornar um valor padrão caso o preço não seja encontrado
+    return 0;
+  };
 
   // UseEffect para inicializar os tamanhos disponíveis
   useEffect(() => {
@@ -69,86 +68,54 @@ const getPriceForSize = (product, color, size) => {
     setFilteredProducts(originalProducts);
   }, [originalProducts]);
 
+  useEffect(() => {
+    filterProducts();
+  }, [selectedColor, selectedSize]);
 
+  const filterProducts = () => {
+    let filtered = originalProducts;
+
+    if (selectedColor) {
+      filtered = filtered.filter(product =>
+        product.variations.some(variation => variation.color === selectedColor)
+      );
+    }
+
+    if (selectedSize) {
+      filtered = filtered.filter(product =>
+        product.variations.some(variation =>
+          variation.sizes.some(sizeObj => sizeObj.size === selectedSize)
+        )
+      );
+    }
+
+    setFilteredProducts(filtered);
+    setAvailableSizes(getAllSizes(filtered));
+  };
 
   const handleColorClick = (color) => {
     if (color === selectedColor) {
-      // Desseleciona a cor se já estiver selecionada
       setSelectedColor(null);
-      setAvailableSizes(getAllSizes(originalProducts));
       setFilteredProducts(originalProducts);
-      updateDisplayedPrices();
+      setAvailableSizes(getAllSizes(originalProducts));
     } else {
-      // Filtra produtos pela cor selecionada
-      const filteredProductsByColor = originalProducts.filter((product) =>
-        product.variations.some((variation) => variation.color === color)
-      );
-  
-      // Atualiza os tamanhos disponíveis para a cor selecionada
-      const sizesForColor = new Set();
-      filteredProductsByColor.forEach((product) => {
-        product.variations.forEach((variation) => {
-          if (variation.color === color) {
-            variation.sizes.forEach((sizeObj) => {
-              sizesForColor.add(sizeObj.size);
-            });
-          }
-        });
-      });
-  
       setSelectedColor(color);
-      setAvailableSizes(Array.from(sizesForColor));
-      setFilteredProducts(filteredProductsByColor);
     }
   };
-  
+
+  const handleSizeClick = (size) => {
+    setSelectedSize(size);
+  };
+
   const updateDisplayedPrices = () => {
     const updatedPrices = filteredProducts.map(product => {
-      // Se uma cor estiver selecionada, apenas atualize os preços dos produtos que têm essa cor
-      if (selectedColor) {
-        const selectedColorVariation = product.variations.find(variation => variation.color === selectedColor);
-        if (selectedColorVariation) {
-          const price = selectedSize ? getPriceForSize(product, selectedColor, selectedSize) : selectedColorVariation.sizes[0].price;
-          return { ...product, displayedPrice: price };
-        }
-      }
-      // Se nenhuma cor estiver selecionada, atualize os preços para todas as variações do produto
-      const price = selectedSize ? getPriceForSize(product, null, selectedSize) : product.variations[0].sizes[0].price;
+      const selectedColorVariation = product.variations.find(variation => variation.color === selectedColor) || product.variations[0];
+      const price = selectedSize ? getPriceForSize(product, selectedColor, selectedSize) : selectedColorVariation.sizes[0].price;
       return { ...product, displayedPrice: price };
     });
     setFilteredProducts(updatedPrices);
   };
-  
-  const handleSizeClick = (size) => {
-    // Filtra produtos pelo tamanho selecionado
-    const filteredProductsBySize = originalProducts.filter((product) =>
-      product.variations.some((variation) =>
-        variation.sizes.some((sizeObj) => sizeObj.size === size)
-      )
-    );
-  
-    setSelectedSize(size);
-  
-    // Atualizar o preço exibido de acordo com o tamanho selecionado e a cor selecionada
-    const updatedFilteredProducts = filteredProductsBySize.map((product) => {
-      const selectedVariation = product.variations.find((variation) =>
-        variation.sizes.some((sizeObj) => sizeObj.size === size)
-      );
-      const price = selectedVariation
-        ? getPriceForSize(product, selectedColor, size) // Use selectedColor to maintain color filtering
-        : null; // No price if size not found
-      return { ...product, price };
-    });
-  
-    setFilteredProducts(updatedFilteredProducts);
-  };
-  
 
-  const handlePriceClick = (range) => {
-    setSelectedPrice(range);
-  };
-
- 
   const fetchMixedProducts = async (page, filters) => {
     setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
 
