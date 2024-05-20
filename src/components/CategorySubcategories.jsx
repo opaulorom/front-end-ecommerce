@@ -61,20 +61,15 @@ const getPriceForSize = (product, color, size) => {
   return 0;
 };
 
-// Função para atualizar os preços exibidos com base na cor e tamanho selecionados
-const updateDisplayedPrices = () => {
-  const updatedPrices = filteredProducts.map(product => {
-    const price = selectedColor && selectedSize ? getPriceForSize(product, selectedColor, selectedSize) : product.variations[0].sizes[0].price;
-    return { ...product, displayedPrice: price };
-  });
-  setFilteredProducts(updatedPrices);
-};
+
 
   // UseEffect para inicializar os tamanhos disponíveis
   useEffect(() => {
     setAvailableSizes(getAllSizes(originalProducts));
     setFilteredProducts(originalProducts);
   }, [originalProducts]);
+
+
 
   const handleColorClick = (color) => {
     if (color === selectedColor) {
@@ -83,14 +78,13 @@ const updateDisplayedPrices = () => {
       setAvailableSizes(getAllSizes(originalProducts));
       setFilteredProducts(originalProducts);
       updateDisplayedPrices();
-
     } else {
       // Filtra produtos pela cor selecionada
-      const filteredProductsByColor = originalProducts.filter((product) => 
+      const filteredProductsByColor = originalProducts.filter((product) =>
         product.variations.some((variation) => variation.color === color)
       );
-
-      // Coleta os tamanhos disponíveis para a cor selecionada
+  
+      // Atualiza os tamanhos disponíveis para a cor selecionada
       const sizesForColor = new Set();
       filteredProductsByColor.forEach((product) => {
         product.variations.forEach((variation) => {
@@ -101,41 +95,52 @@ const updateDisplayedPrices = () => {
           }
         });
       });
-
+  
       setSelectedColor(color);
       setAvailableSizes(Array.from(sizesForColor));
       setFilteredProducts(filteredProductsByColor);
     }
   };
-
-  const handleSizeClick = (size) => {
-    if (size === selectedSize) {
-      // Desseleciona o tamanho se já estiver selecionado
-      setSelectedSize(null);
+  
+  const updateDisplayedPrices = () => {
+    const updatedPrices = filteredProducts.map(product => {
+      // Se uma cor estiver selecionada, apenas atualize os preços dos produtos que têm essa cor
       if (selectedColor) {
-        handleColorClick(selectedColor); // Reaplicar filtragem por cor se uma cor estiver selecionada
-      } else {
-        setFilteredProducts(originalProducts); // Restaurar produtos originais se nenhum filtro de cor estiver aplicado
+        const selectedColorVariation = product.variations.find(variation => variation.color === selectedColor);
+        if (selectedColorVariation) {
+          const price = selectedSize ? getPriceForSize(product, selectedColor, selectedSize) : selectedColorVariation.sizes[0].price;
+          return { ...product, displayedPrice: price };
+        }
       }
-    } else {
-      // Filtra produtos pelo tamanho selecionado
-      const filteredProductsBySize = originalProducts.filter((product) => 
-        product.variations.some((variation) => 
-          variation.sizes.some((sizeObj) => sizeObj.size === size)
-        )
+      // Se nenhuma cor estiver selecionada, atualize os preços para todas as variações do produto
+      const price = selectedSize ? getPriceForSize(product, null, selectedSize) : product.variations[0].sizes[0].price;
+      return { ...product, displayedPrice: price };
+    });
+    setFilteredProducts(updatedPrices);
+  };
+  
+  const handleSizeClick = (size) => {
+    // Filtra produtos pelo tamanho selecionado
+    const filteredProductsBySize = originalProducts.filter((product) =>
+      product.variations.some((variation) =>
+        variation.sizes.some((sizeObj) => sizeObj.size === size)
+      )
+    );
+  
+    setSelectedSize(size);
+  
+    // Atualizar o preço exibido de acordo com o tamanho selecionado e a cor selecionada
+    const updatedFilteredProducts = filteredProductsBySize.map((product) => {
+      const selectedVariation = product.variations.find((variation) =>
+        variation.sizes.some((sizeObj) => sizeObj.size === size)
       );
+      const price = selectedVariation
+        ? getPriceForSize(product, selectedColor, size) // Use selectedColor to maintain color filtering
+        : null; // No price if size not found
+      return { ...product, price };
+    });
   
-      setSelectedSize(size);
-      
-      // Atualizar o preço exibido de acordo com o tamanho selecionado
-      const updatedFilteredProducts = filteredProductsBySize.map((product) => {
-        const selectedVariation = product.variations.find(variation => variation.sizes.some(sizeObj => sizeObj.size === size));
-        const price = selectedVariation ? selectedVariation.sizes.find(sizeObj => sizeObj.size === size).price : null;
-        return { ...product, price };
-      });
-  
-      setFilteredProducts(updatedFilteredProducts);
-    }
+    setFilteredProducts(updatedFilteredProducts);
   };
   
 
@@ -245,27 +250,20 @@ const updateDisplayedPrices = () => {
     setCurrentPage(page);
   };
 
-
-
   const handleFilterClick = async (filterType, value) => {
-    const filters = {
-      [filterType]: value,
-    };
-  
     let filteredProducts = originalProducts;
   
     if (filterType === "size") {
-      filteredProducts = originalProducts.filter((product) => {
-        return product.variations.some((variation) => {
-          return variation.sizes.some((sizeObj) => sizeObj.size === value);
-        });
-      });
+      filteredProducts = originalProducts.filter((product) =>
+        product.variations.some((variation) =>
+          variation.sizes.some((sizeObj) => sizeObj.size === value)
+        )
+      );
+      setSelectedSize(value); // Atualiza o tamanho selecionado no estado
     } else if (filterType === "color") {
-      filteredProducts = originalProducts.filter((product) => {
-        return product.variations.some(
-          (variation) => variation.color === value
-        );
-      });
+      filteredProducts = originalProducts.filter((product) =>
+        product.variations.some((variation) => variation.color === value)
+      );
       setSelectedColor(value); // Atualiza a cor selecionada no estado
     } else if (filterType === "price") {
       // Aqui, filtre os produtos com base no intervalo de preços selecionado
@@ -276,9 +274,10 @@ const updateDisplayedPrices = () => {
       });
     }
   
-    setMixedProducts(filteredProducts);
-    setTotalPages(1);
+    setFilteredProducts(filteredProducts);
+    setTotalPages(1); // Atualiza o número total de páginas para 1, uma vez que os produtos filtrados serão exibidos em uma única página
   };
+  
   
   const handleFavoriteClick = (productId) => {
     setMixedProducts((prevProducts) =>
@@ -806,101 +805,108 @@ const updateDisplayedPrices = () => {
                 </span>
               </div>
             )}
-            <ul>
-              
-            {filteredProducts.map((product) => {
-  const selectedColorVariation = selectedColor
-    ? product.variations.find(
-        (variation) => variation.color === selectedColor
-      )
-    : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
+    <ul>
+  {filteredProducts.map((product) => {
+    const selectedColorVariation = selectedColor
+      ? product.variations.find(
+          (variation) => variation.color === selectedColor
+        )
+      : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
 
-  // Encontre o preço correto para exibição
-  const displayedPrice = selectedSize
-    ? getPriceForSize(product, selectedColor, selectedSize)
-    : selectedColorVariation
-    ? selectedColorVariation.sizes[0].price // Se nenhum tamanho estiver selecionado, use o preço do primeiro tamanho disponível para a variação selecionada
-    : product.variations[0].sizes[0].price; // Se nenhum tamanho ou variação estiver selecionado, use o preço do primeiro tamanho disponível no primeiro produto
+    // Verifique se há uma foto disponível
+    const hasPhoto =
+      selectedColorVariation &&
+      selectedColorVariation.urls &&
+      selectedColorVariation.urls.length > 0;
 
-                  return (
-                    <li
-                    key={product._id || "undefined"}
-                    style={{ position: "relative" }}
-                  >
-                    <Link
-                      to={`/products/${product._id}`}
-                      style={{ color: "black", textDecoration: "none" }}
-                    >
-                      {selectedColorVariation &&
-                      selectedColorVariation.urls.length > 0 ? (
-                        <img
-                          src={selectedColorVariation.urls[0]}
-                          alt={product.name}
-                          style={{
-                            width: "30vw",
-                            marginTop: "-2rem",
-                            zIndex: "-1",
-                            marginLeft: "1rem",
-                          }}
-                        />
-                      ) : null}
-              
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          marginBottom: "4rem",
-                          marginLeft: "1rem",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontSize: "1rem",
-                            fontWeight: "700",
-                            fontFamily: "poppins, sans-serif",
-                          }}
-                        >
-                          R${" "}
-                          {Number(displayedPrice || product.price || product.variations[0].sizes[0].price)
-                            .toFixed(2)
-                            .padStart(5, "0")}
-                        </span>
-                        <span
-                          style={{
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            width: "15vw",
-                            color: "rgb(114, 114, 114)",
-                            fontSize: ".8rem",
-                          }}
-                        >
-                          {product.name}
-                        </span>
-                      </div>
-                    </Link>
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: "-5%",
-                        right: "0",
-                        zIndex: 9999,
-                        marginBottom: "5rem",
-                        width: "3rem",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <IconToggle
-                        productId={product._id}
-                        isFavorite={favorites[product._id]}
-                      />
-                    </div>
-                  </li>
-                  );
-                })}
-            </ul>
+    // Se não houver foto disponível, não renderize o produto
+    if (!hasPhoto) {
+      return null;
+    }
+
+    // Encontre o preço correto para exibição
+    const displayedPrice = selectedSize
+      ? getPriceForSize(product, selectedColor, selectedSize)
+      : selectedColorVariation
+      ? selectedColorVariation.sizes[0].price // Se nenhum tamanho estiver selecionado, use o preço do primeiro tamanho disponível para a variação selecionada
+      : product.variations[0].sizes[0].price; // Se nenhum tamanho ou variação estiver selecionado, use o preço do primeiro tamanho disponível no primeiro produto
+
+    return (
+      <li
+        key={product._id || "undefined"}
+        style={{ position: "relative" }}
+      >
+        <Link
+          to={`/products/${product._id}`}
+          style={{ color: "black", textDecoration: "none" }}
+        >
+          <img
+            src={selectedColorVariation.urls[0]}
+            alt={product.name}
+            style={{
+              width: "30vw",
+              marginTop: "-2rem",
+              zIndex: "-1",
+              marginLeft: "1rem",
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "4rem",
+              marginLeft: "1rem",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "1rem",
+                fontWeight: "700",
+                fontFamily: "poppins, sans-serif",
+              }}
+            >
+              R${" "}
+              {Number(displayedPrice || product.price || product.variations[0].sizes[0].price)
+                .toFixed(2)
+                .padStart(5, "0")}
+            </span>
+            <span
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                width: "15vw",
+                color: "rgb(114, 114, 114)",
+                fontSize: ".8rem",
+              }}
+            >
+              {product.name}
+            </span>
+          </div>
+        </Link>
+        <div
+          style={{
+            position: "absolute",
+            top: "-5%",
+            right: "0",
+            zIndex: 9999,
+            marginBottom: "5rem",
+            width: "3rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <IconToggle
+            productId={product._id}
+            isFavorite={favorites[product._id]}
+          />
+        </div>
+      </li>
+    );
+  })}
+</ul>
+
 
             {mixedProducts.length > 0 && (
               <>
