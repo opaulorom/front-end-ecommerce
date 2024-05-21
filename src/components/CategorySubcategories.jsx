@@ -35,34 +35,29 @@ const CategorySubcategories = () => {
     setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
   }, []);
 
-// Função para obter tamanhos disponíveis de uma cor específica
-const getSizesForColor = (products, color) => {
-  const sizesArray = []; // Usando um array para armazenar os tamanhos
-
-  products.forEach((product) => {
-    if (!color || product.variations.some(variation => variation.color === color)) {
-      product.variations.forEach((variation) => {
-        variation.sizes.forEach((sizeObj) => {
-          if (!sizesArray.includes(sizeObj.size)) {
-            sizesArray.push(sizeObj.size); // Adicionando tamanho ao array se não estiver presente
-          }
+  const getSizesForColor = (products, color) => {
+    const sizesSet = new Set(); // Usando um Set para garantir que os tamanhos não sejam repetidos
+  
+    products.forEach((product) => {
+      if (!color || product.variations.some(variation => variation.color === color)) {
+        product.variations.forEach((variation) => {
+          variation.sizes.forEach((sizeObj) => {
+            sizesSet.add(sizeObj.size); // Adicionando tamanho ao Set
+          });
         });
-      });
-    }
-  });
-
-  return sizesArray; // Retornando um array de tamanhos únicos
-};
-
-
+      }
+    });
+  
+    return Array.from(sizesSet); // Retornando um array de tamanhos únicos
+  };
+  
 
   // Função para obter o preço de um tamanho específico
   const getPriceForSize = (product, color, size) => {
     const variation = product.variations.find(variation => variation.color === color);
     if (variation) {
-      const sizesArray = getSizesForColor([product], color); // Obtendo o array de tamanhos
-      const price = sizesArray.find(item => item.size === size)?.price; // Procurando o preço do tamanho no array
-      return price || 0; // Retornando o preço encontrado ou 0 se não encontrado
+      const sizeObj = variation.sizes.find(item => item.size === size); // Encontrando o objeto do tamanho específico
+      return sizeObj ? sizeObj.price : 0; // Retornando o preço do tamanho encontrado ou 0 se não encontrado
     }
     // Retornar um valor padrão caso a variação não seja encontrada
     return 0;
@@ -73,8 +68,7 @@ const getSizesForColor = (products, color) => {
   useEffect(() => {
     if (originalProducts.length > 0) {
       const firstColor = originalProducts[0].variations[0].color;
-      const sizesMap = getSizesForColor(originalProducts, firstColor); // Obtenha o mapa de tamanhos
-      const sizesArray = Array.from(sizesMap); // Converta o mapa diretamente em um array
+      const sizesArray = getSizesForColor(originalProducts, firstColor);
       setAvailableSizes(sizesArray);
     }
     setFilteredProducts(originalProducts);
@@ -104,7 +98,6 @@ const getSizesForColor = (products, color) => {
       );
     }
   
-    // Definir os produtos filtrados no estado
     setFilteredProducts(filtered);
   };
   
