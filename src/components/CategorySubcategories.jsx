@@ -49,6 +49,20 @@ const CategorySubcategories = () => {
     return Array.from(sizesSet);
   };
 
+  // Função para obter tamanhos disponíveis de uma cor específica
+  const getSizesForColor = (products, color) => {
+    const sizesSet = new Set();
+    products.forEach((product) => {
+      const variation = product.variations.find(variation => variation.color === color);
+      if (variation) {
+        variation.sizes.forEach((sizeObj) => {
+          sizesSet.add(sizeObj.size);
+        });
+      }
+    });
+    return Array.from(sizesSet);
+  };
+
   // Função para obter o preço de um tamanho específico
   const getPriceForSize = (product, color, size) => {
     const variation = product.variations.find(variation => variation.color === color);
@@ -62,9 +76,12 @@ const CategorySubcategories = () => {
     return 0;
   };
 
-  // UseEffect para inicializar os tamanhos disponíveis
+  // UseEffect para inicializar os tamanhos disponíveis com base na primeira cor
   useEffect(() => {
-    setAvailableSizes(getAllSizes(originalProducts));
+    if (originalProducts.length > 0) {
+      const firstColor = originalProducts[0].variations[0].color;
+      setAvailableSizes(getSizesForColor(originalProducts, firstColor));
+    }
     setFilteredProducts(originalProducts);
   }, [originalProducts]);
 
@@ -79,6 +96,12 @@ const CategorySubcategories = () => {
       filtered = filtered.filter(product =>
         product.variations.some(variation => variation.color === selectedColor)
       );
+      setAvailableSizes(getSizesForColor(originalProducts, selectedColor));
+    } else {
+      if (originalProducts.length > 0) {
+        const firstColor = originalProducts[0].variations[0].color;
+        setAvailableSizes(getSizesForColor(originalProducts, firstColor));
+      }
     }
 
     if (selectedSize) {
@@ -90,14 +113,16 @@ const CategorySubcategories = () => {
     }
 
     setFilteredProducts(filtered);
-    setAvailableSizes(getAllSizes(filtered));
   };
 
   const handleColorClick = (color) => {
     if (color === selectedColor) {
       setSelectedColor(null);
       setFilteredProducts(originalProducts);
-      setAvailableSizes(getAllSizes(originalProducts));
+      if (originalProducts.length > 0) {
+        const firstColor = originalProducts[0].variations[0].color;
+        setAvailableSizes(getSizesForColor(originalProducts, firstColor));
+      }
     } else {
       setSelectedColor(color);
     }
@@ -106,16 +131,6 @@ const CategorySubcategories = () => {
   const handleSizeClick = (size) => {
     setSelectedSize(size);
   };
-
-  const updateDisplayedPrices = () => {
-    const updatedPrices = filteredProducts.map(product => {
-      const selectedColorVariation = product.variations.find(variation => variation.color === selectedColor) || product.variations[0];
-      const price = selectedSize ? getPriceForSize(product, selectedColor, selectedSize) : selectedColorVariation.sizes[0].price;
-      return { ...product, displayedPrice: price };
-    });
-    setFilteredProducts(updatedPrices);
-  };
-
   const fetchMixedProducts = async (page, filters) => {
     setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
 
@@ -621,7 +636,7 @@ const CategorySubcategories = () => {
         }}
       >
         {availableSizes.map((size, index) => (
-          <div key={index} onClick={() => handleSizeClick(size)}>
+          <div key={index} >
             <button
               style={{
                 borderRadius: "20px",
@@ -635,6 +650,7 @@ const CategorySubcategories = () => {
                 marginTop: "8px",
                 cursor: "pointer",
               }}
+              onClick={() => handleSizeClick(size)}
             >
               <span style={{ fontSize: ".8rem" }}>{size}</span>
             </button>
