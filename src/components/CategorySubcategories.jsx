@@ -36,25 +36,23 @@ const CategorySubcategories = () => {
   }, []);
 
 // Função para obter tamanhos disponíveis de uma cor específica
-// Função para obter tamanhos disponíveis de uma cor específica
 const getSizesForColor = (products, color) => {
-  const sizesMap = new Map();
+  const sizesArray = []; // Usando um array para armazenar os tamanhos
+
   products.forEach((product) => {
     if (!color || product.variations.some(variation => variation.color === color)) {
       product.variations.forEach((variation) => {
         variation.sizes.forEach((sizeObj) => {
-          if (!sizesMap.has(sizeObj.size)) {
-            sizesMap.set(sizeObj.size, true);
+          if (!sizesArray.includes(sizeObj.size)) {
+            sizesArray.push(sizeObj.size); // Adicionando tamanho ao array se não estiver presente
           }
         });
       });
     }
   });
-  return Array.from(sizesMap.keys());
+
+  return sizesArray; // Retornando um array de tamanhos únicos
 };
-
-
-
 
 
 
@@ -62,43 +60,42 @@ const getSizesForColor = (products, color) => {
   const getPriceForSize = (product, color, size) => {
     const variation = product.variations.find(variation => variation.color === color);
     if (variation) {
-      const sizeObj = variation.sizes.find(sizeObj => sizeObj.size === size);
-      if (sizeObj) {
-        return sizeObj.price;
-      }
+      const sizesArray = getSizesForColor([product], color); // Obtendo o array de tamanhos
+      const price = sizesArray.find(item => item.size === size)?.price; // Procurando o preço do tamanho no array
+      return price || 0; // Retornando o preço encontrado ou 0 se não encontrado
     }
-    // Retornar um valor padrão caso o preço não seja encontrado
+    // Retornar um valor padrão caso a variação não seja encontrada
     return 0;
   };
-
+  
+  
   // UseEffect para inicializar os tamanhos disponíveis com base na primeira cor
   useEffect(() => {
     if (originalProducts.length > 0) {
       const firstColor = originalProducts[0].variations[0].color;
-      setAvailableSizes(getSizesForColor(originalProducts, firstColor));
+      const sizesMap = getSizesForColor(originalProducts, firstColor); // Obtenha o mapa de tamanhos
+      const sizesArray = Array.from(sizesMap); // Converta o mapa diretamente em um array
+      setAvailableSizes(sizesArray);
     }
     setFilteredProducts(originalProducts);
   }, [originalProducts]);
-
+  
+  
   useEffect(() => {
     filterProducts();
   }, [selectedColor, selectedSize]);
 
   const filterProducts = () => {
     let filtered = originalProducts;
-
+  
+    // Filtrar por cor, se uma cor estiver selecionada
     if (selectedColor) {
       filtered = filtered.filter(product =>
         product.variations.some(variation => variation.color === selectedColor)
       );
-      setAvailableSizes(getSizesForColor(originalProducts, selectedColor));
-    } else {
-      if (originalProducts.length > 0) {
-        const firstColor = originalProducts[0].variations[0].color;
-        setAvailableSizes(getSizesForColor(originalProducts, firstColor));
-      }
     }
-
+  
+    // Filtrar por tamanho, se um tamanho estiver selecionado
     if (selectedSize) {
       filtered = filtered.filter(product =>
         product.variations.some(variation =>
@@ -106,9 +103,11 @@ const getSizesForColor = (products, color) => {
         )
       );
     }
-
+  
+    // Definir os produtos filtrados no estado
     setFilteredProducts(filtered);
   };
+  
 
   const handleColorClick = (color) => {
     if (color === selectedColor) {
@@ -122,10 +121,11 @@ const getSizesForColor = (products, color) => {
       setSelectedColor(color);
     }
   };
-
+  
   const handleSizeClick = (size) => {
     setSelectedSize(size);
   };
+  
 
 
 
@@ -617,48 +617,38 @@ const getSizesForColor = (products, color) => {
           </div>
         </div>
       ))}
+<h3
+  style={{
+    fontFamily: "Montserrat, arial, sans-serif",
+    fontWeight: "600",
+    fontSize: "1.2rem",
+    color: "rgb(52, 52, 54)",
+  }}
+>
+  Tamanhos
+</h3>
+<div>
+  {availableSizes.map((size, index) => (
+    <button
+      key={index}
+      style={{
+        borderRadius: "20px",
+        width: "40px",
+        height: "40px",
+        border: "1px solid rgb(114, 114, 114)",
+        backgroundColor:
+          selectedSize === size ? "#333" : "rgb(255, 255, 255)",
+        color: selectedSize === size ? "white" : "black",
+        margin: "8px",
+        cursor: "pointer",
+      }}
+      onClick={() => handleSizeClick(size)}
+    >
+      <span style={{ fontSize: ".8rem" }}>{size}</span>
+    </button>
+  ))}
+</div>
 
-      <h3
-        style={{
-          fontFamily: "Montserrat, arial, sans-serif",
-          fontWeight: "600",
-          fontSize: "1.2rem",
-          color: "rgb(52, 52, 54)",
-        }}
-      >
-        Tamanhos
-      </h3>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-        }}
-      >
-        {availableSizes.map((size, index) => (
-          <div key={index} >
-            <button
-              style={{
-                borderRadius: "20px",
-                width: "40px",
-                height: "40px",
-                border: "1px solid rgb(114, 114, 114)",
-                backgroundColor:
-                  selectedSize === size ? "#333" : "rgb(255, 255, 255)",
-                color: selectedSize === size ? "white" : "black",
-                marginLeft: "8px",
-                marginTop: "8px",
-                cursor: "pointer",
-              }}
-              onClick={() => handleSizeClick(size)}
-            >
-              <span style={{ fontSize: ".8rem" }}>{size}</span>
-            </button>
-          </div>
-        ))}
-      </div>
-
-     
-    
       </div>
 
 
