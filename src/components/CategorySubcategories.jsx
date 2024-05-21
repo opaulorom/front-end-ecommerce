@@ -35,33 +35,28 @@ const CategorySubcategories = () => {
     setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
   }, []);
 
-
-  // Função para obter todos os tamanhos disponíveis em todos os produtos
-  const getAllSizes = (products) => {
-    const sizesSet = new Set();
-    products.forEach((product) => {
+// Função para obter tamanhos disponíveis de uma cor específica
+// Função para obter tamanhos disponíveis de uma cor específica
+const getSizesForColor = (products, color) => {
+  const sizesMap = new Map();
+  products.forEach((product) => {
+    if (!color || product.variations.some(variation => variation.color === color)) {
       product.variations.forEach((variation) => {
         variation.sizes.forEach((sizeObj) => {
-          sizesSet.add(sizeObj.size);
+          if (!sizesMap.has(sizeObj.size)) {
+            sizesMap.set(sizeObj.size, true);
+          }
         });
       });
-    });
-    return Array.from(sizesSet);
-  };
+    }
+  });
+  return Array.from(sizesMap.keys());
+};
 
-  // Função para obter tamanhos disponíveis de uma cor específica
-  const getSizesForColor = (products, color) => {
-    const sizesSet = new Set();
-    products.forEach((product) => {
-      const variation = product.variations.find(variation => variation.color === color);
-      if (variation) {
-        variation.sizes.forEach((sizeObj) => {
-          sizesSet.add(sizeObj.size);
-        });
-      }
-    });
-    return Array.from(sizesSet);
-  };
+
+
+
+
 
   // Função para obter o preço de um tamanho específico
   const getPriceForSize = (product, color, size) => {
@@ -131,6 +126,10 @@ const CategorySubcategories = () => {
   const handleSizeClick = (size) => {
     setSelectedSize(size);
   };
+
+
+
+
   const fetchMixedProducts = async (page, filters) => {
     setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
 
