@@ -18,10 +18,7 @@ const CartB = () => {
   const [exceedAvailability, setExceedAvailability] = useState(1);
   const [changeStockStatus, setChangeStockStatus] = useState(false);
   const [stockStatus, setStockStatus] = useState({});
-
-  const handleChangeStockStatus = () => {
-    setChangeStockStatus((prevStatus) => !prevStatus);
-  };
+ 
 
   useEffect(() => {
     axios
@@ -349,10 +346,7 @@ const CartB = () => {
                         }}
                         style={{
                           cursor: "pointer",
-                          // opacity: updatedQuantity === -1 c
-                          // opacity:
-                          // exceedAvailability === -1
-                          // ? 1 : 0.5
+                           color:item.quantity === getAvailableQuantity(item) ? "rgb(189, 189, 189)" : "rgb(33, 33, 33)"
                         }}
                       />
                     </div>
