@@ -6,7 +6,7 @@ import "./LoginForm.css"
 import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
-  const { loggedIn, isCustomer,  login, logout } = useAuth();
+  const { loggedIn, isCustomer,  login, remainingAttempts  } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [formErrors, setFormErrors] = useState({});
@@ -37,6 +37,9 @@ const LoginForm = () => {
     return (
       <div className='logout-container'>
         {isCustomer ? <ProfileDetails/> : null}
+        {remainingAttempts !== null && (
+        <p>Tentativas restantes: {remainingAttempts}</p>
+      )}
       </div>
     );
   }
