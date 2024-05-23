@@ -227,6 +227,16 @@ const Cart = () => {
     }
   };
 
+
+  const getAvailableQuantity = (item) => {
+    const variation = item.productId.variations.find(
+      (variation) => variation.color === item.color
+    );
+    const sizeObj = variation?.sizes.find((size) => size.size === item.size);
+    return sizeObj ? sizeObj.quantityAvailable : 0;
+  };
+
+
   return (
     <div style={{ position: "relative" }}>
       <Header />
@@ -561,16 +571,21 @@ const Cart = () => {
                             }}
                             style={{
                               cursor: "pointer",
-                              // opacity: updatedQuantity === -1 c
-                              // opacity:
-                              // exceedAvailability === -1
-                              // ? 1 : 0.5
+                               color:item.quantity === getAvailableQuantity(item) ? "rgb(189, 189, 189)" : "rgb(33, 33, 33)"
                             }}
                           />
                         </div>
                       </div>
+                      <div className={styles.texts}>
+                        <span className={styles.spanName} style={{ color: item.quantity === getAvailableQuantity(item) ? '#E71E1E' : '#21BF45' }}>
+                            {item.quantity === getAvailableQuantity(item)
+                              ? "Produto fora de estoque"
+                              : "Produto em estoque"}
+                          </span>
+                        </div>
                     </div>
                     <div>R${item.price}</div>
+                 
                   </div>
                 </div>
               ))}
