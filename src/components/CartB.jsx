@@ -17,9 +17,10 @@ const CartB = () => {
   const productsContainerRef = useRef(null);
   const [exceedAvailability, setExceedAvailability] = useState(1);
   const [changeStockStatus, setChangeStockStatus] = useState(false);
+  const [stockStatus, setStockStatus] = useState({});
 
   const handleChangeStockStatus = () => {
-    setChangeStockStatus(prevStatus => !prevStatus);
+    setChangeStockStatus((prevStatus) => !prevStatus);
   };
 
   useEffect(() => {
@@ -38,6 +39,7 @@ const CartB = () => {
       });
   }, [userId, token]);
 
+  
   const getAvailableQuantity = (item) => {
     const variation = item.productId.variations.find(
       (variation) => variation.color === item.color
@@ -48,8 +50,20 @@ const CartB = () => {
 
   const statusStyle = {
     color: changeStockStatus === true ? "red" : "black",
-    fontSize: "1rem"
+    fontSize: "1rem",
   };
+
+  useEffect(() => {
+    // Atualizar status do estoque quando houver mudanças no carrinho
+    const newStockStatus = {};
+    getCart.forEach((item) => {
+      newStockStatus[item.productId._id] =
+        getAvailableQuantity(item) > 0
+          ? "Produto em estoque"
+          : "Produto fora de estoque";
+    });
+    setStockStatus(newStockStatus);
+  }, [getCart]);
 
   return (
     <div style={{ position: "relative" }}>
@@ -134,7 +148,9 @@ const CartB = () => {
                   item.productId.variations.some((variation) =>
                     variation.sizes.some((size) => size.quantityAvailable > 0)
                   ) ? (
-                    <p>{`Apenas ${getAvailableQuantity(item)} unidades em estoque`}</p>
+                    <p>{`Apenas ${getAvailableQuantity(
+                      item
+                    )} unidades em estoque`}</p>
                   ) : (
                     <p className={styles.p}>0 unidades em estoque</p>
                   )}
@@ -231,10 +247,7 @@ const CartB = () => {
                           const newCart = [...getCart];
                           newCart[index].quantity = newQuantity;
                           setGetCart(newCart);
-                          handleQuantityChange(
-                            item.productId._id,
-                            newQuantity
-                          );
+                          handleQuantityChange(item.productId._id, newQuantity);
                         }}
                         style={{}}
                         className={styles.inputContainer}
@@ -264,10 +277,7 @@ const CartB = () => {
                             .then((response) => {
                               const products = response.data.cart.products;
 
-                              console.log(
-                                "Produtos no carrinho:",
-                                products
-                              );
+                              console.log("Produtos no carrinho:", products);
 
                               // Verifica se a quantidade de algum produto excede a disponibilidade
                               const exceedAvailability = products.some(
@@ -285,8 +295,7 @@ const CartB = () => {
                                     product.productId
                                   );
                                   return (
-                                    product.quantity >
-                                    product.availableQuantity
+                                    product.quantity > product.availableQuantity
                                   );
                                 }
                               );
@@ -324,8 +333,7 @@ const CartB = () => {
                                     product.size === size
                                 ); // Certifique-se de verificar também o variationId
                                 if (productIndex !== -1) {
-                                  newCart[productIndex].quantity =
-                                    newQuantity;
+                                  newCart[productIndex].quantity = newQuantity;
                                 }
                                 return newCart;
                               });
@@ -349,12 +357,15 @@ const CartB = () => {
                       />
                     </div>
                     <div>
-                      <span
-                        style={statusStyle}
-                        onClick={handleChangeStockStatus}
-                      >
-                        status
-                      </span>
+                      <div>
+                        <div className={styles.texts}>
+                          <span className={styles.spanName}>
+                            {item.quantity === getAvailableQuantity(item)
+                              ? "Produto fora de estoque"
+                              : "Produto em estoque"}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
