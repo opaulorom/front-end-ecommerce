@@ -28,23 +28,100 @@ const CategorySubcategories = () => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
+  const [availableSizes, setAvailableSizes] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState(originalProducts);
 
   useEffect(() => {
     setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
   }, []);
 
+  const getSizesForColor = (products, color) => {
+    const sizesSet = new Set(); // Usando um Set para garantir que os tamanhos não sejam repetidos
+  
+    products.forEach((product) => {
+      if (!color || product.variations.some(variation => variation.color === color)) {
+        product.variations.forEach((variation) => {
+          variation.sizes.forEach((sizeObj) => {
+            sizesSet.add(sizeObj.size); // Adicionando tamanho ao Set
+          });
+        });
+      }
+    });
+  
+    return Array.from(sizesSet); // Retornando um array de tamanhos únicos
+  };
+  
+
+  // Função para obter o preço de um tamanho específico
+  const getPriceForSize = (product, color, size) => {
+    const variation = product.variations.find(variation => variation.color === color);
+    if (variation) {
+      const sizeObj = variation.sizes.find(item => item.size === size); // Encontrando o objeto do tamanho específico
+      return sizeObj ? sizeObj.price : 0; // Retornando o preço do tamanho encontrado ou 0 se não encontrado
+    }
+    // Retornar um valor padrão caso a variação não seja encontrada
+    return 0;
+  };
+  
+  
+  // UseEffect para inicializar os tamanhos disponíveis com base na primeira cor
+  useEffect(() => {
+    if (originalProducts.length > 0) {
+      const firstColor = originalProducts[0].variations[0].color;
+      const sizesArray = getSizesForColor(originalProducts, firstColor);
+      setAvailableSizes(sizesArray);
+    }
+    setFilteredProducts(originalProducts);
+  }, [originalProducts]);
+  
+  
+  useEffect(() => {
+    filterProducts();
+  }, [selectedColor, selectedSize]);
+
+  const filterProducts = () => {
+    let filtered = originalProducts;
+  
+    // Filtrar por cor, se uma cor estiver selecionada
+    if (selectedColor) {
+      filtered = filtered.filter(product =>
+        product.variations.some(variation => variation.color === selectedColor)
+      );
+    }
+  
+    // Filtrar por tamanho, se um tamanho estiver selecionado
+    if (selectedSize) {
+      filtered = filtered.filter(product =>
+        product.variations.some(variation =>
+          variation.sizes.some(sizeObj => sizeObj.size === selectedSize)
+        )
+      );
+    }
+  
+    setFilteredProducts(filtered);
+  };
+  
+
   const handleColorClick = (color) => {
-    setSelectedColor(color);
-
-    // Procurar a cor no colorMap
+    if (color === selectedColor) {
+      setSelectedColor(null);
+      setFilteredProducts(originalProducts);
+      if (originalProducts.length > 0) {
+        const firstColor = originalProducts[0].variations[0].color;
+        setAvailableSizes(getSizesForColor(originalProducts, firstColor));
+      }
+    } else {
+      setSelectedColor(color);
+    }
   };
-  const handlePriceClick = (range) => {
-    setSelectedPrice(range);
-  };
-
+  
   const handleSizeClick = (size) => {
     setSelectedSize(size);
   };
+  
+
+
+
 
   const fetchMixedProducts = async (page, filters) => {
     setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
@@ -147,27 +224,20 @@ const CategorySubcategories = () => {
     setCurrentPage(page);
   };
 
-
-
   const handleFilterClick = async (filterType, value) => {
-    const filters = {
-      [filterType]: value,
-    };
-  
     let filteredProducts = originalProducts;
   
     if (filterType === "size") {
-      filteredProducts = originalProducts.filter((product) => {
-        return product.variations.some((variation) => {
-          return variation.sizes.some((sizeObj) => sizeObj.size === value);
-        });
-      });
+      filteredProducts = originalProducts.filter((product) =>
+        product.variations.some((variation) =>
+          variation.sizes.some((sizeObj) => sizeObj.size === value)
+        )
+      );
+      setSelectedSize(value); // Atualiza o tamanho selecionado no estado
     } else if (filterType === "color") {
-      filteredProducts = originalProducts.filter((product) => {
-        return product.variations.some(
-          (variation) => variation.color === value
-        );
-      });
+      filteredProducts = originalProducts.filter((product) =>
+        product.variations.some((variation) => variation.color === value)
+      );
       setSelectedColor(value); // Atualiza a cor selecionada no estado
     } else if (filterType === "price") {
       // Aqui, filtre os produtos com base no intervalo de preços selecionado
@@ -178,9 +248,10 @@ const CategorySubcategories = () => {
       });
     }
   
-    setMixedProducts(filteredProducts);
-    setTotalPages(1);
+    setFilteredProducts(filteredProducts);
+    setTotalPages(1); // Atualiza o número total de páginas para 1, uma vez que os produtos filtrados serão exibidos em uma única página
   };
+  
   
   const handleFavoriteClick = (productId) => {
     setMixedProducts((prevProducts) =>
@@ -468,6 +539,7 @@ const CategorySubcategories = () => {
                 )}
               </div>
             </div>
+            desktop
             <div className={styles.DesktopFilter}>
               <p
                 style={{
@@ -493,101 +565,84 @@ const CategorySubcategories = () => {
                   </li>
                 ))}
               </ul>
-
               <div style={{ marginBottom: "3rem" }}>
-                <h3
-                  style={{
-                    fontFamily: "Montserrat, arial, sans-serif",
-                    fontWeight: "600",
-                    fontSize: "1.2rem",
-                    color: "rgb(52, 52, 54)",
-                  }}
-                >
-                  Cores
-                </h3>
+      <h3
+        style={{
+          fontFamily: "Montserrat, arial, sans-serif",
+          fontWeight: "600",
+          fontSize: "1.2rem",
+          color: "rgb(52, 52, 54)",
+        }}
+      >
+        Cores
+      </h3>
 
-                {colors.map((color, index) => (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyItems: "center",
-                      marginTop: "1rem",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "20px",
-                        height: "20px",
-                        borderRadius: "50%",
-                        backgroundColor: colorMap[color],
-                        marginRight: "10px",
-                        border: "1px solid gray",
-                      }}
-                    ></div>
-                    <div
-                      key={index}
-                      onClick={() => {
-                        handleColorClick(color),
-                          handleFilterClick("color", color);
-                      }}
-                      style={{
-                        cursor: "pointer",
-                        fontWeight: selectedColor === color ? "600" : "400",
-                        fontSize: selectedColor === color ? "1.1rem" : "1rem",
-                        fontFamily: "Montserrat, arial, sans-serif",
-                      }}
-                    >
-                      {color}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <h3
-                style={{
-                  fontFamily: "Montserrat, arial, sans-serif",
-                  fontWeight: "600",
-                  fontSize: "1.2rem",
-                  color: "rgb(52, 52, 54)",
-                }}
-              >
-                Tamanhos
-              </h3>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(4, 1fr)",
-                }}
-              >
-                {Array.from(uniqueSizes).map((size, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleFilterClick("size", size)}
-                  >
-                    <button
-                      style={{
-                        borderRadius: "20px",
-                        width: "40px",
-                        height: "40px",
-                        border: "1px solid rgb(114, 114, 114)",
-                        backgroundColor:
-                          selectedSize === size ? "#333" : "rgb(255, 255, 255)",
-                        color: selectedSize === size ? "white" : "black",
-                        marginLeft: "8px",
-                        marginTop: "8px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleSizeClick(size)}
-                    >
-                      {" "}
-                      <span style={{ fontSize: ".8rem" }}> {size}</span>
-                    </button>
-                  </div>
-                ))}
-              </div>
+      {colors.map((color, index) => (
+        <div
+          key={index}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyItems: "center",
+            marginTop: "1rem",
+          }}
+        >
+          <div
+            style={{
+              width: "20px",
+              height: "20px",
+              borderRadius: "50%",
+              backgroundColor: colorMap[color],
+              marginRight: "10px",
+              border: "1px solid gray",
+            }}
+          ></div>
+          <div
+            onClick={() => handleColorClick(color)}
+            style={{
+              cursor: "pointer",
+              fontWeight: selectedColor === color ? "600" : "400",
+              fontSize: selectedColor === color ? "1.1rem" : "1rem",
+              fontFamily: "Montserrat, arial, sans-serif",
+            }}
+          >
+            {color}
+          </div>
+        </div>
+      ))}
+<h3
+  style={{
+    fontFamily: "Montserrat, arial, sans-serif",
+    fontWeight: "600",
+    fontSize: "1.2rem",
+    color: "rgb(52, 52, 54)",
+  }}
+>
+  Tamanhos
+</h3>
+<div>
+  {availableSizes.map((size, index) => (
+    <button
+      key={index}
+      style={{
+        borderRadius: "20px",
+        width: "40px",
+        height: "40px",
+        border: "1px solid rgb(114, 114, 114)",
+        backgroundColor:
+          selectedSize === size ? "#333" : "rgb(255, 255, 255)",
+        color: selectedSize === size ? "white" : "black",
+        margin: "8px",
+        cursor: "pointer",
+      }}
+      onClick={() => handleSizeClick(size)}
+    >
+      <span style={{ fontSize: ".8rem" }}>{size}</span>
+    </button>
+  ))}
+</div>
 
-              <div style={{ marginTop: "3rem" }}>
-                <h3
+        <h3
                   style={{
                     fontFamily: "Montserrat, arial, sans-serif",
                     fontWeight: "600",
@@ -597,42 +652,6 @@ const CategorySubcategories = () => {
                 >
                   Faixas de Preços
                 </h3>
-                {priceRanges.map((range, index) => (
-                  <div
-                    key={index}
-                    onClick={() => {
-                      handlePriceClick(range),
-                        handleFilterClick("priceRange", range);
-                    }}
-                    style={{
-                      cursor: "pointer",
-                      fontFamily: "Montserrat, arial, sans-serif",
-                      fontWeight: selectedPrice === range ? "600" : "400",
-                      fontSize: selectedPrice === range ? "1.1rem" : "1rem",
-                      color:
-                        selectedPrice === range
-                          ? "rgb(52, 52, 54)"
-                          : "rgb(52, 52, 54)",
-                    }}
-                  >
-                    {range}
-                  </div>
-                ))}
-              </div>
-        <div>
-  <div
-    onClick={() => handleFilterClick("price", "")}
-    style={{
-      cursor: "pointer",
-      fontFamily: "Montserrat, arial, sans-serif",
-      fontWeight: selectedPrice === "" ? "600" : "400",
-      fontSize: selectedPrice === "" ? "1.1rem" : "1rem",
-      color: selectedPrice === "" ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
-      margin: "0.5rem",
-    }}
-  >
-    Selecione uma faixa de preço
-  </div>
   <div
     onClick={() => handleFilterClick("price", "0-50")}
     style={{
@@ -644,7 +663,7 @@ const CategorySubcategories = () => {
       margin: "0.5rem",
     }}
   >
-    R$0 - R$50
+    R$5 - R$50
   </div>
   <div
     onClick={() => handleFilterClick("price", "50-100")}
@@ -711,94 +730,121 @@ const CategorySubcategories = () => {
                 </span>
               </div>
             )}
-            <ul>
-              {mixedProducts &&
-                mixedProducts.map((product) => {
-                  const selectedColorVariation = selectedColor
-                    ? product.variations.find(
-                        (variation) => variation.color === selectedColor
-                      )
-                    : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
+    <ul>
+    {filteredProducts.map((product) => {
+    const selectedColorVariation = selectedColor
+    ? product.variations.find(
+        (variation) => variation.color === selectedColor
+      )
+    : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
 
-                  return (
-                    <li
-                      key={product._id || "undefined"}
-                      style={{ position: "relative" }}
-                    >
-                      <Link
-                        to={`/products/${product._id}`}
-                        style={{ color: "black", textDecoration: "none" }}
-                      >
-                        {selectedColorVariation &&
-                        selectedColorVariation.urls.length > 0 ? (
-                          <img
-                            src={selectedColorVariation.urls[0]}
-                            alt={product.name}
-                            style={{
-                              width: "30vw",
-                              marginTop: "-2rem",
-                              zIndex: "-1",
-                              marginLeft: "1rem",
-                            }}
-                          />
-                        ) : null}
+  // Verifique se há uma foto disponível
+  const hasPhoto =
+    selectedColorVariation &&
+    selectedColorVariation.urls &&
+    selectedColorVariation.urls.length > 0;
 
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            marginBottom: "4rem",
-                            marginLeft: "1rem",
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontSize: "1rem",
-                              fontWeight: "700",
-                              fontFamily: "poppins, sans-serif",
-                            }}
-                          >
-                            R${" "}
-                            {Number(product.variations[0].sizes[0].price)
-                              .toFixed(2)
-                              .padStart(5, "0")}
-                          </span>
-                          <span
-                            style={{
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                              width: "15vw",
-                              color: "rgb(114, 114, 114)",
-                              fontSize: ".8rem",
-                            }}
-                          >
-                            {product.name}
-                          </span>
-                        </div>
-                      </Link>
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "-5%",
-                          right: "0",
-                          zIndex: 9999,
-                          marginBottom: "5rem",
-                          width: "3rem",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <IconToggle
-                          productId={product._id}
-                          isFavorite={favorites[product._id]}
-                        />
-                      </div>
-                    </li>
-                  );
-                })}
-            </ul>
+  // Se não houver foto disponível, não renderize o produto
+  if (!hasPhoto) {
+    return null;
+  }
+
+  // Encontre o preço correto para exibição
+// Encontre o preço correto para exibição
+const displayedPrice = selectedSize
+  ? getPriceForSize(product, selectedColor, selectedSize)
+  : selectedColorVariation
+  ? selectedColorVariation.sizes[0].price // Se nenhum tamanho estiver selecionado, use o preço do primeiro tamanho disponível para a variação selecionada
+  : product.variations[0].sizes[0].price; // Se nenhum tamanho ou variação estiver selecionado, use o preço do primeiro tamanho disponível no primeiro produto
+
+  // Acessar o tamanho do produto corretamente
+  const size = selectedSize || selectedColorVariation.sizes[0].name;
+
+  // Construindo os parâmetros da URL
+  const queryParams = new URLSearchParams();
+  queryParams.append("selectedImageFromCategory", selectedColorVariation.urls[0]);
+  queryParams.append("selectedColorFromCategory", selectedColor);
+  queryParams.append("selectedPriceFromCategory", displayedPrice);
+  queryParams.append("selectedSizeFromCategory", size);
+
+    return (
+      <li
+        key={product._id || "undefined"}
+        style={{ position: "relative" }}
+      >
+        <Link
+  to={{
+    pathname: `/products/${product._id}`,
+    search: `?${queryParams.toString()}`
+  }}  style={{ color: "black", textDecoration: "none" }}
+        >
+          <img
+            src={selectedColorVariation.urls[0]}
+            alt={product.name}
+            style={{
+              width: "30vw",
+              marginTop: "-2rem",
+              zIndex: "-1",
+              marginLeft: "1rem",
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "4rem",
+              marginLeft: "1rem",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "1rem",
+                fontWeight: "700",
+                fontFamily: "poppins, sans-serif",
+              }}
+            >
+              R${" "}
+              {Number(displayedPrice || product.price || product.variations[0].sizes[0].price)
+                .toFixed(2)
+                .padStart(5, "0")}
+            </span>
+            <span
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                width: "15vw",
+                color: "rgb(114, 114, 114)",
+                fontSize: ".8rem",
+              }}
+            >
+              {product.name}
+            </span>
+          </div>
+        </Link>
+        <div
+          style={{
+            position: "absolute",
+            top: "-5%",
+            right: "0",
+            zIndex: 9999,
+            marginBottom: "5rem",
+            width: "3rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <IconToggle
+            productId={product._id}
+            isFavorite={favorites[product._id]}
+          />
+        </div>
+      </li>
+    );
+  })}
+</ul>
+
 
             {mixedProducts.length > 0 && (
               <>

@@ -642,11 +642,7 @@ const CategorySubcategories = () => {
   ))}
 </div>
 
-      </div>
-
-
-              <div style={{ marginTop: "3rem" }}>
-                <h3
+        <h3
                   style={{
                     fontFamily: "Montserrat, arial, sans-serif",
                     fontWeight: "600",
@@ -656,42 +652,6 @@ const CategorySubcategories = () => {
                 >
                   Faixas de Preços
                 </h3>
-                {priceRanges.map((range, index) => (
-                  <div
-                    key={index}
-                    onClick={() => {
-                      handlePriceClick(range),
-                        handleFilterClick("priceRange", range);
-                    }}
-                    style={{
-                      cursor: "pointer",
-                      fontFamily: "Montserrat, arial, sans-serif",
-                      fontWeight: selectedPrice === range ? "600" : "400",
-                      fontSize: selectedPrice === range ? "1.1rem" : "1rem",
-                      color:
-                        selectedPrice === range
-                          ? "rgb(52, 52, 54)"
-                          : "rgb(52, 52, 54)",
-                    }}
-                  >
-                    {range}
-                  </div>
-                ))}
-              </div>
-        <div>
-  <div
-    onClick={() => handleFilterClick("price", "")}
-    style={{
-      cursor: "pointer",
-      fontFamily: "Montserrat, arial, sans-serif",
-      fontWeight: selectedPrice === "" ? "600" : "400",
-      fontSize: selectedPrice === "" ? "1.1rem" : "1rem",
-      color: selectedPrice === "" ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
-      margin: "0.5rem",
-    }}
-  >
-    Selecione uma faixa de preço
-  </div>
   <div
     onClick={() => handleFilterClick("price", "0-50")}
     style={{
@@ -703,7 +663,7 @@ const CategorySubcategories = () => {
       margin: "0.5rem",
     }}
   >
-    R$0 - R$50
+    R$5 - R$50
   </div>
   <div
     onClick={() => handleFilterClick("price", "50-100")}
@@ -771,30 +731,41 @@ const CategorySubcategories = () => {
               </div>
             )}
     <ul>
-  {filteredProducts.map((product) => {
+    {filteredProducts.map((product) => {
     const selectedColorVariation = selectedColor
-      ? product.variations.find(
-          (variation) => variation.color === selectedColor
-        )
-      : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
+    ? product.variations.find(
+        (variation) => variation.color === selectedColor
+      )
+    : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
 
-    // Verifique se há uma foto disponível
-    const hasPhoto =
-      selectedColorVariation &&
-      selectedColorVariation.urls &&
-      selectedColorVariation.urls.length > 0;
+  // Verifique se há uma foto disponível
+  const hasPhoto =
+    selectedColorVariation &&
+    selectedColorVariation.urls &&
+    selectedColorVariation.urls.length > 0;
 
-    // Se não houver foto disponível, não renderize o produto
-    if (!hasPhoto) {
-      return null;
-    }
+  // Se não houver foto disponível, não renderize o produto
+  if (!hasPhoto) {
+    return null;
+  }
 
-    // Encontre o preço correto para exibição
-    const displayedPrice = selectedSize
-      ? getPriceForSize(product, selectedColor, selectedSize)
-      : selectedColorVariation
-      ? selectedColorVariation.sizes[0].price // Se nenhum tamanho estiver selecionado, use o preço do primeiro tamanho disponível para a variação selecionada
-      : product.variations[0].sizes[0].price; // Se nenhum tamanho ou variação estiver selecionado, use o preço do primeiro tamanho disponível no primeiro produto
+  // Encontre o preço correto para exibição
+// Encontre o preço correto para exibição
+const displayedPrice = selectedSize
+  ? getPriceForSize(product, selectedColor, selectedSize)
+  : selectedColorVariation
+  ? selectedColorVariation.sizes[0].price // Se nenhum tamanho estiver selecionado, use o preço do primeiro tamanho disponível para a variação selecionada
+  : product.variations[0].sizes[0].price; // Se nenhum tamanho ou variação estiver selecionado, use o preço do primeiro tamanho disponível no primeiro produto
+
+  // Acessar o tamanho do produto corretamente
+  const size = selectedSize || selectedColorVariation.sizes[0].name;
+
+  // Construindo os parâmetros da URL
+  const queryParams = new URLSearchParams();
+  queryParams.append("selectedImageFromCategory", selectedColorVariation.urls[0]);
+  queryParams.append("selectedColorFromCategory", selectedColor);
+  queryParams.append("selectedPriceFromCategory", displayedPrice);
+  queryParams.append("selectedSizeFromCategory", size);
 
     return (
       <li
@@ -802,8 +773,10 @@ const CategorySubcategories = () => {
         style={{ position: "relative" }}
       >
         <Link
-          to={`/products/${product._id}`}
-          style={{ color: "black", textDecoration: "none" }}
+  to={{
+    pathname: `/products/${product._id}`,
+    search: `?${queryParams.toString()}`
+  }}  style={{ color: "black", textDecoration: "none" }}
         >
           <img
             src={selectedColorVariation.urls[0]}

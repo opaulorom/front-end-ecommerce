@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./ProductDetails.css";
 import Header from "./Header";
@@ -34,6 +34,15 @@ const ProductDetails = () => {
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedColorId, setSelectedColorId] = useState("");
   const [selectedSizeId, setSelectedSizeId] = useState("");
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const selectedImageFromCategory = searchParams.get("selectedImageFromCategory");
+  const selectedColorFromCategory = searchParams.get("selectedColorFromCategory");
+  const selectedPriceFromCategory = searchParams.get("selectedPriceFromCategory");
+  const selectedSizeFromCategory = searchParams.get("selectedSizeFromCategory");
+
+  
+  
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
   };
@@ -105,27 +114,10 @@ const ProductDetails = () => {
 
         if (response.data.product) {
           const productData = response.data.product;
-
-          // Defina a imagem da cor selecionada como a primeira imagem da primeira variação
-          setSelectedColorImage(productData.variations[0]?.urls[0] || "");
-
-          // Atualize o estado do produto com os dados recebidos
           setProduct(productData);
 
-          // Verifique se há variações disponíveis
           if (productData.variations.length > 0) {
-            // Atualize o estado com os tamanhos disponíveis para cada cor
-            setSizesFromDatabase(
-              productData.variations.map((variation) => ({
-                color: variation.color,
-                sizes: variation.sizes,
-              }))
-            );
-
-            // Defina o primeiro tamanho como padrão
-            setIsColorAndSizeSelected(true); // Marque como selecionado automaticamente
-
-            // Defina o preço do primeiro tamanho como padrão
+            setSizesFromDatabase(productData.variations[0]?.sizes || []);
             setSelectedPrice(productData.variations[0]?.sizes[0]?.price || "");
           }
         }
@@ -136,6 +128,19 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [productId]);
+
+  useEffect(() => {
+    setSelectedPrice(selectedPriceFromCategory);
+  }, [selectedPriceFromCategory]);
+
+  useEffect(() => {
+    setSelectedColorIndex(product.variations.findIndex((v) => v.color === selectedColorFromCategory));
+  }, [product.variations, selectedColorFromCategory]);
+
+  useEffect(() => {
+    setSelectedSize(selectedSizeFromCategory);
+  }, [selectedSizeFromCategory]);
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -257,11 +262,15 @@ const ProductDetails = () => {
     }
   };
 
-  // Atualize a função handleSizeSelection para atualizar o estado do tamanho selecionado
+  useEffect(() => {
+    setSelectedPrice(selectedPriceFromCategory || product.variations[selectedColorIndex]?.sizes[0]?.price);
+  }, [selectedPriceFromCategory, product.variations, selectedColorIndex]);
+  
+  // Atualize a função handleSizeSelection para atualizar o preço quando o tamanho for alterado
   const handleSizeSelection = (sizeId, price) => {
     setSelectedSize(sizeId); // Atualize o estado do tamanho selecionado
     setSelectedSizeId(sizeId); // Atualize o ID do tamanho selecionado
-    setSelectedPrice(price); // Atualize o preço selecionado
+    setSelectedPrice(price || product.variations[selectedColorIndex]?.sizes.find(size => size.size === sizeId)?.price);
   };
 
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
@@ -395,7 +404,11 @@ const ProductDetails = () => {
                       </div>
                     ))}
                 </div>
-                Preço: R$ {selectedPrice}
+                Preço: R$ {selectedPrice }
+                <span>{selectedPriceFromCategory}</span>
+{selectedColorFromCategory}
+<img src={selectedImageFromCategory} alt="" />
+                {selectedSizeFromCategory}
                 <div>
                   <h3>
                     Tamanhos disponíveis para{" "}
