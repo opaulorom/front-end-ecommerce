@@ -359,7 +359,7 @@ const CartB = () => {
                     <div>
                       <div>
                         <div className={styles.texts}>
-                          <span className={styles.spanName}>
+                        <span className={styles.spanName} style={{ color: item.quantity === getAvailableQuantity(item) ? '#E71E1E' : '#21BF45' }}>
                             {item.quantity === getAvailableQuantity(item)
                               ? "Produto fora de estoque"
                               : "Produto em estoque"}
