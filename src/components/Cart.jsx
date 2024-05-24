@@ -42,8 +42,7 @@ const Cart = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const modalRef = useRef(null);
-  const [totalQuantity, setTotalQuantity] = useState([])
-
+  const [totalQuantity, setTotalQuantity] = useState([]);
 
   const handleClickOpenModal = (uniqueId) => {
     setDeleteProductId(uniqueId);
@@ -82,7 +81,7 @@ const Cart = () => {
       .then((response) => {
         setGetCart(response.data.cart.products); // Define os produtos do carrinho
         setGetTotal(response.data.cart); // Define o total do carrinho
-        setTotalQuantity(response.data.cart.TotalQuantity)
+        setTotalQuantity(response.data.cart.TotalQuantity);
         setLoading(false); // Define o estado de carregamento como falso
       })
       .catch((error) => {
@@ -230,7 +229,6 @@ const Cart = () => {
     }
   };
 
-
   const getAvailableQuantity = (item) => {
     const variation = item.productId.variations.find(
       (variation) => variation.color === item.color
@@ -238,7 +236,6 @@ const Cart = () => {
     const sizeObj = variation?.sizes.find((size) => size.size === item.size);
     return sizeObj ? sizeObj.quantityAvailable : 0;
   };
-
 
   return (
     <div style={{ position: "relative" }}>
@@ -251,12 +248,13 @@ const Cart = () => {
         </div>
       ) : (
         <>
-     
-     <div style={{
-      marginTop:"10rem"
-     }}>
-        Total de {totalQuantity} produtos no carrinho
-      </div>
+          <div
+            style={{
+              marginTop: "10rem",
+            }}
+          >
+            Total de {totalQuantity} produtos no carrinho
+          </div>
           {getCart.length > 0 && (
             <>
               {selectedFreteIndex === null && getTotal.totalAmount < 300 && (
@@ -401,23 +399,25 @@ const Cart = () => {
                       }}
                       className={styles.textsContainer}
                     >
-                       <div className={styles.quantity}>
-                  {" "}
-                  {item.productId.variations &&
-                  item.productId.variations.some((variation) =>
-                    variation.sizes.some((size) => size.quantityAvailable > 0)
-                  ) ? (
-                    <p>{`Apenas ${getAvailableQuantity(
-                      item
-                    )} unidades em estoque`}</p>
-                  ) : (
-                    <p className={styles.p}>0 unidades em estoque</p>
-                  )}
-                </div>
+                      <div className={styles.quantity}>
+                        {" "}
+                        {item.productId.variations &&
+                        item.productId.variations.some((variation) =>
+                          variation.sizes.some(
+                            (size) => size.quantityAvailable > 0
+                          )
+                        ) ? (
+                          <p>{`Apenas ${getAvailableQuantity(
+                            item
+                          )} unidades em estoque`}</p>
+                        ) : (
+                          <p className={styles.p}>0 unidades em estoque</p>
+                        )}
+                      </div>
                       <span>{item.productId && item.productId.name}</span>
                       <span> {item.size}</span>
                       <span> {item.color}</span>
-                
+
                       <div>
                         <div
                           style={{
@@ -425,7 +425,7 @@ const Cart = () => {
                             alignItems: "center",
                             gap: ".5rem",
                             color: "rgb(236, 62, 62)",
-                            cursor:"pointer"
+                            cursor: "pointer",
                           }}
                           onClick={() => handleClickOpenModal(item._id)}
                         >
@@ -593,21 +593,31 @@ const Cart = () => {
                             }}
                             style={{
                               cursor: "pointer",
-                               color:item.quantity === getAvailableQuantity(item) ? "rgb(189, 189, 189)" : "rgb(33, 33, 33)"
+                              color:
+                                item.quantity === getAvailableQuantity(item)
+                                  ? "rgb(189, 189, 189)"
+                                  : "rgb(33, 33, 33)",
                             }}
                           />
                         </div>
                       </div>
                       <div className={styles.texts}>
-                        <span className={styles.spanName} style={{ color: item.quantity === getAvailableQuantity(item) ? '#E71E1E' : '#21BF45' }}>
-                            {item.quantity === getAvailableQuantity(item)
-                              ? "Produto fora de estoque"
-                              : "Produto em estoque"}
-                          </span>
-                        </div>
+                        <span
+                          className={styles.spanName}
+                          style={{
+                            color:
+                              item.quantity === getAvailableQuantity(item)
+                                ? "#E71E1E"
+                                : "#21BF45",
+                          }}
+                        >
+                          {item.quantity === getAvailableQuantity(item)
+                            ? "Produto fora de estoque"
+                            : "Produto em estoque"}
+                        </span>
+                      </div>
                     </div>
                     <div>R${item.price}</div>
-                 
                   </div>
                 </div>
               ))}
@@ -746,7 +756,7 @@ const Cart = () => {
                           alt="logo das transportadoras"
                           style={{ width: "10vw" }}
                         />
-                          
+
                         <p>{item.nomeTransportadora}</p>
                         <p>
                           {" "}
