@@ -42,6 +42,8 @@ const Cart = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const modalRef = useRef(null);
+  const [totalQuantity, setTotalQuantity] = useState([])
+
 
   const handleClickOpenModal = (uniqueId) => {
     setDeleteProductId(uniqueId);
@@ -80,6 +82,7 @@ const Cart = () => {
       .then((response) => {
         setGetCart(response.data.cart.products); // Define os produtos do carrinho
         setGetTotal(response.data.cart); // Define o total do carrinho
+        setTotalQuantity(response.data.cart.TotalQuantity)
         setLoading(false); // Define o estado de carregamento como falso
       })
       .catch((error) => {
@@ -248,6 +251,12 @@ const Cart = () => {
         </div>
       ) : (
         <>
+     
+     <div style={{
+      marginTop:"10rem"
+     }}>
+        Total de {totalQuantity} produtos no carrinho
+      </div>
           {getCart.length > 0 && (
             <>
               {selectedFreteIndex === null && getTotal.totalAmount < 300 && (
