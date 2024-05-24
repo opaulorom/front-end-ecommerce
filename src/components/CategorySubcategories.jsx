@@ -10,6 +10,7 @@ import CircularIndeterminate from "./CircularIndeterminate";
 import colorMap from "./colorMap";
 import Navbar from "./Navbar";
 import CloseIcon from '@mui/icons-material/Close';
+import FilterListIcon from '@mui/icons-material/FilterList';
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -31,6 +32,14 @@ const CategorySubcategories = () => {
   const [availableSizes, setAvailableSizes] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState(originalProducts);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const [doubleBorder, setDoubleBorder] = useState(null); // Alterar para índice
+   
+
+  const handleSelectBorder = (index) => {
+    setDoubleBorder(index);
+  };
+
+  
 
   useEffect(() => {
     setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
@@ -375,7 +384,7 @@ const CategorySubcategories = () => {
                   }}
                   onClick={handleOpenModal}
                 >
-                  <TuneIcon />
+                  <FilterListIcon />
                   Filtros
                 </div>
               </div>
@@ -429,41 +438,52 @@ const CategorySubcategories = () => {
                 >
                   Cores
                 </h3>
+              <div style={{
+                          display: "grid",
+                          gridTemplateColumns: "repeat(4, 1fr)",
+                        }}>
 
-                {colors.map((color, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyItems: "center",
-                      marginTop: "1rem",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "20px",
-                        height: "20px",
-                        borderRadius: "50%",
-                        backgroundColor: colorMap[color],
-                        marginRight: "10px",
-                        border: "1px solid gray",
-                      }}
-                    ></div>
-                    <div
-                      onClick={() => handleColorClick(color)}
-                      style={{
-                        cursor: "pointer",
-                        fontWeight: selectedColor === color ? "600" : "400",
-                        fontSize: selectedColor === color ? "1.1rem" : "1rem",
-                        fontFamily: "Montserrat, arial, sans-serif",
-                      }}
-                    >
-                      {color}
-                    </div>
-                  </div>
-                ))}
+{colors.map((color, index) => (
+          <div
+            key={index}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyItems: "center",
+              marginTop: "1rem",
+              position: "relative"
+            }}
+            onClick={() => { handleColorClick(color); handleSelectBorder(index); }}
+          >
+            <div
+              style={{
+                width: "20px",
+                height: "20px",
+                borderRadius: "50%",
+                backgroundColor: colorMap[color],
+                marginRight: "10px",
+                border: `1px solid ${doubleBorder === index ? "transparent" : "gray"}`,
+                position: "relative" // Adicionando posição relativa para referência
+              }}
+            ></div>
+            {doubleBorder === index && (
+              <div
+                style={{
+                  width: "28px", // Tamanho do círculo externo
+                  height: "28px", // Tamanho do círculo externo
+                  borderRadius: "50%",
+                  border: "2px solid red",
+                  position: "absolute",
+                  top: "-5px", // Ajustando para manter a centralização vertical
+                  left: "-5px", // Ajustando para manter a centralização horizontal
+                }}
+              ></div>
+            )}
+          </div>
+        ))}
+              </div>
 
+               
                       </div>
                       <div
                         style={{
