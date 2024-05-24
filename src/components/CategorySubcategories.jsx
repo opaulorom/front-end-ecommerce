@@ -619,6 +619,8 @@ const filterProducts = () => {
           </div>
         </div>
       ))}
+
+
 <h3
   style={{
     fontFamily: "Montserrat, arial, sans-serif",
@@ -629,28 +631,44 @@ const filterProducts = () => {
 >
   Tamanhos
 </h3>
-<div>
-  {availableSizes.map((size, index) => (
-    <button
-      key={index}
-      style={{
-        borderRadius: "20px",
-        width: "40px",
-        height: "40px",
-        border: "1px solid rgb(114, 114, 114)",
-        backgroundColor:
-          selectedSize === size ? "#333" : "rgb(255, 255, 255)",
-        color: selectedSize === size ? "white" : "black",
-        margin: "8px",
-        cursor: "pointer",
-      }}
-      onClick={() => handleSizeClick(size)}
-    >
-      <span style={{ fontSize: ".8rem" }}>{size}</span>
-    </button>
-  ))}
-</div>
 
+<div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "repeat(4, 1fr)",
+                        }}
+                        className={styles.repeat}
+                      >
+             
+
+                        {Array.from(uniqueSizes).map((size, index) => (
+                          <div
+                            key={index}
+                            onClick={() => handleFilterClick("size", size)}
+                          >
+                            <button
+                              style={{
+                                borderRadius: "20px",
+                                width: "40px",
+                                height: "40px",
+                                border: "1px solid rgb(114, 114, 114)",
+                                backgroundColor:
+                                  selectedSize === size
+                                    ? "#333"
+                                    : "rgb(255, 255, 255)",
+                                color:
+                                  selectedSize === size ? "white" : "black",
+                                marginLeft: "8px",
+                                marginTop: "8px",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => handleSizeClick(size)}
+                            >
+                              <span style={{ fontSize: ".8rem" }}> {size}</span>
+                            </button>
+                          </div>
+                        ))}
+                      </div>
         <h3
                   style={{
                     fontFamily: "Montserrat, arial, sans-serif",
@@ -787,6 +805,7 @@ const displayedPrice = selectedSize
     search: `?${queryParams.toString()}`
   }}  style={{ color: "black", textDecoration: "none" }}
         >
+        
           <img
             src={selectedColorVariation.urls[0]}
             alt={product.name}
