@@ -392,6 +392,19 @@ const Cart = () => {
                       }}
                       className={styles.textsContainer}
                     >
+                       <div className={styles.quantity}>
+                  {" "}
+                  {item.productId.variations &&
+                  item.productId.variations.some((variation) =>
+                    variation.sizes.some((size) => size.quantityAvailable > 0)
+                  ) ? (
+                    <p>{`Apenas ${getAvailableQuantity(
+                      item
+                    )} unidades em estoque`}</p>
+                  ) : (
+                    <p className={styles.p}>0 unidades em estoque</p>
+                  )}
+                </div>
                       <span>{item.productId && item.productId.name}</span>
                       <span> {item.size}</span>
                       <span> {item.color}</span>
