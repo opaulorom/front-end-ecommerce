@@ -661,7 +661,7 @@ const CategorySubcategories = () => {
                         borderRadius: "50%",
                         backgroundColor: colorMap[color],
                         marginRight: "10px",
-                        border: "1px solid gray",
+                        border: "1px solid rgba(0, 0, 0, 0.05)",
                       }}
                     ></div>
                     <div
