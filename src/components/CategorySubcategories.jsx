@@ -303,6 +303,8 @@ const CategorySubcategories = () => {
     setOpenFilterModal(false);
   };
 
+  const filteredProductsContent = filteredProducts.length
+
   return (
     <div
       style={{
@@ -417,56 +419,51 @@ const CategorySubcategories = () => {
                       </div>
 
                       <div style={{ marginBottom: "3rem" }}>
-                        <h3
-                          style={{
-                            fontFamily: "Montserrat, arial, sans-serif",
-                            fontWeight: "600",
-                            fontSize: "1.2rem",
-                            color: "rgb(52, 52, 54)",
-                          }}
-                        >
-                          Cores
-                        </h3>
-                        <div>
-                          {colors.map((color, index) => (
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyItems: "center",
-                                marginTop: "1rem",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  width: "20px",
-                                  height: "20px",
-                                  borderRadius: "50%",
-                                  backgroundColor: colorMap[color],
-                                  marginRight: "10px",
-                                  border: "1px solid gray",
-                                }}
-                              ></div>
-                              <div
-                                key={index}
-                                onClick={() => {
-                                  handleColorClick(color),
-                                    handleFilterClick("color", color);
-                                }}
-                                style={{
-                                  cursor: "pointer",
-                                  fontWeight:
-                                    selectedColor === color ? "600" : "400",
-                                  fontSize:
-                                    selectedColor === color ? "1.1rem" : "1rem",
-                                  fontFamily: "Montserrat, arial, sans-serif",
-                                }}
-                              >
-                                {color}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+                      <h3
+                  style={{
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: "600",
+                    fontSize: "1.2rem",
+                    color: "rgb(52, 52, 54)",
+                  }}
+                >
+                  Cores
+                </h3>
+
+                {colors.map((color, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyItems: "center",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        borderRadius: "50%",
+                        backgroundColor: colorMap[color],
+                        marginRight: "10px",
+                        border: "1px solid gray",
+                      }}
+                    ></div>
+                    <div
+                      onClick={() => handleColorClick(color)}
+                      style={{
+                        cursor: "pointer",
+                        fontWeight: selectedColor === color ? "600" : "400",
+                        fontSize: selectedColor === color ? "1.1rem" : "1rem",
+                        fontFamily: "Montserrat, arial, sans-serif",
+                      }}
+                    >
+                      {color}
+                    </div>
+                  </div>
+                ))}
+
                       </div>
                       <div
                         style={{
@@ -577,7 +574,9 @@ const CategorySubcategories = () => {
                 >
                   R$200 ou mais
                 </div>
-              
+                
+         
+                <button  onClick={handleClickCloseModal}  className={styles.filteredQuantity} > {filteredProductsContent} resultados </button>
                     </div>
                   </div>
                 )}
@@ -776,6 +775,7 @@ const CategorySubcategories = () => {
                   R$200 ou mais
                 </div>
               </div>
+              
             </div>
           </div>
 
