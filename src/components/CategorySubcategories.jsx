@@ -9,7 +9,7 @@ import TuneIcon from "@mui/icons-material/Tune";
 import CircularIndeterminate from "./CircularIndeterminate";
 import colorMap from "./colorMap";
 import Navbar from "./Navbar";
-
+import CloseIcon from '@mui/icons-material/Close';
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -31,7 +31,7 @@ const CategorySubcategories = () => {
   const [availableSizes, setAvailableSizes] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState(originalProducts);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
- 
+
   useEffect(() => {
     setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
   }, []);
@@ -39,7 +39,10 @@ const CategorySubcategories = () => {
   const getSizesForColor = (products, color) => {
     const sizesSet = new Set();
     products.forEach((product) => {
-      if (!color || product.variations.some(variation => variation.color === color)) {
+      if (
+        !color ||
+        product.variations.some((variation) => variation.color === color)
+      ) {
         product.variations.forEach((variation) => {
           variation.sizes.forEach((sizeObj) => {
             sizesSet.add(sizeObj.size);
@@ -52,57 +55,59 @@ const CategorySubcategories = () => {
 
   // Função para obter o preço de um tamanho específico
   const getPriceForSize = (product, color, size) => {
-    const variation = product.variations.find(variation => variation.color === color);
+    const variation = product.variations.find(
+      (variation) => variation.color === color
+    );
     if (variation) {
-      const sizeObj = variation.sizes.find(item => item.size === size);
+      const sizeObj = variation.sizes.find((item) => item.size === size);
       return sizeObj ? sizeObj.price : 0;
     }
     return 0;
   };
-  
-  
+
   // UseEffect para inicializar os tamanhos disponíveis com base na primeira cor
- 
-useEffect(() => {
-  if (originalProducts.length > 0) {
-    const firstColor = originalProducts[0].variations[0].color;
-    const sizesArray = getSizesForColor(originalProducts, firstColor);
-    setAvailableSizes(sizesArray);
-  }
-  setFilteredProducts(originalProducts);
-}, [originalProducts]);
 
-useEffect(() => {
-  filterProducts();
-}, [selectedColor, selectedSize, selectedSubcategory]);
-  
+  useEffect(() => {
+    if (originalProducts.length > 0) {
+      const firstColor = originalProducts[0].variations[0].color;
+      const sizesArray = getSizesForColor(originalProducts, firstColor);
+      setAvailableSizes(sizesArray);
+    }
+    setFilteredProducts(originalProducts);
+  }, [originalProducts]);
 
-  
-const filterProducts = () => {
-  let filtered = originalProducts;
+  useEffect(() => {
+    filterProducts();
+  }, [selectedColor, selectedSize, selectedSubcategory]);
 
-  if (selectedColor) {
-    filtered = filtered.filter(product =>
-      product.variations.some(variation => variation.color === selectedColor)
-    );
-  }
+  const filterProducts = () => {
+    let filtered = originalProducts;
 
-  if (selectedSize) {
-    filtered = filtered.filter(product =>
-      product.variations.some(variation =>
-        variation.sizes.some(sizeObj => sizeObj.size === selectedSize)
-      )
-    );
-  }
+    if (selectedColor) {
+      filtered = filtered.filter((product) =>
+        product.variations.some(
+          (variation) => variation.color === selectedColor
+        )
+      );
+    }
 
-  if (selectedSubcategory) {
-    filtered = filtered.filter(product => product.subcategory === selectedSubcategory);
-  }
+    if (selectedSize) {
+      filtered = filtered.filter((product) =>
+        product.variations.some((variation) =>
+          variation.sizes.some((sizeObj) => sizeObj.size === selectedSize)
+        )
+      );
+    }
 
-  setFilteredProducts(filtered);
-};
+    if (selectedSubcategory) {
+      filtered = filtered.filter(
+        (product) => product.subcategory === selectedSubcategory
+      );
+    }
 
-  
+    setFilteredProducts(filtered);
+  };
+
   const handleSubcategoryClick = (subcategory) => {
     if (subcategory === selectedSubcategory) {
       setSelectedSubcategory(null);
@@ -111,7 +116,7 @@ const filterProducts = () => {
       setSelectedSubcategory(subcategory);
     }
   };
-  
+
   const handleColorClick = (color) => {
     if (color === selectedColor) {
       setSelectedColor(null);
@@ -124,14 +129,10 @@ const filterProducts = () => {
       setSelectedColor(color);
     }
   };
-  
+
   const handleSizeClick = (size) => {
     setSelectedSize(size);
   };
-  
-
-
-
 
   const fetchMixedProducts = async (page, filters) => {
     setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
@@ -236,7 +237,7 @@ const filterProducts = () => {
 
   const handleFilterClick = async (filterType, value) => {
     let filteredProducts = originalProducts;
-  
+
     if (filterType === "size") {
       filteredProducts = originalProducts.filter((product) =>
         product.variations.some((variation) =>
@@ -257,12 +258,11 @@ const filterProducts = () => {
         return productPrice >= minPrice && productPrice <= maxPrice;
       });
     }
-  
+
     setFilteredProducts(filteredProducts);
     setTotalPages(1); // Atualiza o número total de páginas para 1, uma vez que os produtos filtrados serão exibidos em uma única página
   };
-  
-  
+
   const handleFavoriteClick = (productId) => {
     setMixedProducts((prevProducts) =>
       prevProducts.map((product) =>
@@ -310,7 +310,7 @@ const filterProducts = () => {
         marginTop: "14rem",
       }}
     >
-      <div style={{ zIndex: "999999999999" }}>
+      <div style={{ zIndex: "6" }}>
         <Header />
       </div>
 
@@ -382,12 +382,15 @@ const filterProducts = () => {
               <div>
                 {openFilterModal && (
                   <div className={styles.FilterModal}>
-                    <div ref={modalRef} className={styles.FilterModalContent}>
+                    <div ref={modalRef} className={styles.FilterModalContent} style={{
+                       overflowX: "auto",
+                       maxHeight: "100vh",
+                    }}>
                       <span
                         className={styles.FilterClose}
                         onClick={handleClickCloseModal}
                       >
-                        &times;
+                       <CloseIcon />
                       </span>
                       <p
                         style={{
@@ -407,9 +410,7 @@ const filterProducts = () => {
                               style={{ marginLeft: "-2.5rem" }}
                               className={styles.myLinks}
                             >
-                           
-                                {subcategory}
-                       
+                              {subcategory}
                             </li>
                           ))}
                         </ul>
@@ -426,7 +427,7 @@ const filterProducts = () => {
                         >
                           Cores
                         </h3>
-                        <div onClick={handleClickCloseModal}>
+                        <div>
                           {colors.map((color, index) => (
                             <div
                               style={{
@@ -502,46 +503,81 @@ const filterProducts = () => {
                           </div>
                         ))}
                       </div>
-
-                      <div style={{ marginTop: "3rem" }}>
-                        <h3
-                          style={{
-                            fontFamily: "Montserrat, arial, sans-serif",
-                            fontWeight: "600",
-                            fontSize: "1.2rem",
-                            color: "rgb(52, 52, 54)",
-                          }}
-                        >
-                          Faixas de Preços
-                        </h3>
-                        <div onClick={handleClickCloseModal}>
-                          {priceRanges.map((range, index) => (
-                            <div
-                              key={index}
-                              onClick={() => {
-                                handlePriceClick(range),
-                                  handleFilterClick("priceRange", range);
-                              }}
-                              style={{
-                                cursor: "pointer",
-                                fontFamily: "Montserrat, arial, sans-serif",
-                                fontWeight:
-                                  selectedPrice === range ? "600" : "400",
-                                fontSize:
-                                  selectedPrice === range ? "1.1rem" : "1rem",
-                                color:
-                                  selectedPrice === range
-                                    ? "rgb(52, 52, 54)"
-                                    : "rgb(52, 52, 54)",
-                              }}
-                            >
-                              {range}
-                            </div>
-                          ))}
-                   
-                        </div>
-                        
-                      </div>
+                      <h3
+                  style={{
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: "600",
+                    fontSize: "1.2rem",
+                    color: "rgb(52, 52, 54)",
+                  }}
+                >
+                  Faixas de Preços
+                </h3>
+                <div
+                  onClick={() => handleFilterClick("price", "0-50")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "0-50" ? "600" : "400",
+                    fontSize: selectedPrice === "0-50" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "0-50"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$5 - R$50
+                </div>
+                <div
+                  onClick={() => handleFilterClick("price", "50-100")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "50-100" ? "600" : "400",
+                    fontSize: selectedPrice === "50-100" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "50-100"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$50 - R$100
+                </div>
+                <div
+                  onClick={() => handleFilterClick("price", "100-200")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "100-200" ? "600" : "400",
+                    fontSize: selectedPrice === "100-200" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "100-200"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$100 - R$200
+                </div>
+                <div
+                  onClick={() => handleFilterClick("price", "200-")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "200-" ? "600" : "400",
+                    fontSize: selectedPrice === "200-" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "200-"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$200 ou mais
+                </div>
+              
                     </div>
                   </div>
                 )}
@@ -560,116 +596,112 @@ const filterProducts = () => {
                 Categorias
               </p>
               <div onClick={handleClickCloseModal}>
-  <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
-    {subcategories.map((subcategory, index) => (
-      <li
-        key={index}
-        style={{ marginLeft: "-2.5rem" }}
-        className={styles.myLinks}
-        onClick={() => handleSubcategoryClick(subcategory)}
-      >
-        {subcategory}
-      </li>
-    ))}
-  </ul>
-</div>
+                <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
+                  {subcategories.map((subcategory, index) => (
+                    <li
+                      key={index}
+                      style={{ marginLeft: "-2.5rem" }}
+                      className={styles.myLinks}
+                      onClick={() => handleSubcategoryClick(subcategory)}
+                    >
+                      {subcategory}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
               <div style={{ marginBottom: "3rem" }}>
-      <h3
-        style={{
-          fontFamily: "Montserrat, arial, sans-serif",
-          fontWeight: "600",
-          fontSize: "1.2rem",
-          color: "rgb(52, 52, 54)",
-        }}
-      >
-        Cores
-      </h3>
+                <h3
+                  style={{
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: "600",
+                    fontSize: "1.2rem",
+                    color: "rgb(52, 52, 54)",
+                  }}
+                >
+                  Cores
+                </h3>
 
-      {colors.map((color, index) => (
-        <div
-          key={index}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyItems: "center",
-            marginTop: "1rem",
-          }}
-        >
-          <div
-            style={{
-              width: "20px",
-              height: "20px",
-              borderRadius: "50%",
-              backgroundColor: colorMap[color],
-              marginRight: "10px",
-              border: "1px solid gray",
-            }}
-          ></div>
-          <div
-            onClick={() => handleColorClick(color)}
-            style={{
-              cursor: "pointer",
-              fontWeight: selectedColor === color ? "600" : "400",
-              fontSize: selectedColor === color ? "1.1rem" : "1rem",
-              fontFamily: "Montserrat, arial, sans-serif",
-            }}
-          >
-            {color}
-          </div>
-        </div>
-      ))}
+                {colors.map((color, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyItems: "center",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        borderRadius: "50%",
+                        backgroundColor: colorMap[color],
+                        marginRight: "10px",
+                        border: "1px solid gray",
+                      }}
+                    ></div>
+                    <div
+                      onClick={() => handleColorClick(color)}
+                      style={{
+                        cursor: "pointer",
+                        fontWeight: selectedColor === color ? "600" : "400",
+                        fontSize: selectedColor === color ? "1.1rem" : "1rem",
+                        fontFamily: "Montserrat, arial, sans-serif",
+                      }}
+                    >
+                      {color}
+                    </div>
+                  </div>
+                ))}
 
+                <h3
+                  style={{
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: "600",
+                    fontSize: "1.2rem",
+                    color: "rgb(52, 52, 54)",
+                  }}
+                >
+                  Tamanhos
+                </h3>
 
-<h3
-  style={{
-    fontFamily: "Montserrat, arial, sans-serif",
-    fontWeight: "600",
-    fontSize: "1.2rem",
-    color: "rgb(52, 52, 54)",
-  }}
->
-  Tamanhos
-</h3>
-
-<div
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(4, 1fr)",
+                  }}
+                  className={styles.repeat}
+                >
+                  {Array.from(uniqueSizes).map((size, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleFilterClick("size", size)}
+                    >
+                      <button
                         style={{
-                          display: "grid",
-                          gridTemplateColumns: "repeat(4, 1fr)",
+                          borderRadius: "20px",
+                          width: "40px",
+                          height: "40px",
+                          border: "1px solid rgb(114, 114, 114)",
+                          backgroundColor:
+                            selectedSize === size
+                              ? "#333"
+                              : "rgb(255, 255, 255)",
+                          color: selectedSize === size ? "white" : "black",
+                          marginLeft: "8px",
+                          marginTop: "8px",
+                          cursor: "pointer",
                         }}
-                        className={styles.repeat}
+                        onClick={() => handleSizeClick(size)}
                       >
-             
-
-                        {Array.from(uniqueSizes).map((size, index) => (
-                          <div
-                            key={index}
-                            onClick={() => handleFilterClick("size", size)}
-                          >
-                            <button
-                              style={{
-                                borderRadius: "20px",
-                                width: "40px",
-                                height: "40px",
-                                border: "1px solid rgb(114, 114, 114)",
-                                backgroundColor:
-                                  selectedSize === size
-                                    ? "#333"
-                                    : "rgb(255, 255, 255)",
-                                color:
-                                  selectedSize === size ? "white" : "black",
-                                marginLeft: "8px",
-                                marginTop: "8px",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => handleSizeClick(size)}
-                            >
-                              <span style={{ fontSize: ".8rem" }}> {size}</span>
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-        <h3
+                        <span style={{ fontSize: ".8rem" }}> {size}</span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <h3
                   style={{
                     fontFamily: "Montserrat, arial, sans-serif",
                     fontWeight: "600",
@@ -679,61 +711,71 @@ const filterProducts = () => {
                 >
                   Faixas de Preços
                 </h3>
-  <div
-    onClick={() => handleFilterClick("price", "0-50")}
-    style={{
-      cursor: "pointer",
-      fontFamily: "Montserrat, arial, sans-serif",
-      fontWeight: selectedPrice === "0-50" ? "600" : "400",
-      fontSize: selectedPrice === "0-50" ? "1.1rem" : "1rem",
-      color: selectedPrice === "0-50" ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
-      margin: "0.5rem",
-    }}
-  >
-    R$5 - R$50
-  </div>
-  <div
-    onClick={() => handleFilterClick("price", "50-100")}
-    style={{
-      cursor: "pointer",
-      fontFamily: "Montserrat, arial, sans-serif",
-      fontWeight: selectedPrice === "50-100" ? "600" : "400",
-      fontSize: selectedPrice === "50-100" ? "1.1rem" : "1rem",
-      color: selectedPrice === "50-100" ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
-      margin: "0.5rem",
-    }}
-  >
-    R$50 - R$100
-  </div>
-  <div
-    onClick={() => handleFilterClick("price", "100-200")}
-    style={{
-      cursor: "pointer",
-      fontFamily: "Montserrat, arial, sans-serif",
-      fontWeight: selectedPrice === "100-200" ? "600" : "400",
-      fontSize: selectedPrice === "100-200" ? "1.1rem" : "1rem",
-      color: selectedPrice === "100-200" ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
-      margin: "0.5rem",
-    }}
-  >
-    R$100 - R$200
-  </div>
-  <div
-    onClick={() => handleFilterClick("price", "200-")}
-    style={{
-      cursor: "pointer",
-      fontFamily: "Montserrat, arial, sans-serif",
-      fontWeight: selectedPrice === "200-" ? "600" : "400",
-      fontSize: selectedPrice === "200-" ? "1.1rem" : "1rem",
-      color: selectedPrice === "200-" ? "rgb(52, 52, 54)" : "rgb(52, 52, 54)",
-      margin: "0.5rem",
-    }}
-  >
-    R$200 ou mais
-  </div>
-</div>
-
-
+                <div
+                  onClick={() => handleFilterClick("price", "0-50")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "0-50" ? "600" : "400",
+                    fontSize: selectedPrice === "0-50" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "0-50"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$5 - R$50
+                </div>
+                <div
+                  onClick={() => handleFilterClick("price", "50-100")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "50-100" ? "600" : "400",
+                    fontSize: selectedPrice === "50-100" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "50-100"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$50 - R$100
+                </div>
+                <div
+                  onClick={() => handleFilterClick("price", "100-200")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "100-200" ? "600" : "400",
+                    fontSize: selectedPrice === "100-200" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "100-200"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$100 - R$200
+                </div>
+                <div
+                  onClick={() => handleFilterClick("price", "200-")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "200-" ? "600" : "400",
+                    fontSize: selectedPrice === "200-" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "200-"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$200 ou mais
+                </div>
+              </div>
             </div>
           </div>
 
@@ -757,122 +799,129 @@ const filterProducts = () => {
                 </span>
               </div>
             )}
-    <ul>
-    {filteredProducts.map((product) => {
-    const selectedColorVariation = selectedColor
-    ? product.variations.find(
-        (variation) => variation.color === selectedColor
-      )
-    : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
+            <ul>
+              {filteredProducts.map((product) => {
+                const selectedColorVariation = selectedColor
+                  ? product.variations.find(
+                      (variation) => variation.color === selectedColor
+                    )
+                  : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
 
-  // Verifique se há uma foto disponível
-  const hasPhoto =
-    selectedColorVariation &&
-    selectedColorVariation.urls &&
-    selectedColorVariation.urls.length > 0;
+                // Verifique se há uma foto disponível
+                const hasPhoto =
+                  selectedColorVariation &&
+                  selectedColorVariation.urls &&
+                  selectedColorVariation.urls.length > 0;
 
-  // Se não houver foto disponível, não renderize o produto
-  if (!hasPhoto) {
-    return null;
-  }
+                // Se não houver foto disponível, não renderize o produto
+                if (!hasPhoto) {
+                  return null;
+                }
 
-  // Encontre o preço correto para exibição
-// Encontre o preço correto para exibição
-const displayedPrice = selectedSize
-  ? getPriceForSize(product, selectedColor, selectedSize)
-  : selectedColorVariation
-  ? selectedColorVariation.sizes[0].price // Se nenhum tamanho estiver selecionado, use o preço do primeiro tamanho disponível para a variação selecionada
-  : product.variations[0].sizes[0].price; // Se nenhum tamanho ou variação estiver selecionado, use o preço do primeiro tamanho disponível no primeiro produto
+                // Encontre o preço correto para exibição
+                // Encontre o preço correto para exibição
+                const displayedPrice = selectedSize
+                  ? getPriceForSize(product, selectedColor, selectedSize)
+                  : selectedColorVariation
+                  ? selectedColorVariation.sizes[0].price // Se nenhum tamanho estiver selecionado, use o preço do primeiro tamanho disponível para a variação selecionada
+                  : product.variations[0].sizes[0].price; // Se nenhum tamanho ou variação estiver selecionado, use o preço do primeiro tamanho disponível no primeiro produto
 
-  // Acessar o tamanho do produto corretamente
-  const size = selectedSize || selectedColorVariation.sizes[0].name;
+                // Acessar o tamanho do produto corretamente
+                const size =
+                  selectedSize || selectedColorVariation.sizes[0].name;
 
-  // Construindo os parâmetros da URL
-  const queryParams = new URLSearchParams();
-  queryParams.append("selectedImageFromCategory", selectedColorVariation.urls[0]);
-  queryParams.append("selectedColorFromCategory", selectedColor);
-  queryParams.append("selectedPriceFromCategory", displayedPrice);
-  queryParams.append("selectedSizeFromCategory", size);
+                // Construindo os parâmetros da URL
+                const queryParams = new URLSearchParams();
+                queryParams.append(
+                  "selectedImageFromCategory",
+                  selectedColorVariation.urls[0]
+                );
+                queryParams.append("selectedColorFromCategory", selectedColor);
+                queryParams.append("selectedPriceFromCategory", displayedPrice);
+                queryParams.append("selectedSizeFromCategory", size);
 
-    return (
-      <li
-        key={product._id || "undefined"}
-        style={{ position: "relative" }}
-      >
-        <Link
-  to={{
-    pathname: `/products/${product._id}`,
-    search: `?${queryParams.toString()}`
-  }}  style={{ color: "black", textDecoration: "none" }}
-        >
-        
-          <img
-            src={selectedColorVariation.urls[0]}
-            alt={product.name}
-            style={{
-              width: "30vw",
-              marginTop: "-2rem",
-              zIndex: "-1",
-              marginLeft: "1rem",
-            }}
-          />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              marginBottom: "4rem",
-              marginLeft: "1rem",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "1rem",
-                fontWeight: "700",
-                fontFamily: "poppins, sans-serif",
-              }}
-            >
-              R${" "}
-              {Number(displayedPrice || product.price || product.variations[0].sizes[0].price)
-                .toFixed(2)
-                .padStart(5, "0")}
-            </span>
-            <span
-              style={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                width: "15vw",
-                color: "rgb(114, 114, 114)",
-                fontSize: ".8rem",
-              }}
-            >
-              {product.name}
-            </span>
-          </div>
-        </Link>
-        <div
-          style={{
-            position: "absolute",
-            top: "-5%",
-            right: "0",
-            zIndex: 9999,
-            marginBottom: "5rem",
-            width: "3rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <IconToggle
-            productId={product._id}
-            isFavorite={favorites[product._id]}
-          />
-        </div>
-      </li>
-    );
-  })}
-</ul>
-
+                return (
+                  <li
+                    key={product._id || "undefined"}
+                    style={{ position: "relative" }}
+                  >
+                    <Link
+                      to={{
+                        pathname: `/products/${product._id}`,
+                        search: `?${queryParams.toString()}`,
+                      }}
+                      style={{ color: "black", textDecoration: "none" }}
+                    >
+                      <img
+                        src={selectedColorVariation.urls[0]}
+                        alt={product.name}
+                        style={{
+                          width: "30vw",
+                          marginTop: "-2rem",
+                          zIndex: "-1",
+                          marginLeft: "1rem",
+                        }}
+                      />
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          marginBottom: "4rem",
+                          marginLeft: "1rem",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: "1rem",
+                            fontWeight: "700",
+                            fontFamily: "poppins, sans-serif",
+                          }}
+                        >
+                          R${" "}
+                          {Number(
+                            displayedPrice ||
+                              product.price ||
+                              product.variations[0].sizes[0].price
+                          )
+                            .toFixed(2)
+                            .padStart(5, "0")}
+                        </span>
+                        <span
+                          style={{
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            width: "15vw",
+                            color: "rgb(114, 114, 114)",
+                            fontSize: ".8rem",
+                          }}
+                        >
+                          {product.name}
+                        </span>
+                      </div>
+                    </Link>
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "-5%",
+                        right: "0",
+                        zIndex: 5,
+                        marginBottom: "5rem",
+                        width: "3rem",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <IconToggle
+                        productId={product._id}
+                        isFavorite={favorites[product._id]}
+                      />
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
 
             {mixedProducts.length > 0 && (
               <>
