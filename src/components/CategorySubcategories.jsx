@@ -649,7 +649,10 @@ const CategorySubcategories = () => {
                       alignItems: "center",
                       justifyItems: "center",
                       marginTop: "1rem",
+                      cursor: "pointer"
                     }}
+                    onClick={() => handleColorClick(color)}
+
                   >
                     <div
                       style={{
@@ -662,7 +665,6 @@ const CategorySubcategories = () => {
                       }}
                     ></div>
                     <div
-                      onClick={() => handleColorClick(color)}
                       style={{
                         cursor: "pointer",
                         fontWeight: selectedColor === color ? "600" : "400",
