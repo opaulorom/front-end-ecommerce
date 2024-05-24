@@ -30,78 +30,88 @@ const CategorySubcategories = () => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [availableSizes, setAvailableSizes] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState(originalProducts);
-
+  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+ 
   useEffect(() => {
     setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
   }, []);
 
   const getSizesForColor = (products, color) => {
-    const sizesSet = new Set(); // Usando um Set para garantir que os tamanhos não sejam repetidos
-  
+    const sizesSet = new Set();
     products.forEach((product) => {
       if (!color || product.variations.some(variation => variation.color === color)) {
         product.variations.forEach((variation) => {
           variation.sizes.forEach((sizeObj) => {
-            sizesSet.add(sizeObj.size); // Adicionando tamanho ao Set
+            sizesSet.add(sizeObj.size);
           });
         });
       }
     });
-  
-    return Array.from(sizesSet); // Retornando um array de tamanhos únicos
+    return Array.from(sizesSet);
   };
-  
 
   // Função para obter o preço de um tamanho específico
   const getPriceForSize = (product, color, size) => {
     const variation = product.variations.find(variation => variation.color === color);
     if (variation) {
-      const sizeObj = variation.sizes.find(item => item.size === size); // Encontrando o objeto do tamanho específico
-      return sizeObj ? sizeObj.price : 0; // Retornando o preço do tamanho encontrado ou 0 se não encontrado
+      const sizeObj = variation.sizes.find(item => item.size === size);
+      return sizeObj ? sizeObj.price : 0;
     }
-    // Retornar um valor padrão caso a variação não seja encontrada
     return 0;
   };
   
   
   // UseEffect para inicializar os tamanhos disponíveis com base na primeira cor
-  useEffect(() => {
-    if (originalProducts.length > 0) {
-      const firstColor = originalProducts[0].variations[0].color;
-      const sizesArray = getSizesForColor(originalProducts, firstColor);
-      setAvailableSizes(sizesArray);
-    }
-    setFilteredProducts(originalProducts);
-  }, [originalProducts]);
-  
-  
-  useEffect(() => {
-    filterProducts();
-  }, [selectedColor, selectedSize]);
+ 
+useEffect(() => {
+  if (originalProducts.length > 0) {
+    const firstColor = originalProducts[0].variations[0].color;
+    const sizesArray = getSizesForColor(originalProducts, firstColor);
+    setAvailableSizes(sizesArray);
+  }
+  setFilteredProducts(originalProducts);
+}, [originalProducts]);
 
-  const filterProducts = () => {
-    let filtered = originalProducts;
+useEffect(() => {
+  filterProducts();
+}, [selectedColor, selectedSize, selectedSubcategory]);
   
-    // Filtrar por cor, se uma cor estiver selecionada
-    if (selectedColor) {
-      filtered = filtered.filter(product =>
-        product.variations.some(variation => variation.color === selectedColor)
-      );
+
+  
+const filterProducts = () => {
+  let filtered = originalProducts;
+
+  if (selectedColor) {
+    filtered = filtered.filter(product =>
+      product.variations.some(variation => variation.color === selectedColor)
+    );
+  }
+
+  if (selectedSize) {
+    filtered = filtered.filter(product =>
+      product.variations.some(variation =>
+        variation.sizes.some(sizeObj => sizeObj.size === selectedSize)
+      )
+    );
+  }
+
+  if (selectedSubcategory) {
+    filtered = filtered.filter(product => product.subcategory === selectedSubcategory);
+  }
+
+  setFilteredProducts(filtered);
+};
+
+  
+  const handleSubcategoryClick = (subcategory) => {
+    if (subcategory === selectedSubcategory) {
+      setSelectedSubcategory(null);
+      setFilteredProducts(originalProducts);
+    } else {
+      setSelectedSubcategory(subcategory);
     }
-  
-    // Filtrar por tamanho, se um tamanho estiver selecionado
-    if (selectedSize) {
-      filtered = filtered.filter(product =>
-        product.variations.some(variation =>
-          variation.sizes.some(sizeObj => sizeObj.size === selectedSize)
-        )
-      );
-    }
-  
-    setFilteredProducts(filtered);
   };
   
-
   const handleColorClick = (color) => {
     if (color === selectedColor) {
       setSelectedColor(null);
@@ -397,11 +407,9 @@ const CategorySubcategories = () => {
                               style={{ marginLeft: "-2.5rem" }}
                               className={styles.myLinks}
                             >
-                              <Link
-                                to={`/categories/${category}/${subcategory}`}
-                              >
+                           
                                 {subcategory}
-                              </Link>
+                       
                             </li>
                           ))}
                         </ul>
@@ -551,20 +559,21 @@ const CategorySubcategories = () => {
               >
                 Categorias
               </p>
+              <div onClick={handleClickCloseModal}>
+  <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
+    {subcategories.map((subcategory, index) => (
+      <li
+        key={index}
+        style={{ marginLeft: "-2.5rem" }}
+        className={styles.myLinks}
+        onClick={() => handleSubcategoryClick(subcategory)}
+      >
+        {subcategory}
+      </li>
+    ))}
+  </ul>
+</div>
 
-              <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
-                {subcategories.map((subcategory, index) => (
-                  <li
-                    key={index}
-                    style={{ marginLeft: "-2.5rem" }}
-                    className={styles.myLinks}
-                  >
-                    <Link to={`/categories/${category}/${subcategory}`}>
-                      {subcategory}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
               <div style={{ marginBottom: "3rem" }}>
       <h3
         style={{
