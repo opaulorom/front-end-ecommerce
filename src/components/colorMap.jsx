@@ -48,7 +48,8 @@ const colorMap = {
     Salmão:"#FA8072",
     rosaFloral: "#FFC0CB", // Exemplo de definição da cor rosa floral,
     vinho: "#A2011F",
-    marinho: "#120A8F"
+    marinho: "#120A8F",
+    "azul marinho":  "#120A8F"
   };
   
   export default colorMap;
