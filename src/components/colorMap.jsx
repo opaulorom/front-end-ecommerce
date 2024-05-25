@@ -11,7 +11,7 @@ const colorMap = {
     cinza: "#808080",
     preto: "#000000",
     branco: "#FFFFFF",
-    turquesa: "#40E0D0",
+    "azul turquesa": "#40E0D0",
     violeta: "#EE82EE",
     coral: "#FF7F50",
     lavanda: "#E6E6FA",

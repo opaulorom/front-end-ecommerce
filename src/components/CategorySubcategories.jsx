@@ -42,8 +42,10 @@ const CategorySubcategories = () => {
   
 
   useEffect(() => {
-    setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
-  }, []);
+    // Obter as chaves do colorMap e remover espaços em branco
+    const trimmedKeys = Object.keys(colorMap).map(key => key.trim());
+    setColors(trimmedKeys); // Lista de todas as cores do colorMap sem espaços
+  }, [colorMap]);
 
   const getSizesForColor = (products, color) => {
     const sizesSet = new Set();
