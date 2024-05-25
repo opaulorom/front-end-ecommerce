@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isCustomer, setIsCustomer] = useState(false); // Renomeado para isCustomer
   const [userId, setUserId] = useState(null); // Adicionado userId
+  const [remainingAttempts, setRemainingAttempts] = useState('Usuário bloqueado'); // Inicialize como null ou 0
 
   useEffect(() => {
     const storedToken = Cookies.get('token');
@@ -26,26 +27,31 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
-
+  
       const { token, user } = response.data;
-      const { role, _id } = user;
-
+      const { role, _id, remainingAttempts } = user; // Inclua remainingAttempts
+  
       setLoggedIn(true);
       setIsCustomer(role === 'customer');
-      setUserId(_id); // Definindo o ID do usuário após o login
+      setUserId(_id);
+      setRemainingAttempts(remainingAttempts); // Atualize remainingAttempts no estado
+  
       Cookies.set('token', token);
       Cookies.set('role', role);
-      Cookies.set('userId', _id); // Salvando o ID do usuário nos cookies
-      
+      Cookies.set('userId', _id);
+  
+      console.log(remainingAttempts);
     } catch (error) {
       if (error.response && error.response.status === 401) {
+        const { remainingAttempts } = error.response.data;
+        setRemainingAttempts(remainingAttempts); // Atualize aqui em caso de erro
         toast.error('Erro, email ou senha inválidos!', { position: toast.POSITION.TOP_CENTER });
       } else {
         console.error('Erro na solicitação de login', error);
       }
     }
   };
-
+  
   const logout = () => {
     Cookies.remove('token');
     Cookies.remove('role');
@@ -61,6 +67,7 @@ export const AuthProvider = ({ children }) => {
     userId, // Incluindo userId nos valores do contexto
     login,
     logout,
+    remainingAttempts
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

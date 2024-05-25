@@ -6,7 +6,7 @@ import "./LoginForm.css"
 import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
-  const { loggedIn, isCustomer,  login, logout } = useAuth();
+  const { loggedIn, isCustomer,  login, remainingAttempts  } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [formErrors, setFormErrors] = useState({});
@@ -76,6 +76,10 @@ const LoginForm = () => {
             Login
           </button>
         </div>
+        {remainingAttempts &&  <div>
+          Tentativas restantes: {remainingAttempts !== undefined ? remainingAttempts : 'N/A'}
+        </div>}
+       
       </div>
       Ainda nao tem uma conta  <Link to={"/register"}>Cadastre-se</Link><br/>
       Esqueceu a senha   <Link to={"/forgotPassword"}>clique aqui</Link>
