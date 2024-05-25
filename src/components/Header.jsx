@@ -221,11 +221,11 @@ const Header = () => {
                             display: "flex",
                             alignItems: "center",
                             color: "red",
-                            position: "absolute",
                             bottom: "10px",
                             left: "10px",
                             gap: ".2rem",
                             cursor: "pointer",
+                            marginTop:"15rem"
                           }}
                           onClick={logout}
                         >

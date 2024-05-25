@@ -3,6 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -39,8 +40,8 @@ export const AuthProvider = ({ children }) => {
       Cookies.set('token', token);
       Cookies.set('role', role);
       Cookies.set('userId', _id);
-  
-      console.log(remainingAttempts);
+     
+
     } catch (error) {
       if (error.response && error.response.status === 401) {
         const { remainingAttempts } = error.response.data;
@@ -59,6 +60,8 @@ export const AuthProvider = ({ children }) => {
     setLoggedIn(false);
     setIsCustomer(false);
     setUserId(null); // Resetando o ID do usuário ao fazer logout
+    navigate('/home');
+
   };
 
   const values = {

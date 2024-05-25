@@ -44,6 +44,7 @@ import OrderDetails from "./components/OrderDetails";
 import { UnreadProvider } from "./context/UnreadContext";
 import AllOrderDetails from "./components/AllOrderDetails";
 import SuccessPage from "./components/SuccessPage";
+import MobileProfile from "./components/MobileProfile";
 
 const Root = () => (
   <Routes>
@@ -54,6 +55,8 @@ const Root = () => (
     <Route path="/favoritos" element={<Heart />} />
     <Route path="/carrinho" element={<Cart />} />
     <Route path="/perfil" element={<Profile />} />
+    <Route path="/conta" element={<MobileProfile />} />
+
     <Route path="/products/:productId" element={<ProductDetails  />} />{" "}
     <Route path="/payment" element={<Pay />} />
     <Route path="/" element={<Categories />} />

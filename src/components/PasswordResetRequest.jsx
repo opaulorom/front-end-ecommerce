@@ -27,7 +27,8 @@ const PasswordResetRequest = () => {
     <Header/>
       <Navbar/>
     <div style={{marginTop:"15rem"}}>
-
+   
+  
       <h2>Solicitar Redefinição de Senha</h2>
       <form onSubmit={handleSubmit}>
         <label>
