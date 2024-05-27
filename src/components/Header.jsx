@@ -190,7 +190,7 @@ const Header = () => {
                                     color: "rgb(108, 117, 125)",
                                   }}
                                 >
-                                  Minha Contaj
+                                  Minha Conta
                                 </a>
                               </Link>
                             </li>
@@ -226,7 +226,8 @@ const Header = () => {
                             left: "10px",
                             gap: ".2rem",
                             cursor: "pointer",
-                            marginTop:"15rem"
+                            marginTop:"1rem",
+                            marginRight:"4rem"
                           }}
                           onClick={logout}
                         >

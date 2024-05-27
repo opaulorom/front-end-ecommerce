@@ -6,7 +6,7 @@ import "./LoginForm.css"
 import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
-  const { loggedIn, isCustomer,  login, remainingAttempts  } = useAuth();
+  const { loggedIn, isCustomer, login, remainingAttempts } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [formErrors, setFormErrors] = useState({});
@@ -36,57 +36,73 @@ const LoginForm = () => {
   if (loggedIn) {
     return (
       <div className='logout-container'>
-        {isCustomer ? <ProfileDetails/> : null}
+        {isCustomer ? <ProfileDetails /> : null}
       </div>
     );
   }
 
   return (
-    <div className="body">
+    <>
       <div className="container">
         <div className='loginStyle'>
           <h1>Login</h1>
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            placeholder="Digite o email..."
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setFormErrors((prevErrors) => ({ ...prevErrors, email: '' }));
-            }}
-            className={formErrors.email ? 'error' : ''}
-          />
-          {formErrors.email && <span className='error-message'>{formErrors.email}</span>}
-          <br />
-          <label htmlFor="password">Senha</label>
-          <input
-            type="password"
-            placeholder="Digite a senha..."
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setFormErrors((prevErrors) => ({ ...prevErrors, password: '' }));
-            }}
-            className={formErrors.password ? 'error' : ''}
-          />
-          {formErrors.password && <span className='error-message'>{formErrors.password}</span>}
-          <br />
-          <button className="loginButton" onClick={handleLogin}>
-            Login
-          </button>
+          {remainingAttempts && <div>
+            Tentativas restantes: {remainingAttempts !== undefined ? remainingAttempts : 'N/A'}
+          </div>}
+          <div className='loginStyle__inputLabel'>
+
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              placeholder="Digite o email..."
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setFormErrors((prevErrors) => ({ ...prevErrors, email: '' }));
+              }}
+              className={formErrors.email ? 'error' : ''}
+            />
+            {formErrors.email && <span className='error-message'>{formErrors.email}</span>}
+            <br />
+            <label htmlFor="password">Senha</label>
+            <input
+              type="password"
+              placeholder="Digite a senha..."
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setFormErrors((prevErrors) => ({ ...prevErrors, password: '' }));
+              }}
+              className={formErrors.password ? 'error' : ''}
+            />
+    
+
+            <div className='loginStyle__button'>
+
+              {formErrors.password && <span className='error-message'>{formErrors.password}</span>}
+          
+              <button className="loginButton" onClick={handleLogin}>
+                Login
+              </button>
+              <div>
+                Ainda nao tem uma conta  <Link to={"/register"}>Cadastre-se</Link><br />
+                Esqueceu a senha   <Link to={"/forgotPassword"}>clique aqui</Link>
+
+              </div>
+            </div>
+          </div>
+
+
+
+
         </div>
-        {remainingAttempts &&  <div>
-          Tentativas restantes: {remainingAttempts !== undefined ? remainingAttempts : 'N/A'}
-        </div>}
-       
+
       </div>
-      Ainda nao tem uma conta  <Link to={"/register"}>Cadastre-se</Link><br/>
-      Esqueceu a senha   <Link to={"/forgotPassword"}>clique aqui</Link>
 
-      
 
-    </div>
+
+
+    </>
   );
 };
 
