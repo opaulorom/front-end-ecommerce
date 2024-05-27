@@ -190,7 +190,7 @@ const Header = () => {
                                     color: "rgb(108, 117, 125)",
                                   }}
                                 >
-                                  Minha Conta
+                                  Minha Contaj
                                 </a>
                               </Link>
                             </li>
@@ -216,6 +216,7 @@ const Header = () => {
                             </li>
                           </ul>
                         </nav>
+                 
                         <div
                           style={{
                             display: "flex",
