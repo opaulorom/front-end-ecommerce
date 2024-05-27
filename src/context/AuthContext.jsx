@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isCustomer, setIsCustomer] = useState(false); // Renomeado para isCustomer
   const [userId, setUserId] = useState(null); // Adicionado userId
-  const [remainingAttempts, setRemainingAttempts] = useState('Usuário bloqueado'); // Inicialize como null ou 0
+  const [remainingAttempts, setRemainingAttempts] = useState(''); // Inicialize como null ou 0
 
   useEffect(() => {
     const storedToken = Cookies.get('token');
