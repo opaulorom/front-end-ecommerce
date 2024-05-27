@@ -84,10 +84,12 @@ const LoginForm = () => {
               <button className="loginButton" onClick={handleLogin}>
                 Login
               </button>
-              <div>
-                Ainda nao tem uma conta  <Link to={"/register"}>Cadastre-se</Link><br />
-                Esqueceu a senha   <Link to={"/forgotPassword"}>clique aqui</Link>
-
+              <div className='loginStyle__links'>
+                <span>  Ainda nao tem uma conta  <Link to={"/register"}>Cadastre-se</Link></span>
+                <span> Esqueceu a senha   <Link to={"/forgotPassword"}>clique aqui</Link>
+</span>
+              
+               
               </div>
             </div>
           </div>
