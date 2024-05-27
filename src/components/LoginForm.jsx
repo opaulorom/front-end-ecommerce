@@ -45,13 +45,13 @@ const LoginForm = () => {
     <>
       <div className="container">
         <div className='loginStyle'>
-          <h1>Login</h1>
+          <h1 className="Login">Login</h1>
           {remainingAttempts && <div>
             Tentativas restantes: {remainingAttempts !== undefined ? remainingAttempts : 'N/A'}
           </div>}
           <div className='loginStyle__inputLabel'>
 
-            <label htmlFor="email">Email</label>
+            <label className="email"  htmlFor="email">Email</label>
             <input
               type="text"
               placeholder="Digite o email..."
@@ -61,10 +61,11 @@ const LoginForm = () => {
                 setFormErrors((prevErrors) => ({ ...prevErrors, email: '' }));
               }}
               className={formErrors.email ? 'error' : ''}
+              
             />
             {formErrors.email && <span className='error-message'>{formErrors.email}</span>}
             <br />
-            <label htmlFor="password">Senha</label>
+            <label className="password" htmlFor="password">Senha</label>
             <input
               type="password"
               placeholder="Digite a senha..."

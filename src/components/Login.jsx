@@ -45,7 +45,7 @@ const Login = () => {
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2 >Login</h2>
       {errorMessage && <div className="error">{errorMessage}</div>}
       {isBlocked && (
         <div className="blocked-message">
@@ -55,7 +55,6 @@ const Login = () => {
       {!isBlocked && (
         <form onSubmit={handleSubmit}>
           <div>
-            <label>Email:</label>
             <input
               type="email"
               value={email}
@@ -64,7 +63,6 @@ const Login = () => {
             />
           </div>
           <div>
-            <label>Senha:</label>
             <input
               type="password"
               value={password}
