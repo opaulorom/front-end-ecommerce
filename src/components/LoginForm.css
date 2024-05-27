@@ -59,3 +59,16 @@
   color:rgb(33, 33, 33);
 }
 
+
+.loginStyle__links .span{
+  color:rgb(33, 33, 33);
+
+}
+
+/* CSS media query dentro de um stylesheet */
+@media (max-width: 600px) {
+  .loginButton{
+    width:80vw;
+    padding: 1rem;
+  }
+}

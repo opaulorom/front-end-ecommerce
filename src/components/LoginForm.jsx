@@ -86,8 +86,8 @@ const LoginForm = () => {
                 Login
               </button>
               <div className='loginStyle__links'>
-                <span>  Ainda nao tem uma conta  <Link to={"/register"}>Cadastre-se</Link></span>
-                <span> Esqueceu a senha   <Link to={"/forgotPassword"}>clique aqui</Link>
+                <span className="span">  Ainda nao tem uma conta  <Link to={"/register"}>Cadastre-se</Link></span>
+                <span className="span"> Esqueceu a senha   <Link to={"/forgotPassword"}>clique aqui</Link>
 </span>
               
                
