@@ -223,7 +223,7 @@ body {
     display: none;
   }
   .ContainerHeader {
-    height: 8svh;
+    height: 5svh;
   }
 }
 
@@ -233,11 +233,13 @@ body {
 
 
 
-@media (min-width: 1559px)  {
-  .ContainerHeader{
-    height: 12vh;
-  }
+
+
+.ContainerHeader{
+  height: 14vh;
 }
+
+
 
 .desktopContainer {
   display: flex;
@@ -314,5 +316,13 @@ body {
   .desktopContainer{
     gap: 10rem;
     margin-right: 2rem;
+  }
+}
+
+
+
+@media (min-width: 1559px)  {
+  .ContainerHeader{
+    height: 9vh;
   }
 }
