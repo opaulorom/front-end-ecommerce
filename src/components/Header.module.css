@@ -258,3 +258,11 @@ body {
     margin-right: 2rem;
   }
 }
+
+
+@media (max-width: 853px)  {
+  .desktopContainer{
+    gap: 5rem;
+    margin-right: 2rem;
+  }
+}
