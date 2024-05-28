@@ -299,3 +299,12 @@ body {
     margin-right: 2rem;
   }
 }
+
+
+
+@media (max-width: 1120px) {
+  .desktopContainer{
+    gap: 10rem;
+    margin-right: 2rem;
+  }
+}
