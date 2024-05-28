@@ -48,10 +48,10 @@ const NewArrivals = () => {
         >
           {newArrivals.map((product) => (
             <>
-              <li key={product._id}>
+              <li key={product._id}    className="liContainer">
               <IconToggle
                     productId={product._id}
-
+                    className='IconToggleContainer'
                   />
                 <Link
                   to={`/products/${product._id}`}
