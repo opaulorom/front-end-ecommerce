@@ -250,6 +250,26 @@ body {
 
   width: 100%;
 }
+
+
+
+
+@media (max-width: 344px)  {
+  .desktopContainer{
+    gap: 3rem;
+    margin-right: 1rem;
+  }
+}
+
+
+
+@media (max-width: 912px)  {
+  .desktopContainer{
+    gap: 5rem;
+    margin-right: 2rem;
+  }
+}
+
 @media (max-width: 820px)  {
   .desktopContainer{
     gap: 5rem;
@@ -264,6 +284,8 @@ body {
     margin-right: 2rem;
   }
 }
+
+
 
 
 @media (max-width: 1024px) {
