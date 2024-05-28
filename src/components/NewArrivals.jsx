@@ -49,10 +49,15 @@ const NewArrivals = () => {
           {newArrivals.map((product) => (
             <>
               <li key={product._id}    className="liContainer">
-              <IconToggle
+              <div
+                 
+                      className="IconToggleContainer"
+                      
+                    >
+                        <IconToggle
                     productId={product._id}
-                    className='IconToggleContainer'
                   />
+                    </div>
                 <Link
                   to={`/products/${product._id}`}
                 
