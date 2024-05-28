@@ -37,7 +37,12 @@
   }
 }
 
-
+@media (max-width: 820px)  {
+  .inputContainer{
+    width: 40vw;
+    height: 4vh;
+  }
+}
 @media (min-width: 1559px) and (orientation: landscape)  {
   .inputWrapper{
     height: 3rem;
@@ -47,3 +52,4 @@
     
   }
 }
+
