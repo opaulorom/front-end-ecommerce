@@ -8,7 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useAuth } from "../context/AuthContext";
 import IconToggle from "./IconToggle";
-
+import "./NewArrivals.css"
 const NewArrivals = () => {
   const [newArrivals, setNewArrivals] = useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
@@ -36,7 +36,7 @@ const NewArrivals = () => {
     setCurrentPage(page);
   };
 
- 
+
   return (
     <div>
       <Header />
@@ -44,70 +44,63 @@ const NewArrivals = () => {
 
       <div style={{ marginTop: "10rem" }}>
         <ul
-          style={{
-            listStyleType: "none",
-            padding: 0,
-            margin: 0,
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "1rem",
-            flexDirection: "column",
-          }}
+          className="ulContainer"
         >
           {newArrivals.map((product) => (
-            <li key={product._id}>
-              <Link
-                to={`/products/${product._id}`}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  marginBottom: "2rem",
-                  alignItems: "center",
-                  color: "black",
-                  textDecoration: "none",
-                }}
-              >
-                   <IconToggle
-                      productId={product._id}
-                     
-                    />
-                {product.variations &&
-                  product.variations[0] &&
-                  product.variations[0].urls && (
-                    <img
-                      src={product.variations[0].urls[0]}
-                      alt=""
-                      style={{ width: "15vw" }}
-                    />
-                  )}
+            <>
+              <li key={product._id}>
+              <IconToggle
+                    productId={product._id}
 
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <span
-                    style={{
-                      fontSize: "1rem",
-                      fontWeight: "700",
-                      fontFamily: "poppins, sans-serif",
-                    }}
-                  >
-                    R$ {product.variations[0].sizes[0].price && product.variations[0].sizes[0].price}
-                  </span>
+                  />
+                <Link
+                  to={`/products/${product._id}`}
+                
+                  className="LinkContainer"
+                >
+                
+                  {product.variations &&
+                    product.variations[0] &&
+                    product.variations[0].urls && (
+                      <img
+                        src={product.variations[0].urls[0]}
+                        alt=""
+                
+                        className="IMGContainer"
 
-                  <span
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      width: "15vw",
-                      color: "rgb(114, 114, 114)",
-                      fontSize: ".8rem",
-                    }}
-                  >
-                    {product.name}
-                  </span>
-                </div>
-              </Link>
-            </li>
+                      />
+                    )}
+
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <span
+                      style={{
+                        fontSize: "1rem",
+                        fontWeight: "700",
+                        fontFamily: "poppins, sans-serif",
+                      }}
+                    >
+                      R$ {product.variations[0].sizes[0].price && product.variations[0].sizes[0].price}
+                    </span>
+
+                    <span
+                      style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        width: "15vw",
+                        color: "rgb(114, 114, 114)",
+                        fontSize: ".8rem",
+                      }}
+                    >
+                      {product.name}
+                    </span>
+                  </div>
+                </Link>
+              </li>
+
+            </>
           ))}
+
         </ul>
 
         <div
@@ -130,7 +123,7 @@ const NewArrivals = () => {
           </Stack>
         </div>
       </div>
-     
+
     </div>
   );
 };
