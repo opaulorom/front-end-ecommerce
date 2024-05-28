@@ -20,7 +20,8 @@
     cursor: pointer;
   }
   
-
+ 
+ 
   
 @media (max-width: 600px) and (orientation: portrait) {
   .inputWrapper {
@@ -33,8 +34,14 @@
   }
 
   .inputContainer{
+    
     height: 5vh;
   }
+
+  .searchIcon{
+    display: none;
+  }
+
 }
 
 
@@ -94,5 +101,40 @@
   .inputContainer{
     width: 40vw;
     height: 7vh;
+  }
+}
+
+
+@media (max-width: 375px){
+  .inputContainer{
+    width: 30vw;
+  }
+}
+
+
+
+@media (max-width: 490px){
+  .inputContainer{
+    width: 60vw;
+    height: 5vh;
+    margin-top: -10rem;
+  }
+}
+
+
+
+@media (max-width: 575px){
+  .inputContainer{
+    width: 60vw;
+    height: 5vh;
+    margin-top: -10rem;
+  }
+}
+
+
+@media (max-width: 581px){
+  .inputContainer{
+    width: 60vw;
+    height: 5vh;
   }
 }

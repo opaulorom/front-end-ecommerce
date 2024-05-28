@@ -39,6 +39,8 @@
   .SearchBarContent {
     position: absolute;
     left: 10px;
+    margin-top: 2.5rem;
+ 
   }
 
   .ContainerHeaderMobile {
@@ -259,6 +261,10 @@ body {
     gap: 3rem;
     margin-right: 1rem;
   }
+
+  .SearchBarContent{
+    width: 10vw;
+  }
 }
 
 @media (max-width: 375px)  {
@@ -266,6 +272,8 @@ body {
     gap: 3rem;
     margin-right: 2rem;
   }
+
+  
 }
 
 @media (max-width: 912px)  {
