@@ -37,6 +37,13 @@
   }
 }
 
+@media (max-width: 853px)  {
+  .inputContainer{
+    width: 40vw;
+    height: 4vh;
+  }
+}
+
 @media (max-width: 820px)  {
   .inputContainer{
     width: 40vw;

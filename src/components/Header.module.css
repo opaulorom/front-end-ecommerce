@@ -229,8 +229,6 @@ body {
 @media (max-width: 834px) and (orientation: portrait) {
 }
 
-@media (max-width: 1024px) and (orientation: portrait) {
-}
 
 
 @media (min-width: 1559px)  {
@@ -261,6 +259,14 @@ body {
 
 
 @media (max-width: 853px)  {
+  .desktopContainer{
+    gap: 5rem;
+    margin-right: 2rem;
+  }
+}
+
+
+@media (max-width: 1024px) {
   .desktopContainer{
     gap: 5rem;
     margin-right: 2rem;
