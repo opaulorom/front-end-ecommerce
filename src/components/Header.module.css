@@ -118,6 +118,7 @@ body {
 .DesktopContainer {
   display: flex;
   align-items: center;
+
 }
 .modal {
   position: fixed;
@@ -236,7 +237,9 @@ body {
 
 
 @media (min-width: 1559px)  {
-  
+  .ContainerHeader{
+    height: 12vh;
+  }
 }
 
 .desktopContainer {
@@ -244,6 +247,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 12rem;
+  margin-top: -1rem;
   
 
 
