@@ -225,6 +225,7 @@ body {
   .ContainerHeader {
     height: 5svh;
   }
+ 
 }
 
 
@@ -325,4 +326,9 @@ body {
   .ContainerHeader{
     height: 9vh;
   }
+}
+
+
+.bellContainer{
+  display: none;
 }

@@ -250,9 +250,9 @@ const Header = () => {
               )}
 
               <div className={styles.IconsDesktopContainer}>
-                <div>
+                <div className={styles.bellContainer}>
                   {loggedIn === true && (
-                    <div>
+                    <div >
                       <div
                         style={{
                           position: "relative",
