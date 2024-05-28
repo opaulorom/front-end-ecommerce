@@ -261,7 +261,12 @@ body {
   }
 }
 
-
+@media (max-width: 375px)  {
+  .desktopContainer{
+    gap: 3rem;
+    margin-right: 2rem;
+  }
+}
 
 @media (max-width: 912px)  {
   .desktopContainer{
