@@ -132,8 +132,9 @@ const Header = () => {
   return (
     <>
       <div className={styles.ContainerHeader}>
-        <div>
+ 
           <div className={styles.desktopContainer}>
+            
             <div className={styles.child}>
               <i>
                 <Link to={"/home"}>
@@ -149,7 +150,7 @@ const Header = () => {
             <div className={styles.SearchBar}>
               <SearchBar />
             </div>
-
+       
             <div>
               {openBellModal && loggedIn === true && (
                 <div className={styles.HeaderModal}>
@@ -349,7 +350,7 @@ const Header = () => {
         </div> */}
 
 
-      </div>
+ 
 
 
 

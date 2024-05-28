@@ -36,3 +36,14 @@
     height: 5vh;
   }
 }
+
+
+@media (min-width: 1559px) and (orientation: landscape)  {
+  .inputWrapper{
+    height: 3rem;
+  }
+  .inputContainer{
+    height: 5vh;
+    
+  }
+}
