@@ -31,7 +31,7 @@
     .IconToggleContainer{
         position: absolute;
         top: 5%;
-        right: 0;
+        right: 1.5rem;
         z-index: 5;
         margin-bottom: 5rem;
         width: 3rem;
