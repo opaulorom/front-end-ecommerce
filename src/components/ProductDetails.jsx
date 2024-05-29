@@ -330,7 +330,6 @@ const ProductDetails = () => {
 
         <div>
 
-          {logout === true & <>mesagem</>}
         </div>
 
         <div

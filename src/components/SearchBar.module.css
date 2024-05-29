@@ -138,3 +138,15 @@
     height: 5vh;
   }
 }
+
+@media (min-width: 608px) and (max-width: 819px) and (orientation: portrait){
+ .inputContainer{
+  width: 25vw;
+  margin-right: 12rem;
+ }
+ 
+ .searchIcon{
+  display: none;
+}
+
+}
