@@ -1,5 +1,4 @@
 
-
 @media (max-width: 600px){
     .ulContainer{
         list-style-type: none;
@@ -40,6 +39,10 @@
         justify-content: center;
     }
 }
+
+
+
+
 
 @media (min-width: 700px){
     .ulContainer{
@@ -86,4 +89,13 @@
         justify-content: center;
     }
     
+}
+
+
+
+@media (min-width: 1559px) {
+    .IconToggleContainer{
+        right: 5rem;
+
+    }
 }
