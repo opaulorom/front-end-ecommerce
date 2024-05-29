@@ -91,7 +91,12 @@
     
 }
 
+@media (max-width: 1120px) and  (min-width: 630px) {
+    .IconToggleContainer{
+        right: 3rem;
 
+    }
+}
 
 @media (min-width: 1559px) {
     .IconToggleContainer{
