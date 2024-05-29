@@ -48,60 +48,47 @@ const NewArrivals = () => {
         >
           {newArrivals.map((product) => (
             <>
-              <li key={product._id}    className="liContainer">
-              <div
-                 
-                      className="IconToggleContainer"
-                      
-                    >
-                        <IconToggle
-                    productId={product._id}
-                  />
-                    </div>
-                <Link
-                  to={`/products/${product._id}`}
-                
-                  className="LinkContainer"
-                >
-                
-                  {product.variations &&
-                    product.variations[0] &&
-                    product.variations[0].urls && (
-                      <img
-                        src={product.variations[0].urls[0]}
-                        alt=""
-                
-                        className="IMGContainer"
+            <li key={product._id} className="liContainer">
+  <div className="IconToggleContainer">
+    <IconToggle productId={product._id} />
+  </div>
+  <Link to={`/products/${product._id}`} className="LinkContainer">
+    {product.variations &&
+      product.variations[0] &&
+      product.variations[0].urls && (
+        <img
+          src={product.variations[0].urls[0]}
+          alt=""
+          className="IMGContainer"
+        />
+      )}
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <span
+        style={{
+          fontSize: "1rem",
+          fontWeight: "700",
+          fontFamily: "poppins, sans-serif",
+        }}
+      >
+        R$ {product.variations[0].sizes[0].price &&
+          product.variations[0].sizes[0].price}
+      </span>
+      <span
+        style={{
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          width: "15vw",
+          color: "rgb(114, 114, 114)",
+          fontSize: ".8rem",
+        }}
+      >
+        {product.name}
+      </span>
+    </div>
+  </Link>
+</li>
 
-                      />
-                    )}
-
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span
-                      style={{
-                        fontSize: "1rem",
-                        fontWeight: "700",
-                        fontFamily: "poppins, sans-serif",
-                      }}
-                    >
-                      R$ {product.variations[0].sizes[0].price && product.variations[0].sizes[0].price}
-                    </span>
-
-                    <span
-                      style={{
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        width: "15vw",
-                        color: "rgb(114, 114, 114)",
-                        fontSize: ".8rem",
-                      }}
-                    >
-                      {product.name}
-                    </span>
-                  </div>
-                </Link>
-              </li>
 
             </>
           ))}
