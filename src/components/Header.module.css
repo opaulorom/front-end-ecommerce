@@ -15,7 +15,7 @@
   }
 }
 
-@media (max-width: 600px) and (orientation: portrait) {
+@media (max-width: 699px) and (orientation: portrait) {
   .ContainerHeader {
     display: none;
   }
@@ -350,12 +350,14 @@ body {
 @media (min-width: 608px) and (max-width: 819px) and (orientation: portrait) {
 
   .desktopContainer{
-   gap: 1rem;
+    display: none;
   }
 
   .ContainerHeaderMobile{
-    display: none;
+    display: block;
   }
+
+  
   
   .MediewalLogo{
     width: 20vw;
