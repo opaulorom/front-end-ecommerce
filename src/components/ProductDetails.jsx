@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import CartB from "./CartB";
+import { useAuth } from "../context/AuthContext";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -34,6 +35,9 @@ const ProductDetails = () => {
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedColorId, setSelectedColorId] = useState("");
   const [selectedSizeId, setSelectedSizeId] = useState("");
+
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
   };
@@ -246,11 +250,18 @@ const ProductDetails = () => {
         // Adiciona ao carrinho apenas se for um novo produto
         addToCart();
         toast.success("Produto adicionado ao carrinho!");
-
+     
         handleClickOpenCartModal();
+      
       } catch (error) {
-        console.error("Erro ao adicionar produto ao carrinho:", error);
-        toast.error("Erro ao adicionar produto ao carrinho.");
+        if(loggedIn === false){
+          toast.error("Precisa fazer login pra adicionar algo ao carrinho!");
+
+        }else{
+          console.error("Erro ao adicionar produto ao carrinho:", error);
+          toast.error("Erro ao adicionar produto ao carrinho.");
+
+        }
       }
     } else {
       toast.error("Por favor, selecione uma cor e um tamanho.");
@@ -317,7 +328,10 @@ const ProductDetails = () => {
           )}
         </div>
 
-        <div></div>
+        <div>
+
+          {logout === true & <>mesagem</>}
+        </div>
 
         <div
           style={{
