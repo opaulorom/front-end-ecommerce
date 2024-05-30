@@ -259,7 +259,7 @@ const ProductDetails = () => {
 
         }else{
           console.error("Erro ao adicionar produto ao carrinho:", error);
-          toast.error("Erro ao adicionar produto ao carrinho.");
+          toast.error("Produto com essa cor e tamanho indisponível.");
 
         }
       }
