@@ -44,7 +44,7 @@ const Header = () => {
         })
         .then((response) => {
           setLocalCartItemCount(
-            Math.max(response.data.cart.products.length, 0)
+            Math.max(response.data.cart.TotalQuantity, 0)
           );
         })
         .catch((error) => {

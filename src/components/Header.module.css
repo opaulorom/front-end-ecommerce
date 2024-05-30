@@ -9,11 +9,7 @@
   }
 }
 
-@media (mim-width: 575px) {
-  .desktopContainer{
-    gap: 8rem;
-  }
-}
+
 
 @media (max-width: 699px) and (orientation: portrait) {
   .ContainerHeader {
@@ -370,10 +366,33 @@ body {
   }
 
   .MobileHeader__Container{
-
+    gap: 18rem;
   }
 
 
  
 
 }
+
+
+@media  (min-width: 575px) and (max-width: 767px) and (orientation: portrait){
+  .ContainerHeaderMobile{
+
+  }
+
+  .MobileHeader__Container{
+    gap: 17rem;
+  }
+}
+
+
+@media  (min-width: 575px) and (max-width: 822px) {
+  .ContainerHeaderMobile{
+
+  }
+
+  .MobileHeader__Container{
+    gap: 15rem;
+  }
+}
+
