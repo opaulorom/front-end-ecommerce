@@ -602,7 +602,6 @@ const CategorySubcategories = () => {
                 )}
               </div>
             </div>
-            desktop
             <div className={styles.DesktopFilter}>
               <p
                 style={{
@@ -821,7 +820,8 @@ const CategorySubcategories = () => {
                 </span>
               </div>
             )}
-            <ul>
+            <ul                       className={styles.ProductsContainer}
+>
               {filteredProducts.map((product) => {
                 const selectedColorVariation = selectedColor
                   ? product.variations.find(
@@ -865,13 +865,15 @@ const CategorySubcategories = () => {
                 return (
                   <li
                     key={product._id || "undefined"}
-                    style={{ position: "relative" }}
+                    className={styles.ProductsContainer__li}
+        
                   >
                     <Link
                       to={{
                         pathname: `/products/${product._id}`,
                         search: `?${queryParams.toString()}`,
                       }}
+
                       style={{ color: "black", textDecoration: "none" }}
                     >
                       <img

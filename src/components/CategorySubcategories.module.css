@@ -171,3 +171,14 @@
 .doubleBorder.selected {
   border: 2px solid #007bff; /* Adicione os estilos da borda desejados */
 }
+
+
+.ProductsContainer__li{
+  position: relative;
+ 
+}
+
+.ProductsContainer{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
