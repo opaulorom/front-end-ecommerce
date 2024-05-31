@@ -48,6 +48,13 @@
   cursor: pointer;
 }
 
+.ProductsContainer__image{
+  width: 30vw;
+  margin-top: -2rem;
+  z-index: -1;
+  margin-left: 1rem;
+}
+
 @media (max-width: 600px) {
   .DesktopFilter {
     display: none;
@@ -83,6 +90,11 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 
+  }
+
+
+  .ProductsContainer__image{
+    width: 40vw;
   }
  
 

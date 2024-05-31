@@ -222,6 +222,7 @@ const CategorySubcategories = () => {
         );
         const data = await response.json();
         setOriginalProducts(data.mixedProducts);
+        console.log(data.mixedProducts)
         setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
       } catch (error) {
         console.error("Erro ao obter produtos misturados:", error);
@@ -879,12 +880,9 @@ const CategorySubcategories = () => {
                       <img
                         src={selectedColorVariation.urls[0]}
                         alt={product.name}
-                        style={{
-                          width: "30vw",
-                          marginTop: "-2rem",
-                          zIndex: "-1",
-                          marginLeft: "1rem",
-                        }}
+                  
+                        className={styles.ProductsContainer__image}
+
                       />
                       <div
                         style={{
