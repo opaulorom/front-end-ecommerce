@@ -143,13 +143,13 @@ const CategorySubcategories = () => {
     setSelectedSize(size);
   };
 
+  
   const fetchMixedProducts = async (page, filters) => {
-    setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
-
+    setLoading(true);
     try {
       const queryString = Object.entries(filters)
         .map(([key, value]) => `${key}=${value}`)
-        .join("&");
+        .join('&');
 
       const response = await fetch(
         `http://localhost:3001/api/categories/${category}/mixedProducts?page=${page}&${queryString}`
@@ -157,9 +157,10 @@ const CategorySubcategories = () => {
       const data = await response.json();
       setMixedProducts(data.mixedProducts);
       setTotalPages(data.totalPages);
-      setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
     } catch (error) {
-      console.error("Erro ao obter produtos misturados:", error);
+      console.error('Erro ao obter produtos misturados:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -222,7 +223,7 @@ const CategorySubcategories = () => {
         );
         const data = await response.json();
         setOriginalProducts(data.mixedProducts);
-        console.log(data.mixedProducts)
+        
         setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
       } catch (error) {
         console.error("Erro ao obter produtos misturados:", error);
@@ -821,129 +822,110 @@ const CategorySubcategories = () => {
                 </span>
               </div>
             )}
-            <ul                       className={styles.ProductsContainer}
->
-              {filteredProducts.map((product) => {
-                const selectedColorVariation = selectedColor
-                  ? product.variations.find(
-                      (variation) => variation.color === selectedColor
-                    )
-                  : product.variations[0]; // Padrão para a primeira variação se nenhuma cor estiver selecionada
+             <ul className={styles.ProductsContainer}>
+        {mixedProducts.map((product) => {
+          const selectedColorVariation = selectedColor
+            ? product.variations.find(
+                (variation) => variation.color === selectedColor
+              )
+            : product.variations[0];
 
-                // Verifique se há uma foto disponível
-                const hasPhoto =
-                  selectedColorVariation &&
-                  selectedColorVariation.urls &&
-                  selectedColorVariation.urls.length > 0;
+          const hasPhoto =
+            selectedColorVariation &&
+            selectedColorVariation.urls &&
+            selectedColorVariation.urls.length > 0;
 
-                // Se não houver foto disponível, não renderize o produto
-                if (!hasPhoto) {
-                  return null;
-                }
+          if (!hasPhoto) {
+            return null;
+          }
 
-                // Encontre o preço correto para exibição
-                // Encontre o preço correto para exibição
-                const displayedPrice = selectedSize
-                  ? getPriceForSize(product, selectedColor, selectedSize)
-                  : selectedColorVariation
-                  ? selectedColorVariation.sizes[0].price // Se nenhum tamanho estiver selecionado, use o preço do primeiro tamanho disponível para a variação selecionada
-                  : product.variations[0].sizes[0].price; // Se nenhum tamanho ou variação estiver selecionado, use o preço do primeiro tamanho disponível no primeiro produto
+          const displayedPrice = selectedSize
+            ? getPriceForSize(product, selectedColor, selectedSize)
+            : selectedColorVariation
+            ? selectedColorVariation.sizes[0].price
+            : product.variations[0].sizes[0].price;
 
-                // Acessar o tamanho do produto corretamente
-                const size =
-                  selectedSize || selectedColorVariation.sizes[0].name;
+          const size = selectedSize || selectedColorVariation.sizes[0].name;
 
-                // Construindo os parâmetros da URL
-                const queryParams = new URLSearchParams();
-                queryParams.append(
-                  "selectedImageFromCategory",
-                  selectedColorVariation.urls[0]
-                );
-                queryParams.append("selectedColorFromCategory", selectedColor);
-                queryParams.append("selectedPriceFromCategory", displayedPrice);
-                queryParams.append("selectedSizeFromCategory", size);
+          const queryParams = new URLSearchParams();
+          queryParams.append(
+            'selectedImageFromCategory',
+            selectedColorVariation.urls[0]
+          );
+          queryParams.append('selectedColorFromCategory', selectedColor);
+          queryParams.append('selectedPriceFromCategory', displayedPrice);
+          queryParams.append('selectedSizeFromCategory', size);
 
-                return (
-                  <li
-                    key={product._id || "undefined"}
-                    className={styles.ProductsContainer__li}
-        
+          return (
+            <li
+              key={product._id}
+              className={styles.ProductsContainer__li}
+            >
+              <Link
+                to={{
+                  pathname: `/products/${product._id}`,
+                  search: `?${queryParams.toString()}`,
+                }}
+                style={{ color: 'black', textDecoration: 'none' }}
+              >
+                <img
+                  src={selectedColorVariation.urls[0]}
+                  alt={product.name}
+                  className={styles.ProductsContainer__image}
+                />
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    marginBottom: '4rem',
+                    marginLeft: '1rem',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: '700',
+                      fontFamily: 'poppins, sans-serif',
+                    }}
                   >
-                    <Link
-                      to={{
-                        pathname: `/products/${product._id}`,
-                        search: `?${queryParams.toString()}`,
-                      }}
-
-                      style={{ color: "black", textDecoration: "none" }}
-                    >
-                      <img
-                        src={selectedColorVariation.urls[0]}
-                        alt={product.name}
-                  
-                        className={styles.ProductsContainer__image}
-
-                      />
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          marginBottom: "4rem",
-                          marginLeft: "1rem",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontSize: "1rem",
-                            fontWeight: "700",
-                            fontFamily: "poppins, sans-serif",
-                          }}
-                        >
-                          R${" "}
-                          {Number(
-                            displayedPrice ||
-                              product.price ||
-                              product.variations[0].sizes[0].price
-                          )
-                            .toFixed(2)
-                            .padStart(5, "0")}
-                        </span>
-                        <span
-                          style={{
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            width: "15vw",
-                            color: "rgb(114, 114, 114)",
-                            fontSize: ".8rem",
-                          }}
-                        >
-                          {product.name}
-                        </span>
-                      </div>
-                    </Link>
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: "-5%",
-                        right: "0",
-                        zIndex: 5,
-                        marginBottom: "5rem",
-                        width: "3rem",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <IconToggle
-                        productId={product._id}
-                        isFavorite={favorites[product._id]}
-                      />
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
+                    R$ {Number(displayedPrice || product.price || product.variations[0].sizes[0].price).toFixed(2).padStart(5, '0')}
+                  </span>
+                  <span
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      width: '15vw',
+                      color: 'rgb(114, 114, 114)',
+                      fontSize: '.8rem',
+                    }}
+                  >
+                    {product.name}
+                  </span>
+                </div>
+              </Link>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '-5%',
+                  right: '0',
+                  zIndex: 5,
+                  marginBottom: '5rem',
+                  width: '3rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <IconToggle
+                  productId={product._id}
+                  isFavorite={favorites[product._id]}
+                />
+              </div>
+            </li>
+          );
+        })}
+      </ul>
 
             {mixedProducts.length > 0 && (
               <>
