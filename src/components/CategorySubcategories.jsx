@@ -180,9 +180,8 @@ const CategorySubcategories = () => {
       }
     };
 
-    const fetchFilters = async () => {
+     const fetchFilters = async () => {
       setLoading(true);
-
       try {
         const colorsResponse = await fetch(
           `http://localhost:3001/api/categories/${category}/colors`
@@ -193,6 +192,7 @@ const CategorySubcategories = () => {
         const priceResponse = await fetch(
           `http://localhost:3001/api/categories/${category}/priceRanges`
         );
+
         const colorsData = await colorsResponse.json();
         const sizesData = await sizesResponse.json();
         const priceData = await priceResponse.json();
@@ -200,18 +200,20 @@ const CategorySubcategories = () => {
         setColors(colorsData);
         setSizes(sizesData);
         setPriceRanges(priceData);
-        setLoading(false);
 
         // Atualizar o conjunto único de tamanhos com base nos dados filtrados
         const allSizes = sizesData.reduce((acc, size) => {
-          size.split(",").forEach((s) => acc.add(s.trim()));
+          size.split(',').forEach((s) => acc.add(s.trim()));
           return acc;
         }, new Set());
         setUniqueSizes(allSizes);
       } catch (error) {
-        console.error("Erro ao obter opções de filtros:", error);
+        console.error('Erro ao obter opções de filtros:', error);
+      } finally {
+        setLoading(false);
       }
     };
+
 
     const fetchOriginalProducts = async () => {
       try {
