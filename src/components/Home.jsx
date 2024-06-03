@@ -9,6 +9,8 @@ import NewArrivals from "./NewArrivals";
 import Slider from "../components/Slider";
 
 const Home = () => {
+
+  
   return (
     <div>
       <Slider />
