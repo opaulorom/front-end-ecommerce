@@ -34,18 +34,13 @@ const CategorySubcategories = () => {
   const [filteredProducts, setFilteredProducts] = useState(originalProducts);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [doubleBorder, setDoubleBorder] = useState(null); // Alterar para índice
-  const [hideProducts, setHideProducts] = useState(false); // Alterar para índice
-
+   
 
   const handleSelectBorder = (index) => {
     setDoubleBorder(index);
   };
 
-  const handleHideProducts = () => {
-    setHideProducts(true)
-  }
-
-
+  
 
   useEffect(() => {
     setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
@@ -96,7 +91,7 @@ const CategorySubcategories = () => {
   }, [selectedColor, selectedSize, selectedSubcategory]);
   const filterProducts = () => {
     let filtered = originalProducts;
-
+  
     if (selectedColor) {
       filtered = filtered.filter((product) =>
         product.variations.some(
@@ -104,7 +99,7 @@ const CategorySubcategories = () => {
         )
       );
     }
-
+  
     if (selectedSize) {
       console.log('Filtrando produtos por tamanho:', selectedSize);
       filtered = filtered.filter((product) =>
@@ -113,14 +108,14 @@ const CategorySubcategories = () => {
         )
       );
     }
-
+  
     if (selectedSubcategory) {
       console.log('Filtrando produtos por subcategoria:', selectedSubcategory);
       filtered = filtered.filter(
         (product) => product.subcategory === selectedSubcategory
       );
     }
-
+  
     setFilteredProducts(filtered);
   };
 
@@ -137,25 +132,20 @@ const CategorySubcategories = () => {
     if (color === selectedColor) {
       setSelectedColor(null);
       setFilteredProducts(originalProducts);
-      setHideProducts(false);
       if (originalProducts.length > 0) {
         const firstColor = originalProducts[0].variations[0].color;
         setAvailableSizes(getSizesForColor(originalProducts, firstColor));
       }
     } else {
-      setHideProducts(true);
-
       setSelectedColor(color);
     }
-
-
   };
 
   const handleSizeClick = (size) => {
     setSelectedSize(size);
   };
 
-
+  
   const fetchMixedProducts = async (page, filters) => {
     setLoading(true);
     try {
@@ -192,7 +182,7 @@ const CategorySubcategories = () => {
       }
     };
 
-    const fetchFilters = async () => {
+     const fetchFilters = async () => {
       setLoading(true);
       try {
         const colorsResponse = await fetch(
@@ -237,7 +227,7 @@ const CategorySubcategories = () => {
         );
         const data = await response.json();
         setOriginalProducts(data.mixedProducts);
-
+        
         setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
       } catch (error) {
         console.error("Erro ao obter produtos misturados:", error);
@@ -262,7 +252,7 @@ const CategorySubcategories = () => {
 
   const handleFilterClick = async (filterType, value) => {
     let filteredProducts = originalProducts;
-
+  
     if (filterType === "size") {
       console.log('Filtrando produtos por tamanho:', value);
       filteredProducts = originalProducts.filter((product) =>
@@ -286,7 +276,7 @@ const CategorySubcategories = () => {
         return productPrice >= minPrice && productPrice <= maxPrice;
       });
     }
-
+  
     setFilteredProducts(filteredProducts);
     setTotalPages(1); // Atualiza o número total de páginas para 1, uma vez que os produtos filtrados serão exibidos em uma única página
   };
@@ -412,14 +402,14 @@ const CategorySubcategories = () => {
                 {openFilterModal && (
                   <div className={styles.FilterModal}>
                     <div ref={modalRef} className={styles.FilterModalContent} style={{
-                      overflowX: "auto",
-                      maxHeight: "100vh",
+                       overflowX: "auto",
+                       maxHeight: "100vh",
                     }}>
                       <span
                         className={styles.FilterClose}
                         onClick={handleClickCloseModal}
                       >
-                        <CloseIcon />
+                       <CloseIcon />
                       </span>
                       <p
                         style={{
@@ -446,62 +436,62 @@ const CategorySubcategories = () => {
                       </div>
 
                       <div style={{ marginBottom: "3rem" }}>
-                        <h3
-                          style={{
-                            fontFamily: "Montserrat, arial, sans-serif",
-                            fontWeight: "600",
-                            fontSize: "1.2rem",
-                            color: "rgb(52, 52, 54)",
-                          }}
-                        >
-                          Cores
-                        </h3>
-                        <div style={{
+                      <h3
+                  style={{
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: "600",
+                    fontSize: "1.2rem",
+                    color: "rgb(52, 52, 54)",
+                  }}
+                >
+                  Cores
+                </h3>
+              <div style={{
                           display: "grid",
                           gridTemplateColumns: "repeat(4, 1fr)",
                         }}>
 
-                          {colors.map((color, index) => (
-                            <div
-                              key={index}
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyItems: "center",
-                                marginTop: "1rem",
-                                position: "relative"
-                              }}
-                              onClick={() => { handleColorClick(color); handleSelectBorder(index); }}
-                            >
-                              <div
-                                style={{
-                                  width: "20px",
-                                  height: "20px",
-                                  borderRadius: "50%",
-                                  backgroundColor: colorMap[color],
-                                  marginRight: "10px",
-                                  border: `1px solid ${doubleBorder === index ? "transparent" : "gray"}`,
-                                  position: "relative" // Adicionando posição relativa para referência
-                                }}
-                              ></div>
-                              {doubleBorder === index && (
-                                <div
-                                  style={{
-                                    width: "28px", // Tamanho do círculo externo
-                                    height: "28px", // Tamanho do círculo externo
-                                    borderRadius: "50%",
-                                    border: "2px solid red",
-                                    position: "absolute",
-                                    top: "-5px", // Ajustando para manter a centralização vertical
-                                    left: "-5px", // Ajustando para manter a centralização horizontal
-                                  }}
-                                ></div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
+{colors.map((color, index) => (
+          <div
+            key={index}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyItems: "center",
+              marginTop: "1rem",
+              position: "relative"
+            }}
+            onClick={() => { handleColorClick(color); handleSelectBorder(index); }}
+          >
+            <div
+              style={{
+                width: "20px",
+                height: "20px",
+                borderRadius: "50%",
+                backgroundColor: colorMap[color],
+                marginRight: "10px",
+                border: `1px solid ${doubleBorder === index ? "transparent" : "gray"}`,
+                position: "relative" // Adicionando posição relativa para referência
+              }}
+            ></div>
+            {doubleBorder === index && (
+              <div
+                style={{
+                  width: "28px", // Tamanho do círculo externo
+                  height: "28px", // Tamanho do círculo externo
+                  borderRadius: "50%",
+                  border: "2px solid red",
+                  position: "absolute",
+                  top: "-5px", // Ajustando para manter a centralização vertical
+                  left: "-5px", // Ajustando para manter a centralização horizontal
+                }}
+              ></div>
+            )}
+          </div>
+        ))}
+              </div>
 
-
+               
                       </div>
                       <div
                         style={{
@@ -539,82 +529,82 @@ const CategorySubcategories = () => {
                         ))}
                       </div>
                       <h3
-                        style={{
-                          fontFamily: "Montserrat, arial, sans-serif",
-                          fontWeight: "600",
-                          fontSize: "1.2rem",
-                          color: "rgb(52, 52, 54)",
-                        }}
-                      >
-                        Faixas de Preços
-                      </h3>
-                      <div
-                        onClick={() => handleFilterClick("price", "0-50")}
-                        style={{
-                          cursor: "pointer",
-                          fontFamily: "Montserrat, arial, sans-serif",
-                          fontWeight: selectedPrice === "0-50" ? "600" : "400",
-                          fontSize: selectedPrice === "0-50" ? "1.1rem" : "1rem",
-                          color:
-                            selectedPrice === "0-50"
-                              ? "rgb(52, 52, 54)"
-                              : "rgb(52, 52, 54)",
-                          margin: "0.5rem",
-                        }}
-                      >
-                        R$5 - R$50
-                      </div>
-                      <div
-                        onClick={() => handleFilterClick("price", "50-100")}
-                        style={{
-                          cursor: "pointer",
-                          fontFamily: "Montserrat, arial, sans-serif",
-                          fontWeight: selectedPrice === "50-100" ? "600" : "400",
-                          fontSize: selectedPrice === "50-100" ? "1.1rem" : "1rem",
-                          color:
-                            selectedPrice === "50-100"
-                              ? "rgb(52, 52, 54)"
-                              : "rgb(52, 52, 54)",
-                          margin: "0.5rem",
-                        }}
-                      >
-                        R$50 - R$100
-                      </div>
-                      <div
-                        onClick={() => handleFilterClick("price", "100-200")}
-                        style={{
-                          cursor: "pointer",
-                          fontFamily: "Montserrat, arial, sans-serif",
-                          fontWeight: selectedPrice === "100-200" ? "600" : "400",
-                          fontSize: selectedPrice === "100-200" ? "1.1rem" : "1rem",
-                          color:
-                            selectedPrice === "100-200"
-                              ? "rgb(52, 52, 54)"
-                              : "rgb(52, 52, 54)",
-                          margin: "0.5rem",
-                        }}
-                      >
-                        R$100 - R$200
-                      </div>
-                      <div
-                        onClick={() => handleFilterClick("price", "200-")}
-                        style={{
-                          cursor: "pointer",
-                          fontFamily: "Montserrat, arial, sans-serif",
-                          fontWeight: selectedPrice === "200-" ? "600" : "400",
-                          fontSize: selectedPrice === "200-" ? "1.1rem" : "1rem",
-                          color:
-                            selectedPrice === "200-"
-                              ? "rgb(52, 52, 54)"
-                              : "rgb(52, 52, 54)",
-                          margin: "0.5rem",
-                        }}
-                      >
-                        R$200 ou mais
-                      </div>
-
-
-                      <button onClick={handleClickCloseModal} className={styles.filteredQuantity} > {filteredProductsContent} resultados </button>
+                  style={{
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: "600",
+                    fontSize: "1.2rem",
+                    color: "rgb(52, 52, 54)",
+                  }}
+                >
+                  Faixas de Preços
+                </h3>
+                <div
+                  onClick={() => handleFilterClick("price", "0-50")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "0-50" ? "600" : "400",
+                    fontSize: selectedPrice === "0-50" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "0-50"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$5 - R$50
+                </div>
+                <div
+                  onClick={() => handleFilterClick("price", "50-100")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "50-100" ? "600" : "400",
+                    fontSize: selectedPrice === "50-100" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "50-100"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$50 - R$100
+                </div>
+                <div
+                  onClick={() => handleFilterClick("price", "100-200")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "100-200" ? "600" : "400",
+                    fontSize: selectedPrice === "100-200" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "100-200"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$100 - R$200
+                </div>
+                <div
+                  onClick={() => handleFilterClick("price", "200-")}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "200-" ? "600" : "400",
+                    fontSize: selectedPrice === "200-" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "200-"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$200 ou mais
+                </div>
+                
+         
+                <button  onClick={handleClickCloseModal}  className={styles.filteredQuantity} > {filteredProductsContent} resultados </button>
                     </div>
                   </div>
                 )}
@@ -693,7 +683,7 @@ const CategorySubcategories = () => {
                     </div>
                   </div>
                 ))}
-
+ 
 
                 <h3
                   style={{
@@ -815,9 +805,10 @@ const CategorySubcategories = () => {
                   R$200 ou mais
                 </div>
               </div>
-
+              
             </div>
           </div>
+          <ProductList products={filteredProducts} />
 
           <div className={styles.ProductsDesktopContainer}>
             {mixedProducts.length === 0 && (
@@ -839,203 +830,115 @@ const CategorySubcategories = () => {
                 </span>
               </div>
             )}
+             <ul className={styles.ProductsContainer}>
+        {mixedProducts.map((product) => {
+          const selectedColorVariation = selectedColor
+            ? product.variations.find(
+                (variation) => variation.color === selectedColor
+              )
+            : product.variations[0];
 
+          const hasPhoto =
+            selectedColorVariation &&
+            selectedColorVariation.urls &&
+            selectedColorVariation.urls.length > 0;
 
-{hideProducts === false ? (
-  <>
-    {mixedProducts.map((product) => {
-      const selectedColorVariation = selectedColor
-        ? product.variations.find(
-            (variation) => variation.color === selectedColor
-          )
-        : product.variations[0];
+          if (!hasPhoto) {
+            return null;
+          }
 
-      const hasPhoto =
-        selectedColorVariation &&
-        selectedColorVariation.urls &&
-        selectedColorVariation.urls.length > 0;
+          const displayedPrice = selectedSize
+            ? getPriceForSize(product, selectedColor, selectedSize)
+            : selectedColorVariation
+            ? selectedColorVariation.sizes[0].price
+            : product.variations[0].sizes[0].price;
 
-      if (!hasPhoto) {
-        return null;
-      }
+          const size = selectedSize || selectedColorVariation.sizes[0].name;
 
-      const displayedPrice = selectedSize
-        ? getPriceForSize(product, selectedColor, selectedSize)
-        : selectedColorVariation
-        ? selectedColorVariation.sizes[0].price
-        : product.variations[0].sizes[0].price;
+          const queryParams = new URLSearchParams();
+          queryParams.append(
+            'selectedImageFromCategory',
+            selectedColorVariation.urls[0]
+          );
+          queryParams.append('selectedColorFromCategory', selectedColor);
+          queryParams.append('selectedPriceFromCategory', displayedPrice);
+          queryParams.append('selectedSizeFromCategory', size);
 
-      const size = selectedSize || selectedColorVariation.sizes[0].name;
+          return (
 
-      const queryParams = new URLSearchParams();
-      queryParams.append(
-        'selectedImageFromCategory',
-        selectedColorVariation.urls[0]
-      );
-      queryParams.append('selectedColorFromCategory', selectedColor);
-      queryParams.append('selectedPriceFromCategory', displayedPrice);
-      queryParams.append('selectedSizeFromCategory', size);
-
-      return (
-        <ProductList
-          key={product.id}  // Adiciona uma chave única para cada item da lista
-          image={selectedColorVariation.urls[0]}
-          products={filteredProducts}
-          search={`?${queryParams.toString()}`}
-          displayedPrice={Number(
-            displayedPrice ||
-              product.price ||
-              product.variations[0].sizes[0].price
-          )
-            .toFixed(2)
-            .padStart(5, '0')}
-          productId={product._id}
-          isFavorite={favorites[product._id]}
-          size={product.variations[0].sizes[0].size}
-        />
-      );
-    })}
-  </>
-) : (
-
-<>
-                    <ul className={styles.ProductsContainer}>
-              {mixedProducts.map((product) => {
-                const selectedColorVariation = selectedColor
-                  ? product.variations.find(
-                    (variation) => variation.color === selectedColor
-                  )
-                  : product.variations[0];
-
-                const hasPhoto =
-                  selectedColorVariation &&
-                  selectedColorVariation.urls &&
-                  selectedColorVariation.urls.length > 0;
-
-                if (!hasPhoto) {
-                  return null;
-                }
-
-                const displayedPrice = selectedSize
-                  ? getPriceForSize(product, selectedColor, selectedSize)
-                  : selectedColorVariation
-                    ? selectedColorVariation.sizes[0].price
-                    : product.variations[0].sizes[0].price;
-
-                const size = selectedSize || selectedColorVariation.sizes[0].name;
-
-                const queryParams = new URLSearchParams();
-                queryParams.append(
-                  'selectedImageFromCategory',
-                  selectedColorVariation.urls[0]
-                );
-                queryParams.append('selectedColorFromCategory', selectedColor);
-                queryParams.append('selectedPriceFromCategory', displayedPrice);
-                queryParams.append('selectedSizeFromCategory', size);
-
-                return (
-
-                  <>
-
-              
-
-
-
-                      <> 
-                      
-                      <li
-                        key={product._id}
-                        className={styles.ProductsContainer__li}
-                      >
-
-                        <Link
-                          to={{
-                            pathname: `/products/${product._id}`,
-                            search: `?${queryParams.toString()}`,
-                          }}
-                          style={{ color: 'black', textDecoration: 'none' }}
-                        >
-                          <img
-                            src={selectedColorVariation.urls[0]}
-                            alt={product.name}
-                            className={styles.ProductsContainer__image}
-                          />
-                          <div
-                            style={{
-                              display: 'flex',
-                              flexDirection: 'column',
-                              marginBottom: '4rem',
-                              marginLeft: '1rem',
-                            }}
-                          >
-                            <span
-                              style={{
-                                fontSize: '1rem',
-                                fontWeight: '700',
-                                fontFamily: 'poppins, sans-serif',
-                              }}
-                            >
-                              R$ {Number(displayedPrice || product.price || product.variations[0].sizes[0].price).toFixed(2).padStart(5, '0')}
-                            </span>
-                            <span
-                              style={{
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
-                                width: '15vw',
-                                color: 'rgb(114, 114, 114)',
-                                fontSize: '.8rem',
-                              }}
-                            >
-                              {product.name}
-                            </span>
-                          </div>
-                        </Link>
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: '-5%',
-                            right: '0',
-                            zIndex: 5,
-                            marginBottom: '5rem',
-                            width: '3rem',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <IconToggle
-                            productId={product._id}
-                            isFavorite={favorites[product._id]}
-                          />
-                        </div>
-                      </li>
-
-
-                      </>
-
-
-
-
-
-
-
-                    
-
-
-
-           
-
-                  </>
-                );
-              })}
-            </ul>
-
-                    
-                    </>)
-}
+            <>
             
-        
+            <li
+              key={product._id}
+              className={styles.ProductsContainer__li}
+            >
+              <Link
+                to={{
+                  pathname: `/products/${product._id}`,
+                  search: `?${queryParams.toString()}`,
+                }}
+                style={{ color: 'black', textDecoration: 'none' }}
+              >
+                <img
+                  src={selectedColorVariation.urls[0]}
+                  alt={product.name}
+                  className={styles.ProductsContainer__image}
+                />
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    marginBottom: '4rem',
+                    marginLeft: '1rem',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: '700',
+                      fontFamily: 'poppins, sans-serif',
+                    }}
+                  >
+                    R$ {Number(displayedPrice || product.price || product.variations[0].sizes[0].price).toFixed(2).padStart(5, '0')}
+                  </span>
+                  <span
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      width: '15vw',
+                      color: 'rgb(114, 114, 114)',
+                      fontSize: '.8rem',
+                    }}
+                  >
+                    {product.name}
+                  </span>
+                </div>
+              </Link>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '-5%',
+                  right: '0',
+                  zIndex: 5,
+                  marginBottom: '5rem',
+                  width: '3rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <IconToggle
+                  productId={product._id}
+                  isFavorite={favorites[product._id]}
+                />
+              </div>
+            </li>
+            
+            </>
+          );
+        })}
+      </ul>
 
             {mixedProducts.length > 0 && (
               <>
@@ -1058,8 +961,8 @@ const CategorySubcategories = () => {
             )}
           </div>
 
-
-
+        
+    
         </>
       )}
       <Navbar />
