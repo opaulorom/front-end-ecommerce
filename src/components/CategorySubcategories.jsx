@@ -34,7 +34,8 @@ const CategorySubcategories = () => {
   const [filteredProducts, setFilteredProducts] = useState(originalProducts);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [doubleBorder, setDoubleBorder] = useState(null); // Alterar para índice
-   
+  const [hideProducts, setHideProducts] = useState(false); // Alterar para índice
+
 
   const handleSelectBorder = (index) => {
     setDoubleBorder(index);
@@ -143,6 +144,9 @@ const CategorySubcategories = () => {
 
   const handleSizeClick = (size) => {
     setSelectedSize(size);
+    if(selectedSize === size){
+      setHideProducts(true)
+    }
   };
 
   
@@ -808,9 +812,7 @@ const CategorySubcategories = () => {
               
             </div>
           </div>
-          <ProductList products={filteredProducts} />
-
-          <div className={styles.ProductsDesktopContainer}>
+          {hideProducts === false ? (<div className={styles.ProductsDesktopContainer}>
             {mixedProducts.length === 0 && (
               <div
                 style={{
@@ -960,7 +962,10 @@ const CategorySubcategories = () => {
               </>
             )}
           </div>
+) : (          <ProductList products={filteredProducts} />
+)}
 
+          
         
     
         </>
