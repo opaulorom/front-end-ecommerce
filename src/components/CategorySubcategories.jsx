@@ -90,6 +90,10 @@ const CategorySubcategories = () => {
   useEffect(() => {
     filterProducts();
   }, [selectedColor, selectedSize, selectedSubcategory]);
+
+
+
+
   const filterProducts = () => {
     let filtered = originalProducts;
   
@@ -140,12 +144,21 @@ const CategorySubcategories = () => {
     } else {
       setSelectedColor(color);
     }
+    updateHideProducts(selectedSize, color);
   };
 
   const handleSizeClick = (size) => {
     setSelectedSize(size);
-    if(selectedSize === size){
-      setHideProducts(true)
+    updateHideProducts(size, selectedColor);
+  };
+
+  const updateHideProducts = (size, color) => {
+    if (size && !color) {
+      setHideProducts(true); // Mostrar ProductList quando apenas o tamanho é selecionado
+    } else if (size && color) {
+      setHideProducts(false); // Mostrar produtos misturados quando tamanho e cor são selecionados
+    } else {
+      setHideProducts(false); // Mostrar produtos misturados por padrão
     }
   };
 
@@ -266,6 +279,7 @@ const CategorySubcategories = () => {
       );
       setSelectedSize(value); // Atualiza o tamanho selecionado no estado
     } else if (filterType === "color") {
+      setHideProducts(true)
       console.log('Filtrando produtos por cor:', value);
       filteredProducts = originalProducts.filter((product) =>
         product.variations.some((variation) => variation.color === value)
@@ -687,7 +701,6 @@ const CategorySubcategories = () => {
                     </div>
                   </div>
                 ))}
- 
 
                 <h3
                   style={{
@@ -812,6 +825,7 @@ const CategorySubcategories = () => {
               
             </div>
           </div>
+  
           {hideProducts === false ? (<div className={styles.ProductsDesktopContainer}>
             {mixedProducts.length === 0 && (
               <div
@@ -940,6 +954,7 @@ const CategorySubcategories = () => {
             </>
           );
         })}
+        
       </ul>
 
             {mixedProducts.length > 0 && (
