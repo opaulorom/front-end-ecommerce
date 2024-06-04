@@ -853,7 +853,7 @@ const CategorySubcategories = () => {
               
             </div>
           </div>
-          <PriceRange filteredProducts={filteredProducts} />
+              <PriceRange filteredProducts={filteredProducts} />
 
 
           {hideProducts === false ? (<div className={styles.ProductsDesktopContainer}>
