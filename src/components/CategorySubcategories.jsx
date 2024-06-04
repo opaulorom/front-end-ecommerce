@@ -203,9 +203,6 @@ const CategorySubcategories = () => {
     fetchSubcategoriesData();
   }, [category, selectedSubcategory]);
 
-  const handleClickSubcategory = (subcategory) => {
-    onSubcategorySelect(subcategory);
-  };
 
   useEffect(() => {
     setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
