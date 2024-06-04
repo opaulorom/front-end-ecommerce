@@ -12,7 +12,6 @@ import Navbar from "./Navbar";
 import CloseIcon from '@mui/icons-material/Close';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ProductList from "./ProductList";
-import PriceRange from "./PriceRange";
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -853,7 +852,6 @@ const CategorySubcategories = () => {
               
             </div>
           </div>
-              <PriceRange filteredProducts={filteredProducts} />
 
 
           {hideProducts === false ? (<div className={styles.ProductsDesktopContainer}>
