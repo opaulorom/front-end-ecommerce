@@ -7,7 +7,7 @@ const PriceRange = ({ filteredProducts }) => {
         <div key={index}>
           <h3>{product.name}</h3>
           <p>{product.description}</p>
-          <p>Price: {product.price}</p>
+          <p>Price: {product.variations[0].sizes[0].price}</p>
           {/* Adicione mais informações do produto conforme necessário */}
         </div>
       ))}
