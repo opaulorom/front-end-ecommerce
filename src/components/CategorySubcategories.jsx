@@ -15,6 +15,8 @@ import ProductList from "./ProductList";
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
+  const [subcategoriesData, setSubcategoriesData] = useState([]);
+
   const [mixedProducts, setMixedProducts] = useState([]);
   const [originalProducts, setOriginalProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -183,8 +185,36 @@ const CategorySubcategories = () => {
     }
   };
 
+  
+  useEffect(() => {
+    const fetchSubcategoriesData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/api/categories/${category}/${selectedSubcategory}`
+        );
+        const data = await response.json();
+        setSubcategoriesData(data.subcategoryProducts);
+        setLoading(false);
+      } catch (error) {
+        console.error("Erro ao obter subcategorias:", error);
+      }
+    };
+
+    fetchSubcategoriesData();
+  }, [category, selectedSubcategory]);
+
+  const handleClickSubcategory = (subcategory) => {
+    onSubcategorySelect(subcategory);
+  };
+
   useEffect(() => {
     setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
+
+
+  
+
+
+
 
     const fetchSubcategories = async () => {
       try {
@@ -825,7 +855,8 @@ const CategorySubcategories = () => {
               
             </div>
           </div>
-  
+        
+
           {hideProducts === false ? (<div className={styles.ProductsDesktopContainer}>
             {mixedProducts.length === 0 && (
               <div
@@ -985,6 +1016,36 @@ const CategorySubcategories = () => {
     
         </>
       )}
+
+
+   <div>
+      {loading ? (
+        <p>Carregando...</p>
+      ) : (
+        <div style={{
+          border: "1px solid gray"
+        }}>
+          {subcategoriesData.map(product => (
+            <div key={product._id}>
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <img src={product.variations[0].urls[0]} alt={product.name} />
+              <p>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
+              <p>Disponibilidade: {product.variations[0].sizes[0].quantityAvailable}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+
+
+
+
+
+
+
+
       <Navbar />
     </div>
   );
