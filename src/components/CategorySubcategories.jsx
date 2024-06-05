@@ -130,6 +130,7 @@ const CategorySubcategories = () => {
     if (subcategory === selectedSubcategory) {
       setSelectedSubcategory(null);
       setFilteredProducts(originalProducts);
+      
     } else {
       setSelectedSubcategory(subcategory);
     }
@@ -149,6 +150,7 @@ const CategorySubcategories = () => {
         const firstColor = originalProducts[0].variations[0].color;
         setAvailableSizes(getSizesForColor(originalProducts, firstColor));
       }
+     
     } else {
       setSelectedColor(color);
     }
@@ -399,7 +401,216 @@ const CategorySubcategories = () => {
   };
 
   const filteredProductsContent = filteredProducts.length
+  const [content, setContent] = useState('1');
 
+  const renderContent = () => {
+    switch (content) {
+      case '1':
+        return <>    {hideProducts === false ? (<div className={styles.ProductsDesktopContainer}>
+          {mixedProducts.length === 0 && (
+            <div
+              style={{
+                position: "absolute",
+                display: "flex",
+                flexDirection: "column",
+                top: "15rem",
+                left: "35rem",
+              }}
+            >
+              <img
+                src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
+                alt=""
+              />
+              <span>
+                O Produto que Você Procura Não Está Disponível no momento.
+              </span>
+            </div>
+          )}
+           <ul className={styles.ProductsContainer}>
+      {mixedProducts.map((product) => {
+        const selectedColorVariation = selectedColor
+          ? product.variations.find(
+              (variation) => variation.color === selectedColor
+            )
+          : product.variations[0];
+
+        const hasPhoto =
+          selectedColorVariation &&
+          selectedColorVariation.urls &&
+          selectedColorVariation.urls.length > 0;
+
+        if (!hasPhoto) {
+          return null;
+        }
+
+        const displayedPrice = selectedSize
+          ? getPriceForSize(product, selectedColor, selectedSize)
+          : selectedColorVariation
+          ? selectedColorVariation.sizes[0].price
+          : product.variations[0].sizes[0].price;
+
+        const size = selectedSize || selectedColorVariation.sizes[0].name;
+
+        const queryParams = new URLSearchParams();
+        queryParams.append(
+          'selectedImageFromCategory',
+          selectedColorVariation.urls[0]
+        );
+        queryParams.append('selectedColorFromCategory', selectedColor);
+        queryParams.append('selectedPriceFromCategory', displayedPrice);
+        queryParams.append('selectedSizeFromCategory', size);
+
+        return (
+
+          <>
+          
+          <li
+            key={product._id}
+            className={styles.ProductsContainer__li}
+          >
+            <Link
+              to={{
+                pathname: `/products/${product._id}`,
+                search: `?${queryParams.toString()}`,
+              }}
+              style={{ color: 'black', textDecoration: 'none' }}
+            >
+              <img
+                src={selectedColorVariation.urls[0]}
+                alt={product.name}
+                className={styles.ProductsContainer__image}
+              />
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  marginBottom: '4rem',
+                  marginLeft: '1rem',
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: '1rem',
+                    fontWeight: '700',
+                    fontFamily: 'poppins, sans-serif',
+                  }}
+                >
+                  R$ {Number(displayedPrice || product.price || product.variations[0].sizes[0].price).toFixed(2).padStart(5, '0')}
+                </span>
+                <span
+                  style={{
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    width: '15vw',
+                    color: 'rgb(114, 114, 114)',
+                    fontSize: '.8rem',
+                  }}
+                >
+                  {product.name}
+                </span>
+              </div>
+            </Link>
+            <div
+              style={{
+                position: 'absolute',
+                top: '-5%',
+                right: '0',
+                zIndex: 5,
+                marginBottom: '5rem',
+                width: '3rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <IconToggle
+                productId={product._id}
+                isFavorite={favorites[product._id]}
+              />
+            </div>
+          </li>
+          
+          </>
+        );
+      })}
+      
+    </ul>
+
+          {mixedProducts.length > 0 && (
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: "2rem",
+                }}
+                className={styles.DestopCustomPagination}
+              >
+                <CustomPagination
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  onChangePage={handlePageChange}
+                />
+              </div>
+            </>
+          )}
+        </div>
+) : (          <ProductList products={filteredProducts} />
+)}</>;
+     
+      case '2':
+        return <>
+        <div>
+           {loading ? (
+             <p>Carregando...</p>
+           ) : (
+             <div style={{
+               border: "1px solid gray"
+             }}>
+               {subcategoriesData.map(product => (
+                 <div key={product._id}>
+                   <h3>{product.name}</h3>
+                   <p>{product.description}</p>
+                   <img src={product.variations[0].urls[0]} alt={product.name} />
+                   <p>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
+                   <p>Disponibilidade: {product.variations[0].sizes[0].quantityAvailable}</p>
+                 </div>
+               ))}
+             </div>
+           )}
+         </div>
+     
+     </>;
+      case '3':
+        return <>
+        <div>
+          {loading ? (
+            <p>Carregando...</p>
+          ) : (
+            <div style={{
+              border: "1px solid yellow"
+            }}>
+                 <div>
+          {priceRange.map((product) => (
+            <div key={product._id}>
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              {/* Renderização adicional conforme necessário */}
+            </div>
+          ))}
+        </div>
+    
+            </div>
+          )}
+        </div>
+    
+    </>;
+      default:
+        return null;
+    }
+  };
   return (
     <div
       style={{
@@ -581,7 +792,7 @@ const CategorySubcategories = () => {
                         {Array.from(uniqueSizes).map((size, index) => (
                           <div
                             key={index}
-                            onClick={() => handleFilterClick("size", size)}
+                            onClick={() => {handleFilterClick("size", size)}}
                           >
                             <button
                               style={{
@@ -706,7 +917,7 @@ const CategorySubcategories = () => {
                       key={index}
                       style={{ marginLeft: "-2.5rem" }}
                       className={styles.myLinks}
-                      onClick={() => handleSubcategoryClick(subcategory)}
+                      onClick={() => {handleSubcategoryClick(subcategory),  setContent('2')}}
                     >
                       {subcategory}
                     </li>
@@ -736,7 +947,8 @@ const CategorySubcategories = () => {
                       marginTop: "1rem",
                       cursor: "pointer"
                     }}
-                    onClick={() => handleColorClick(color)}
+                    onClick={() => {handleColorClick(color),       setContent('1')
+                  }}
 
                   >
                     <div
@@ -779,11 +991,13 @@ const CategorySubcategories = () => {
                     gridTemplateColumns: "repeat(4, 1fr)",
                   }}
                   className={styles.repeat}
+                  
                 >
                   {Array.from(uniqueSizes).map((size, index) => (
                     <div
                       key={index}
-                      onClick={() => handleFilterClick("size", size)}
+                      onClick={() => {handleFilterClick("size", size),       setContent('1')
+                    }}
                     >
                       <button
                         style={{
@@ -800,7 +1014,7 @@ const CategorySubcategories = () => {
                           marginTop: "8px",
                           cursor: "pointer",
                         }}
-                        onClick={() => handleSizeClick(size)}
+                        onClick={() =>{ handleSizeClick(size)}}
                       >
                         <span style={{ fontSize: ".8rem" }}> {size}</span>
                       </button>
@@ -818,7 +1032,7 @@ const CategorySubcategories = () => {
                   Faixas de Preços
                 </h3>
                 <div
-                  onClick={() => handlePriceRangeClick(0, 50)}
+                  onClick={() => {handlePriceRangeClick(0, 50), setContent('3')}}
                   style={{
                     cursor: "pointer",
                     fontFamily: "Montserrat, arial, sans-serif",
@@ -834,7 +1048,7 @@ const CategorySubcategories = () => {
                   R$5 - R$50
                 </div>
                 <div
-                  onClick={() => handlePriceRangeClick(50, 100)}
+                  onClick={() => {handlePriceRangeClick(50, 100), setContent('3')}}
                   style={{
                     cursor: "pointer",
                     fontFamily: "Montserrat, arial, sans-serif",
@@ -850,7 +1064,7 @@ const CategorySubcategories = () => {
                   R$50 - R$100
                 </div>
                 <div
-                  onClick={() => handlePriceRangeClick(100, 200)}
+                  onClick={() => {handlePriceRangeClick(100, 200), setContent('3')}}
                   style={{
                     cursor: "pointer",
                     fontFamily: "Montserrat, arial, sans-serif",
@@ -866,7 +1080,7 @@ const CategorySubcategories = () => {
                   R$100 - R$200
                 </div>
                 <div
-                  onClick={() => handlePriceRangeClick(200,  500)}
+                  onClick={() => {handlePriceRangeClick(200, 500), setContent('3')}}
                   style={{
                     cursor: "pointer",
                     fontFamily: "Montserrat, arial, sans-serif",
@@ -885,161 +1099,12 @@ const CategorySubcategories = () => {
               
             </div>
           </div>
+      
+          <div>
 
-
-          {hideProducts === false ? (<div className={styles.ProductsDesktopContainer}>
-            {mixedProducts.length === 0 && (
-              <div
-                style={{
-                  position: "absolute",
-                  display: "flex",
-                  flexDirection: "column",
-                  top: "15rem",
-                  left: "35rem",
-                }}
-              >
-                <img
-                  src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
-                  alt=""
-                />
-                <span>
-                  O Produto que Você Procura Não Está Disponível no momento.
-                </span>
-              </div>
-            )}
-             <ul className={styles.ProductsContainer}>
-        {mixedProducts.map((product) => {
-          const selectedColorVariation = selectedColor
-            ? product.variations.find(
-                (variation) => variation.color === selectedColor
-              )
-            : product.variations[0];
-
-          const hasPhoto =
-            selectedColorVariation &&
-            selectedColorVariation.urls &&
-            selectedColorVariation.urls.length > 0;
-
-          if (!hasPhoto) {
-            return null;
-          }
-
-          const displayedPrice = selectedSize
-            ? getPriceForSize(product, selectedColor, selectedSize)
-            : selectedColorVariation
-            ? selectedColorVariation.sizes[0].price
-            : product.variations[0].sizes[0].price;
-
-          const size = selectedSize || selectedColorVariation.sizes[0].name;
-
-          const queryParams = new URLSearchParams();
-          queryParams.append(
-            'selectedImageFromCategory',
-            selectedColorVariation.urls[0]
-          );
-          queryParams.append('selectedColorFromCategory', selectedColor);
-          queryParams.append('selectedPriceFromCategory', displayedPrice);
-          queryParams.append('selectedSizeFromCategory', size);
-
-          return (
-
-            <>
-            
-            <li
-              key={product._id}
-              className={styles.ProductsContainer__li}
-            >
-              <Link
-                to={{
-                  pathname: `/products/${product._id}`,
-                  search: `?${queryParams.toString()}`,
-                }}
-                style={{ color: 'black', textDecoration: 'none' }}
-              >
-                <img
-                  src={selectedColorVariation.urls[0]}
-                  alt={product.name}
-                  className={styles.ProductsContainer__image}
-                />
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    marginBottom: '4rem',
-                    marginLeft: '1rem',
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: '1rem',
-                      fontWeight: '700',
-                      fontFamily: 'poppins, sans-serif',
-                    }}
-                  >
-                    R$ {Number(displayedPrice || product.price || product.variations[0].sizes[0].price).toFixed(2).padStart(5, '0')}
-                  </span>
-                  <span
-                    style={{
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      width: '15vw',
-                      color: 'rgb(114, 114, 114)',
-                      fontSize: '.8rem',
-                    }}
-                  >
-                    {product.name}
-                  </span>
-                </div>
-              </Link>
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '-5%',
-                  right: '0',
-                  zIndex: 5,
-                  marginBottom: '5rem',
-                  width: '3rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <IconToggle
-                  productId={product._id}
-                  isFavorite={favorites[product._id]}
-                />
-              </div>
-            </li>
-            
-            </>
-          );
-        })}
-        
-      </ul>
-
-            {mixedProducts.length > 0 && (
-              <>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: "2rem",
-                  }}
-                  className={styles.DestopCustomPagination}
-                >
-                  <CustomPagination
-                    totalPages={totalPages}
-                    currentPage={currentPage}
-                    onChangePage={handlePageChange}
-                  />
-                </div>
-              </>
-            )}
-          </div>
-) : (          <ProductList products={filteredProducts} />
-)}
+<div>{renderContent()}</div>
+</div>
+      
 
           
         
@@ -1048,52 +1113,8 @@ const CategorySubcategories = () => {
       )}
 
 
-   <div>
-      {loading ? (
-        <p>Carregando...</p>
-      ) : (
-        <div style={{
-          border: "1px solid gray"
-        }}>
-          {subcategoriesData.map(product => (
-            <div key={product._id}>
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-              <img src={product.variations[0].urls[0]} alt={product.name} />
-              <p>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
-              <p>Disponibilidade: {product.variations[0].sizes[0].quantityAvailable}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
 
-
-    <div>
-      {loading ? (
-        <p>Carregando...</p>
-      ) : (
-        <div style={{
-          border: "1px solid yellow"
-        }}>
-             <div>
-      {priceRange.map((product) => (
-        <div key={product._id}>
-          <h3>{product.name}</h3>
-          <p>{product.description}</p>
-          {/* Renderização adicional conforme necessário */}
-        </div>
-      ))}
-    </div>
-
-        </div>
-      )}
-    </div>
-
-
-
-
-
+  
 
 
 
