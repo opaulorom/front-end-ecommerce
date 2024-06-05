@@ -37,7 +37,7 @@ const CategorySubcategories = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [doubleBorder, setDoubleBorder] = useState(null); // Alterar para índice
   const [hideProducts, setHideProducts] = useState(false); // Alterar para índice
-
+  const [priceRange, setPriceRange] = useState([]);
 
   const handleSelectBorder = (index) => {
     setDoubleBorder(index);
@@ -135,6 +135,12 @@ const CategorySubcategories = () => {
     }
   };
 
+  const handlePriceRangeClick = (minPrice, maxPrice) => {
+   setSelectedPrice({minPrice, maxPrice})
+  };
+
+
+
   const handleColorClick = (color) => {
     if (color === selectedColor) {
       setSelectedColor(null);
@@ -203,6 +209,30 @@ const CategorySubcategories = () => {
     fetchSubcategoriesData();
   }, [category, selectedSubcategory]);
 
+
+   
+
+  useEffect(() => {
+    const fetchPriceRangeData = async () => {
+      if(selectedPrice){
+        try {
+          const { minPrice, maxPrice } = selectedPrice;
+
+          const response = await fetch(
+            `http://localhost:3001/api/category/${category}/priceRange?minPrice=${minPrice}&maxPrice=${maxPrice}`
+          );
+          const data = await response.json();
+          setPriceRange(data.products || []);
+          setLoading(false);
+        } catch (error) {
+          console.error("Erro ao obter subcategorias:", error);
+        }
+      };
+      }
+     
+
+    fetchPriceRangeData();
+  }, [category, selectedPrice]);
 
   useEffect(() => {
     setLoading(true); // Define o estado de carregamento como true antes de fazer a chamada à API
@@ -325,6 +355,9 @@ const CategorySubcategories = () => {
     setFilteredProducts(filteredProducts);
     setTotalPages(1); // Atualiza o número total de páginas para 1, uma vez que os produtos filtrados serão exibidos em uma única página
   };
+
+
+
   const handleFavoriteClick = (productId) => {
     setMixedProducts((prevProducts) =>
       prevProducts.map((product) =>
@@ -785,7 +818,7 @@ const CategorySubcategories = () => {
                   Faixas de Preços
                 </h3>
                 <div
-                  onClick={() => handleFilterClick("price", "0-50")}
+                  onClick={() => handlePriceRangeClick(0, 50)}
                   style={{
                     cursor: "pointer",
                     fontFamily: "Montserrat, arial, sans-serif",
@@ -801,7 +834,7 @@ const CategorySubcategories = () => {
                   R$5 - R$50
                 </div>
                 <div
-                  onClick={() => handleFilterClick("price", "50-100")}
+                  onClick={() => handlePriceRangeClick(50, 100)}
                   style={{
                     cursor: "pointer",
                     fontFamily: "Montserrat, arial, sans-serif",
@@ -817,7 +850,7 @@ const CategorySubcategories = () => {
                   R$50 - R$100
                 </div>
                 <div
-                  onClick={() => handleFilterClick("price", "100-200")}
+                  onClick={() => handlePriceRangeClick(100, 200)}
                   style={{
                     cursor: "pointer",
                     fontFamily: "Montserrat, arial, sans-serif",
@@ -833,7 +866,7 @@ const CategorySubcategories = () => {
                   R$100 - R$200
                 </div>
                 <div
-                  onClick={() => handleFilterClick("price", "200-")}
+                  onClick={() => handlePriceRangeClick(200,  500)}
                   style={{
                     cursor: "pointer",
                     fontFamily: "Montserrat, arial, sans-serif",
@@ -1035,6 +1068,27 @@ const CategorySubcategories = () => {
       )}
     </div>
 
+
+    <div>
+      {loading ? (
+        <p>Carregando...</p>
+      ) : (
+        <div style={{
+          border: "1px solid yellow"
+        }}>
+             <div>
+      {priceRange.map((product) => (
+        <div key={product._id}>
+          <h3>{product.name}</h3>
+          <p>{product.description}</p>
+          {/* Renderização adicional conforme necessário */}
+        </div>
+      ))}
+    </div>
+
+        </div>
+      )}
+    </div>
 
 
 
