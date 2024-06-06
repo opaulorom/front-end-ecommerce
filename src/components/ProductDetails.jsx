@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import CartB from "./CartB";
 import { useAuth } from "../context/AuthContext";
+import { TrendingUpOutlined } from "@mui/icons-material";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -35,9 +36,13 @@ const ProductDetails = () => {
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedColorId, setSelectedColorId] = useState("");
   const [selectedSizeId, setSelectedSizeId] = useState("");
-
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-
+  
+  const hendleButtonDisabled = () => {
+    setIsButtonDisabled(true)
+  }
+  
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
   };
@@ -427,18 +432,25 @@ const ProductDetails = () => {
                              
                             }}
                           >
-                            <span
+                            <button
                               className={`size-button ${
                                 size.size === selectedSize ? "active" : ""
+                                
                               }`}
+                              style={{
+                                border:size.inStockSize === true ? "2px dashed #ccc" : "",
+
+                                color: size.inStockSize === true ? "#999" : "",
+                              }}
+                              disabled={size.inStockSize === true ? isButtonDisabled : false}
                               onClick={() =>
                                 handleSizeSelection(size.size, size.price)
                               }
                             >
                               {size.size}
-                            </span>
+                              
+                            </button>
 
-                         
                           </div>
                         )
                       )}
