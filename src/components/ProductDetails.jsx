@@ -439,7 +439,6 @@ const ProductDetails = () => {
                               }`}
                               style={{
                                 border:size.inStockSize === true ? "2px dashed #ccc" : "",
-
                                 color: size.inStockSize === true ? "#999" : "",
                               }}
                               disabled={size.inStockSize === true ? isButtonDisabled : false}
