@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:3001/loginCustumer', {
+      const response = await axios.post('https://serveradmin-whhj.onrender.com/loginCustumer', {
         email,
         password,
       });
