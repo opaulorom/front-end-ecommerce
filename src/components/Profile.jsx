@@ -22,8 +22,9 @@ const Profile = () => {
       <Header> </Header>
       <div style={{marginTop:"10rem"}}>
       <LoginForm/>
-      <Protected></Protected>
-
+      {loggedIn === true &&  <Protected></Protected>
+      }
+     
       </div>
   
       </div>
