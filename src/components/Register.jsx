@@ -38,14 +38,21 @@ function RegisterUser() {
       
       <h2>Register User</h2>
       {message && <p>{message}</p>}
-      {error && <p>{error}</p>}
       <form onSubmit={handleSubmit}>
         <label>Email:</label>
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <br />
-        <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <br />
+        {error && <p>{error}</p>}
+
+       <div style={{
+        display:"flex",
+        flexDirection:"column",
+        width:"20vw"
+       }}>
+       <label>Password:</label>
+       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+       </div>
+       
+    
         <button type="submit">Register</button>
       </form>
     </div>
