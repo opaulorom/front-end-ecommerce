@@ -4,14 +4,15 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Header from './Header';
 import Navbar from './Navbar';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 function RegisterUser() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const { token } = useParams();
-
+  const [showPassword, setShowPassword] = useState(null)
   useEffect(() => {
     // O token agora está disponível aqui, você pode usá-lo como desejar
     console.log(token);
@@ -49,7 +50,19 @@ function RegisterUser() {
         width:"20vw"
        }}>
        <label>Password:</label>
+       <div style={{
+        position:"relative"
+       }}>
        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+       <div onClick={() => setShowPassword(!showPassword)} style={{
+        position:"absolute",
+        right:"10px",
+        top:"50%",
+        transform:"translateY(-50%)",
+        cursor:"pointer"
+
+       }}>{showPassword ? <VisibilityIcon/>: <VisibilityOffIcon/>}</div>
+       </div>
        </div>
        
     
