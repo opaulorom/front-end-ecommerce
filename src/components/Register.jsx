@@ -53,7 +53,7 @@ function RegisterUser() {
        <div style={{
         position:"relative"
        }}>
-       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+       <input type={showPassword ? "text": "password"} value={password} onChange={(e) => setPassword(e.target.value)} required />
        <div onClick={() => setShowPassword(!showPassword)} style={{
         position:"absolute",
         right:"10px",
