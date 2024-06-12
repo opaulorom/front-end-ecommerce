@@ -9,14 +9,7 @@ import LoginForm from './LoginForm';
 
 const Profile = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-  const [showButton, setShowButton] = useState(false);
-  useEffect(() => {
-    if(loggedIn){
-      setShowButton(true)
-    } else {
-      setShowButton(false)
-    }
-  })
+  
   return (
     <div>
       <Header> </Header>
