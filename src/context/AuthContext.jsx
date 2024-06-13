@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
       Cookies.set('role', role);
       Cookies.set('userId', _id);
      
+  
 
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -60,7 +61,7 @@ export const AuthProvider = ({ children }) => {
     setLoggedIn(false);
     setIsCustomer(false);
     setUserId(null); // Resetando o ID do usuário ao fazer logout
-    navigate('/home');
+    navigate('/login');
 
   };
 

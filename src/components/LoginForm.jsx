@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ProfileDetails from './ProfileDetails';
 import "./LoginForm.css"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const LoginForm = () => {
@@ -12,6 +12,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [formErrors, setFormErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
+  const navigate = useNavigate(); // Inicialize o hook useNavigate
 
   const handleLogin = () => {
     if (validateForm()) {

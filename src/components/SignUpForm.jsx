@@ -5,10 +5,12 @@ import Navbar from "./Navbar";
 import Header from "./Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 const SignUpForm = () => {
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
   const [showCEP, setShowCEP] = useState(false);
   const [formComplete, setFormComplete] = useState(false);
+  const navigate = useNavigate(); // Inicialize o hook useNavigate
 
   const [formData, setFormData] = useState({
     custumerId: userId, // Usando o userId do usuário logado
@@ -24,6 +26,23 @@ const SignUpForm = () => {
     city: "",
     state: "",
   });
+  useEffect(() => {
+    // Verifica se todos os campos obrigatórios estão preenchidos
+    const requiredFields = [
+      "name",
+      "cpfCnpj",
+      "email",
+      "mobilePhone",
+      "postalCode",
+      "address",
+      "addressNumber",
+      "province",
+      "city",
+      "state",
+    ];
+    const isComplete = requiredFields.every((field) => formData[field].trim() !== "");
+    setFormComplete(isComplete);
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -110,8 +129,14 @@ const SignUpForm = () => {
         formData
       );
       console.log("Dados enviados com sucesso:", response.data);
+
+    if (response.data) {
+   
+      navigate("/home");
+    }
+
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
-    } catch (error) {
+     } catch (error) {
       console.error("Erro ao enviar informações do usuário:", error);
       // Trate erros aqui, como exibir uma mensagem para o usuário
     }
@@ -306,9 +331,9 @@ const SignUpForm = () => {
             </label>
           </>
         )}
-        {Object.values(formData).filter((val) => val !== "").length > 1 && (
-          <button type="submit">Submit</button>
-        )}
+      <button type="submit" disabled={!formComplete} style={{ backgroundColor: formComplete ? "#14337C" : "#ccc" }}>
+          Submit
+        </button>
       </form>
     </>
   );
