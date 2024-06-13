@@ -9,7 +9,7 @@ import NewArrivals from "./NewArrivals";
 import Slider from "../components/Slider";
 
 const Home = () => {
-
+ 
   
   return (
     <div>
@@ -26,7 +26,7 @@ const Home = () => {
       </div>
 
       <Navbar></Navbar>
-
+     
       
     </div>
   );

@@ -56,6 +56,7 @@ const Root = () => (
     <Route path="/carrinho" element={<Cart />} />
     <Route path="/perfil" element={<Profile />} />
     <Route path="/conta" element={<MobileProfile />} />
+    <Route path="/pix" element={<PixPage />} />
 
     <Route path="/products/:productId" element={<ProductDetails  />} />{" "}
     <Route path="/payment" element={<Pay />} />

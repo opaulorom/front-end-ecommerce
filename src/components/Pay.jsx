@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import ImageComponent from "./ImageComponent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import PixPage from "./PixPage";
 
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState("pix");
@@ -64,7 +65,7 @@ const Pay = () => {
       // Redirecionar para a URL de pagamento PIX
       setEncodedImage(data.encodedImage);
       setPixCode(data.payload);
-    
+   
     } catch (error) {
       console.error(error);
     }
@@ -281,11 +282,12 @@ const Pay = () => {
             Cartão de Crédito
           </label>
         </div>
+        
         <div>
           {paymentMethod === "pix" && (
             <p>
               <button onClick={handlePixPayment}>Pagar com Pix</button>
-
+    
               <div>
                 {encodedImage && <ImageComponent encodedImage={encodedImage} />}
                 {encodedImage && (
