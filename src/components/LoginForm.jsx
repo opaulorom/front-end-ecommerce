@@ -11,6 +11,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [formErrors, setFormErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
 
   const handleLogin = () => {
     if (validateForm()) {
@@ -73,7 +74,7 @@ const LoginForm = () => {
             }}>
               <label className="password" htmlFor="password">Senha</label>
               <input
-                type={password ? "text" : "password"}
+                type={showPassword ? "text" : "password"} // Usa showPassword para alternar o tipo de input
                 placeholder="Digite a senha..."
                 value={password}
                 onChange={(e) => {
@@ -83,7 +84,7 @@ const LoginForm = () => {
                 className={formErrors.password ? 'error' : ''}
               />
               <div
-                onClick={() => setPassword(!password)}  // Alterna o estado de showPassword
+                onClick={() => setShowPassword(!showPassword)}  // Alterna o estado de showPassword
                 style={{
                   position: "absolute",
                   right: "10px",
@@ -92,8 +93,8 @@ const LoginForm = () => {
                   cursor: "pointer"
                 }}
               >
-                {password ? <VisibilityOffIcon /> : <VisibilityIcon />}
-              </div>
+                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </div>
             </div>
 
 
