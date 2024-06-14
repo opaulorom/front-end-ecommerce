@@ -88,7 +88,7 @@ const Pay = () => {
       console.log(data);
 
       // Redirecionar para a URL de pagamento PIX
-      window.location.href = data.bankSlipUrl;
+    //   window.location.href = data.bankSlipUrl;
     } catch (error) {
       console.error(error);
     }
@@ -306,6 +306,7 @@ const Pay = () => {
 
           {paymentMethod === "boleto" && (
             <p>
+           
               <button onClick={handleBoletoPayment}>Pagar com Boleto</button>
             </p>
           )}

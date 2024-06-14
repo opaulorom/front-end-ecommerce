@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import ImageComponent from "./ImageComponent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { saveAs } from "file-saver";
 
 
 const Pay = () => {
@@ -20,6 +21,10 @@ const Pay = () => {
   const [buttonClicked, setButtonClicked] = useState(false);
   const navigate = useNavigate(); // Inicialize o hook useNavigate
   const [showContent, setShowContent] = useState(true);
+  const [boleto, setBoleto] = useState(null);
+
+
+  
 
   const handleChangeContentClick = () => {
     setShowContent(false);
@@ -91,9 +96,12 @@ const Pay = () => {
       );
       const data = await response.json();
       console.log(data);
-
-      // Redirecionar para a URL de pagamento PIX
+      setBoleto(data)
+      // // Redirecionar para a URL de pagamento PIX
       window.location.href = data.bankSlipUrl;
+
+          // Atualiza o estado com a URL do boleto
+
       handleChangeContentClick()
     } catch (error) {
       console.error(error);
@@ -181,6 +189,8 @@ const Pay = () => {
         console.log("Erro ao visualizar frete.", error);
       });
   }, [userId, getTotal]);
+
+ 
 
   return (
     <div
@@ -290,7 +300,7 @@ const Pay = () => {
                     />{" "}
                     Cartão de Crédito
                   </label>
-
+        
                 </div>
 
                 <div> {paymentMethod === "cartao" && (
@@ -425,6 +435,13 @@ const Pay = () => {
         ) : (
           <div id="div2">
             <p>     <div>
+            {paymentMethod === "boleto" && (
+  <>
+    <button onClick={() => window.open(boleto.bankSlipUrl)}>Ver Boleto</button>
+    <button onClick={handleDownloadBoleto}>Download do Boleto</button>
+    </>
+)}
+
               {paymentMethod === "pix" && (
                 <p>
 
