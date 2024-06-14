@@ -22,6 +22,7 @@ const Pay = () => {
   const navigate = useNavigate(); // Inicialize o hook useNavigate
   const [showContent, setShowContent] = useState(true);
   const [boleto, setBoleto] = useState(null);
+  const [creditCard, setCreditCard] = useState(null);
 
 
 
@@ -158,7 +159,7 @@ const Pay = () => {
       );
       console.log();
 
-
+      setCreditCard(response.data)
       // if (response.data) {
 
       //   navigate("/success");
@@ -166,6 +167,7 @@ const Pay = () => {
       //   navigate("/");
 
       // }
+      handleChangeContentClick()
 
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
@@ -435,6 +437,16 @@ const Pay = () => {
         ) : (
           <div id="div2">
             <p>     <div>
+            {paymentMethod === "cartao"  && (
+              <>
+              <div style={{
+                marginTop:"15rem"
+              }}>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/Zcn8dp8/verified.png" alt="verified" border="0" /></a>              pagamento comfirmado
+
+              </div>
+              </>
+            )}
            
               {paymentMethod === "pix" && (
                 <p>
