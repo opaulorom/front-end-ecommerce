@@ -72,11 +72,11 @@ const Pay = () => {
       );
       const data = await response.json();
       console.log(data);
+      handleChangeContentClick()
 
       // Redirecionar para a URL de pagamento PIX
       setEncodedImage(data.encodedImage);
       setPixCode(data.payload);
-      handleChangeContentClick()
     } catch (error) {
       console.error(error);
     }
@@ -103,7 +103,6 @@ const Pay = () => {
 
       // Atualiza o estado com a URL do boleto
 
-      handleChangeContentClick()
     } catch (error) {
       console.error(error);
     }
@@ -158,6 +157,7 @@ const Pay = () => {
         }
       );
       console.log();
+      handleChangeContentClick()
 
       setCreditCard(response.data)
       // if (response.data) {
@@ -167,7 +167,6 @@ const Pay = () => {
       //   navigate("/");
 
       // }
-      handleChangeContentClick()
 
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
