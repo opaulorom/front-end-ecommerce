@@ -159,11 +159,11 @@ const Pay = () => {
         }
       );
       console.log();
-      if(response.data){
+      if (response.data) {
         handleChangeContentClick()
 
       } else {
-        
+
       }
       setCreditCard(response.data)
       // if (response.data) {
@@ -205,7 +205,7 @@ const Pay = () => {
     >
       <PaymentHeader />
       <Navbar />
- 
+
       <div style={{ textAlign: 'center', marginTop: '10rem' }}>
         {showContent ? (
           <div>
@@ -443,46 +443,46 @@ const Pay = () => {
           </div>
         ) : (
           <div id="div2">
-            <p>  
-              
-                 <div>
-              {paymentMethod === "cartao" && (
-                <>
-                  <div style={{
-                    marginTop: "15rem"
-                  }}>
-                    <a href="https://imgbb.com/"><img src="https://i.ibb.co/Zcn8dp8/verified.png" alt="verified" border="0" /></a>              pagamento comfirmado
+            <p>
 
-                  </div>
-                </>
-              )}
+              <div>
+                {paymentMethod === "cartao" && (
+                  <>
+                    <div style={{
+                      marginTop: "15rem"
+                    }}>
+                      <a href="https://imgbb.com/"><img src="https://i.ibb.co/Zcn8dp8/verified.png" alt="verified" border="0" /></a>              pagamento comfirmado
 
-              {paymentMethod === "pix" && (
-                <p>
+                    </div>
+                  </>
+                )}
 
-                  <div>
-                    {encodedImage && <ImageComponent encodedImage={encodedImage} />}
-                    {encodedImage && (
-                      <>
-                        <p style={{ width: "10vw" }}>{pixCode}</p>
-                        <div>
-                          <button onClick={handleClick}>
-                            {status === "copiar" ? "Copiar" : "Copiado"}
-                          </button>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </p>
-              )}
+                {paymentMethod === "pix" && (
+                  <p>
 
-              {paymentMethod === "boleto" && (
-                <p>
-                  Boleto
-                </p>
-              )}
+                    <div>
+                      {encodedImage && <ImageComponent encodedImage={encodedImage} />}
+                      {encodedImage && (
+                        <>
+                          <p style={{ width: "10vw" }}>{pixCode}</p>
+                          <div>
+                            <button onClick={handleClick}>
+                              {status === "copiar" ? "Copiar" : "Copiado"}
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </p>
+                )}
 
-            </div></p>
+                {paymentMethod === "boleto" && (
+                  <p>
+                    Boleto
+                  </p>
+                )}
+
+              </div></p>
           </div>
         )}
       </div>
