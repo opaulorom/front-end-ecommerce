@@ -437,17 +437,17 @@ const Pay = () => {
         ) : (
           <div id="div2">
             <p>     <div>
-            {paymentMethod === "cartao"  && (
-              <>
-              <div style={{
-                marginTop:"15rem"
-              }}>
-<a href="https://imgbb.com/"><img src="https://i.ibb.co/Zcn8dp8/verified.png" alt="verified" border="0" /></a>              pagamento comfirmado
+              {paymentMethod === "cartao" && (
+                <>
+                  <div style={{
+                    marginTop: "15rem"
+                  }}>
+                    <a href="https://imgbb.com/"><img src="https://i.ibb.co/Zcn8dp8/verified.png" alt="verified" border="0" /></a>              pagamento comfirmado
 
-              </div>
-              </>
-            )}
-           
+                  </div>
+                </>
+              )}
+
               {paymentMethod === "pix" && (
                 <p>
 
