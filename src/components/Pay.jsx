@@ -24,7 +24,7 @@ const Pay = () => {
   const [boleto, setBoleto] = useState(null);
 
 
-  
+
 
   const handleChangeContentClick = () => {
     setShowContent(false);
@@ -100,7 +100,7 @@ const Pay = () => {
       // // Redirecionar para a URL de pagamento PIX
       window.location.href = data.bankSlipUrl;
 
-          // Atualiza o estado com a URL do boleto
+      // Atualiza o estado com a URL do boleto
 
       handleChangeContentClick()
     } catch (error) {
@@ -190,7 +190,7 @@ const Pay = () => {
       });
   }, [userId, getTotal]);
 
- 
+
 
   return (
     <div
@@ -300,7 +300,7 @@ const Pay = () => {
                     />{" "}
                     Cartão de Crédito
                   </label>
-        
+
                 </div>
 
                 <div> {paymentMethod === "cartao" && (
@@ -435,13 +435,7 @@ const Pay = () => {
         ) : (
           <div id="div2">
             <p>     <div>
-            {paymentMethod === "boleto" && (
-  <>
-    <button onClick={() => window.open(boleto.bankSlipUrl)}>Ver Boleto</button>
-    <button onClick={handleDownloadBoleto}>Download do Boleto</button>
-    </>
-)}
-
+           
               {paymentMethod === "pix" && (
                 <p>
 
