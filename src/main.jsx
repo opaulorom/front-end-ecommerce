@@ -35,7 +35,7 @@ import Register from "./components/Register";
 import PasswordResetRequest from "./components/PasswordResetRequest";
 import ResetPasswordPage from "./components/ResetPasswordPage";
 import RegisterLink from "./components/RegisterLink";
-import PixPage from "./components/PixPage";
+
 import NewArrivals from "./components/NewArrivals";
 import WhatsNew from "./components/WhatsNew";
 import SignUpForm from "./components/SignUpForm";
@@ -56,7 +56,7 @@ const Root = () => (
     <Route path="/carrinho" element={<Cart />} />
     <Route path="/perfil" element={<Profile />} />
     <Route path="/conta" element={<MobileProfile />} />
-    <Route path="/pix" element={<PixPage />} />
+
 
     <Route path="/products/:productId" element={<ProductDetails  />} />{" "}
     <Route path="/payment" element={<Pay />} />
@@ -100,7 +100,7 @@ const Root = () => (
     <Route path="/register/:token" element={<Register/>} />
     <Route path="/forgotPassword" element={<PasswordResetRequest/>} />
     <Route path="/reset-password/:token" element={<ResetPasswordPage/>} />
-    <Route path="/pix" element={<PixPage/>} />
+    npm create vite@latest
     <Route path="/whatsNew" element={<WhatsNew/>} />
     <Route path="/newArrivals" element={<NewArrivals/>} />
     <Route path="/signUp" element={<SignUpForm/>} />
