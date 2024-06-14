@@ -23,7 +23,7 @@ const Pay = () => {
   const [showContent, setShowContent] = useState(true);
   const [boleto, setBoleto] = useState(null);
   const [creditCard, setCreditCard] = useState(null);
-  const [pix, setLoading] = useState(true); // Estado para controlar o carregamento
+  const [pix, setPix] = useState(true); // Estado para controlar o carregamento
 
 
 
@@ -73,6 +73,7 @@ const Pay = () => {
       );
       const data = await response.json();
       console.log(data);
+      setPix(data)
       handleChangeContentClick()
 
       // Redirecionar para a URL de pagamento PIX
@@ -204,6 +205,7 @@ const Pay = () => {
     >
       <PaymentHeader />
       <Navbar />
+ 
       <div style={{ textAlign: 'center', marginTop: '10rem' }}>
         {showContent ? (
           <div>
@@ -437,10 +439,13 @@ const Pay = () => {
 
               </div>
             </div>
+
           </div>
         ) : (
           <div id="div2">
-            <p>     <div>
+            <p>  
+              
+                 <div>
               {paymentMethod === "cartao" && (
                 <>
                   <div style={{
