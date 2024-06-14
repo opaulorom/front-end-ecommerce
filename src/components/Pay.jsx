@@ -23,6 +23,7 @@ const Pay = () => {
   const [showContent, setShowContent] = useState(true);
   const [boleto, setBoleto] = useState(null);
   const [creditCard, setCreditCard] = useState(null);
+  const [pix, setLoading] = useState(true); // Estado para controlar o carregamento
 
 
 
@@ -157,8 +158,12 @@ const Pay = () => {
         }
       );
       console.log();
-      handleChangeContentClick()
+      if(response.data){
+        handleChangeContentClick()
 
+      } else {
+        
+      }
       setCreditCard(response.data)
       // if (response.data) {
 
