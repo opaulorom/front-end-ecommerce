@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import ImageComponent from "./ImageComponent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 
 const Pay = () => {
@@ -222,7 +223,16 @@ const Pay = () => {
         {showContent ? (
           <div>
              {pixLoading || creditCardLoading || boletoLoading ? (
+              <>
+              <div style={{
+                marginTop:"10rem"
+              }}>
+                    <CircularProgress />
               <p>Carregando...</p>
+
+              </div>
+              
+              </>
             ) : (<>
             
             <div id="div1">
