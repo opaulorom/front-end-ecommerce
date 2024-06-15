@@ -72,6 +72,8 @@ const Cart = () => {
   }, [openModal]);
 
   function handleProducts() {
+    setLoading(true); // Define o estado de carregamento como falso
+
     axios
       .get(`http://localhost:3001/api/cart/${userId}`, {
         headers: {
@@ -85,6 +87,8 @@ const Cart = () => {
         setLoading(false); // Define o estado de carregamento como falso
       })
       .catch((error) => {
+        setLoading(false); // Define o estado de carregamento como falso
+
         console.log("Erro ao visualizar frete.", error);
       });
   }
