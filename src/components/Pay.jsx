@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 import ImageComponent from "./ImageComponent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { saveAs } from "file-saver";
 
 
 const Pay = () => {
@@ -25,7 +24,8 @@ const Pay = () => {
   const [creditCard, setCreditCard] = useState(null);
   const [pix, setPix] = useState(true); // Estado para controlar o carregamento
 
-
+  const [pixLoading, setPixLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
+  const [creditCardLoading, setCreditCardLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
 
 
   const handleChangeContentClick = () => {
@@ -60,6 +60,8 @@ const Pay = () => {
 
   // pagar com pix sem checkout transparente
   const handlePixPayment = async () => {
+    setPixLoading(true); // Ativar o loader
+
     try {
       const response = await fetch(
         `http://localhost:3001/api/pixQRcodeStatico/${userId}`,
@@ -72,6 +74,8 @@ const Pay = () => {
         }
       );
       const data = await response.json();
+      setPixLoading(false); // Desativar o loader
+
       console.log(data);
       setPix(data)
       handleChangeContentClick()
@@ -80,6 +84,8 @@ const Pay = () => {
       setEncodedImage(data.encodedImage);
       setPixCode(data.payload);
     } catch (error) {
+      setPixLoading(false); // Certifique-se de desativar o loader em caso de erro
+
       console.error(error);
     }
   };
@@ -141,7 +147,7 @@ const Pay = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtonClicked(true); // Define o estado como true quando o botão é clicado
-
+    setCreditCardLoading(true)
     try {
 
       const updatedFormData = {
@@ -159,12 +165,11 @@ const Pay = () => {
         }
       );
       console.log();
-      if (response.data) {
+      setCreditCardLoading(false)
         handleChangeContentClick()
 
-      } else {
 
-      }
+      
       setCreditCard(response.data)
       // if (response.data) {
 
@@ -176,6 +181,7 @@ const Pay = () => {
 
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
+      setCreditCardLoading(false)
       console.error("Erro ao enviar informações do usuário:", error);
       // Trate erros aqui, como exibir uma mensagem para o usuário
     }
@@ -209,6 +215,10 @@ const Pay = () => {
       <div style={{ textAlign: 'center', marginTop: '10rem' }}>
         {showContent ? (
           <div>
+             {pixLoading || creditCardLoading ? (
+              <p>Carregando...</p>
+            ) : (<>
+            
             <div id="div1">
               <div style={{ marginTop: "8rem" }}>
                 <h1
@@ -439,6 +449,8 @@ const Pay = () => {
 
               </div>
             </div>
+            </>) }
+          
 
           </div>
         ) : (
