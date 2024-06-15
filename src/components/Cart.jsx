@@ -359,13 +359,13 @@ const Cart = () => {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                marginTop: "15rem",
+                marginTop: "2rem",
               }}
             >
               <img
                 src="https://i.ibb.co/x765V9y/bag-4.png"
                 alt=""
-                style={{ width: "15vw" }}
+        
               />
               <p>O carrinho está vazio.</p>
             </div>
