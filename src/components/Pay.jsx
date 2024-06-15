@@ -26,7 +26,9 @@ const Pay = () => {
 
   const [pixLoading, setPixLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
   const [creditCardLoading, setCreditCardLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
+  const [boletoLoading, setBoletoLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
 
+  
 
   const handleChangeContentClick = () => {
     setShowContent(false);
@@ -92,6 +94,8 @@ const Pay = () => {
 
   // pagar boleto sem checkout transparente
   const handleBoletoPayment = async () => {
+    setBoletoLoading(true)
+
     try {
       const response = await fetch(
         `http://localhost:3001/api/boleto/${userId}`,
@@ -104,6 +108,7 @@ const Pay = () => {
         }
       );
       const data = await response.json();
+      setBoletoLoading(false)
       console.log(data);
       setBoleto(data)
       // // Redirecionar para a URL de pagamento PIX
@@ -112,6 +117,7 @@ const Pay = () => {
       // Atualiza o estado com a URL do boleto
 
     } catch (error) {
+      setBoletoLoading(false)
       console.error(error);
     }
   };
@@ -215,7 +221,7 @@ const Pay = () => {
       <div style={{ textAlign: 'center', marginTop: '10rem' }}>
         {showContent ? (
           <div>
-             {pixLoading || creditCardLoading ? (
+             {pixLoading || creditCardLoading || boletoLoading ? (
               <p>Carregando...</p>
             ) : (<>
             
