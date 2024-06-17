@@ -12,6 +12,7 @@ import Navbar from "./Navbar";
 import CloseIcon from '@mui/icons-material/Close';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ProductList from "./ProductList";
+import NewArrivals from "./NewArrivals";
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -306,6 +307,8 @@ const CategorySubcategories = () => {
         
         setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
       } catch (error) {
+        setLoading(false); // Define loading como falso após obter os dados
+
         console.error("Erro ao obter produtos misturados:", error);
       }
     };

@@ -14,7 +14,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.4",
     "@mui/joy": "^5.0.0-beta.22",
-    "@mui/material": "^5.15.4",
+    "@mui/material": "^5.15.20",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "axios": "^1.7.2",
     "firebase": "^10.8.0",
