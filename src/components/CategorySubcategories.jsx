@@ -13,6 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ProductList from "./ProductList";
 import NewArrivals from "./NewArrivals";
+import CategorySubcategoriesSkeleton from "./CategorySubcategoriesSkeleton";
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -177,6 +178,8 @@ const CategorySubcategories = () => {
   const fetchMixedProducts = async (page, filters) => {
     setLoading(true);
     try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
       const queryString = Object.entries(filters)
         .map(([key, value]) => `${key}=${value}`)
         .join('&');
@@ -187,6 +190,8 @@ const CategorySubcategories = () => {
       const data = await response.json();
       setMixedProducts(data.mixedProducts);
       setTotalPages(data.totalPages);
+      setLoading(false);
+
     } catch (error) {
       console.error('Erro ao obter produtos misturados:', error);
     } finally {
@@ -197,7 +202,10 @@ const CategorySubcategories = () => {
   
   useEffect(() => {
     const fetchSubcategoriesData = async () => {
+      setLoading(true)
       try {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
         const response = await fetch(
           `http://localhost:3001/api/categories/${category}/${selectedSubcategory}`
         );
@@ -205,6 +213,8 @@ const CategorySubcategories = () => {
         setSubcategoriesData(data.subcategoryProducts);
         setLoading(false);
       } catch (error) {
+        setLoading(false);
+
         console.error("Erro ao obter subcategorias:", error);
       }
     };
@@ -217,8 +227,12 @@ const CategorySubcategories = () => {
 
   useEffect(() => {
     const fetchPriceRangeData = async () => {
+      setLoading(true);
+
       if(selectedPrice){
         try {
+          await new Promise(resolve => setTimeout(resolve, 2000));
+
           const { minPrice, maxPrice } = selectedPrice;
 
           const response = await fetch(
@@ -228,6 +242,8 @@ const CategorySubcategories = () => {
           setPriceRange(data.products || []);
           setLoading(false);
         } catch (error) {
+          setLoading(false);
+
           console.error("Erro ao obter subcategorias:", error);
         }
       };
@@ -248,6 +264,8 @@ const CategorySubcategories = () => {
 
     const fetchSubcategories = async () => {
       try {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
         const response = await fetch(
           `http://localhost:3001/api/subcategories/${category}`
         );
@@ -262,6 +280,8 @@ const CategorySubcategories = () => {
      const fetchFilters = async () => {
       setLoading(true);
       try {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
         const colorsResponse = await fetch(
           `http://localhost:3001/api/categories/${category}/colors`
         );
@@ -286,6 +306,8 @@ const CategorySubcategories = () => {
           return acc;
         }, new Set());
         setUniqueSizes(allSizes);
+        setLoading(false);
+
       } catch (error) {
         console.error('Erro ao obter opções de filtros:', error);
       } finally {
@@ -295,6 +317,8 @@ const CategorySubcategories = () => {
 
 
     const fetchOriginalProducts = async () => {
+      setLoading(true); // Define loading como falso após obter os dados
+
       try {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -410,7 +434,7 @@ const CategorySubcategories = () => {
     switch (content) {
       case '1':
         return <>    {hideProducts === false ? (<div className={styles.ProductsDesktopContainer}>
-          {mixedProducts.length === 0 && (
+          {/* {mixedProducts.length === 0 &&  (
             <div
               style={{
                 position: "absolute",
@@ -428,7 +452,7 @@ const CategorySubcategories = () => {
                 O Produto que Você Procura Não Está Disponível no momento.
               </span>
             </div>
-          )}
+          )} */}
            <ul className={styles.ProductsContainer}>
       {mixedProducts.map((product) => {
         const selectedColorVariation = selectedColor
@@ -633,7 +657,7 @@ const CategorySubcategories = () => {
             marginTop: "10rem",
           }}
         >
-          <CircularIndeterminate />;
+          <CategorySubcategoriesSkeleton />;
         </div>
       ) : (
         <>
