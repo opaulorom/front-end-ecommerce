@@ -28,6 +28,8 @@
 }
 
 .categoriesImageStyle {
+  object-fit: cover;
+
   border-radius: 8px;
   margin-top: 6rem;
   width: 100vw;
