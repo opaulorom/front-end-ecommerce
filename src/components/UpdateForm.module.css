@@ -1,0 +1,59 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.childContainerA {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+
+
+.childContainerB {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.child {
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+
+.ButtonDataCustomer {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: #05070A;
+    color: white;
+    padding: 1rem;
+    width: 30vw;
+    border: 0;
+    margin-top: 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.p{
+   margin-top: 3rem;
+}
+
+
+@media (max-width: 699px) and (min-width: 300px) {
+    .childContainerA,
+    .childContainerB {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1rem;
+    }
+}
