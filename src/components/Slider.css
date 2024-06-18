@@ -26,3 +26,13 @@
 .slider-button:focus {
   outline: none;
 }
+
+.categoriesImageStyle {
+  border-radius: 8px;
+  margin-top: 6rem;
+  width: 100vw;
+  height: 80vh;
+  max-width: calc(100% - 24px);
+  max-height: none;
+  box-sizing: border-box;
+}

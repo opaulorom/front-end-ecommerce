@@ -4,6 +4,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Link, useNavigate } from 'react-router-dom';
 import SliderSkeleton from './SliderSkeleton';
+import './Slider.css'
 const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) => {
   const [categories, setCategories] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -43,18 +44,6 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
 
     return () => clearInterval(autoPlayTimer);
   }, [currentIndex, categories, autoPlayInterval]);
-  const imageStyle = {
-
-    objectFit: 'contain',
-    borderRadius: '8px',
-    marginTop: "8rem",
-    width: "100%",
-    height: "100%",
-    maxWidth: "calc(100% - 24px)",
-    maxHeight: "none",
-    boxSizing: "border-box"
-
-  };
 
 
 
@@ -80,9 +69,9 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
             {category.images.map((subcategoryImages, subIndex) => (
               <div key={subIndex}>
                 {subcategoryImages.map((image, imageIndex) => (
-                  <div key={imageIndex} style={{ display: 'inline-block', margin: '10px' }}>
+                  <div key={imageIndex} style={{ display: 'inline-block', margin: '10px'  }}>
                     <Link to={`/categories/${encodeURIComponent(category.name)}`}>
-                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={imageStyle} />
+                      <img src={image.imageUrl} alt={`Image ${image._id}`} class="categoriesImageStyle"/>
                     </Link>
                   </div>
                 ))}
