@@ -51,6 +51,7 @@ const NewArrivals = () => {
       <Header />
       <Navbar />
       {loading ? (
+        
         <NewArrivalsSkeleton/>  // Exibir carregamento enquanto os dados não são carregados
       ) : ( <div style={{ marginTop: "20rem" }}>
         <ul

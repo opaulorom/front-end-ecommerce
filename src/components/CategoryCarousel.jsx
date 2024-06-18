@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from "./CategoryCarousel.module.css"
+import CategoryCarouselSkeleton from './CategoryCarouselSkeleton';
 const CategoryCarousel = () => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
@@ -9,10 +10,13 @@ const CategoryCarousel = () => {
   const [touchEndX, setTouchEndX] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
         const response = await axios.get('http://localhost:3001/api/categories');
         console.log('Categories Response:', response.data);
 
@@ -21,7 +25,11 @@ const CategoryCarousel = () => {
         } else {
           setCategories([]);
         }
+        setLoading(false); // Define loading como falso após obter os dados
+
       } catch (error) {
+        setLoading(false); // Define loading como falso após obter os dados
+
         setError(`Error fetching categories: ${error.message}`);
         console.error('Error fetching categories:', error);
       }
@@ -60,6 +68,8 @@ const CategoryCarousel = () => {
     console.log('Clicked on image. Redirecting to category subcategories:', categoryName, subcategoryName);
 
     try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
       const response = await axios.get(`http://localhost:3001/api/subcategories/${categoryName}`);
       const subcategories = response.data;
 
@@ -72,7 +82,11 @@ const CategoryCarousel = () => {
         console.log('No subcategories found. Redirecting to category products:', categoryName, subcategoryName);
         navigate(`/categories/${encodeURIComponent(categoryName)}/${encodeURIComponent(subcategoryName)}/products`);
       }
+      setLoading(false); // Define loading como falso após obter os dados
+
     } catch (error) {
+      setLoading(false); // Define loading como falso após obter os dados
+
       console.error('Error fetching subcategories:', error);
       // Se ocorrer um erro ou não houver subcategorias, redirecione para a página de produtos
       navigate(`/categories/${encodeURIComponent(categoryName)}/${encodeURIComponent(subcategoryName)}/products`);
@@ -80,69 +94,77 @@ const CategoryCarousel = () => {
   };
 
   return (
-    <div
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      style={{
-        overflow: 'hidden',
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop:"-10rem"
-      }}
-    >
-      <div
+    <>
+      {loading ? (
+        <>
+        <CategoryCarouselSkeleton/>
+        </>
+      ) : (<div
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={{
+          overflow: 'hidden',
+          width: '100%',
           display: 'flex',
-          width: `${categories.length * 100}%`,
-          transform: `translateX(-${(100 / categories.length) * currentIndex}%)`,
-          transition: 'transform 0.3s ease', // Tempo de transição reduzido para resposta mais rápida
-          marginLeft:"40rem",
-          gap:"2rem"
+          justifyContent: 'center',
+          marginTop: "-10rem"
         }}
       >
+        <div
+          style={{
+            display: 'flex',
+            width: `${categories.length * 100}%`,
+            transform: `translateX(-${(100 / categories.length) * currentIndex}%)`,
+            transition: 'transform 0.3s ease', // Tempo de transição reduzido para resposta mais rápida
+            marginLeft: "40rem",
+            gap: "2rem"
+          }}
+        >
 
-        <div className={styles.categories}>
-        <div style={{
-          marginLeft:"50rem",
-          display:"flex"
-       
-        }} >
-        {categories.map((category, index) => (
-          <div key={category._id} style={{ width: `${100 / categories.length}%`, textAlign: 'center', marginLeft:"1rem" }}>
-            
-            {category.images.map((subcategoryImages, index) => (
-              subcategoryImages.map(image => (
-                <div key={image._id} style={{ width: '150px', height: '150px', display: 'inline-block' }}>
-                  <div onClick={() => handleImageClick(category.name, subcategoryImages.name)}>
-                    <Link to={`/categories/${encodeURIComponent(category.name)}`} style={{gap:"1rem"}}>
-                      <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius:"50%", aspectRatio:"1/1"}} />
-                    </Link>
-                  </div>
+          <div className={styles.categories}>
+            <div style={{
+              marginLeft: "50rem",
+              display: "flex"
+
+            }} >
+              {categories.map((category, index) => (
+                <div key={category._id} style={{ width: `${100 / categories.length}%`, textAlign: 'center', marginLeft: "1rem" }}>
+
+                  {category.images.map((subcategoryImages, index) => (
+                    subcategoryImages.map(image => (
+                      <div key={image._id} style={{ width: '150px', height: '150px', display: 'inline-block' }}>
+                        <div onClick={() => handleImageClick(category.name, subcategoryImages.name)}>
+                          <Link to={`/categories/${encodeURIComponent(category.name)}`} style={{ gap: "1rem" }}>
+                            <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "50%", aspectRatio: "1/1" }} />
+                          </Link>
+                        </div>
+                      </div>
+                    ))
+                  ))}
+                  <div style={{ marginTop: '1rem' }}>{category.name}</div>
                 </div>
-              ))
-            ))}
-            <div style={{ marginTop: '1rem' }}>{category.name}</div>
+              ))}
+            </div>
+            {/* <div style={{ display: "flex", flexDirection: "column" }}>
+                  <span style={{fontSize:"1rem", fontWeight:"700", fontFamily:"poppins, sans-serif"}}>R$ {product.price}</span>
+  
+                    <span
+                      style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        width: "15vw",
+                        color: "rgb(114, 114, 114)",
+                        fontSize:".8rem"
+                      }}
+                    ></span> */}
           </div>
-        ))}
-      </div>
-       {/* <div style={{ display: "flex", flexDirection: "column" }}>
-                <span style={{fontSize:"1rem", fontWeight:"700", fontFamily:"poppins, sans-serif"}}>R$ {product.price}</span>
+        </div>
+      </div>)}
 
-                  <span
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      width: "15vw",
-                      color: "rgb(114, 114, 114)",
-                      fontSize:".8rem"
-                    }}
-                  ></span> */}
-    </div>
-    </div>
-    </div>
+    </>
+
 
   );
 };
