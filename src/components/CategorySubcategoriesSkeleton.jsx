@@ -7,7 +7,8 @@ export default function CategorySubcategoriesSkeleton() {
 
     <div style={{
       display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      gap: "1rem"
     }}>
       <div>
         <div >

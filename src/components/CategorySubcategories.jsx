@@ -326,10 +326,11 @@ const CategorySubcategories = () => {
         const response = await fetch(
           `http://localhost:3001/api/categories/${category}/mixedProducts`
         );
+        setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
+
         const data = await response.json();
         setOriginalProducts(data.mixedProducts);
         
-        setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
       } catch (error) {
         setLoading(false); // Define loading como falso após obter os dados
 
@@ -433,8 +434,9 @@ const CategorySubcategories = () => {
   const renderContent = () => {
     switch (content) {
       case '1':
-        return <>    {hideProducts === false ? (<div className={styles.ProductsDesktopContainer}>
-          {/* {mixedProducts.length === 0 &&  (
+        return <>    
+        {hideProducts === false ? (<div className={styles.ProductsDesktopContainer}>
+          {mixedProducts.length === 0 &&  (
             <div
               style={{
                 position: "absolute",
@@ -452,7 +454,7 @@ const CategorySubcategories = () => {
                 O Produto que Você Procura Não Está Disponível no momento.
               </span>
             </div>
-          )} */}
+          )}
            <ul className={styles.ProductsContainer}>
       {mixedProducts.map((product) => {
         const selectedColorVariation = selectedColor
@@ -654,7 +656,7 @@ const CategorySubcategories = () => {
           style={{
             display: "flex",
             margin: "0 auto",
-            marginTop: "10rem",
+            marginTop: "-2rem",
           }}
         >
           <CategorySubcategoriesSkeleton />;
