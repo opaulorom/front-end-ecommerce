@@ -139,8 +139,10 @@
     }
 
     .ButtonDataCustomer {
-        width: 10vw; /* Ajuste de largura para telas maiores */
+        width: 8vw; /* Ajuste de largura para telas maiores */
         font-size: 1rem;
+        padding: .8rem;
+        margin-top: 2.8rem;
     }
 
     .input {
