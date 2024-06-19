@@ -20,7 +20,7 @@ const NewArrivals = () => {
     const fetchSearchResults = async () => {
       // Remova ou comente esta linha para eliminar o delay de teste
       try {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // await new Promise(resolve => setTimeout(resolve, 2000));
 
         const response = await fetch(
           `http://localhost:3001/api/products/new-arrivals?page=${currentPage}`

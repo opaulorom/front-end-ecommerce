@@ -15,7 +15,7 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
     const fetchData = async () => {
       try {
         // Simula um delay de 2 segundos
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // await new Promise(resolve => setTimeout(resolve, 2000));
         
         const response = await axios.get('http://localhost:3001/api/categories');
         console.log('Categories Response:', response.data);

@@ -439,7 +439,7 @@ const Pay = () => {
                         onChange={handleChange}
                         value={formData.installmentCount} // Definindo o valor do select
                       >
-                        <option value="1">1 x de {getTotal.totalAmount / 1}</option>
+                        <option >1 x de {getTotal.totalAmount / 1}</option>
                         <option value="2">2 x de {getTotal.totalAmount / 2}</option>
                         <option value="3">3 x de {getTotal.totalAmount / 3}</option>
                         <option value="4">4 x de {getTotal.totalAmount / 4}</option>
