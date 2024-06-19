@@ -132,114 +132,114 @@ const UpdateForm = () => {
 
         <form onSubmit={handleSubmit} className={styles.formContainer}>
 
-          <p>Dados pessoais</p>
+          <h1  className={styles.dados}>DADOS PESSOAIS</h1>
           <div className={styles.childContainerA}>
 
 
             <div className={styles.child}>
-              <label>
+              <label className={styles.label}>
 
                 Nome completo:
               </label>
 
-              <input type="text" name="name" onChange={handleChange} value={formData.name} />
+              <input type="text" name="name" className={styles.input} onChange={handleChange} value={formData.name} />
             </div>
 
             <div className={styles.child}>
-              <label>
+              <label className={styles.label}>
                 CPF:
               </label>
 
-              <input type="text" name="cpfCnpj" onChange={handleChange} value={formData.cpfCnpj} />
+              <input type="text" name="cpfCnpj" className={styles.input} onChange={handleChange} value={formData.cpfCnpj} />
             </div>
 
             <div className={styles.child}>
-              <label>
+              <label className={styles.label}>
 
                 Email:
               </label>
 
-              <input type="email" name="email" onChange={handleChange} value={formData.email} />
+              <input type="email" name="email" className={styles.input} onChange={handleChange} value={formData.email} />
             </div>
 
             <div className={styles.child}>
-              <label>
+              <label className={styles.label}>
 
                 Telefone:
               </label>
 
-              <input type="text" name="mobilePhone" onChange={handleChange} value={formData.mobilePhone} />
+              <input type="text" name="mobilePhone" className={styles.input} onChange={handleChange} value={formData.mobilePhone} />
             </div>
 
           </div>
 
-          <p className={styles.p}>Endereço</p>
+          <h1 className={styles.endereco}>ENDEREÇO</h1>
           <div className={styles.childContainerB}>
 
             <div className={styles.child}>
-              <label>
+              <label className={styles.label}>
 
                 CEP:
               </label>
 
-              <input type="text" name="postalCode" onChange={handleCepChange} value={formData.postalCode} placeholder='digite sem caracteres ex. 01001000  ' />
+              <input type="text" name="postalCode" className={styles.input} onChange={handleCepChange} value={formData.postalCode} placeholder='digite sem caracteres ex. 01001000  ' />
             </div>
 
             <div className={styles.child}>
-              <label>
+              <label className={styles.label}>
 
                 Endereço:
               </label>
 
-              <input type="text" name="address" onChange={handleChange} value={formData.address} />
+              <input type="text" name="address" className={styles.input} onChange={handleChange} value={formData.address} />
             </div>
 
             <div className={styles.child}>
-              <label>
+              <label className={styles.label}>
 
                 Número do endereço:
               </label>
 
-              <input type="text" name="addressNumber" onChange={handleChange} value={formData.addressNumber} />
+              <input type="text" name="addressNumber" className={styles.input} onChange={handleChange} value={formData.addressNumber} />
             </div>
 
             <div className={styles.child}>
-              <label>
+              <label className={styles.label}>
 
                 Complemento:
               </label>
 
-              <input type="text" name="complement" onChange={handleChange} value={formData.complement} />
+              <input type="text" name="complement" className={styles.input} onChange={handleChange} value={formData.complement} />
             </div>
 
             <div className={styles.child}>
-              <label>
+              <label className={styles.label}>
 
                 Bairro:
               </label>
 
-              <input type="text" name="province" onChange={handleChange} value={formData.province} />
+              <input type="text" name="province" className={styles.input} onChange={handleChange} value={formData.province} />
             </div>
 
             <div className={styles.child}>
-              <label>
+              <label className={styles.label}>
 
                 Cidade:
               </label>
 
-              <input type="text" name="city" onChange={handleChange} value={formData.city} />
+              <input type="text" name="city" className={styles.input} onChange={handleChange} value={formData.city} />
             </div>
 
             <div className={styles.child}>
-              <label>
+              <label className={styles.label}>
 
                 Estado:
               </label>
 
-              <input type="text" name="state" onChange={handleChange} value={formData.state} />
+              <input type="text" name="state" className={styles.input} onChange={handleChange} value={formData.state} />
             </div>
 
-            <div>          <button type="submit" className={styles.ButtonDataCustomer}>Atualizar</button>
+            <div>          <button type="submit" className={styles.ButtonDataCustomer}>Salvar</button>
             </div>
           </div>
 
