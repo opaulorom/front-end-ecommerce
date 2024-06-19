@@ -66,7 +66,7 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
       <>
         {categories.map((category, index) => (
           <div key={index} style={{ display: index === currentIndex ? 'block' : 'none' }}>
-            {category.images.map((subcategoryImages, subIndex) => (
+            {category.slider.map((subcategoryImages, subIndex) => (
               <div key={subIndex}>
                 {subcategoryImages.map((image, imageIndex) => (
                   <div key={imageIndex} style={{ display: 'inline-block', margin: '10px'  }}>
