@@ -52,6 +52,7 @@
     font-weight: 400;
     font-size: 1.1rem;
     color: #05070A;
+    margin-top: 1rem;
 }
 
 .dados {
@@ -74,12 +75,42 @@
     grid-template-columns: repeat(1, 1fr);
     gap: 1rem;
 }
+
+
+@media (max-width: 430px){
+    
+}
+
 @media (max-width: 1040px) and (min-width: 480px){
     .ButtonDataCustomer {
         width: 20vw; /* Ajuste de largura para telas maiores */
     }
+    
+    .label{
+        font-size: 1.2rem;
+    }
+
+   
 
 }
+
+
+
+@media (max-width: 393px)  {
+    .ButtonDataCustomer {
+        width: 20vw; /* Ajuste de largura para telas maiores */
+    }
+
+    .dados{
+        font-size: 1.3rem;
+    }
+   
+
+   
+
+}
+
+
 /* Media Queries */
 @media (min-width: 700px) {
     .childContainerA,
@@ -93,13 +124,27 @@
         margin-top: 3rem;
     }
 
+    .label{
+        font-size: 1rem;
+        
+    }
+
+    .endereco{
+        margin-bottom: -2rem;
+    }
+
+
+    .input{
+        font-weight: 400;
+    }
+
     .ButtonDataCustomer {
         width: 10vw; /* Ajuste de largura para telas maiores */
         font-size: 1rem;
     }
 
     .input {
-        padding: .8rem; /* Ajuste de padding para telas maiores */
+        padding: .5rem; /* Ajuste de padding para telas maiores */
         font-size: 1.2rem; /* Ajuste de fonte para telas maiores */
         width: 20vw;
 
@@ -114,3 +159,4 @@
         margin-bottom: 5rem;
     }
 }
+
