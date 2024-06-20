@@ -165,10 +165,10 @@ const SignUpForm = () => {
           {}
         );
         const data = response.data;
-         if(data.erro){
+        if (data.erro) {
           setIsCepInvalid(true)
-setShowCEP(false)
-         } else  {
+          setShowCEP(false)
+        } else {
           setFormData((prevFormData) => ({
             ...prevFormData,
             address: data.logradouro,
@@ -180,12 +180,12 @@ setShowCEP(false)
           setShowCEP(true);
           setIsCepInvalid(false)
 
-         }
-       
-      
+        }
+
+
       } catch (error) {
         setIsCepInvalid(true)
-setShowCEP(false)
+        setShowCEP(false)
         console.error("Erro ao buscar endereço:", error);
         // Trate erros aqui, como exibir uma mensagem para o usuário
       }
@@ -231,7 +231,7 @@ setShowCEP(false)
         style={{ display: "flex", flexDirection: "column", marginTop: "15rem" }}
         className={styles.formContainer}
       >
-                  <h1  className={styles.dados}>DADOS PESSOAIS</h1>
+        <h1 className={styles.dados}>DADOS PESSOAIS</h1>
 
         <div className={styles.childContainerA}>
 
@@ -341,11 +341,11 @@ setShowCEP(false)
 
 
 
-{IsCepInvalid && (
-  <>
-   <span style={{color: "red"}}>cep invalido tente novamente</span></>
-  
-  )}
+          {IsCepInvalid && (
+            <>
+              <span style={{ color: "red" }}>cep invalido tente novamente</span></>
+
+          )}
 
 
           {showCEP && (
@@ -370,7 +370,7 @@ setShowCEP(false)
 
               <div className={styles.child}>
                 <label className={styles.label}>
-                Número do endereço:
+                  Número do endereço:
 
                 </label>
 
@@ -394,7 +394,7 @@ setShowCEP(false)
 
               <div className={styles.child}>
                 <label className={styles.label}>
-                Complemento:
+                  Complemento:
 
                 </label>
                 <input
@@ -413,7 +413,7 @@ setShowCEP(false)
               <div className={styles.child}>
 
                 <label className={styles.label}>
-                Bairro:
+                  Bairro:
 
                 </label>
                 <input
@@ -433,7 +433,7 @@ setShowCEP(false)
               <div className={styles.child}>
 
                 <label className={styles.label}>
-                Cidade:
+                  Cidade:
 
                 </label>
                 <input
@@ -455,8 +455,8 @@ setShowCEP(false)
 
 
               <div className={styles.child}>
-                <label  className={styles.label}>
-                Estado:
+                <label className={styles.label}>
+                  Estado:
 
                 </label>
                 <input
