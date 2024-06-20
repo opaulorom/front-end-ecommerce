@@ -13,6 +13,13 @@
     flex-direction: column;
 }
 
+
+.errorCEP{
+    color: red;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+}
 .ButtonDataCustomer {
     display: flex;
     justify-content: center;

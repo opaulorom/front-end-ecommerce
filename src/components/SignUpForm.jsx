@@ -317,6 +317,7 @@ const SignUpForm = () => {
 
 
           <div className={styles.child}>
+            
             <label className={styles.label}>
               CEP:
 
@@ -331,7 +332,11 @@ const SignUpForm = () => {
               className={styles.input}
 
             />
+{IsCepInvalid && (
+            <>
+              <span  className={styles.errorCEP}>cep invalido tente novamente</span></>
 
+          )}
           </div>
 
 
@@ -341,11 +346,7 @@ const SignUpForm = () => {
 
 
 
-          {IsCepInvalid && (
-            <>
-              <span style={{ color: "red" }}>cep invalido tente novamente</span></>
-
-          )}
+          
 
 
           {showCEP && (
