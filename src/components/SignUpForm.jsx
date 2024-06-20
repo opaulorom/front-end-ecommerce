@@ -23,7 +23,7 @@ const SignUpForm = () => {
   const [showCEP, setShowCEP] = useState(false);
   const [formComplete, setFormComplete] = useState(false);
   const navigate = useNavigate(); // Inicialize o hook useNavigate
-
+  const [IsCepInvalid, setIsCepInvalid] = useState(false)
   const [formData, setFormData] = useState({
     custumerId: userId, // Usando o userId do usuário logado
     name: "",
@@ -165,17 +165,27 @@ const SignUpForm = () => {
           {}
         );
         const data = response.data;
+         if(data.erro){
+          setIsCepInvalid(true)
+setShowCEP(false)
+         } else  {
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            address: data.logradouro,
+            complement: data.complemento,
+            province: data.bairro,
+            city: data.localidade,
+            state: data.uf,
+          }));
+          setShowCEP(true);
+          setIsCepInvalid(false)
 
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          address: data.logradouro,
-          complement: data.complemento,
-          province: data.bairro,
-          city: data.localidade,
-          state: data.uf,
-        }));
-        setShowCEP(true);
+         }
+       
+      
       } catch (error) {
+        setIsCepInvalid(true)
+setShowCEP(false)
         console.error("Erro ao buscar endereço:", error);
         // Trate erros aqui, como exibir uma mensagem para o usuário
       }
@@ -331,7 +341,11 @@ const SignUpForm = () => {
 
 
 
-
+{IsCepInvalid && (
+  <>
+   <span style={{color: "red"}}>cep invalido tente novamente</span></>
+  
+  )}
 
 
           {showCEP && (
