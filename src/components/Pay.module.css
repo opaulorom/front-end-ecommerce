@@ -31,3 +31,31 @@
     grid-template-columns: repeat(1, 1fr);
     gap: 1rem;
 }
+
+.select{
+    background-color: white;
+    color:#05070A ;
+    padding: 1rem;
+    width: 30vw;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+}
+.ButtonDataCustomer {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: #05070A;
+    color: white;
+    padding: 1rem;
+    width: 30vw;
+    border: 0;
+    margin-top: 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 10rem;
+
+}

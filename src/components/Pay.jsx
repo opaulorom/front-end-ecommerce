@@ -471,6 +471,7 @@ const Pay = () => {
                           name="pacelas"
                           onChange={handleChange}
                           value={formData.installmentCount} // Definindo o valor do select
+                          className={styles.select}
                         >
                           <option value="1">1 x de {getTotal.totalAmount / 1}</option>
                           <option value="2">2 x de {getTotal.totalAmount / 2}</option>
@@ -488,7 +489,7 @@ const Pay = () => {
                           <option value="12">12 x de {getTotal.totalAmount / 12}</option>
                         </select>
 
-                        <button type="submit">Finalisar Compra</button>
+                        <button type="submit" className={styles.ButtonDataCustomer}>Finalisar Compra</button>
                       </form>
                     </>
                   )}</div>
