@@ -264,7 +264,7 @@ const SignUpForm = () => {
               value={formData.cpfCnpj}
               style={inputStyle}
               className={styles.input}
-placeholder="digite o cpf..."
+              placeholder="digite o cpf..."
             />
           </div>
 
@@ -280,7 +280,7 @@ placeholder="digite o cpf..."
               value={formData.email}
               style={inputStyle}
               className={styles.input}
-placeholder="digite o email..."
+              placeholder="digite o email..."
             />
           </div>
 
@@ -319,7 +319,7 @@ placeholder="digite o email..."
 
 
           <div className={styles.child}>
-            
+
             <label className={styles.label}>
               CEP:
 
@@ -334,11 +334,11 @@ placeholder="digite o email..."
               className={styles.input}
 
             />
-{IsCepInvalid && (
-            <>
-              <span  className={styles.errorCEP}>Cep invalido tente novamente.</span></>
+            {IsCepInvalid && (
+              <>
+                <span className={styles.errorCEP}>Cep invalido tente novamente.</span></>
 
-          )}
+            )}
           </div>
 
 
@@ -348,7 +348,7 @@ placeholder="digite o email..."
 
 
 
-          
+
 
 
           {showCEP && (
