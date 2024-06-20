@@ -351,143 +351,146 @@ const Pay = () => {
                         }}
                       >
                         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
- <div className={styles.childContainer}>
+                        <div className={styles.childContainer}>
 
- <div  className={styles.child}>
+                          <div className={styles.child}>
 
 
-                          <label className={styles.label}>
-                            nome do titular:
+                            <label className={styles.label}>
+                              nome do titular:
 
-                          </label>
-                          <input
-                            type="text"
-                            name="holderName"
-                            onChange={handleChange}
-                            value={formData.holderName}
-                            style={{
-                              border:
-                                !formData.holderName.trim() && buttonClicked
-                                  ? "1px solid red"
-                                  : "1px solid #ccc",
-                            }}
-                            placeholder="carla alves"
-                            className={styles.input}
+                            </label>
+                            <input
+                              type="text"
+                              name="holderName"
+                              onChange={handleChange}
+                              value={formData.holderName}
+                              style={{
+                                border:
+                                  !formData.holderName.trim() && buttonClicked
+                                    ? "1px solid red"
+                                    : "1px solid #ccc",
+                              }}
+                              placeholder="carla alves"
+                              className={styles.input}
 
-                          />
+                            />
+                          </div>
+                          <div className={styles.child}>
+                            <label className={styles.label}>
+                              numero do cartão:
+
+                            </label>
+
+                            <input
+                              type="number"
+                              name="number"
+                              onChange={handleChange}
+                              value={formData.number}
+                              style={{
+                                border:
+                                  !formData.number.trim() && buttonClicked
+                                    ? "1px solid red"
+                                    : "1px solid #ccc",
+                              }}
+                              placeholder="1234 567890 12345"
+                              className={styles.input}
+
+                            />
+                          </div>
+
+                          <div className={styles.child}>
+                            <label className={styles.label}>
+                              mês de vencimento:
+
+                            </label>
+                            <input
+                              type="text"
+                              name="expiryMonth"
+                              onChange={handleChange}
+                              value={formData.expiryMonth}
+                              style={{
+                                border:
+                                  !formData.expiryMonth.trim() && buttonClicked
+                                    ? "1px solid red"
+                                    : "1px solid #ccc",
+                              }}
+                              className={styles.input}
+                              placeholder="05"
+                            />
+                          </div>
+
+                          <div className={styles.child}>
+                            <label className={styles.label}>
+                              Ano de vencimento:
+
+                            </label>
+                            <input
+                              type="text"
+                              name="expiryYear"
+                              onChange={handleChange}
+                              value={formData.expiryYear}
+                              style={{
+                                border:
+                                  !formData.expiryYear.trim() && buttonClicked
+                                    ? "1px solid red"
+                                    : "1px solid #ccc",
+                              }}
+                              placeholder="2025"
+                              className={styles.input}
+
+                            />
+                          </div>
+
+                          <div className={styles.child}>
+                            <label className={styles.label}>
+                              CVV:
+
+                            </label>
+                            <input
+                              type="text"
+                              name="ccv"
+                              onChange={handleChange}
+                              value={formData.ccv}
+                              style={{
+                                border:
+                                  !formData.ccv.trim() && buttonClicked
+                                    ? "1px solid red"
+                                    : "1px solid #ccc",
+                              }}
+                              className={styles.input}
+                              placeholder="123"
+                            />
+                          </div>
+
+
                         </div>
                         <div className={styles.child}>
-                          <label className={styles.label}>
-                            numero do cartão:
-
-                          </label>
-
-                          <input
-                            type="number"
-                            name="number"
+                          <label className={styles.label}>Parcelas:</label>
+                          <select
+                            name="pacelas"
                             onChange={handleChange}
-                            value={formData.number}
-                            style={{
-                              border:
-                                !formData.number.trim() && buttonClicked
-                                  ? "1px solid red"
-                                  : "1px solid #ccc",
-                            }}
-                            placeholder="1234 567890 12345"
-                            className={styles.input}
-
-                          />
-                        </div>
-
-                        <div  className={styles.child}>
-                          <label className={styles.label}>
-                            mês de vencimento:
-
-                          </label>
-                          <input
-                            type="text"
-                            name="expiryMonth"
-                            onChange={handleChange}
-                            value={formData.expiryMonth}
-                            style={{
-                              border:
-                                !formData.expiryMonth.trim() && buttonClicked
-                                  ? "1px solid red"
-                                  : "1px solid #ccc",
-                            }}
-                            className={styles.input}
-                            placeholder="05"
-                          />
-                        </div>
-
-                        <div  className={styles.child}>
-                          <label className={styles.label}>
-                            Ano de vencimento:
-
-                          </label>
-                          <input
-                            type="text"
-                            name="expiryYear"
-                            onChange={handleChange}
-                            value={formData.expiryYear}
-                            style={{
-                              border:
-                                !formData.expiryYear.trim() && buttonClicked
-                                  ? "1px solid red"
-                                  : "1px solid #ccc",
-                            }}
-                            placeholder="2025"
-                            className={styles.input}
-
-                          />
-                        </div>
-
-                        <div  className={styles.child}>
-                          <label  className={styles.label}>
-                            CVV:
-
-                          </label>
-                          <input
-                            type="text"
-                            name="ccv"
-                            onChange={handleChange}
-                            value={formData.ccv}
-                            style={{
-                              border:
-                                !formData.ccv.trim() && buttonClicked
-                                  ? "1px solid red"
-                                  : "1px solid #ccc",
-                            }}
-                            className={styles.input}
-                            placeholder="123"
-                          />
+                            value={formData.installmentCount} // Definindo o valor do select
+                            className={styles.select}
+                          >
+                            <option value="1">1 x de {getTotal.totalAmount / 1}</option>
+                            <option value="2">2 x de {getTotal.totalAmount / 2}</option>
+                            <option value="3">3 x de {getTotal.totalAmount / 3}</option>
+                            <option value="4">4 x de {getTotal.totalAmount / 4}</option>
+                            <option value="5">5 x de {getTotal.totalAmount / 5}</option>
+                            <option value="6">6 x de {getTotal.totalAmount / 6}</option>
+                            <option value="7">7 x de {getTotal.totalAmount / 7}</option>
+                            <option value="8">8 x de {getTotal.totalAmount / 8}</option>
+                            <option value="9">9 x de {getTotal.totalAmount / 9}</option>
+                            <option value="10">
+                              10 x de {getTotal.totalAmount / 10}
+                            </option>
+                            <option value="11">11 x de {getTotal.totalAmount / 11}</option>
+                            <option value="12">12 x de {getTotal.totalAmount / 12}</option>
+                          </select>
                         </div>
 
 
- </div>
-
-                        <label>Parcelas:</label>
-                        <select
-                          name="pacelas"
-                          onChange={handleChange}
-                          value={formData.installmentCount} // Definindo o valor do select
-                          className={styles.select}
-                        >
-                          <option value="1">1 x de {getTotal.totalAmount / 1}</option>
-                          <option value="2">2 x de {getTotal.totalAmount / 2}</option>
-                          <option value="3">3 x de {getTotal.totalAmount / 3}</option>
-                          <option value="4">4 x de {getTotal.totalAmount / 4}</option>
-                          <option value="5">5 x de {getTotal.totalAmount / 5}</option>
-                          <option value="6">6 x de {getTotal.totalAmount / 6}</option>
-                          <option value="7">7 x de {getTotal.totalAmount / 7}</option>
-                          <option value="8">8 x de {getTotal.totalAmount / 8}</option>
-                          <option value="9">9 x de {getTotal.totalAmount / 9}</option>
-                          <option value="10">
-                            10 x de {getTotal.totalAmount / 10}
-                          </option>
-                          <option value="11">11 x de {getTotal.totalAmount / 11}</option>
-                          <option value="12">12 x de {getTotal.totalAmount / 12}</option>
-                        </select>
 
                         <button type="submit" className={styles.ButtonDataCustomer}>Finalisar Compra</button>
                       </form>
