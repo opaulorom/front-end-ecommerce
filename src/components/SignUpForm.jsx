@@ -264,7 +264,7 @@ const SignUpForm = () => {
               value={formData.cpfCnpj}
               style={inputStyle}
               className={styles.input}
-              placeholder="digite o cpf..."
+              placeholder="123.456.789-09"
             />
           </div>
 
@@ -300,7 +300,7 @@ const SignUpForm = () => {
               value={formData.mobilePhone}
               style={inputStyle}
               className={styles.input}
-              placeholder="digite o telefone..."
+              placeholder="77 88888-8888"
 
             />
           </div>
@@ -329,7 +329,7 @@ const SignUpForm = () => {
               name="postalCode"
               onChange={handleCepChange}
               value={formatCep(formData.postalCode)}
-              placeholder="Digite o CEP"
+              placeholder="77777-777"
               style={inputStyle}
               className={styles.input}
 
