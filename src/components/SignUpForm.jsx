@@ -248,6 +248,7 @@ const SignUpForm = () => {
               value={formData.name}
               style={inputStyle}
               className={styles.input}
+              placeholder="digite o nome completo..."
             />
           </div>
 
@@ -263,7 +264,7 @@ const SignUpForm = () => {
               value={formData.cpfCnpj}
               style={inputStyle}
               className={styles.input}
-
+placeholder="digite o cpf..."
             />
           </div>
 
@@ -279,7 +280,7 @@ const SignUpForm = () => {
               value={formData.email}
               style={inputStyle}
               className={styles.input}
-
+placeholder="digite o email..."
             />
           </div>
 
@@ -299,6 +300,7 @@ const SignUpForm = () => {
               value={formData.mobilePhone}
               style={inputStyle}
               className={styles.input}
+              placeholder="digite o telefone..."
 
             />
           </div>
