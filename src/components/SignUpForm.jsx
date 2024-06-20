@@ -334,7 +334,7 @@ const SignUpForm = () => {
             />
 {IsCepInvalid && (
             <>
-              <span  className={styles.errorCEP}>cep invalido tente novamente</span></>
+              <span  className={styles.errorCEP}>Cep invalido tente novamente.</span></>
 
           )}
           </div>
