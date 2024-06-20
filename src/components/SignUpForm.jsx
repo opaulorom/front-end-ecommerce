@@ -6,6 +6,18 @@ import Header from "./Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import styles from "./SignUpForm.module.css"
+
+
+
+
+
+
+
+
+
+
+
 const SignUpForm = () => {
   const userId = Cookies.get("userId"); // Obtenha o token do cookie
   const [showCEP, setShowCEP] = useState(false);
@@ -130,13 +142,13 @@ const SignUpForm = () => {
       );
       console.log("Dados enviados com sucesso:", response.data);
 
-    if (response.data) {
-   
-      navigate("/home");
-    }
+      if (response.data) {
+
+        navigate("/home");
+      }
 
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
-     } catch (error) {
+    } catch (error) {
       console.error("Erro ao enviar informações do usuário:", error);
       // Trate erros aqui, como exibir uma mensagem para o usuário
     }
@@ -207,132 +219,251 @@ const SignUpForm = () => {
       <form
         onSubmit={handleSubmit}
         style={{ display: "flex", flexDirection: "column", marginTop: "15rem" }}
+        className={styles.formContainer}
       >
-        <label>
-          nome completo:
-          <input
-            type="text"
-            name="name"
-            onChange={handleChange}
-            value={formData.name}
-            style={inputStyle}
-          />
-        </label>
+                  <h1  className={styles.dados}>DADOS PESSOAIS</h1>
 
-        <label>
-          cpf:
-          <input
-            type="text"
-            name="cpfCnpj"
-            onChange={handleChange}
-            value={formData.cpfCnpj}
-            style={inputStyle}
-          />
-        </label>
+        <div className={styles.childContainerA}>
 
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            onChange={handleChange}
-            value={formData.email}
-            style={inputStyle}
-          />
-        </label>
 
-        <label>
-          Telephone:
-          <input
-            type="text"
-            name="mobilePhone"
-            onChange={handleChange}
-            value={formData.mobilePhone}
-            style={inputStyle}
-          />
-        </label>
+          <div className={styles.child}>
+            <label className={styles.label}>
+              Nome Completo:
 
-        <label>
-          Postcode:
-          <input
-            type="text"
-            name="postalCode"
-            onChange={handleCepChange}
-            value={formatCep(formData.postalCode)}
-            placeholder="Digite o CEP"
-            style={inputStyle}
-          />
-        </label>
-        {showCEP && (
-          <>
-            <label>
-              Address:
-              <input
-                type="text"
-                name="address"
-                onChange={handleChange}
-                value={formData.address}
-                style={inputStyle}
-              />
             </label>
+            <input
+              type="text"
+              name="name"
+              onChange={handleChange}
+              value={formData.name}
+              style={inputStyle}
+              className={styles.input}
+            />
+          </div>
 
-            <label>
-              Address Number:
-              <input
-                type="text"
-                name="addressNumber"
-                onChange={handleChange}
-                value={formData.addressNumber}
-                style={inputStyle}
-              />
-            </label>
+          <div className={styles.child}>
+            <label className={styles.label}>
+              CPF:
 
-            <label>
-              Complement:
-              <input
-                type="text"
-                name="complement"
-                onChange={handleChange}
-                value={formData.complement}
-              />
             </label>
+            <input
+              type="text"
+              name="cpfCnpj"
+              onChange={handleChange}
+              value={formData.cpfCnpj}
+              style={inputStyle}
+              className={styles.input}
 
-            <label>
-              province:
-              <input
-                type="text"
-                name="province"
-                onChange={handleChange}
-                value={formData.province}
-                style={inputStyle}
-              />
-            </label>
+            />
+          </div>
 
-            <label>
-              Address City:
-              <input
-                type="text"
-                name="city"
-                onChange={handleChange}
-                value={formData.city}
-                style={inputStyle}
-              />
-            </label>
+          <div className={styles.child}>
+            <label className={styles.label}>
+              Email:
 
-            <label>
-              Address State:
-              <input
-                type="text"
-                name="state"
-                onChange={handleChange}
-                value={formData.state}
-                style={inputStyle}
-              />
+            </label >
+            <input
+              type="email"
+              name="email"
+              onChange={handleChange}
+              value={formData.email}
+              style={inputStyle}
+              className={styles.input}
+
+            />
+          </div>
+
+
+
+
+          <div className={styles.child}>
+
+            <label className={styles.label}>
+              Telefone:
+
             </label>
-          </>
-        )}
-      <button type="submit" disabled={!formComplete} style={{ backgroundColor: formComplete ? "#14337C" : "#ccc" }}>
-          Submit
+            <input
+              type="text"
+              name="mobilePhone"
+              onChange={handleChange}
+              value={formData.mobilePhone}
+              style={inputStyle}
+              className={styles.input}
+
+            />
+          </div>
+
+
+
+
+
+        </div>
+
+
+        <h1 className={styles.endereco}>ENDEREÇO</h1>
+
+
+        <div className={styles.childContainerB}>
+
+
+          <div className={styles.child}>
+            <label className={styles.label}>
+              CEP:
+
+            </label>
+            <input
+              type="text"
+              name="postalCode"
+              onChange={handleCepChange}
+              value={formatCep(formData.postalCode)}
+              placeholder="Digite o CEP"
+              style={inputStyle}
+              className={styles.input}
+
+            />
+
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+          {showCEP && (
+            <>
+
+              <div className={styles.child}>
+                <label className={styles.label}>
+                  Address:
+
+                </label>
+
+                <input
+                  type="text"
+                  name="address"
+                  onChange={handleChange}
+                  value={formData.address}
+                  style={inputStyle}
+                  className={styles.input}
+
+                />
+              </div>
+
+              <div className={styles.child}>
+                <label className={styles.label}>
+                Número do endereço:
+
+                </label>
+
+
+                <input
+                  type="text"
+                  name="addressNumber"
+                  onChange={handleChange}
+                  value={formData.addressNumber}
+                  style={inputStyle}
+                  className={styles.input}
+
+                />
+              </div>
+
+
+
+
+
+
+
+              <div className={styles.child}>
+                <label className={styles.label}>
+                Complemento:
+
+                </label>
+                <input
+                  type="text"
+                  name="complement"
+                  onChange={handleChange}
+                  value={formData.complement}
+                  className={styles.input}
+
+                />
+
+              </div>
+
+
+
+              <div className={styles.child}>
+
+                <label className={styles.label}>
+                Bairro:
+
+                </label>
+                <input
+                  type="text"
+                  name="province"
+                  onChange={handleChange}
+                  value={formData.province}
+                  style={inputStyle}
+                  className={styles.input}
+
+                />
+
+              </div>
+
+
+
+              <div className={styles.child}>
+
+                <label className={styles.label}>
+                Cidade:
+
+                </label>
+                <input
+                  type="text"
+                  name="city"
+                  onChange={handleChange}
+                  value={formData.city}
+                  style={inputStyle}
+                  className={styles.input}
+
+                />
+
+
+              </div>
+
+
+
+
+
+
+              <div className={styles.child}>
+                <label  className={styles.label}>
+                Estado:
+
+                </label>
+                <input
+                  type="text"
+                  name="state"
+                  onChange={handleChange}
+                  value={formData.state}
+                  style={inputStyle}
+                  className={styles.input}
+
+                />
+
+              </div>
+
+            </>
+          )}
+        </div>
+
+
+        <button type="submit" disabled={!formComplete} style={{ backgroundColor: formComplete ? "#05070A" : "#ccc" }} className={styles.ButtonDataCustomer}>
+          Salvar
         </button>
       </form>
     </>
