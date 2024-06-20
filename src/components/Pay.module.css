@@ -1,0 +1,33 @@
+.child {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.input {
+    padding: .5rem;
+    color: black;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #CDCDCD;
+    width: 30vw;
+
+}
+
+
+.label {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: #05070A;
+    margin-top: 1rem;
+}
+
+/* Mobile-First Styles */
+
+.childContainer {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
