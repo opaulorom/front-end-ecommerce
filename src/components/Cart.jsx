@@ -257,7 +257,8 @@ const Cart = () => {
               marginTop: "10rem",
             }}
           >
-            Total de {totalQuantity} produtos no carrinho
+           
+            {totalQuantity > 0  &&  <p>Total de {totalQuantity} produtos no carrinho</p>}
           </div>
           {getCart.length > 0 && (
             <>
