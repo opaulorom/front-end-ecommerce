@@ -79,13 +79,14 @@ const Pay = () => {
       const data = await response.json();
       setPixLoading(false); // Desativar o loader
 
-      console.log(data);
       setPix(data)
       handleChangeContentClick()
 
       // Redirecionar para a URL de pagamento PIX
       setEncodedImage(data.encodedImage);
       setPixCode(data.payload);
+      console.log("pixQRcodeStatico", data);
+
     } catch (error) {
       setPixLoading(false); // Certifique-se de desativar o loader em caso de erro
 

@@ -187,7 +187,7 @@ const Cart = () => {
       setGetCart(cartResponse.data.cart.products);
       setGetTotal(cartResponse.data.cart);
 
-      setShippingFee(res.data.cart.shippingFee);
+      setShippingFee(cartResponse.data.cart.shippingFee);
     } catch (error) {
       console.error("Error updating shipping fee:", error);
     }
