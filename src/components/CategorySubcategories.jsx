@@ -619,16 +619,19 @@ const CategorySubcategories = () => {
             {loading ? (
               <p>Carregando...</p>
             ) : (
-              <div  className={styles.priceContainer}>
-                <div>
+              <div  >
+                <div className={styles.priceContainer}>
                   {priceRange.map((product) => (
-                    <div key={product._id} className={styles.priceContainer__productcard}>
+                    <div key={product._id} >
+                      <div className={styles.priceContainer__productcard}>
                       <img src={product.variations[0].urls[0]} alt={product.name}  className={styles.priceContainer__image}/>
                       <p   className={styles.priceContainer__price}>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
 
                       <h3 className={styles.priceContainer__productName}>{product.name}</h3>
          
                       {/* Renderização adicional conforme necessário */}
+                      </div>
+                     
                     </div>
                   ))}
                 </div>

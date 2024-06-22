@@ -182,6 +182,14 @@
   font-size: 0.8rem;
 }
 
+.priceContainer__image{
+  width: 30vw;
+  margin-top: -2rem;
+  z-index: -1;
+  
+
+}
+
 @media (max-width: 600px) {
   .DesktopFilter,
   .ProductsDesktopContainer,
@@ -237,6 +245,18 @@
     gap: 1rem;
   }
   .subcategoriesDataContainer__image{
+    width: 15vw;
+  }
+  
+  .priceContainer{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-left: 5rem;
+    gap: 1rem;
+  }
+
+
+  .priceContainer__image{
     width: 15vw;
   }
 }
