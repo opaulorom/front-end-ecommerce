@@ -1,0 +1,44 @@
+
+.productListContainer{
+    display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-left: -4rem;
+  gap: 1rem;
+}
+
+
+
+  .productList__productcard{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+  }
+  
+  .productList__productName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 15vw;
+    color: rgb(114, 114, 114);
+    font-size: 0.8rem;
+  }
+  
+  .ProductList__price{
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .ProductList__productName{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 15vw;
+    color: rgb(114, 114, 114);
+    font-size: 0.8rem;
+  }
+  
+  
+  @media (min-width: 700px){
+
+}

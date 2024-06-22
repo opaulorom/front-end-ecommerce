@@ -1,7 +1,7 @@
 // CategoryProducts.js
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-
+import styles from "./CategoryProducts.module.css"
 const CategoryProducts = () => {
   const { category, subcategory } = useParams();
   const [products, setProducts] = useState([]);
@@ -30,11 +30,19 @@ const CategoryProducts = () => {
   return (
     <div>
       <h1>{subcategory} Products</h1>
-      <ul>
+      <ul className={styles.CategoryProducts}>
         {products.map(product => (
-          <Link to={`/products/${product._id}`} key={product._id}>
-            <li>
-              {product.name} - {product.price}
+          
+          <Link to={`/products/${product._id}`} key={product._id} className={styles.CategoryProducts__productcard}>
+            <li className={styles.CategoryProducts__productcard} >
+ 
+                        <img src={product.variations[0].urls[0]} alt={product.name} className={styles.CategoryProducts__image} />
+                        <p className={styles.CategoryProducts__price}>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
+
+                        <h3 className={styles.CategoryProducts__productName}>{product.name}</h3>
+fffffffffffffff
+                        {/* Renderização adicional conforme necessário */}
+        
             </li>
           </Link>
         ))}
