@@ -40,5 +40,12 @@
   
   
   @media (min-width: 700px){
+    .productListContainer{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
 
+    .productListContainer__image{
+        width: 15vw;
+    }
 }

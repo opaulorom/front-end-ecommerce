@@ -5,12 +5,12 @@ export default function ProductList({ products }) {
     <ul className={styles.productListContainer}>
       {products.map(product => (
         <li key={product.id} style={{
-            border: "2px solid gray"
+          border: "2px solid gray"
         }} className={styles.productListContainer__productcard}>
-             <img src={product.variations[0].urls[0]} alt={product.name} className={styles.productListContainer__image} />
-                <p className={styles.productListContainer__price}>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
+          <img src={product.variations[0].urls[0]} alt={product.name} className={styles.productListContainer__image} />
+          <p className={styles.productListContainer__price}>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
 
-                <h3 className={styles.productListContainer__productName}>{product.name}</h3>
+          <h3 className={styles.productListContainer__productName}>{product.name}</h3>
 
         </li>
       ))}
