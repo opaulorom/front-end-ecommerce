@@ -6,7 +6,7 @@ export default function ProductList({ products }) {
       {products.map(product => (
         <li key={product.id} className={styles.productListContainer__productcard}>
           <img src={product.variations[0].urls[0]} alt={product.name} className={styles.productListContainer__image} />
-          <p className={styles.productListContainer__price}>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
+          <p className={styles.productListContainer__price}>R${product.variations[0].sizes[0].price.toFixed(2)}</p>
 
           <h3 className={styles.productListContainer__productName}>{product.name}</h3>
 
