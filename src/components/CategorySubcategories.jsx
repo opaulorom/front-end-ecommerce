@@ -178,7 +178,7 @@ const CategorySubcategories = () => {
   const fetchMixedProducts = async (page, filters) => {
     setLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 20000));
 
       const queryString = Object.entries(filters)
         .map(([key, value]) => `${key}=${value}`)
@@ -204,7 +204,7 @@ const CategorySubcategories = () => {
     const fetchSubcategoriesData = async () => {
       setLoading(true)
       try {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 20000));
 
         const response = await fetch(
           `http://localhost:3001/api/categories/${category}/${selectedSubcategory}`
@@ -231,7 +231,7 @@ const CategorySubcategories = () => {
 
       if (selectedPrice) {
         try {
-          await new Promise(resolve => setTimeout(resolve, 2000));
+          await new Promise(resolve => setTimeout(resolve, 20000));
 
           const { minPrice, maxPrice } = selectedPrice;
 
@@ -264,7 +264,7 @@ const CategorySubcategories = () => {
 
     const fetchSubcategories = async () => {
       try {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 20000));
 
         const response = await fetch(
           `http://localhost:3001/api/subcategories/${category}`
@@ -280,7 +280,7 @@ const CategorySubcategories = () => {
     const fetchFilters = async () => {
       setLoading(true);
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 10000));
 
         const colorsResponse = await fetch(
           `http://localhost:3001/api/categories/${category}/colors`
@@ -320,7 +320,7 @@ const CategorySubcategories = () => {
       setLoading(true); // Define loading como falso após obter os dados
 
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 10000));
 
         // Alteração na chamada de API para obter produtos misturados específicos
         const response = await fetch(
