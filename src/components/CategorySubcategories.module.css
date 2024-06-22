@@ -98,7 +98,8 @@
 .subcategoriesDataContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  margin-left: -5rem;
+  margin-left: -4rem;
+  gap: 1rem;
   
 }
 
@@ -110,6 +111,25 @@
 }
 
 .subcategoriesDataContainer__image {
+  width: 30vw;
+  margin-top: -2rem;
+  z-index: -1;
+}
+
+.priceContainer{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-left: -4rem;
+  gap: 1rem;
+}
+
+.priceContainer__productcard{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.priceContainer__image{
   width: 30vw;
   margin-top: -2rem;
   z-index: -1;
@@ -132,13 +152,28 @@
 }
 
 
-.price {
+.subcategoriesDataContainer__price {
   font-size: 1rem;
   font-weight: 700;
   font-family: 'Poppins', sans-serif;
 }
 
-.productName {
+.subcategoriesDataContainer__productName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 15vw;
+  color: rgb(114, 114, 114);
+  font-size: 0.8rem;
+}
+
+.priceContainer__price{
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+}
+
+.priceContainer__productName{
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

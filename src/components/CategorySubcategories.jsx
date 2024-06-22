@@ -601,8 +601,8 @@ const CategorySubcategories = () => {
            
                    <div className={styles.subcategoriesDataContainer__productCard}>
                     <img src={product.variations[0].urls[0]} alt={product.name}  className={styles.subcategoriesDataContainer__image}/>
-                    <p   className={styles.price}>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
-                    <p  className={styles.productName}> {product.name}</p>
+                    <p   className={styles.subcategoriesDataContainer__price}>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
+                    <p  className={styles.subcategoriesDataContainer__productName}> {product.name}</p>
 
 
                    </div>
@@ -619,14 +619,15 @@ const CategorySubcategories = () => {
             {loading ? (
               <p>Carregando...</p>
             ) : (
-              <div style={{
-                border: "1px solid yellow"
-              }}>
+              <div  className={styles.priceContainer}>
                 <div>
                   {priceRange.map((product) => (
-                    <div key={product._id}>
-                      <h3>{product.name}</h3>
-                      <p>{product.description}</p>
+                    <div key={product._id} className={styles.priceContainer__productcard}>
+                      <img src={product.variations[0].urls[0]} alt={product.name}  className={styles.priceContainer__image}/>
+                      <p   className={styles.priceContainer__price}>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
+
+                      <h3 className={styles.priceContainer__productName}>{product.name}</h3>
+         
                       {/* Renderização adicional conforme necessário */}
                     </div>
                   ))}
@@ -801,7 +802,7 @@ const CategorySubcategories = () => {
                                     width: "28px", // Tamanho do círculo externo
                                     height: "28px", // Tamanho do círculo externo
                                     borderRadius: "50%",
-                                    border: "2px solid red",
+                                    border: "2px solid black",
                                     position: "absolute",
                                     top: "-5px", // Ajustando para manter a centralização vertical
                                     left: "-5px", // Ajustando para manter a centralização horizontal
@@ -860,70 +861,70 @@ const CategorySubcategories = () => {
                         Faixas de Preços
                       </h3>
                       <div
-                        onClick={() => handleFilterClick("price", "0-50")}
-                        style={{
-                          cursor: "pointer",
-                          fontFamily: "Montserrat, arial, sans-serif",
-                          fontWeight: selectedPrice === "0-50" ? "600" : "400",
-                          fontSize: selectedPrice === "0-50" ? "1.1rem" : "1rem",
-                          color:
-                            selectedPrice === "0-50"
-                              ? "rgb(52, 52, 54)"
-                              : "rgb(52, 52, 54)",
-                          margin: "0.5rem",
-                        }}
-                      >
-                        R$5 - R$50
-                      </div>
-                      <div
-                        onClick={() => handleFilterClick("price", "50-100")}
-                        style={{
-                          cursor: "pointer",
-                          fontFamily: "Montserrat, arial, sans-serif",
-                          fontWeight: selectedPrice === "50-100" ? "600" : "400",
-                          fontSize: selectedPrice === "50-100" ? "1.1rem" : "1rem",
-                          color:
-                            selectedPrice === "50-100"
-                              ? "rgb(52, 52, 54)"
-                              : "rgb(52, 52, 54)",
-                          margin: "0.5rem",
-                        }}
-                      >
-                        R$50 - R$100
-                      </div>
-                      <div
-                        onClick={() => handleFilterClick("price", "100-200")}
-                        style={{
-                          cursor: "pointer",
-                          fontFamily: "Montserrat, arial, sans-serif",
-                          fontWeight: selectedPrice === "100-200" ? "600" : "400",
-                          fontSize: selectedPrice === "100-200" ? "1.1rem" : "1rem",
-                          color:
-                            selectedPrice === "100-200"
-                              ? "rgb(52, 52, 54)"
-                              : "rgb(52, 52, 54)",
-                          margin: "0.5rem",
-                        }}
-                      >
-                        R$100 - R$200
-                      </div>
-                      <div
-                        onClick={() => handleFilterClick("price", "200-")}
-                        style={{
-                          cursor: "pointer",
-                          fontFamily: "Montserrat, arial, sans-serif",
-                          fontWeight: selectedPrice === "200-" ? "600" : "400",
-                          fontSize: selectedPrice === "200-" ? "1.1rem" : "1rem",
-                          color:
-                            selectedPrice === "200-"
-                              ? "rgb(52, 52, 54)"
-                              : "rgb(52, 52, 54)",
-                          margin: "0.5rem",
-                        }}
-                      >
-                        R$200 ou mais
-                      </div>
-
+                  onClick={() => { handlePriceRangeClick(0, 50), setContent('3') }}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "0-50" ? "600" : "400",
+                    fontSize: selectedPrice === "0-50" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "0-50"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$5 - R$50
+                </div>
+                <div
+                  onClick={() => { handlePriceRangeClick(50, 100), setContent('3') }}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "50-100" ? "600" : "400",
+                    fontSize: selectedPrice === "50-100" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "50-100"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$50 - R$100
+                </div>
+                <div
+                  onClick={() => { handlePriceRangeClick(100, 200), setContent('3') }}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "100-200" ? "600" : "400",
+                    fontSize: selectedPrice === "100-200" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "100-200"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$100 - R$200
+                </div>
+                <div
+                  onClick={() => { handlePriceRangeClick(200, 500), setContent('3') }}
+                  style={{
+                    cursor: "pointer",
+                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontWeight: selectedPrice === "200-" ? "600" : "400",
+                    fontSize: selectedPrice === "200-" ? "1.1rem" : "1rem",
+                    color:
+                      selectedPrice === "200-"
+                        ? "rgb(52, 52, 54)"
+                        : "rgb(52, 52, 54)",
+                    margin: "0.5rem",
+                  }}
+                >
+                  R$200 ou mais
+                </div>
+mobile
 
                       <button onClick={handleClickCloseModal} className={styles.filteredQuantity} > {filteredProductsContent} resultados </button>
                     </div>
