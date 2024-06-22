@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
-
+import styles from "./CategorySubcategoriesSkeleton.module.css"
 export default function CategorySubcategoriesSkeleton() {
   return (
 

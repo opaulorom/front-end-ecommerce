@@ -1,15 +1,17 @@
-.myLinks a {
-  color: inherit;
-  text-decoration: none;
-  font-family: Montserrat, arial, sans-serif;
-  font-weight: 500;
-  font-size: 1rem;
-}
-
+/* Links */
 .myLinks {
   margin-top: 1rem;
 }
 
+.myLinks a {
+  color: inherit;
+  text-decoration: none;
+  font-family: Montserrat, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Filter Modal */
 .FilterModal {
   display: block;
   position: fixed;
@@ -25,13 +27,11 @@
 .FilterModalContent {
   position: absolute;
   background-color: #fefefe;
-
   padding: 20px;
   border: 1px solid #888;
   width: 100%;
   height: 100%;
   z-index: 7;
-
 }
 
 .FiltercartClose {
@@ -48,81 +48,80 @@
   cursor: pointer;
 }
 
-.ProductsContainer__image{
+.FilterClose {
+  margin-top: 2rem;
+}
+
+/* Products Container */
+.ProductsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  list-style-type: none;
+}
+
+.ProductsContainer__li {
+  position: relative;
+}
+
+.ProductsContainer__image {
   width: 30vw;
   margin-top: -2rem;
-  z-index: -1;
   margin-left: 1rem;
+  z-index: -1;
 }
 
-@media (max-width: 600px) {
-  .DesktopFilter {
-    display: none;
-  }
-  .ProductsDesktopContainer {
-   color: #888;
-    display: none;
-    
-  }
-  .TabletContainerProducts{
-    display: none;
-  }
- 
-  .ProductsDesktopContainer{
-    margin-left: -5rem;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-
-  }
-
-  .img{
-    width: 30vw;
-  }
-
-  .DestopCustomPagination{
-    position: absolute;
-    bottom: -45rem;
-    margin-left: 3rem;
-
-  }
-
-  .repeat{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-
-  }
-
-
-  .ProductsContainer__image{
-    width: 40vw;
-  }
- 
-
+/* Filtered Quantity */
+.filteredQuantity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+  width: 80vw;
+  background-color: #0C0C0C;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
 }
-@media (min-width: 700px) {
-  .MobileFilter {
-    display: none;
-  }
-  .ProductsMobileContainer {
-    display: none;
-  }
-  .FilterContainer{
-    display: none;
-  }
-  .TabletContainerProducts{
-    display: none;
-  }
-  .DesktopContainerProducts{
-    display: none;
 
-  }
+/* Double Border */
+.doubleBorder {
+  border: 2px solid red;
+}
+
+.doubleBorder.selected {
+  border: 2px solid #007bff;
+}
+
+/* Subcategories Data Container */
+.subcategoriesDataContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-left: -5rem;
   
 }
 
+.subcategoriesDataContainer__productCard {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  
+}
+
+.subcategoriesDataContainer__image {
+  width: 30vw;
+  margin-top: -2rem;
+  z-index: -1;
+}
+
+/* Filter */
 .Filter {
   display: flex;
   flex-direction: column;
 }
+
+/* Desktop Container Products */
 .DesktopContainerProducts {
   list-style-type: none;
   padding: 0;
@@ -132,67 +131,94 @@
   gap: 1rem;
 }
 
+
+.price {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+}
+
+.productName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 15vw;
+  color: rgb(114, 114, 114);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 600px) {
+  .DesktopFilter,
+  .ProductsDesktopContainer,
+  .TabletContainerProducts {
+    display: none;
+  }
+
+  .ProductsDesktopContainer {
+    color: #888;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-left: -5rem;
+  }
+
+  .img {
+    width: 30vw;
+  }
+
+  .DestopCustomPagination {
+    position: absolute;
+    bottom: -45rem;
+    margin-left: 3rem;
+  }
+
+  .repeat {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ProductsContainer__image {
+    width: 40vw;
+  }
+}
+
+@media (min-width: 700px) {
+  .MobileFilter,
+  .ProductsMobileContainer,
+  .FilterContainer,
+  .TabletContainerProducts,
+  .DesktopContainerProducts {
+    display: none;
+  }
+  .ProductsContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    list-style-type: none;
+  }
+
+  .subcategoriesDataContainer{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-left: 5rem;
+    gap: 1rem;
+  }
+  .subcategoriesDataContainer__image{
+    width: 15vw;
+  }
+}
+
 @media (max-width: 800px) and (orientation: portrait) {
-  .DesktopFilter{
+  .DesktopFilter {
     margin-top: 5rem;
     margin-left: -3rem;
   }
+
   .TabletContainerProducts {
     display: block;
     grid-template-columns: repeat(2, 1fr);
   }
-  .DesktopContainerProducts{
+
+  .DesktopContainerProducts,
+  .DestopCustomPagination {
     display: none;
   }
-  .DestopCustomPagination{
-    display: none;
-  }
-
-}
-
-
-.FilterClose{
-  margin-top: 2rem;
-}
-
-
-.filteredQuantity{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  width: 80vw;
-  margin-top: 1rem;
-  background-color: #0C0C0C;
-  color: white;
-  border: 0;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  font-size: 1rem;
-
-}
-
-
-.doubleBorder{
-  border: 2px solid red;
-}
-
-/* Atualize a classe para aplicar a borda à miniatura selecionada */
-.doubleBorder.selected {
-  border: 2px solid #007bff; /* Adicione os estilos da borda desejados */
-}
-
-
-.ProductsContainer__li{
-  position: relative;
-  
- 
-}
-
-.ProductsContainer{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  list-style-type: none;
 }

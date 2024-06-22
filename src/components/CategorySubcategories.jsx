@@ -595,16 +595,17 @@ const CategorySubcategories = () => {
             {loading ? (
               <p>Carregando...</p>
             ) : (
-              <div style={{
-                border: "1px solid gray"
-              }}>
+              <div   className={styles.subcategoriesDataContainer}>
                 {subcategoriesData.map(product => (
                   <div key={product._id}>
-                    <h3>{product.name}</h3>
-                    <p>{product.description}</p>
-                    <img src={product.variations[0].urls[0]} alt={product.name} />
-                    <p>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
-                    <p>Disponibilidade: {product.variations[0].sizes[0].quantityAvailable}</p>
+           
+                   <div className={styles.subcategoriesDataContainer__productCard}>
+                    <img src={product.variations[0].urls[0]} alt={product.name}  className={styles.subcategoriesDataContainer__image}/>
+                    <p   className={styles.price}>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
+                    <p  className={styles.productName}> {product.name}</p>
+
+
+                   </div>
                   </div>
                 ))}
               </div>
@@ -746,6 +747,8 @@ const CategorySubcategories = () => {
                               key={index}
                               style={{ marginLeft: "-2.5rem" }}
                               className={styles.myLinks}
+                              onClick={() => { handleSubcategoryClick(subcategory), setContent('2') }}
+
                             >
                               {subcategory}
                             </li>
