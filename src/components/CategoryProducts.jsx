@@ -40,7 +40,6 @@ const CategoryProducts = () => {
                         <p className={styles.CategoryProducts__price}>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
 
                         <h3 className={styles.CategoryProducts__productName}>{product.name}</h3>
-fffffffffffffff
                         {/* Renderização adicional conforme necessário */}
         
             </li>
