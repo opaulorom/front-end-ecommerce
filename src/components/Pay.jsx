@@ -529,14 +529,14 @@ const Pay = () => {
                     <div>
                       {encodedImage && <ImageComponent encodedImage={encodedImage} />}
                       {encodedImage && (
-                        <>
-                          <p style={{ width: "10vw" }}>{pixCode}</p>
+                        <div className={styles.pixCodeContainer}>
+                          <p  className={styles.pixCodeContainer___p}>{pixCode}</p>
                           <div>
-                            <button onClick={handleClick}>
+                            <button onClick={handleClick} className={styles.pixCodeContainer___button}>
                               {status === "copiar" ? "Copiar" : "Copiado"}
                             </button>
                           </div>
-                        </>
+                        </div>
                       )}
                     </div>
                   </p>

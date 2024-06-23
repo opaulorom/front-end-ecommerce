@@ -59,3 +59,34 @@
     margin-bottom: 10rem;
 
 }
+
+.pixCodeContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.pixCodeContainer___p{
+    font-family: "poppins", sans-serif;
+    font-size: .8rem;
+    
+}
+
+
+.pixCodeContainer___button{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: #05070A;
+    color: white;
+    padding: 1rem;
+    width: 30vw;
+    border: 0;
+    margin-top: 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    font-weight: 600;
+
+
+}
