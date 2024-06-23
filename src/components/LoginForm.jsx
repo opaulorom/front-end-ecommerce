@@ -49,8 +49,9 @@ const LoginForm = () => {
       <div className="container">
         <div className='loginStyle'>
           <h1 className="Login">Login</h1>
-          {remainingAttempts && <div>
-            Tentativas restantes: {remainingAttempts !== undefined ? remainingAttempts : 'N/A'}
+          <div style={{color: !remainingAttempts? "red" : ""}}>Usuário bloqueado tente mais tarde.</div>
+          {remainingAttempts && <div >
+            Tentativas restantes: <span style={{color: remainingAttempts > 0 && "red"}}>{remainingAttempts !== undefined ? remainingAttempts : 'N/A'}</span> 
           </div>}
           <div className='loginStyle__inputLabel'>
 
