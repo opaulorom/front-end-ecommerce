@@ -70,10 +70,10 @@ const ImageGallery = () => {
         ))}
       </div>
       <div style={{ position: 'absolute', top: '50%', left: '10%', transform: 'translateY(-50%)' }}>
-        <ArrowBackIosNewRoundedIcon onClick={prevPage} disabled={isBackDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', opacity: isBackDisabled ? 0.5 : 1 }} />
+        <ArrowBackIosNewRoundedIcon onClick={prevPage} disabled={isBackDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', color: isBackDisabled ? "rgb(189, 189, 189)" : "" }} />
       </div>
       <div style={{ position: 'absolute', top: '50%', right: '10%', transform: 'translateY(-50%)' }}>
-        <ArrowForwardIosRoundedIcon onClick={nextPage} disabled={isForwardDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', opacity: isForwardDisabled ? 0.5 : 1 }} />
+        <ArrowForwardIosRoundedIcon onClick={nextPage} disabled={isForwardDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', color: isForwardDisabled ? "rgb(189, 189, 189)" : "" }} />
       </div>
     </div>
   );
