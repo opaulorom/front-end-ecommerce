@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import CartB from "./CartB";
 import { useAuth } from "../context/AuthContext";
 import { TrendingUpOutlined } from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -294,6 +295,116 @@ const ProductDetails = () => {
     );
   };
 
+
+
+  const isSmallScreen = useMediaQuery('(max-width:600px)');
+  const isMediumScreen = useMediaQuery('(min-width:700px)');
+  const isLargeScreen = useMediaQuery('(min-width:1025px)');
+
+  const getbuttonStyleA = () => {
+    if (isSmallScreen) {
+      return {
+        backgroundColor: "#5070E3",
+        color: "white",
+        border: "0",
+        padding: ".8rem",
+        borderRadius: "10px",
+        fontWeight: "500",
+        fontFamily: "poppins, sans-serif",
+        cursor: "pointer",
+        display:"flex",
+        margin: "0 auto",
+        marginTop:"3rem",
+        width:"80vw",
+         justifyContent:"center",
+        fontSize:"1.3rem",
+      };
+    } else if (isMediumScreen) {
+      return {
+        backgroundColor: "#5070E3",
+        color: "white",
+        border: "none",
+        padding: ".8rem",
+        borderRadius: "8px",
+        fontWeight: "500",
+        fontFamily: "poppins, sans-serif",
+        cursor: "pointer",
+        display:"flex",
+        margin: "0 auto",
+        marginTop:"5rem",
+        width:"15vw",
+         justifyContent:"center",
+        fontSize:"1rem",
+      };
+    } else if (isLargeScreen) {
+      return {
+        width: '13vw',
+        height: '40vh',
+      };
+    } else {
+      return {
+        width: '13vw',
+        height: '40vh',
+      };
+    }
+  };
+
+  const buttonStyleA = getbuttonStyleA();
+
+
+
+  
+  const getbuttonStyleB = () => {
+    if (isSmallScreen) {
+      return {
+        backgroundColor: "red",
+        color: "white",
+        border: "none",
+        padding: ".8rem",
+        borderRadius: "8px",
+        fontWeight: "500",
+        fontFamily: "poppins, sans-serif",
+        cursor: "pointer",
+        display:"flex",
+        margin: "0 auto",
+         marginTop:"5rem",
+        width:"80vw",
+        justifyContent:"center",
+        fontSize:"1.3rem",
+      };
+    } else if (isMediumScreen) {
+      return {
+        backgroundColor: "red",
+        color: "white",
+        border: "none",
+        padding: ".8rem",
+        borderRadius: "8px",
+        fontWeight: "500",
+        fontFamily: "poppins, sans-serif",
+        cursor: "pointer",
+        display:"flex",
+        margin: "0 auto",
+         marginTop:"5rem",
+        width:"15vw",
+        justifyContent:"center",
+        fontSize:"1rem",
+      };
+    } else if (isLargeScreen) {
+      return {
+        width: '13vw',
+        height: '40vh',
+      };
+    } else {
+      return {
+        width: '13vw',
+        height: '40vh',
+      };
+    }
+  };
+  const buttonStyleB = getbuttonStyleB();
+
+
+  
   return (
     <>
       <div>
@@ -464,36 +575,21 @@ const ProductDetails = () => {
             {!showCartButton && (
               <button
                 onClick={handleAddToCartAndOpenModal}
-                style={{
-                  backgroundColor: "#5070E3",
-                  color: "white",
-                  border: "none",
-                  padding: ".8rem",
-                  borderRadius: "5px",
-                  fontWeight: "500",
-                  fontFamily: "poppins, sans-serif",
-                  cursor: "pointer",
-                }}
+           
+                style={buttonStyleA}
+
               >
-                Adicionar ao Carrinho
+                COMPRAR
               </button>
             )}
 
             {showCartButton && (
               <button
                 onClick={handleClickOpenModal}
-                style={{
-                  backgroundColor: "red",
-                  color: "white",
-                  border: "none",
-                  padding: ".8rem",
-                  borderRadius: "5px",
-                  fontWeight: "500",
-                  fontFamily: "poppins, sans-serif",
-                  cursor: "pointer",
-                }}
+             
+                style={buttonStyleB}
               >
-                Adicionar ao Carrinho
+                COMPRAR
               </button>
             )}
 
