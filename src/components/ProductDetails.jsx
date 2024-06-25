@@ -41,11 +41,11 @@ const ProductDetails = () => {
   const [selectedSizeId, setSelectedSizeId] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-  const [changeUrlLink, setChangeUrlLink] =  useState(0)
+  const [changeUrlLink, setChangeUrlLink] = useState(0)
   const hendleButtonDisabled = () => {
     setIsButtonDisabled(true)
   }
-  
+
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
   };
@@ -217,31 +217,31 @@ const ProductDetails = () => {
 
   const [imageIndices, setImageIndices] = useState({});
 
-// Inicializando os índices para cada cor no momento da montagem do componente
-useEffect(() => {
-  const indices = {};
-  product.variations.forEach((variation, index) => {
-    indices[variation.color] = 0;  // Inicializa todos os índices de URL como 0
-  });
-  setImageIndices(indices);
-}, [product]);
+  // Inicializando os índices para cada cor no momento da montagem do componente
+  useEffect(() => {
+    const indices = {};
+    product.variations.forEach((variation, index) => {
+      indices[variation.color] = 0;  // Inicializa todos os índices de URL como 0
+    });
+    setImageIndices(indices);
+  }, [product]);
 
-const handleArrowClick = (direction) => {
-  const currentColor = product.variations[selectedColorIndex]?.color;
-  
-  setImageIndices(prevIndices => {
-    const maxIndex = product.variations[selectedColorIndex].urls.length - 1;
-    let newIndex = prevIndices[currentColor];
+  const handleArrowClick = (direction) => {
+    const currentColor = product.variations[selectedColorIndex]?.color;
 
-    if (direction === "prev") {
-      newIndex = newIndex > 0 ? newIndex - 1 : maxIndex;
-    } else {
-      newIndex = newIndex < maxIndex ? newIndex + 1 : 0;
-    }
+    setImageIndices(prevIndices => {
+      const maxIndex = product.variations[selectedColorIndex].urls.length - 1;
+      let newIndex = prevIndices[currentColor];
 
-    return { ...prevIndices, [currentColor]: newIndex };
-  });
-};
+      if (direction === "prev") {
+        newIndex = newIndex > 0 ? newIndex - 1 : maxIndex;
+      } else {
+        newIndex = newIndex < maxIndex ? newIndex + 1 : 0;
+      }
+
+      return { ...prevIndices, [currentColor]: newIndex };
+    });
+  };
 
   const handleAddToCartAndOpenModal = async () => {
     const productId = product._id;
@@ -281,14 +281,14 @@ const handleArrowClick = (direction) => {
         // Adiciona ao carrinho apenas se for um novo produto
         addToCart();
         toast.success("Produto adicionado ao carrinho!");
-     
+
         handleClickOpenCartModal();
-      
+
       } catch (error) {
-        if(loggedIn === false){
+        if (loggedIn === false) {
           toast.error("Precisa fazer login pra adicionar algo ao carrinho!");
 
-        }else{
+        } else {
           console.error("Erro ao adicionar produto ao carrinho:", error);
           toast.error("Produto com essa cor e tamanho indisponível.");
 
@@ -341,17 +341,17 @@ const handleArrowClick = (direction) => {
         fontWeight: "500",
         fontFamily: "poppins, sans-serif",
         cursor: "pointer",
-        display:"flex",
+        display: "flex",
         margin: "0 auto",
-        marginTop:"3rem",
-        width:"80vw",
-         justifyContent:"center",
-        fontSize:"1.3rem",
+        marginTop: "3rem",
+        width: "80vw",
+        justifyContent: "center",
+        fontSize: "1.3rem",
       };
-    } else if(max300And895, isPortrait){
+    } else if (max300And895, isPortrait) {
       return {
         backgroundColor: "red",
-        width:"10vw",
+        width: "10vw",
 
 
       }
@@ -365,12 +365,12 @@ const handleArrowClick = (direction) => {
         fontWeight: "500",
         fontFamily: "poppins, sans-serif",
         cursor: "pointer",
-        display:"flex",
+        display: "flex",
         margin: "0 auto",
-        marginTop:"5rem",
-        width:"15vw",
-         justifyContent:"center",
-        fontSize:"1rem",
+        marginTop: "5rem",
+        width: "15vw",
+        justifyContent: "center",
+        fontSize: "1rem",
       };
     } else if (isLargeScreen) {
       return {
@@ -389,7 +389,7 @@ const handleArrowClick = (direction) => {
 
 
 
-  
+
   const getbuttonStyleB = () => {
     if (isSmallScreen) {
       return {
@@ -401,12 +401,12 @@ const handleArrowClick = (direction) => {
         fontWeight: "500",
         fontFamily: "poppins, sans-serif",
         cursor: "pointer",
-        display:"flex",
+        display: "flex",
         margin: "0 auto",
-         marginTop:"5rem",
-        width:"80vw",
-        justifyContent:"center",
-        fontSize:"1.3rem",
+        marginTop: "5rem",
+        width: "80vw",
+        justifyContent: "center",
+        fontSize: "1.3rem",
       };
     } else if (isMediumScreen) {
       return {
@@ -418,12 +418,12 @@ const handleArrowClick = (direction) => {
         fontWeight: "500",
         fontFamily: "poppins, sans-serif",
         cursor: "pointer",
-        display:"flex",
+        display: "flex",
         margin: "0 auto",
-         marginTop:"5rem",
-        width:"15vw",
-        justifyContent:"center",
-        fontSize:"1rem",
+        marginTop: "5rem",
+        width: "15vw",
+        justifyContent: "center",
+        fontSize: "1rem",
       };
     } else if (isLargeScreen) {
       return {
@@ -454,7 +454,7 @@ const handleArrowClick = (direction) => {
       return nextUrlIndex;
     });
   };
-  
+
 
   const [activeColorIndex, setActiveColorIndex] = useState(0);
   const [activeUrlIndex, setActiveUrlIndex] = useState(0);
@@ -476,7 +476,7 @@ const handleArrowClick = (direction) => {
     setActiveUrlIndex((prevIndex) => (prevIndex - 1 + product.variations[activeColorIndex].urls.length) % product.variations[activeColorIndex].urls.length);
   };
 
- 
+
 
   const handlePageNext = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.floor(product.variations[activeColorIndex].urls.length / IMAGES_PER_PAGE)));
@@ -538,63 +538,60 @@ const handleArrowClick = (direction) => {
             </div>
           )}
         </div>
-        <div>
-        <div>
-      {validActiveUrlIndex ? (
-        <div>
-          <img src={selectedImageUrl} alt="Selected product" style={{ width: "20vw", marginBottom: "2rem" }} />
+        <div className={styles.DesktopCarrosel}>
+
           <div>
-            <KeyboardArrowLeftIcon onClick={handlePrevClick}></KeyboardArrowLeftIcon>
-            <KeyboardArrowRightIcon onClick={handleNextClick}></KeyboardArrowRightIcon>
+            {validActiveUrlIndex ? (
+              <div>
+                <img src={selectedImageUrl} alt="Selected product" style={{ width: "20vw", marginBottom: "2rem" }} />
+                <div>
+                  <KeyboardArrowLeftIcon onClick={handlePrevClick}></KeyboardArrowLeftIcon>
+                  <KeyboardArrowRightIcon onClick={handleNextClick}></KeyboardArrowRightIcon>
+                </div>
+              </div>
+            ) : (
+              <p>No image available</p>
+            )}
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "5rem" }}>
+              {validUrls && product.variations[activeColorIndex].urls.length > IMAGES_PER_PAGE && (
+                <button onClick={handlePagePrev} disabled={currentPage === 0}>
+                  &lt;
+                </button>
+              )}
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                {currentImages.map((url, urlIndex) => (
+                  <div key={startIndex + urlIndex}>
+                    <img
+                      src={url}
+                      alt={`Image ${startIndex + urlIndex} for ${product.variations[activeColorIndex].color}`}
+                      style={{ width: "10vw", cursor: "pointer", border: startIndex + urlIndex === activeUrlIndex ? "2px solid blue" : "none" }}
+                      onClick={() => setActiveUrlIndex(startIndex + urlIndex)}
+                    />
+                  </div>
+                ))}
+              </div>
+              {validUrls && product.variations[activeColorIndex].urls.length > IMAGES_PER_PAGE && (
+                <button onClick={handlePageNext} disabled={endIndex >= product.variations[activeColorIndex].urls.length} >
+                  &gt;
+                </button>
+              )}
+            </div>
           </div>
         </div>
-      ) : (
-        <p>No image available</p>
-      )}
-     <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "5rem" }}>
-        {validUrls && product.variations[activeColorIndex].urls.length > IMAGES_PER_PAGE && (
-          <button onClick={handlePagePrev} disabled={currentPage === 0}>
-            &lt;
-          </button>
-        )}
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          {currentImages.map((url, urlIndex) => (
-            <div key={startIndex + urlIndex}>
-              <img
-                src={url}
-                alt={`Image ${startIndex + urlIndex} for ${product.variations[activeColorIndex].color}`}
-                style={{ width: "10vw", cursor: "pointer", border: startIndex + urlIndex === activeUrlIndex ? "2px solid blue" : "none" }}
-                onClick={() => setActiveUrlIndex(startIndex + urlIndex)}
-              />
-            </div>
-          ))}
-        </div>
-        {validUrls && product.variations[activeColorIndex].urls.length > IMAGES_PER_PAGE && (
-          <button onClick={handlePageNext} disabled={endIndex >= product.variations[activeColorIndex].urls.length} >
-            &gt;
-          </button>
-        )}
-      </div>
-    </div>
-    </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-            marginTop: "24rem",
-          }}
-        >
+
+
+        <div className={styles.carroselMobile}>
           <div key={currentImageIndex} className="image-container">
             {product.variations[currentImageIndex] && (
-            <img
-            src={product.variations[selectedColorIndex]?.urls[imageIndices[product.variations[selectedColorIndex]?.color]] || selectedImageUrl}
-            alt={product.variations[selectedColorIndex]?.color}
-            style={{ width: "25vw" }}
-            onClick={() => {handleImageClick, handleDotChangeClick(variationIndex, urlIndex)}} // Se você ainda precisa deste manipulador de cliques
-          />
-          
+              <img
+                src={product.variations[selectedColorIndex]?.urls[imageIndices[product.variations[selectedColorIndex]?.color]] || selectedImageUrl}
+                alt={product.variations[selectedColorIndex]?.color}
+                style={{ width: "25vw" }}
+
+                onClick={() => { handleImageClick, handleDotChangeClick(variationIndex, urlIndex) }} // Se você ainda precisa deste manipulador de cliques
+              />
+
             )}
 
             <div className="navigation-arrows">
@@ -613,20 +610,40 @@ const handleArrowClick = (direction) => {
               </div>
             </div>
 
-           
-      <div className="dot-container">
-        {product.variations?.map((variation, index) => (
-          <span
-            key={index}
-            className={`dot ${
-              index === selectedColorIndex ? "active" : ""
-            }`}
-            onClick={() => handleDotClick(index)}
-          />
-        ))}
-      </div>
-    </div>
-    
+
+            <div className="dot-container">
+              {product.variations?.map((variation, index) => (
+                <span
+                  key={index}
+                  className={`dot ${index === selectedColorIndex ? "active" : ""
+                    }`}
+                  onClick={() => handleDotClick(index)}
+                />
+              ))}
+            </div>
+
+          </div>
+        </div>
+
+
+        <div>
+
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+              marginTop: "10rem",
+            }}
+
+          >
+
+
+
+          </div>
+
+
 
 
           <div>
@@ -665,7 +682,7 @@ const handleArrowClick = (direction) => {
                     Tamanhos disponíveis para{" "}
                     {product.variations[selectedColorIndex]?.color}:
                   </h3>
-                  <div style={{ display: "flex", flexDirection: "row", alignItems:"center" }}>
+                  <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                     {sizesFromDatabase[selectedColorIndex]?.sizes &&
                       sizesFromDatabase[selectedColorIndex].sizes.map(
                         (size, sizeIndex) => (
@@ -675,16 +692,15 @@ const handleArrowClick = (direction) => {
                               marginLeft: "1rem",
                               display: "flex",
                               flexDirection: "column",
-                             
+
                             }}
                           >
                             <button
-                              className={`size-button ${
-                                size.size === selectedSize ? "active" : ""
-                                
-                              }`}
+                              className={`size-button ${size.size === selectedSize ? "active" : ""
+
+                                }`}
                               style={{
-                                border:size.inStockSize === true ? "2px dashed #ccc" : "",
+                                border: size.inStockSize === true ? "2px dashed #ccc" : "",
                                 color: size.inStockSize === true ? "#888" : "",
                                 cursor: size.inStockSize === true ? "" : "pointer",
 
@@ -695,9 +711,9 @@ const handleArrowClick = (direction) => {
                               }
                             >
                               {size.size}
-                              
+
                             </button>
-                       
+
 
                           </div>
                         )
@@ -710,7 +726,7 @@ const handleArrowClick = (direction) => {
             {!showCartButton && (
               <button
                 onClick={handleAddToCartAndOpenModal}
-           
+
                 style={buttonStyleA}
 
               >
@@ -721,7 +737,7 @@ const handleArrowClick = (direction) => {
             {showCartButton && (
               <button
                 onClick={handleClickOpenModal}
-             
+
                 style={buttonStyleB}
               >
                 COMPRAR

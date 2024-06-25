@@ -152,11 +152,19 @@
     font-size: 1.3rem;
   }
   
-  
-  
-  
-  
+  .carroselMobile{
+    display: block;
+    margin-top: 100rem;
 
+  }
+  
+  
+  
+ 
+.DesktopCarrosel{
+  display: none;
+
+}
 
    
   @media (max-width: 600px) {
@@ -169,11 +177,22 @@
       display: none;
 
     }
+
+  
     
   }
+  
 
-  @media (max-width: 700px) {
+  @media (min-width: 700px) {
     .buttonStyle{
       width: 20vw;
+    }
+    .carroselMobile{
+      display: none;
+
+    }
+    .DesktopCarrosel{
+      display: block;
+    
     }
   }
