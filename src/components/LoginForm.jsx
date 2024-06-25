@@ -49,10 +49,15 @@ const LoginForm = () => {
       <div className="container">
         <div className='loginStyle'>
           <h1 className="Login">Login</h1>
-          <div style={{color: !remainingAttempts? "red" : ""}}>Usuário bloqueado tente mais tarde.</div>
-          {remainingAttempts && <div >
-            Tentativas restantes: <span style={{color: remainingAttempts > 0 && "red"}}>{remainingAttempts !== undefined ? remainingAttempts : 'N/A'}</span> 
-          </div>}
+       
+          {remainingAttempts > 0 ? (
+            <div >
+            Tentativas restantes: <span style={{color: remainingAttempts > 0  && "blue"}}>{remainingAttempts !== undefined ? remainingAttempts : 'Usuário bloqueado tente mais tarde.'}</span> 
+          </div>
+          ) :  (
+            <span style={{color: "red"}}>Usuário bloqueado tente mais tarde.</span>
+          )
+          }
           <div className='loginStyle__inputLabel'>
 
             <label className="email" htmlFor="email">Email</label>

@@ -14,6 +14,7 @@ import CartB from "./CartB";
 import { useAuth } from "../context/AuthContext";
 import { TrendingUpOutlined } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
+import { width } from "@mui/system";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -296,13 +297,17 @@ const ProductDetails = () => {
   };
 
 
+  const max300And895 = useMediaQuery('(min-width:393px) and (max-width:853px)');
 
-  const isSmallScreen = useMediaQuery('(max-width:600px)');
+  const isSmallScreen = useMediaQuery('(max-width:699px)');
+
   const isMediumScreen = useMediaQuery('(min-width:700px)');
+
   const isLargeScreen = useMediaQuery('(min-width:1025px)');
+  const isPortrait = useMediaQuery('(orientation: portrait)');
 
   const getbuttonStyleA = () => {
-    if (isSmallScreen) {
+    if (isSmallScreen, isPortrait) {
       return {
         backgroundColor: "#5070E3",
         color: "white",
@@ -319,6 +324,13 @@ const ProductDetails = () => {
          justifyContent:"center",
         fontSize:"1.3rem",
       };
+    } else if(max300And895, isPortrait){
+      return {
+        backgroundColor: "red",
+        width:"10vw",
+
+
+      }
     } else if (isMediumScreen) {
       return {
         backgroundColor: "#5070E3",
@@ -453,7 +465,7 @@ const ProductDetails = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-around",
-            marginTop: "50rem",
+            marginTop: "24rem",
           }}
         >
           <div key={currentImageIndex} className="image-container">
@@ -496,7 +508,7 @@ const ProductDetails = () => {
 
           <div>
             <div>
-              <div style={{ marginTop: "-35rem" }}>
+              <div >
                 <div className="thumbnail-container">
                   {product.variations
                     ?.filter(
