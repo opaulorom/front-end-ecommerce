@@ -176,6 +176,7 @@ const ProductDetails = () => {
     setCurrentImageIndex(colorIndex);
     setSelectedColorId(product.variations[colorIndex]._id); // Armazena o ID da cor selecionada
     setActiveColorIndex(colorIndex);
+    setCurrentPage(0); // Reset the page to the first when the color changes
 
     setActiveUrlIndex(0); // Assuming we want to show the first image of the selected color
 
@@ -457,11 +458,16 @@ const handleArrowClick = (direction) => {
 
   const [activeColorIndex, setActiveColorIndex] = useState(0);
   const [activeUrlIndex, setActiveUrlIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const IMAGES_PER_PAGE = 5;
 
   const handleDotChangeClick = (variationIndex, urlIndex) => {
     setActiveColorIndex(variationIndex);
     setActiveUrlIndex(urlIndex);
+    setCurrentPage(0); // Reset the page to the first when the color changes
   };
+
   const handleNextClick = () => {
     setActiveUrlIndex((prevIndex) => (prevIndex + 1) % product.variations[activeColorIndex].urls.length);
   };
@@ -470,7 +476,15 @@ const handleArrowClick = (direction) => {
     setActiveUrlIndex((prevIndex) => (prevIndex - 1 + product.variations[activeColorIndex].urls.length) % product.variations[activeColorIndex].urls.length);
   };
 
+ 
 
+  const handlePageNext = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.floor(product.variations[activeColorIndex].urls.length / IMAGES_PER_PAGE)));
+  };
+
+  const handlePagePrev = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
 
   const validVariations = product && product.variations && product.variations.length > 0;
   const validActiveColorIndex = validVariations && activeColorIndex < product.variations.length;
@@ -480,6 +494,11 @@ const handleArrowClick = (direction) => {
   const selectedImageUrl = validActiveUrlIndex
     ? product.variations[activeColorIndex].urls[activeUrlIndex]
     : "";
+
+  const startIndex = currentPage * IMAGES_PER_PAGE;
+  const endIndex = Math.min(startIndex + IMAGES_PER_PAGE, validUrls ? product.variations[activeColorIndex].urls.length : 0);
+  const currentImages = validUrls ? product.variations[activeColorIndex].urls.slice(startIndex, endIndex) : [];
+
 
   return (
     <>
@@ -532,18 +551,28 @@ const handleArrowClick = (direction) => {
       ) : (
         <p>No image available</p>
       )}
-      <div style={{ display: "flex", flexDirection: "row", marginTop: "5rem" }}>
-        {validVariations ? product.variations[activeColorIndex].urls.map((url, urlIndex) => (
-          <div key={urlIndex}>
-            <img
-              src={url}
-              alt={`Image ${urlIndex} for ${product.variations[activeColorIndex].color}`}
-              style={{ width: "10vw", cursor: "pointer"}}
-              onClick={() => setActiveUrlIndex(urlIndex)}
-            />
-          </div>
-        )) : (
-          <p>No variations available</p>
+     <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "5rem" }}>
+        {validUrls && product.variations[activeColorIndex].urls.length > IMAGES_PER_PAGE && (
+          <button onClick={handlePagePrev} disabled={currentPage === 0}>
+            &lt;
+          </button>
+        )}
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          {currentImages.map((url, urlIndex) => (
+            <div key={startIndex + urlIndex}>
+              <img
+                src={url}
+                alt={`Image ${startIndex + urlIndex} for ${product.variations[activeColorIndex].color}`}
+                style={{ width: "10vw", cursor: "pointer", border: startIndex + urlIndex === activeUrlIndex ? "2px solid blue" : "none" }}
+                onClick={() => setActiveUrlIndex(startIndex + urlIndex)}
+              />
+            </div>
+          ))}
+        </div>
+        {validUrls && product.variations[activeColorIndex].urls.length > IMAGES_PER_PAGE && (
+          <button onClick={handlePageNext} disabled={endIndex >= product.variations[activeColorIndex].urls.length} >
+            &gt;
+          </button>
         )}
       </div>
     </div>
