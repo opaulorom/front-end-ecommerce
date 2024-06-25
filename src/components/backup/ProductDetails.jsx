@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./ProductDetails.css";
 import Header from "./Header";
@@ -11,6 +11,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import CartB from "./CartB";
+import { useAuth } from "../context/AuthContext";
+import { TrendingUpOutlined } from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material";
+import { width } from "@mui/system";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -34,14 +38,12 @@ const ProductDetails = () => {
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedColorId, setSelectedColorId] = useState("");
   const [selectedSizeId, setSelectedSizeId] = useState("");
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const selectedImageFromCategory = searchParams.get("selectedImageFromCategory");
-  const selectedColorFromCategory = searchParams.get("selectedColorFromCategory");
-  const selectedPriceFromCategory = searchParams.get("selectedPriceFromCategory");
-  const selectedSizeFromCategory = searchParams.get("selectedSizeFromCategory");
-
-  
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
+  const [changeUrlLink, setChangeUrlLink] =  useState(0)
+  const hendleButtonDisabled = () => {
+    setIsButtonDisabled(true)
+  }
   
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
@@ -114,10 +116,27 @@ const ProductDetails = () => {
 
         if (response.data.product) {
           const productData = response.data.product;
+
+          // Defina a imagem da cor selecionada como a primeira imagem da primeira variação
+          setSelectedColorImage(productData.variations[0]?.urls[0] || "");
+
+          // Atualize o estado do produto com os dados recebidos
           setProduct(productData);
 
+          // Verifique se há variações disponíveis
           if (productData.variations.length > 0) {
-            setSizesFromDatabase(productData.variations[0]?.sizes || []);
+            // Atualize o estado com os tamanhos disponíveis para cada cor
+            setSizesFromDatabase(
+              productData.variations.map((variation) => ({
+                color: variation.color,
+                sizes: variation.sizes,
+              }))
+            );
+
+            // Defina o primeiro tamanho como padrão
+            setIsColorAndSizeSelected(true); // Marque como selecionado automaticamente
+
+            // Defina o preço do primeiro tamanho como padrão
             setSelectedPrice(productData.variations[0]?.sizes[0]?.price || "");
           }
         }
@@ -128,19 +147,6 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [productId]);
-
-  useEffect(() => {
-    setSelectedPrice(selectedPriceFromCategory);
-  }, [selectedPriceFromCategory]);
-
-  useEffect(() => {
-    setSelectedColorIndex(product.variations.findIndex((v) => v.color === selectedColorFromCategory));
-  }, [product.variations, selectedColorFromCategory]);
-
-  useEffect(() => {
-    setSelectedSize(selectedSizeFromCategory);
-  }, [selectedSizeFromCategory]);
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -196,22 +202,41 @@ const ProductDetails = () => {
     console.log("Sizes from database:", sizesFromDatabase);
     console.log("Selected color index:", selectedColorIndex);
   };
-
   const handleDotClick = (index) => {
-    setCurrentImageIndex(index);
+    setSelectedColorIndex(index);
+    setChangeUrlLink(0); // Reseta o índice da URL ao selecionar uma nova cor
   };
 
-  const handleArrowClick = (direction) => {
+
+
+
+  const [imageIndices, setImageIndices] = useState({});
+
+// Inicializando os índices para cada cor no momento da montagem do componente
+useEffect(() => {
+  const indices = {};
+  product.variations.forEach((variation, index) => {
+    indices[variation.color] = 0;  // Inicializa todos os índices de URL como 0
+  });
+  setImageIndices(indices);
+}, [product]);
+
+const handleArrowClick = (direction) => {
+  const currentColor = product.variations[selectedColorIndex]?.color;
+  
+  setImageIndices(prevIndices => {
+    const maxIndex = product.variations[selectedColorIndex].urls.length - 1;
+    let newIndex = prevIndices[currentColor];
+
     if (direction === "prev") {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : product.variations.length - 1
-      );
+      newIndex = newIndex > 0 ? newIndex - 1 : maxIndex;
     } else {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex < product.variations.length - 1 ? prevIndex + 1 : 0
-      );
+      newIndex = newIndex < maxIndex ? newIndex + 1 : 0;
     }
-  };
+
+    return { ...prevIndices, [currentColor]: newIndex };
+  });
+};
 
   const handleAddToCartAndOpenModal = async () => {
     const productId = product._id;
@@ -251,26 +276,29 @@ const ProductDetails = () => {
         // Adiciona ao carrinho apenas se for um novo produto
         addToCart();
         toast.success("Produto adicionado ao carrinho!");
-
+     
         handleClickOpenCartModal();
+      
       } catch (error) {
-        console.error("Erro ao adicionar produto ao carrinho:", error);
-        toast.error("Erro ao adicionar produto ao carrinho.");
+        if(loggedIn === false){
+          toast.error("Precisa fazer login pra adicionar algo ao carrinho!");
+
+        }else{
+          console.error("Erro ao adicionar produto ao carrinho:", error);
+          toast.error("Produto com essa cor e tamanho indisponível.");
+
+        }
       }
     } else {
       toast.error("Por favor, selecione uma cor e um tamanho.");
     }
   };
 
-  useEffect(() => {
-    setSelectedPrice(selectedPriceFromCategory || product.variations[selectedColorIndex]?.sizes[0]?.price);
-  }, [selectedPriceFromCategory, product.variations, selectedColorIndex]);
-  
-  // Atualize a função handleSizeSelection para atualizar o preço quando o tamanho for alterado
+  // Atualize a função handleSizeSelection para atualizar o estado do tamanho selecionado
   const handleSizeSelection = (sizeId, price) => {
     setSelectedSize(sizeId); // Atualize o estado do tamanho selecionado
     setSelectedSizeId(sizeId); // Atualize o ID do tamanho selecionado
-    setSelectedPrice(price || product.variations[selectedColorIndex]?.sizes.find(size => size.size === sizeId)?.price);
+    setSelectedPrice(price); // Atualize o preço selecionado
   };
 
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
@@ -286,6 +314,167 @@ const ProductDetails = () => {
       prevIndex < product.variations.length - 1 ? prevIndex + 1 : 0
     );
   };
+
+
+  const max300And895 = useMediaQuery('(min-width:393px) and (max-width:853px)');
+
+  const isSmallScreen = useMediaQuery('(max-width:699px)');
+
+  const isMediumScreen = useMediaQuery('(min-width:700px)');
+
+  const isLargeScreen = useMediaQuery('(min-width:1025px)');
+  const isPortrait = useMediaQuery('(orientation: portrait)');
+
+  const getbuttonStyleA = () => {
+    if (isSmallScreen, isPortrait) {
+      return {
+        backgroundColor: "#5070E3",
+        color: "white",
+        border: "0",
+        padding: ".8rem",
+        borderRadius: "10px",
+        fontWeight: "500",
+        fontFamily: "poppins, sans-serif",
+        cursor: "pointer",
+        display:"flex",
+        margin: "0 auto",
+        marginTop:"3rem",
+        width:"80vw",
+         justifyContent:"center",
+        fontSize:"1.3rem",
+      };
+    } else if(max300And895, isPortrait){
+      return {
+        backgroundColor: "red",
+        width:"10vw",
+
+
+      }
+    } else if (isMediumScreen) {
+      return {
+        backgroundColor: "#5070E3",
+        color: "white",
+        border: "none",
+        padding: ".8rem",
+        borderRadius: "8px",
+        fontWeight: "500",
+        fontFamily: "poppins, sans-serif",
+        cursor: "pointer",
+        display:"flex",
+        margin: "0 auto",
+        marginTop:"5rem",
+        width:"15vw",
+         justifyContent:"center",
+        fontSize:"1rem",
+      };
+    } else if (isLargeScreen) {
+      return {
+        width: '13vw',
+        height: '40vh',
+      };
+    } else {
+      return {
+        width: '13vw',
+        height: '40vh',
+      };
+    }
+  };
+
+  const buttonStyleA = getbuttonStyleA();
+
+
+
+  
+  const getbuttonStyleB = () => {
+    if (isSmallScreen) {
+      return {
+        backgroundColor: "red",
+        color: "white",
+        border: "none",
+        padding: ".8rem",
+        borderRadius: "8px",
+        fontWeight: "500",
+        fontFamily: "poppins, sans-serif",
+        cursor: "pointer",
+        display:"flex",
+        margin: "0 auto",
+         marginTop:"5rem",
+        width:"80vw",
+        justifyContent:"center",
+        fontSize:"1.3rem",
+      };
+    } else if (isMediumScreen) {
+      return {
+        backgroundColor: "red",
+        color: "white",
+        border: "none",
+        padding: ".8rem",
+        borderRadius: "8px",
+        fontWeight: "500",
+        fontFamily: "poppins, sans-serif",
+        cursor: "pointer",
+        display:"flex",
+        margin: "0 auto",
+         marginTop:"5rem",
+        width:"15vw",
+        justifyContent:"center",
+        fontSize:"1rem",
+      };
+    } else if (isLargeScreen) {
+      return {
+        width: '13vw',
+        height: '40vh',
+      };
+    } else {
+      return {
+        width: '13vw',
+        height: '40vh',
+      };
+    }
+  };
+  const buttonStyleB = getbuttonStyleB();
+
+
+  const handleImageClick = () => {
+    setChangeUrlLink((currentUrlIndex) => {
+      // Incrementa o índice da URL
+      let nextUrlIndex = currentUrlIndex + 1;
+      // Verifica se o índice excede o número de URLs na variação atual
+      if (nextUrlIndex >= product.variations[currentImageIndex].urls.length) {
+        // Se desejar que ele retorne ao início automaticamente
+        return 0;
+        // Se não deseja ciclar automaticamente, mantenha no último
+        // return currentUrlIndex;
+      }
+      return nextUrlIndex;
+    });
+  };
+  
+  const [activeColorIndex, setActiveColorIndex] = useState(0);
+  const [activeUrlIndex, setActiveUrlIndex] = useState(0);
+
+  const handleDotChangeClick = (variationIndex, urlIndex) => {
+    setActiveColorIndex(variationIndex);
+    setActiveUrlIndex(urlIndex);
+  };
+
+  const handleNextClick = () => {
+    setActiveUrlIndex((prevIndex) => (prevIndex + 1) % product.variations[activeColorIndex].urls.length);
+  };
+
+  const handlePrevClick = () => {
+    setActiveUrlIndex((prevIndex) => (prevIndex - 1 + product.variations[activeColorIndex].urls.length) % product.variations[activeColorIndex].urls.length);
+  };
+
+  // Verificação para garantir que os índices estão dentro do intervalo
+  const validVariations = product && product.variations && product.variations.length > 0;
+  const validActiveColorIndex = validVariations && activeColorIndex < product.variations.length;
+  const validUrls = validActiveColorIndex && product.variations[activeColorIndex].urls && product.variations[activeColorIndex].urls.length > 0;
+  const validActiveUrlIndex = validUrls && activeUrlIndex < product.variations[activeColorIndex].urls.length;
+
+  const selectedImageUrl = validActiveUrlIndex
+    ? product.variations[activeColorIndex].urls[activeUrlIndex]
+    : "";
 
   return (
     <>
@@ -325,24 +514,56 @@ const ProductDetails = () => {
             </div>
           )}
         </div>
+        <div>
+        <div>
+      {validActiveUrlIndex ? (
+      
+        <div>
+                  <img src={selectedImageUrl} alt="Selected product" style={{ width: "20vw", marginBottom: "2rem" }} />
 
-        <div></div>
+        <button onClick={handlePrevClick}>&lt; Previous</button>
+        <button onClick={handleNextClick}>Next &gt;</button>
+      </div>
+      ) : (
+        <p>No image available</p>
+      )}
+      <div style={{ display: "flex", flexDirection: "row", marginTop: "5rem" }}>
+        {validVariations ? product.variations.map((variation, variationIndex) => (
+          <div key={variationIndex}>
+            {variation.urls && variation.urls.map((url, urlIndex) => (
+              <img
+                key={urlIndex}
+                src={url}
+                alt={`Image ${urlIndex} for ${variation.color}`}
+                style={{ width: "10vw", cursor: "pointer" }}
+                onClick={() => handleDotChangeClick(variationIndex, urlIndex)}
+              />
+            ))}
+          </div>
+        )) : (
+          <p>No variations available</p>
+        )}
+      </div>
+    </div>
+    </div>
 
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-around",
-            marginTop: "50rem",
+            marginTop: "24rem",
           }}
         >
           <div key={currentImageIndex} className="image-container">
             {product.variations[currentImageIndex] && (
-              <img
-                src={product.variations[currentImageIndex]?.urls[0]} // Use currentImageIndex para selecionar a imagem correspondente
-                alt={product.variations[currentImageIndex]?.color}
-                style={{ width: "25vw" }}
-              />
+            <img
+            src={product.variations[selectedColorIndex]?.urls[imageIndices[product.variations[selectedColorIndex]?.color]] || selectedImageUrl}
+            alt={product.variations[selectedColorIndex]?.color}
+            style={{ width: "25vw" }}
+            onClick={() => {handleImageClick, handleDotChangeClick(variationIndex, urlIndex)}} // Se você ainda precisa deste manipulador de cliques
+          />
+          
             )}
 
             <div className="navigation-arrows">
@@ -361,22 +582,25 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            <div className="dot-container">
-              {product.variations?.map((variation, index) => (
-                <span
-                  key={index}
-                  className={`dot ${
-                    index === currentImageIndex ? "active" : ""
-                  }`}
-                  onClick={() => handleDotClick(index)}
-                />
-              ))}
-            </div>
-          </div>
+           
+      <div className="dot-container">
+        {product.variations?.map((variation, index) => (
+          <span
+            key={index}
+            className={`dot ${
+              index === selectedColorIndex ? "active" : ""
+            }`}
+            onClick={() => handleDotClick(index)}
+          />
+        ))}
+      </div>
+    </div>
+    
+
 
           <div>
             <div>
-              <div style={{ marginTop: "-35rem" }}>
+              <div >
                 <div className="thumbnail-container">
                   {product.variations
                     ?.filter(
@@ -404,11 +628,7 @@ const ProductDetails = () => {
                       </div>
                     ))}
                 </div>
-                Preço: R$ {selectedPrice }
-                <span>{selectedPriceFromCategory}</span>
-{selectedColorFromCategory}
-<img src={selectedImageFromCategory} alt="" />
-                {selectedSizeFromCategory}
+                Preço: R$ {selectedPrice}
                 <div>
                   <h3>
                     Tamanhos disponíveis para{" "}
@@ -427,18 +647,27 @@ const ProductDetails = () => {
                              
                             }}
                           >
-                            <span
+                            <button
                               className={`size-button ${
                                 size.size === selectedSize ? "active" : ""
+                                
                               }`}
+                              style={{
+                                border:size.inStockSize === true ? "2px dashed #ccc" : "",
+                                color: size.inStockSize === true ? "#888" : "",
+                                cursor: size.inStockSize === true ? "" : "pointer",
+
+                              }}
+                              disabled={size.inStockSize === true ? isButtonDisabled : false}
                               onClick={() =>
                                 handleSizeSelection(size.size, size.price)
                               }
                             >
                               {size.size}
-                            </span>
+                              
+                            </button>
+                       
 
-                         
                           </div>
                         )
                       )}
@@ -450,36 +679,21 @@ const ProductDetails = () => {
             {!showCartButton && (
               <button
                 onClick={handleAddToCartAndOpenModal}
-                style={{
-                  backgroundColor: "#5070E3",
-                  color: "white",
-                  border: "none",
-                  padding: ".8rem",
-                  borderRadius: "5px",
-                  fontWeight: "500",
-                  fontFamily: "poppins, sans-serif",
-                  cursor: "pointer",
-                }}
+           
+                style={buttonStyleA}
+
               >
-                Adicionar ao Carrinho
+                COMPRAR
               </button>
             )}
 
             {showCartButton && (
               <button
                 onClick={handleClickOpenModal}
-                style={{
-                  backgroundColor: "red",
-                  color: "white",
-                  border: "none",
-                  padding: ".8rem",
-                  borderRadius: "5px",
-                  fontWeight: "500",
-                  fontFamily: "poppins, sans-serif",
-                  cursor: "pointer",
-                }}
+             
+                style={buttonStyleB}
               >
-                Adicionar ao Carrinho
+                COMPRAR
               </button>
             )}
 
