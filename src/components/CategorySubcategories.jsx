@@ -18,7 +18,7 @@ const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
   const [subcategoriesData, setSubcategoriesData] = useState([]);
-
+  const [hoveredIndex, setHoveredIndex] = useState(-1); // -1 indica que nenhuma imagem está sendo hoverada
   const [mixedProducts, setMixedProducts] = useState([]);
   const [originalProducts, setOriginalProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -178,7 +178,7 @@ const CategorySubcategories = () => {
   const fetchMixedProducts = async (page, filters) => {
     setLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 20000));
+      // await new Promise(resolve => setTimeout(resolve, 20000));
 
       const queryString = Object.entries(filters)
         .map(([key, value]) => `${key}=${value}`)
@@ -204,7 +204,7 @@ const CategorySubcategories = () => {
     const fetchSubcategoriesData = async () => {
       setLoading(true)
       try {
-        await new Promise(resolve => setTimeout(resolve, 20000));
+        // await new Promise(resolve => setTimeout(resolve, 20000));
 
         const response = await fetch(
           `http://localhost:3001/api/categories/${category}/${selectedSubcategory}`
@@ -231,7 +231,7 @@ const CategorySubcategories = () => {
 
       if (selectedPrice) {
         try {
-          await new Promise(resolve => setTimeout(resolve, 20000));
+          // await new Promise(resolve => setTimeout(resolve, 20000));
 
           const { minPrice, maxPrice } = selectedPrice;
 
@@ -264,7 +264,7 @@ const CategorySubcategories = () => {
 
     const fetchSubcategories = async () => {
       try {
-        await new Promise(resolve => setTimeout(resolve, 20000));
+        // await new Promise(resolve => setTimeout(resolve, 20000));
 
         const response = await fetch(
           `http://localhost:3001/api/subcategories/${category}`
@@ -280,7 +280,7 @@ const CategorySubcategories = () => {
     const fetchFilters = async () => {
       setLoading(true);
       try {
-        await new Promise((resolve) => setTimeout(resolve, 10000));
+        // await new Promise((resolve) => setTimeout(resolve, 10000));
 
         const colorsResponse = await fetch(
           `http://localhost:3001/api/categories/${category}/colors`
@@ -320,7 +320,7 @@ const CategorySubcategories = () => {
       setLoading(true); // Define loading como falso após obter os dados
 
       try {
-        await new Promise((resolve) => setTimeout(resolve, 10000));
+        // await new Promise((resolve) => setTimeout(resolve, 10000));
 
         // Alteração na chamada de API para obter produtos misturados específicos
         const response = await fetch(
@@ -456,7 +456,7 @@ const CategorySubcategories = () => {
               </div>
             )}
             <ul className={styles.ProductsContainer}>
-              {mixedProducts.map((product) => {
+              {mixedProducts.map((product, index) => {
                 const selectedColorVariation = selectedColor
                   ? product.variations.find(
                     (variation) => variation.color === selectedColor
@@ -489,6 +489,18 @@ const CategorySubcategories = () => {
                 queryParams.append('selectedPriceFromCategory', displayedPrice);
                 queryParams.append('selectedSizeFromCategory', size);
 
+                let imageUrl;
+
+        switch (true) {
+          case selectedColorVariation.urls.length > 1:
+            imageUrl =
+              hoveredIndex === index
+                ? selectedColorVariation.urls[1]
+                : selectedColorVariation.urls[0];
+            break;
+          default:
+            imageUrl = selectedColorVariation.urls[0];
+        }
                 return (
 
                   <>
@@ -504,11 +516,19 @@ const CategorySubcategories = () => {
                         }}
                         style={{ color: 'black', textDecoration: 'none' }}
                       >
-                        <img
-                          src={selectedColorVariation.urls[0]}
-                          alt={product.name}
-                          className={styles.ProductsContainer__image}
-                        />
+                       <img
+                src={imageUrl}
+                alt={product.name}
+                className={styles.ProductsContainer__image}
+                onMouseEnter={() =>
+                  selectedColorVariation.urls.length > 1 &&
+                  setHoveredIndex(index)
+                }
+                onMouseLeave={() =>
+                  selectedColorVariation.urls.length > 1 &&
+                  setHoveredIndex(-1)
+                }
+              />
                         <div
                           style={{
                             display: 'flex',
