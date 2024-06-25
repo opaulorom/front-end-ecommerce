@@ -40,7 +40,7 @@ const ProductDetails = () => {
   const [selectedSizeId, setSelectedSizeId] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-  
+  const [changeUrlLink, setChangeUrlLink] =  useState(0)
   const hendleButtonDisabled = () => {
     setIsButtonDisabled(true)
   }
@@ -207,17 +207,37 @@ const ProductDetails = () => {
     setCurrentImageIndex(index);
   };
 
-  const handleArrowClick = (direction) => {
+
+
+
+
+  const [imageIndices, setImageIndices] = useState({});
+
+// Inicializando os índices para cada cor no momento da montagem do componente
+useEffect(() => {
+  const indices = {};
+  product.variations.forEach((variation, index) => {
+    indices[variation.color] = 0;  // Inicializa todos os índices de URL como 0
+  });
+  setImageIndices(indices);
+}, [product]);
+
+const handleArrowClick = (direction) => {
+  const currentColor = product.variations[selectedColorIndex]?.color;
+  
+  setImageIndices(prevIndices => {
+    const maxIndex = product.variations[selectedColorIndex].urls.length - 1;
+    let newIndex = prevIndices[currentColor];
+
     if (direction === "prev") {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : product.variations.length - 1
-      );
+      newIndex = newIndex > 0 ? newIndex - 1 : maxIndex;
     } else {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex < product.variations.length - 1 ? prevIndex + 1 : 0
-      );
+      newIndex = newIndex < maxIndex ? newIndex + 1 : 0;
     }
-  };
+
+    return { ...prevIndices, [currentColor]: newIndex };
+  });
+};
 
   const handleAddToCartAndOpenModal = async () => {
     const productId = product._id;
@@ -416,6 +436,20 @@ const ProductDetails = () => {
   const buttonStyleB = getbuttonStyleB();
 
 
+  const handleImageClick = () => {
+    setChangeUrlLink((currentUrlIndex) => {
+      // Incrementa o índice da URL
+      let nextUrlIndex = currentUrlIndex + 1;
+      // Verifica se o índice excede o número de URLs na variação atual
+      if (nextUrlIndex >= product.variations[currentImageIndex].urls.length) {
+        // Se desejar que ele retorne ao início automaticamente
+        return 0;
+        // Se não deseja ciclar automaticamente, mantenha no último
+        // return currentUrlIndex;
+      }
+      return nextUrlIndex;
+    });
+  };
   
   return (
     <>
@@ -470,11 +504,13 @@ const ProductDetails = () => {
         >
           <div key={currentImageIndex} className="image-container">
             {product.variations[currentImageIndex] && (
-              <img
-                src={product.variations[currentImageIndex]?.urls[0]} // Use currentImageIndex para selecionar a imagem correspondente
-                alt={product.variations[currentImageIndex]?.color}
-                style={{ width: "25vw" }}
-              />
+            <img
+            src={product.variations[selectedColorIndex]?.urls[imageIndices[product.variations[selectedColorIndex]?.color]]}
+            alt={product.variations[selectedColorIndex]?.color}
+            style={{ width: "25vw" }}
+            onClick={handleImageClick} // Se você ainda precisa deste manipulador de cliques
+          />
+          
             )}
 
             <div className="navigation-arrows">
