@@ -202,11 +202,10 @@ const ProductDetails = () => {
     console.log("Sizes from database:", sizesFromDatabase);
     console.log("Selected color index:", selectedColorIndex);
   };
-
   const handleDotClick = (index) => {
-    setCurrentImageIndex(index);
+    setSelectedColorIndex(index);
+    setChangeUrlLink(0); // Reseta o índice da URL ao selecionar uma nova cor
   };
-
 
 
 
@@ -529,18 +528,19 @@ const handleArrowClick = (direction) => {
               </div>
             </div>
 
-            <div className="dot-container">
-              {product.variations?.map((variation, index) => (
-                <span
-                  key={index}
-                  className={`dot ${
-                    index === currentImageIndex ? "active" : ""
-                  }`}
-                  onClick={() => handleDotClick(index)}
-                />
-              ))}
-            </div>
-          </div>
+           
+      <div className="dot-container">
+        {product.variations?.map((variation, index) => (
+          <span
+            key={index}
+            className={`dot ${
+              index === selectedColorIndex ? "active" : ""
+            }`}
+            onClick={() => handleDotClick(index)}
+          />
+        ))}
+      </div>
+    </div>
 
           <div>
             <div>
