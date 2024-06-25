@@ -174,6 +174,9 @@ const ProductDetails = () => {
     setSelectedColorIndex(colorIndex);
     setCurrentImageIndex(colorIndex);
     setSelectedColorId(product.variations[colorIndex]._id); // Armazena o ID da cor selecionada
+    setActiveColorIndex(colorIndex);
+
+    setActiveUrlIndex(0); // Assuming we want to show the first image of the selected color
 
     // Verificar se a cor selecionada tem uma imagem associada
     const selectedVariation = product.variations[colorIndex];
@@ -514,7 +517,7 @@ const handleArrowClick = (direction) => {
             </div>
           )}
         </div>
-        {/* <div>
+        <div>
         <div>
       {validActiveUrlIndex ? (
       
@@ -545,7 +548,7 @@ const handleArrowClick = (direction) => {
         )}
       </div>
     </div>
-    </div> */}
+    </div>
 
         <div
           style={{
