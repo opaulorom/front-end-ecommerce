@@ -453,6 +453,7 @@ const handleArrowClick = (direction) => {
     });
   };
   
+
   const [activeColorIndex, setActiveColorIndex] = useState(0);
   const [activeUrlIndex, setActiveUrlIndex] = useState(0);
 
@@ -460,7 +461,6 @@ const handleArrowClick = (direction) => {
     setActiveColorIndex(variationIndex);
     setActiveUrlIndex(urlIndex);
   };
-
   const handleNextClick = () => {
     setActiveUrlIndex((prevIndex) => (prevIndex + 1) % product.variations[activeColorIndex].urls.length);
   };
@@ -469,7 +469,8 @@ const handleArrowClick = (direction) => {
     setActiveUrlIndex((prevIndex) => (prevIndex - 1 + product.variations[activeColorIndex].urls.length) % product.variations[activeColorIndex].urls.length);
   };
 
-  // Verificação para garantir que os índices estão dentro do intervalo
+
+
   const validVariations = product && product.variations && product.variations.length > 0;
   const validActiveColorIndex = validVariations && activeColorIndex < product.variations.length;
   const validUrls = validActiveColorIndex && product.variations[activeColorIndex].urls && product.variations[activeColorIndex].urls.length > 0;
@@ -520,28 +521,25 @@ const handleArrowClick = (direction) => {
         <div>
         <div>
       {validActiveUrlIndex ? (
-      
         <div>
-                  <img src={selectedImageUrl} alt="Selected product" style={{ width: "20vw", marginBottom: "2rem" }} />
-
-        <button onClick={handlePrevClick}>&lt; Previous</button>
-        <button onClick={handleNextClick}>Next &gt;</button>
-      </div>
+          <img src={selectedImageUrl} alt="Selected product" style={{ width: "20vw", marginBottom: "2rem" }} />
+          <div>
+            <button onClick={handlePrevClick}>&lt; Previous</button>
+            <button onClick={handleNextClick}>Next &gt;</button>
+          </div>
+        </div>
       ) : (
         <p>No image available</p>
       )}
       <div style={{ display: "flex", flexDirection: "row", marginTop: "5rem" }}>
-        {validVariations ? product.variations.map((variation, variationIndex) => (
-          <div key={variationIndex}>
-            {variation.urls && variation.urls.map((url, urlIndex) => (
-              <img
-                key={urlIndex}
-                src={url}
-                alt={`Image ${urlIndex} for ${variation.color}`}
-                style={{ width: "10vw", cursor: "pointer" }}
-                onClick={() => handleDotChangeClick(variationIndex, urlIndex)}
-              />
-            ))}
+        {validVariations ? product.variations[activeColorIndex].urls.map((url, urlIndex) => (
+          <div key={urlIndex}>
+            <img
+              src={url}
+              alt={`Image ${urlIndex} for ${product.variations[activeColorIndex].color}`}
+              style={{ width: "10vw", cursor: "pointer", border: urlIndex === activeUrlIndex ? "2px solid blue" : "none" }}
+              onClick={() => setActiveUrlIndex(urlIndex)}
+            />
           </div>
         )) : (
           <p>No variations available</p>
