@@ -491,16 +491,16 @@ const CategorySubcategories = () => {
 
                 let imageUrl;
 
-        switch (true) {
-          case selectedColorVariation.urls.length > 1:
-            imageUrl =
-              hoveredIndex === index
-                ? selectedColorVariation.urls[1]
-                : selectedColorVariation.urls[0];
-            break;
-          default:
-            imageUrl = selectedColorVariation.urls[0];
-        }
+                switch (true) {
+                  case selectedColorVariation.urls.length > 1:
+                    imageUrl =
+                      hoveredIndex === index
+                        ? selectedColorVariation.urls[1]
+                        : selectedColorVariation.urls[0];
+                    break;
+                  default:
+                    imageUrl = selectedColorVariation.urls[0];
+                }
                 return (
 
                   <>
@@ -516,19 +516,19 @@ const CategorySubcategories = () => {
                         }}
                         style={{ color: 'black', textDecoration: 'none' }}
                       >
-                       <img
-                src={imageUrl}
-                alt={product.name}
-                className={styles.ProductsContainer__image}
-                onMouseEnter={() =>
-                  selectedColorVariation.urls.length > 1 &&
-                  setHoveredIndex(index)
-                }
-                onMouseLeave={() =>
-                  selectedColorVariation.urls.length > 1 &&
-                  setHoveredIndex(-1)
-                }
-              />
+                        <img
+                          src={imageUrl}
+                          alt={product.name}
+                          className={styles.ProductsContainer__image}
+                          onMouseEnter={() =>
+                            selectedColorVariation.urls.length > 1 &&
+                            setHoveredIndex(index)
+                          }
+                          onMouseLeave={() =>
+                            selectedColorVariation.urls.length > 1 &&
+                            setHoveredIndex(-1)
+                          }
+                        />
                         <div
                           style={{
                             display: 'flex',
