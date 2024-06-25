@@ -538,7 +538,7 @@ const handleArrowClick = (direction) => {
             <img
               src={url}
               alt={`Image ${urlIndex} for ${product.variations[activeColorIndex].color}`}
-              style={{ width: "10vw", cursor: "pointer", border: urlIndex === activeUrlIndex ? "2px solid blue" : "none" }}
+              style={{ width: "10vw", cursor: "pointer"}}
               onClick={() => setActiveUrlIndex(urlIndex)}
             />
           </div>
