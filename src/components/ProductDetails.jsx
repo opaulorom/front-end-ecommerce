@@ -15,7 +15,8 @@ import { useAuth } from "../context/AuthContext";
 import { TrendingUpOutlined } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { width } from "@mui/system";
-
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState({ variations: [] });
@@ -524,8 +525,8 @@ const handleArrowClick = (direction) => {
         <div>
           <img src={selectedImageUrl} alt="Selected product" style={{ width: "20vw", marginBottom: "2rem" }} />
           <div>
-            <button onClick={handlePrevClick}>&lt; Previous</button>
-            <button onClick={handleNextClick}>Next &gt;</button>
+            <KeyboardArrowLeftIcon onClick={handlePrevClick}></KeyboardArrowLeftIcon>
+            <KeyboardArrowRightIcon onClick={handleNextClick}></KeyboardArrowRightIcon>
           </div>
         </div>
       ) : (
