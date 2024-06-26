@@ -1,5 +1,10 @@
 .dataContainer{
-    border: 1px solid gray;
+    border: 1px solid #ccc;
+    /* border: 3px double #333; Cor sólida e espessura de 3px com borda dupla */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombras para efeito de profundidade */
+
+    border-radius: 8px; /* Bordas arredondadas */
+
     width: 80vw;
     height: 22vh;
     display: flex;

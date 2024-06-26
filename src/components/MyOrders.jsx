@@ -123,7 +123,7 @@ const MyOrders = () => {
                 >
                   {" "}
                   <div className={styles.flex}>
-                    <span>{order.billingType}</span>
+                    <span>{order.billingType === "CREDIT_CARD" ? "  CARTÃO DE CREDITO" :  order.billingType}</span>
                     <span className={styles.value}>R${order.value}</span>{" "}
 
                   </div>
