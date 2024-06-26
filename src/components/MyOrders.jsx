@@ -137,7 +137,7 @@ const MyOrders = () => {
                   <div
                   className={styles.flex}
                 >
-                  <span>Status</span>
+                  <span className={styles.status}>Status</span>
                   <span>
                     {" "}
                     {(() => {

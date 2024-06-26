@@ -13,7 +13,14 @@
     width: 15vw;
 }
 
+.status{
+    color: gray;
+    font-size: .8rem;
+}
 .flex{
     display: flex;
     justify-content: space-between;
+    margin-top: 1rem;
+    font-family: Poppins, arial, sans-serif;
 }
+
