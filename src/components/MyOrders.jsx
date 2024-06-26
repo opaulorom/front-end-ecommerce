@@ -129,7 +129,7 @@ const MyOrders = () => {
                   </div>
 
                   <div className={styles.flex}>
-                    <span>data do pedido: </span>
+                    <span>Data do Pedido: </span>
                     <span>{formatDate(order.dueDate)}</span>
 
                   </div>
