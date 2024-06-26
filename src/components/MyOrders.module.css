@@ -18,7 +18,7 @@
     width: 15vw;
 }
 
-.status{
+.textStyle{
     color: gray;
     font-size: .9rem;
     font-weight: 400;
@@ -66,7 +66,19 @@
 
   @media screen and (min-width: 700px) {
     .dataContainer{
-        width: 60vw;
+        width: 50vw;
         height: 65vh;
+    }
+
+    .textStyle{
+        font-size: .9rem;
+    }
+    .status{
+        font-size: 1rem;
+
+    }
+    .value{
+        font-size: 1rem;
+
     }
   }

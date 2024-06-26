@@ -102,19 +102,21 @@ const MyOrders = () => {
                 key={index}
                 className={styles.dataContainer}
               >
+                                      <Link to={`/order/${order.custumerId}/${order._id}`} style={{
+                                        textDecoration: 'none', 
+                                      }}>
+
                 <div >
                   {order.products.slice(0, 1).map((product, prodIndex) => (
                     <div
                       key={prodIndex}
 
                     >
-                      <Link to={`/order/${order.custumerId}/${order._id}`}>
                         <img
                           src={product.image}
                           alt={`Produto ${product.productId}`}
                           className={styles.dataContainer__img}
                         />
-                      </Link>
                     </div>
                   ))}
                 </div>
@@ -123,21 +125,21 @@ const MyOrders = () => {
                 >
                   {" "}
                   <div className={styles.flex}>
-                    <span>{order.billingType === "CREDIT_CARD" ? "  CARTÃO DE CREDITO" :  order.billingType}</span>
+                    <span className={styles.textStyle}>{order.billingType === "CREDIT_CARD" ? "  CARTÃO DE CREDITO" :  order.billingType}</span>
                     <span className={styles.value}>R${order.value}</span>{" "}
 
                   </div>
 
                   <div className={styles.flex}>
-                    <span>Data do Pedido: </span>
-                    <span>{formatDate(order.dueDate)}</span>
+                    <span className={styles.textStyle}>Data do Pedido: </span>
+                    <span className={styles.textStyle}>{formatDate(order.dueDate)}</span>
 
                   </div>
 
                   <div
                   className={styles.flex}
                 >
-                  <span className={styles.status}>Status</span>
+                  <span className={styles.textStyle}>Status</span>
                   <span className={`${styles.status} ${
                                   styles[order.status.toLowerCase()]
                                 }`}>
@@ -174,7 +176,10 @@ const MyOrders = () => {
                 >
                   <div>{order.trackingCode}</div>
                 </div>
+                </Link>
+
               </div>
+              
             ))}
 
 
