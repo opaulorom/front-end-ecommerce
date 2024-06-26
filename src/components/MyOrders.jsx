@@ -24,7 +24,6 @@ const MyOrders = () => {
         .get(`http://localhost:3001/api/allOrders/boleto/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
           },
         })
         .then((response) => {
@@ -46,7 +45,6 @@ const MyOrders = () => {
         .get(`http://localhost:3001/api/allOrders/creditCard/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
           },
         })
         .then((response) => {
@@ -69,7 +67,6 @@ const MyOrders = () => {
         .get(`http://localhost:3001/api/allOrders/pix/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
           },
         })
         .then((response) => {
