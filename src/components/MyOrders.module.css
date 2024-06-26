@@ -1,0 +1,19 @@
+.dataContainer{
+    border: 1px solid gray;
+    width: 80vw;
+    height: 20vh;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 20rem;
+    flex-direction: column;
+    padding: 1rem;
+
+}
+.dataContainer__img{
+    width: 15vw;
+}
+
+.flex{
+    display: flex;
+    justify-content: space-between;
+}

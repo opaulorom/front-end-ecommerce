@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import Header from "./Header";
 import Navbar from "./Navbar";
 import { useAuth } from "../context/AuthContext";
@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import CircularIndeterminate from "./CircularIndeterminate";
 import { Pagination, Stack } from "@mui/material";
-
+import styles from "./MyOrders.module.css";
 const MyOrders = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
@@ -86,96 +86,87 @@ const MyOrders = () => {
         </div>
       ) : (
         <>
-          {[...boletos, ...pix, ...creditCard].map((order, index) => (
-            <div
-              key={index}
-              style={{
-                position: "relative",
-                display: "flex",
-                margin: "0 auto",
-                marginTop: "15rem",
-                marginBottom: "15rem",
-                border: "1px solid rgba(0, 0, 0, 0.10)",
-                width: "60vw",
-                height: "50vh",
-              }}
-            >
-              <div style={{ padding: "7rem 3rem" }}>
-                {order.products.slice(0, 1).map((product, prodIndex) => (
-                  <div
-                    key={prodIndex}
-                    style={{
-                      marginBottom: "10rem",
-                    }}
-                  >
-                    <Link to={`/order/${order.custumerId}/${order._id}`}>
-                      <img
-                        src={product.image}
-                        alt={`Produto ${product.productId}`}
-                        style={{ width: "8vw" }}
-                      />
-                    </Link>
-                  </div>
-                ))}
-              </div>
+          <div >
+            {[...boletos, ...pix, ...creditCard].map((order, index) => (
               <div
-                style={{
-                  position: "absolute",
-                  right: "22rem",
-                  marginTop: "3rem",
-                  gap: "2rem",
-                }}
+                key={index}
+                className={styles.dataContainer}
               >
-                {" "}
-                <span>{order.billingType}</span>
-                <span>{order.value}</span>{" "}
-              </div>
+                <div >
+                  {order.products.slice(0, 1).map((product, prodIndex) => (
+                    <div
+                      key={prodIndex}
 
-              <div
-                style={{
-                  position: "absolute",
-                  right: "22rem",
-                  marginTop: "8rem",
-                }}
-              ></div>
-              <div
-                style={{
-                  position: "absolute",
-                  right: "22rem",
-                  marginTop: "5rem",
-                }}
-              >
-                <span>Status</span>
-                <span>
+                    >
+                      <Link to={`/order/${order.custumerId}/${order._id}`}>
+                        <img
+                          src={product.image}
+                          alt={`Produto ${product.productId}`}
+                          className={styles.dataContainer__img}
+                        />
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+                <div
+
+                >
                   {" "}
-                  {(() => {
-                    switch (order.status) {
-                      case "RECEIVED":
-                        return "pago";
-                      case "CONFIRMED":
-                        return "Cobrança confirmada";
-                      case "PENDING":
-                        return "Pendente";
-                      case "OVERDUE":
-                        return "Cobrança vencida";
-                      default:
-                        return;
-                    }
-                  })()}
-                </span>
-              </div>
+                  <div className={styles.flex}>
+                    <span>{order.billingType}</span>
+                    <span>{order.value}</span>{" "}
 
-              <div
-                style={{
-                  position: "absolute",
-                  right: "22rem",
-                  marginTop: "15rem",
-                }}
-              >
-                <div>{order.trackingCode}</div>
+                  </div>
+
+                  <div className={styles.flex}>
+                    <span>data do pedido: </span>
+                    <span>{order.dueDate}</span>{" "}
+
+                  </div>
+
+                  <div
+                  className={styles.flex}
+                >
+                  <span>Status</span>
+                  <span>
+                    {" "}
+                    {(() => {
+                      switch (order.status) {
+                        case "RECEIVED":
+                          return "pago";
+                        case "CONFIRMED":
+                          return "Cobrança confirmada";
+                        case "PENDING":
+                          return "Pendente";
+                        case "OVERDUE":
+                          return "Cobrança vencida";
+                        default:
+                          return;
+                      }
+                    })()}
+                  </span>
+                </div>
+                </div>
+
+                <div
+
+                ></div>
+               
+
+                <div
+                  style={{
+                    position: "absolute",
+                    right: "22rem",
+                    marginTop: "15rem",
+                  }}
+                >
+                  <div>{order.trackingCode}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+
+
+          </div>
           <div
             style={{
               display: "flex",
