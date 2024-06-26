@@ -1,7 +1,7 @@
 .dataContainer{
     border: 1px solid gray;
     width: 80vw;
-    height: 20vh;
+    height: 22vh;
     display: flex;
     margin: 0 auto;
     margin-top: 20rem;
@@ -15,12 +15,45 @@
 
 .status{
     color: gray;
-    font-size: .8rem;
+    font-size: .9rem;
+    font-weight: 400;
 }
 .flex{
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem;
+    margin-top: .5rem;
     font-family: Poppins, arial, sans-serif;
+    color: rgb(114, 114, 114);
+
 }
 
+
+
+
+.pending {
+    color: rgb(236, 162, 23); /* Cor para estado Pendente */
+  }
+  
+  .received {
+    color: green; /* Cor para estado Pago */
+  }
+  
+  .overdue {
+    color: rgb(236, 62, 62); /* Cor para estado Cobrança vencida */
+  }
+  
+  .confirmed {
+    color: #5454c5; /* Cor para estado Cobrança confirmada */
+  }
+  
+  .unknown {
+    color: gray; /* Cor para estado Desconhecido */
+  }
+
+
+
+  .value{
+    color: black;
+    font-size: .9rem;
+    font-weight: 600;
+  }

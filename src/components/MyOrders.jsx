@@ -124,7 +124,7 @@ const MyOrders = () => {
                   {" "}
                   <div className={styles.flex}>
                     <span>{order.billingType}</span>
-                    <span>R${order.value}</span>{" "}
+                    <span className={styles.value}>R${order.value}</span>{" "}
 
                   </div>
 
@@ -138,18 +138,20 @@ const MyOrders = () => {
                   className={styles.flex}
                 >
                   <span className={styles.status}>Status</span>
-                  <span>
+                  <span className={`${styles.status} ${
+                                  styles[order.status.toLowerCase()]
+                                }`}>
                     {" "}
                     {(() => {
                       switch (order.status) {
                         case "RECEIVED":
-                          return "pago";
+                          return "PAGO";
                         case "CONFIRMED":
-                          return "Cobrança confirmada";
+                          return "COBRANÇA CONFIMADA";
                         case "PENDING":
-                          return "Pendente";
+                          return "PENDENTE";
                         case "OVERDUE":
-                          return "Cobrança vencida";
+                          return "COBRANÇA VENCIDA";
                         default:
                           return;
                       }
