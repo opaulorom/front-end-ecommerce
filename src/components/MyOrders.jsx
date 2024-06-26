@@ -70,6 +70,16 @@ const MyOrders = () => {
     setCurrentPage(page);
   };
 
+
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Os meses são baseados em zero
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  
   return (
     <>
       <Header />
@@ -114,13 +124,13 @@ const MyOrders = () => {
                   {" "}
                   <div className={styles.flex}>
                     <span>{order.billingType}</span>
-                    <span>{order.value}</span>{" "}
+                    <span>R${order.value}</span>{" "}
 
                   </div>
 
                   <div className={styles.flex}>
                     <span>data do pedido: </span>
-                    <span>{order.dueDate}</span>{" "}
+                    <span>{formatDate(order.dueDate)}</span>
 
                   </div>
 
