@@ -79,7 +79,7 @@ const MyOrders = () => {
     return `${day}/${month}/${year}`;
   };
 
-  
+
   return (
     <>
       <Header />
@@ -96,91 +96,96 @@ const MyOrders = () => {
         </div>
       ) : (
         <>
-          <div                 className={styles.EXdataContainer}
+        
+          <div className={styles.EXdataContainer}
           >
+            <div className={styles.h1Container}>
+            <h1 className={styles.h1}>MEUS PEDIDOS</h1>
+            </div>
+              
             {[...boletos, ...pix, ...creditCard].map((order, index) => (
               <div
                 key={index}
                 className={styles.dataContainer}
               >
-                                      <Link to={`/order/${order.custumerId}/${order._id}`} style={{
-                                        textDecoration: 'none', 
-                                      }} className={styles.dataContainer__Child}>
+      
+                <Link to={`/order/${order.custumerId}/${order._id}`} style={{
+                  textDecoration: 'none',
+                }} className={styles.dataContainer__Child}>
 
-                <div >
-                  {order.products.slice(0, 1).map((product, prodIndex) => (
-                    <div
-                      key={prodIndex}
+                  <div >
+                    {order.products.slice(0, 1).map((product, prodIndex) => (
+                      <div
+                        key={prodIndex}
 
-                    >
+                      >
                         <img
                           src={product.image}
                           alt={`Produto ${product.productId}`}
                           className={styles.dataContainer__img}
                         />
-                    </div>
-                  ))}
-                </div>
-                <div
- 
-                >
-                  {" "}
-                  <div className={styles.flex}>
-                    <span className={styles.textStyle}>{order.billingType === "CREDIT_CARD" ? "  CARTÃO DE CREDITO" :  order.billingType}</span>
-                    <span className={styles.value}>R${order.value}</span>{" "}
-
+                      </div>
+                    ))}
                   </div>
+                  <div
 
-                  <div className={styles.flex}>
-                    <span className={styles.textStyle}>Data do Pedido: </span>
-                    <span className={styles.textStyle}>{formatDate(order.dueDate)}</span>
+                  >
+                    {" "}
+                    <div className={styles.flex}>
+                      <span className={styles.textStyle}>{order.billingType === "CREDIT_CARD" ? "  CARTÃO DE CREDITO" : order.billingType}</span>
+                      <span className={styles.value}>R${order.value}</span>{" "}
 
+                    </div>
+
+                    <div className={styles.flex}>
+                      <span className={styles.textStyle}>Data do Pedido: </span>
+                      <span className={styles.textStyle}>{formatDate(order.dueDate)}</span>
+
+                    </div>
+
+                    <div
+                      className={styles.flex}
+                    >
+                      <span className={styles.textStyle}>Status</span>
+                      <span className={`${styles.status} ${styles[order.status.toLowerCase()]
+                        }`}>
+                        {" "}
+                        {(() => {
+                          switch (order.status) {
+                            case "RECEIVED":
+                              return "PAGO";
+                            case "CONFIRMED":
+                              return "COBRANÇA CONFIMADA";
+                            case "PENDING":
+                              return "PENDENTE";
+                            case "OVERDUE":
+                              return "COBRANÇA VENCIDA";
+                            default:
+                              return;
+                          }
+                        })()}
+                      </span>
+                    </div>
                   </div>
 
                   <div
-                  className={styles.flex}
-                >
-                  <span className={styles.textStyle}>Status</span>
-                  <span className={`${styles.status} ${
-                                  styles[order.status.toLowerCase()]
-                                }`}>
-                    {" "}
-                    {(() => {
-                      switch (order.status) {
-                        case "RECEIVED":
-                          return "PAGO";
-                        case "CONFIRMED":
-                          return "COBRANÇA CONFIMADA";
-                        case "PENDING":
-                          return "PENDENTE";
-                        case "OVERDUE":
-                          return "COBRANÇA VENCIDA";
-                        default:
-                          return;
-                      }
-                    })()}
-                  </span>
-                </div>
-                </div>
 
-                <div
+                  ></div>
 
-                ></div>
-               
 
-                <div
-                  style={{
-                    position: "absolute",
-                    right: "22rem",
-                    marginTop: "15rem",
-                  }}
-                >
-                  <div>{order.trackingCode}</div>
-                </div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      right: "22rem",
+                      marginTop: "15rem",
+                    }}
+                  >
+                    <div>{order.trackingCode}</div>
+                  </div>
                 </Link>
 
               </div>
-              
+
             ))}
 
 
