@@ -83,7 +83,31 @@ const AllOrderDetails = () => {
               className={styles.boletoContainer}
             >
                <div className={styles.TotalAmountContainer}>
-             <div className={styles.status}>
+            
+
+
+              <span>{order.billingType}</span>
+                            
+<div  className={styles.totalQuantity}>
+<span>Produtos  </span>
+              <span>{order.totalQuantity} unidades</span>
+</div>
+              <div className={styles.valueContainer}>
+                <span>              Valor da entrega
+                </span>
+                <span>{order.shippingFee}</span>
+              </div>
+              <div  className={styles.valueContainer}>
+
+
+              <span>Total do pedido
+              </span>
+              
+              <span>R${order.value}</span>
+
+              </div>
+
+              <div className={styles.status}>
                 <span>Status</span>
                 <span>
                   {" "}
@@ -103,20 +127,6 @@ const AllOrderDetails = () => {
                   })()}
                 </span>
               </div>
-              <div  className={styles.valueContainer}>
-
-
-              <span>{order.billingType}</span>
-              
-              <span>R${order.value}</span>
-
-              </div>
-              
-<div  className={styles.totalQuantity}>
-<span>quantidade </span>
-              <span>{order.totalQuantity}</span>
-</div>
-              
 
              </div>
               {order.status === "PENDING" ? (
