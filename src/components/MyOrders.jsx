@@ -96,7 +96,8 @@ const MyOrders = () => {
         </div>
       ) : (
         <>
-          <div >
+          <div                 className={styles.EXdataContainer}
+          >
             {[...boletos, ...pix, ...creditCard].map((order, index) => (
               <div
                 key={index}

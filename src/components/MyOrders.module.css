@@ -1,3 +1,6 @@
+.EXdataContainer{
+  margin-top: 10rem;
+}
 .dataContainer{
     border: 1px solid #ccc;
     /* border: 3px double #333; Cor sólida e espessura de 3px com borda dupla */
@@ -9,7 +12,7 @@
     height: 22vh;
     display: flex;
     margin: 0 auto;
-    margin-top: 20rem;
+    margin-top: 2rem;
     flex-direction: column;
     padding: 1rem;
 
