@@ -117,16 +117,16 @@ const MyOrders = () => {
                         key={prodIndex}
 
                       >
-<Link to={`/order/${order.custumerId}/${order._id}`} style={{
-                  textDecoration: 'none',
-                }} >
-                   <img
-                          src={product.image}
-                          alt={`Produto ${product.productId}`}
-                          className={styles.dataContainer__img}
-                        />
-                </Link>
-                       
+                        <Link to={`/order/${order.custumerId}/${order._id}`} style={{
+                          textDecoration: 'none',
+                        }} >
+                          <img
+                            src={product.image}
+                            alt={`Produto ${product.productId}`}
+                            className={styles.dataContainer__img}
+                          />
+                        </Link>
+
                       </div>
                     ))}
                   </div>
