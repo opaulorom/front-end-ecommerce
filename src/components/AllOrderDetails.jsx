@@ -110,11 +110,7 @@ const AllOrderDetails = () => {
               <div >
                 {order.products.map((product, prodIndex) => (
                   <div key={prodIndex}>
-                    <img
-                      src={product.image}
-                      alt={`Produto ${product.productId}`}
-                      className={styles.boletoContainer__img}
-                    />
+                  
 
                     <div>{order.trackingCode}</div>
                   </div>
@@ -125,6 +121,11 @@ const AllOrderDetails = () => {
                 {order.products.map((product, prodIndex) => (
                   <>
                     <div key={prodIndex} className={styles.boletoContainer__texts}>
+                    <img
+                      src={product.image}
+                      alt={`Produto ${product.productId}`}
+                      className={styles.boletoContainer__img}
+                    />
                       <span>{product.name}</span>
                       <span>tamanho {product.size}</span>
                       <span>quantidade {product.quantity}</span>
