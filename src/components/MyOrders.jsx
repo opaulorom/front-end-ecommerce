@@ -139,7 +139,7 @@ const MyOrders = () => {
 
                     <div className={styles.flex}>
                       <span className={styles.textStyle}>Data do Pedido: </span>
-                      <span className={styles.textStyle}>{formatDate(order.dueDate)}</span>
+                      <span className={styles.textStyle}>{ order.expirationDate ? formatDate(order.expirationDate) : formatDate(order.dueDate) }</span>
 
                     </div>
 
