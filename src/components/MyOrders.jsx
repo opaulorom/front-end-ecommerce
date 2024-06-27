@@ -197,6 +197,7 @@ const MyOrders = () => {
               justifyContent: "center",
               marginBottom: "2rem",
             }}
+            className={styles.paginationContainer}
           >
             <Stack spacing={2}>
               <Pagination

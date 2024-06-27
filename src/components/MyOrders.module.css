@@ -77,6 +77,10 @@
   margin-top: -3rem;
   margin-bottom: -1rem;
 }
+
+.paginationContainer{
+  margin-top: 4rem;
+}
   @media screen and (min-width: 700px) {
     .dataContainer{
         width: 50vw;
