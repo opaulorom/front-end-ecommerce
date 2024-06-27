@@ -96,22 +96,20 @@ const MyOrders = () => {
         </div>
       ) : (
         <>
-        
+
           <div className={styles.EXdataContainer}
           >
             <div className={styles.h1Container}>
-            <h1 className={styles.h1}>MEUS PEDIDOS</h1>
+              <h1 className={styles.h1}>MEUS PEDIDOS</h1>
             </div>
-              
+
             {[...boletos, ...pix, ...creditCard].map((order, index) => (
               <div
                 key={index}
                 className={styles.dataContainer}
               >
-      
-                <Link to={`/order/${order.custumerId}/${order._id}`} style={{
-                  textDecoration: 'none',
-                }} className={styles.dataContainer__Child}>
+
+                <div className={styles.dataContainer__Child}>
 
                   <div >
                     {order.products.slice(0, 1).map((product, prodIndex) => (
@@ -119,11 +117,16 @@ const MyOrders = () => {
                         key={prodIndex}
 
                       >
-                        <img
+<Link to={`/order/${order.custumerId}/${order._id}`} style={{
+                  textDecoration: 'none',
+                }} >
+                   <img
                           src={product.image}
                           alt={`Produto ${product.productId}`}
                           className={styles.dataContainer__img}
                         />
+                </Link>
+                       
                       </div>
                     ))}
                   </div>
@@ -139,7 +142,7 @@ const MyOrders = () => {
 
                     <div className={styles.flex}>
                       <span className={styles.textStyle}>Data do Pedido: </span>
-                      <span className={styles.textStyle}>{ order.expirationDate ? formatDate(order.expirationDate) : formatDate(order.dueDate) }</span>
+                      <span className={styles.textStyle}>{order.expirationDate ? formatDate(order.expirationDate) : formatDate(order.dueDate)}</span>
 
                     </div>
 
@@ -166,6 +169,14 @@ const MyOrders = () => {
                         })()}
                       </span>
                     </div>
+                    <div
+                      className={styles.flex}
+                    >
+                      <a href="https://www.kangu.com.br/rastreio/" target="_blank">
+                        <span>Rastrear Encomenda</span>
+                      </a>
+                      <span>{order.trackingCode}</span>
+                    </div>
                   </div>
 
                   <div
@@ -173,16 +184,8 @@ const MyOrders = () => {
                   ></div>
 
 
-                  <div
-                    style={{
-                      position: "absolute",
-                      right: "22rem",
-                      marginTop: "15rem",
-                    }}
-                  >
-                    <div>{order.trackingCode}</div>
-                  </div>
-                </Link>
+
+                </div>
 
               </div>
 
@@ -199,6 +202,7 @@ const MyOrders = () => {
             }}
             className={styles.paginationContainer}
           >
+
             <Stack spacing={2}>
               <Pagination
                 count={Math.ceil(totalOrders / pageSize)}
