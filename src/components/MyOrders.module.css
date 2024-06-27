@@ -9,7 +9,7 @@
     border-radius: 8px; /* Bordas arredondadas */
 
     width: 80vw;
-    height: 22vh;
+    height: auto;
     display: flex;
     margin: 0 auto;
     margin-top: 2rem;
