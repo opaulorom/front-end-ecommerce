@@ -104,7 +104,7 @@ const MyOrders = () => {
               >
                                       <Link to={`/order/${order.custumerId}/${order._id}`} style={{
                                         textDecoration: 'none', 
-                                      }}>
+                                      }} className={styles.dataContainer__Child}>
 
                 <div >
                   {order.products.slice(0, 1).map((product, prodIndex) => (
@@ -121,7 +121,7 @@ const MyOrders = () => {
                   ))}
                 </div>
                 <div
-
+ 
                 >
                   {" "}
                   <div className={styles.flex}>

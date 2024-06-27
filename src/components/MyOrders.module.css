@@ -67,7 +67,7 @@
   @media screen and (min-width: 700px) {
     .dataContainer{
         width: 50vw;
-        height: 65vh;
+        height: auto;
     }
 
     .textStyle{
@@ -80,5 +80,19 @@
     .value{
         font-size: 1rem;
 
+    }
+    .dataContainer{
+        display: flex;
+        flex-direction: column;
+    }
+    .dataContainer__Child{
+        display: flex;
+        justify-content: space-between; /* Distribui os itens com espaçamento igual */
+        align-items: center; /* Alinha os itens verticalmente */
+    }
+
+    .flex{
+        margin-top: 2rem;
+        gap: 8rem;
     }
   }

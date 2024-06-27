@@ -12,9 +12,11 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [formErrors, setFormErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
-  const navigate = useNavigate(); // Inicialize o hook useNavigate
+  const navigate = useNavigate(); // Inicialize o hook   const [attemptedLogin, setAttemptedLogin] = useState(false);
+  const [attemptedLogin, setAttemptedLogin] = useState(false);
 
   const handleLogin = () => {
+    setAttemptedLogin(true)
     if (validateForm()) {
       login(email, password);
     }
@@ -50,14 +52,15 @@ const LoginForm = () => {
         <div className='loginStyle'>
           <h1 className="Login">Login</h1>
        
-          {remainingAttempts > 0 ? (
-            <div >
-            Tentativas restantes: <span style={{color: remainingAttempts > 0  && "blue"}}>{remainingAttempts !== undefined ? remainingAttempts : 'Usuário bloqueado tente mais tarde.'}</span> 
-          </div>
-          ) :  (
-            <span style={{color: "red"}}>Usuário bloqueado tente mais tarde.</span>
-          )
-          }
+          {attemptedLogin && remainingAttempts !== null && (
+            remainingAttempts > 0 ? (
+              <div>
+                Tentativas restantes: <span style={{ color: "blue" }}>{remainingAttempts}</span>
+              </div>
+            ) : (
+              <span style={{ color: "red" }}>Usuário bloqueado tente mais tarde.</span>
+            )
+          )}
           <div className='loginStyle__inputLabel'>
 
             <label className="email" htmlFor="email">Email</label>
