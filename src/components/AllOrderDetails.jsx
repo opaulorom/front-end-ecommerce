@@ -82,57 +82,57 @@ const AllOrderDetails = () => {
               key={index}
               className={styles.boletoContainer}
             >
-               <div className={styles.TotalAmountContainer}>
-            
+              <div className={styles.TotalAmountContainer}>
 
 
-              <span>{order.billingType}</span>
-                            
-<div  className={styles.totalQuantity}>
-<span>Produtos  </span>
-              <span>{order.totalQuantity} unidades</span>
-</div>
-              <div className={styles.valueContainer}>
-                <span>              Valor da entrega
-                </span>
-                <span>{order.shippingFee}</span>
+
+                <span>{order.billingType}</span>
+
+                <div className={styles.totalQuantity}>
+                  <span>Produtos  </span>
+                  <span>{order.totalQuantity} unidades</span>
+                </div>
+                <div className={styles.valueContainer}>
+                  <span>              Valor da entrega
+                  </span>
+                  <span>{order.shippingFee}</span>
+                </div>
+                <div className={styles.valueContainer}>
+
+
+                  <span>Total do pedido
+                  </span>
+
+                  <span className={styles.value}>R${order.value}</span>
+
+                </div>
+
+                <div className={styles.status}>
+                  <span>Status</span>
+                  <span>
+                    {" "}
+                    {(() => {
+                      switch (order.status) {
+                        case "RECEIVED":
+                          return "pago";
+                        case "CONFIRMED":
+                          return "Cobrança confirmada";
+                        case "PENDING":
+                          return "Pendente";
+                        case "OVERDUE":
+                          return "Cobrança vencida";
+                        default:
+                          return;
+                      }
+                    })()}
+                  </span>
+                </div>
+
               </div>
-              <div  className={styles.valueContainer}>
-
-
-              <span>Total do pedido
-              </span>
-              
-              <span>R${order.value}</span>
-
-              </div>
-
-              <div className={styles.status}>
-                <span>Status</span>
-                <span>
-                  {" "}
-                  {(() => {
-                    switch (order.status) {
-                      case "RECEIVED":
-                        return "pago";
-                      case "CONFIRMED":
-                        return "Cobrança confirmada";
-                      case "PENDING":
-                        return "Pendente";
-                      case "OVERDUE":
-                        return "Cobrança vencida";
-                      default:
-                        return;
-                    }
-                  })()}
-                </span>
-              </div>
-
-             </div>
               {order.status === "PENDING" ? (
 
                 <div className={styles.boletoContainer__buttonContainer}>
-                   <Link to={order.bankSlipUrl} style={{ textDecoration: "none" }}>
+                  <Link to={order.bankSlipUrl} style={{ textDecoration: "none" }}>
                     {" "}
                     <button className={styles.boletoContainer__button}>Ver boleto</button>{" "}
                   </Link>
@@ -142,7 +142,7 @@ const AllOrderDetails = () => {
                       Este Boleto expira em
                       24 horas</span>
                   </div>
-                 
+
 
 
                 </div>
@@ -154,26 +154,36 @@ const AllOrderDetails = () => {
 
 
               <div >
-              
-                  
 
-                    <div>{order.trackingCode}</div>
-     
-     
+
+
+                <div>{order.trackingCode}</div>
+
+
 
               </div>
-              <div >
+              <div>
                 {order.products.map((product, prodIndex) => (
                   <>
-                    <div key={prodIndex} className={styles.boletoContainer__texts}>
-                    <img
-                      src={product.image}
-                      alt={`Produto ${product.productId}`}
-                      className={styles.boletoContainer__img}
-                    />
-                      <span>{product.name}</span>
-                      <span>tamanho {product.size}</span>
-                      <span>quantidade {product.quantity}</span>
+                    <div key={prodIndex} className={styles.boletoContainer__card}>
+                      <img
+                        src={product.image}
+                        alt={`Produto ${product.productId}`}
+                        className={styles.boletoContainer__img}
+                      />
+                      <div className={styles.boletoContainer__text}>
+
+                        <span>{product.name}</span>
+
+                        <span className={styles.size}>{product.size}</span>
+
+
+
+                        <span className={styles.quantity}> {product.quantity}</span>
+
+
+                      </div>
+<div>text</div>
 
                     </div>
                   </>
@@ -190,8 +200,8 @@ const AllOrderDetails = () => {
                   </>
                 ))}
               </div>
-            
-            
+
+
 
 
 

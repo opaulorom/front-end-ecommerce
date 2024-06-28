@@ -76,6 +76,67 @@
 }
 
 
+.boletoContainer{
+    font-size: 2rem;
+    font-family: Poppins, arial, sans-serif;
+    color: rgb(114, 114, 114);
+}
+
+
+.TotalAmountContainer{
+    border: 1px solid #ccc;
+    /* border: 3px double #333; Cor sólida e espessura de 3px com borda dupla */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 80vw;
+    height: auto;
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    margin-top: 2rem;
+
+    padding: 1rem;
+    margin-bottom: 2rem;
+
+}
+.value{
+    color: #05070A;
+}
+
+
+.boletoContainer__card{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    /* border: 3px double #333; Cor sólida e espessura de 3px com borda dupla */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 80vw;
+    height: auto;
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    margin-top: 2rem;
+
+    padding: 1rem;
+    margin-bottom: 3rem;
+    font-size: 1rem;
+    
+    
+}
+.boletoContainer__size{
+    display: flex;
+    justify-content: space-between;
+    gap: 5rem;
+}
+.boletoContainer__quantity{
+    display: flex;
+    justify-content: space-between;
+    gap: 5rem;
+}
+.boletoContainer__text{
+    display: flex;
+    flex-direction: column;
+}
+
 @media screen and (min-width: 700px) {
     .boletoContainer__buttonContainer {
         display: flex;
