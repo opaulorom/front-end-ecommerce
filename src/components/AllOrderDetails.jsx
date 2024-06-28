@@ -60,6 +60,14 @@ const AllOrderDetails = () => {
 
 
 
+  const maxLength = 35; // Defina o limite de caracteres desejado
+
+  const truncateName = (name) => {
+    if (name.length > maxLength) {
+      return name.substring(0, maxLength) + '...';
+    }
+    return name;
+  };
   return (
     <>
       <Header />
@@ -173,7 +181,7 @@ const AllOrderDetails = () => {
                       />
                       <div className={styles.boletoContainer__text}>
 
-                        <span>{product.name}</span>
+                        <span>{truncateName(product.name)}</span>
 
                         <span className={styles.size}>{product.size}</span>
 
@@ -182,8 +190,9 @@ const AllOrderDetails = () => {
                         <span className={styles.quantity}> {product.quantity}</span>
 
 
+                      </div >
+                      <div>                      <span className={styles.price}>R${product.price}</span>
                       </div>
-<div>text</div>
 
                     </div>
                   </>
@@ -249,6 +258,7 @@ const AllOrderDetails = () => {
               ) : (
                 ""
               )}
+              <span>{product.price}</span>
 
               <div>
                 {order.products.map((product, prodIndex) => (
@@ -294,6 +304,8 @@ const AllOrderDetails = () => {
                       alt={`Produto ${product.productId}`}
                       style={{ width: "10vw" }}
                     />
+                    <span>{product.price}</span>
+
                   </div>
                 ))}
               </div>

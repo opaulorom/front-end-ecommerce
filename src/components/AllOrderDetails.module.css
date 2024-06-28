@@ -137,6 +137,10 @@
     flex-direction: column;
 }
 
+.price{
+    color: #05070A;
+}
+
 @media screen and (min-width: 700px) {
     .boletoContainer__buttonContainer {
         display: flex;
