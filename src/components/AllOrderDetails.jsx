@@ -94,47 +94,55 @@ const AllOrderDetails = () => {
 
 
 
-                <span>{order.billingType}</span>
 
-                <div className={styles.totalQuantity}>
-                  <span>Produtos  </span>
-                  <span>{order.totalQuantity} unidades</span>
-                </div>
-                <div className={styles.valueContainer}>
-                  <span>              Valor da entrega
-                  </span>
-                  <span>{order.shippingFee}</span>
-                </div>
-                <div className={styles.valueContainer}>
-
+                <div className={styles.justifyContent}>
+                  <span>Tipo</span>
 
                   <span>Total do pedido
+
                   </span>
+
+                  <span>Valor da entrega</span>
+                  <span>Quantidade total</span>
+
+
+                  <span>Status</span>
+                </div>
+                <div className={styles.justifyContent}>
+                  <span>{order.billingType}</span>
 
                   <span className={styles.value}>R${order.value}</span>
 
+                  <span>{order.shippingFee}</span>
+
+
+                  <span>{order.totalQuantity} unidades</span>
+
+
+
+       
+
+                    <span>
+                      {" "}
+                      {(() => {
+                        switch (order.status) {
+                          case "RECEIVED":
+                            return "pago";
+                          case "CONFIRMED":
+                            return "Cobrança confirmada";
+                          case "PENDING":
+                            return "Pendente";
+                          case "OVERDUE":
+                            return "Cobrança vencida";
+                          default:
+                            return;
+                        }
+                      })()}
+                    </span>
+   
                 </div>
 
-                <div className={styles.status}>
-                  <span>Status</span>
-                  <span>
-                    {" "}
-                    {(() => {
-                      switch (order.status) {
-                        case "RECEIVED":
-                          return "pago";
-                        case "CONFIRMED":
-                          return "Cobrança confirmada";
-                        case "PENDING":
-                          return "Pendente";
-                        case "OVERDUE":
-                          return "Cobrança vencida";
-                        default:
-                          return;
-                      }
-                    })()}
-                  </span>
-                </div>
+
 
               </div>
               {order.status === "PENDING" ? (
