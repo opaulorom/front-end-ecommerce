@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import styles from "./Pay.module.css"
+import { useCart } from "../context/CartContext";
 
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState("pix");
@@ -29,6 +30,7 @@ const Pay = () => {
   const [creditCardLoading, setCreditCardLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
   const [boletoLoading, setBoletoLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
 
+  const { clearCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
 
 
   const handleChangeContentClick = () => {
@@ -86,6 +88,7 @@ const Pay = () => {
       setEncodedImage(data.encodedImage);
       setPixCode(data.payload);
       console.log("pixQRcodeStatico", data);
+      await clearCart();
 
     } catch (error) {
       setPixLoading(false); // Certifique-se de desativar o loader em caso de erro
@@ -117,6 +120,7 @@ const Pay = () => {
       window.location.href = data.bankSlipUrl;
 
       // Atualiza o estado com a URL do boleto
+      await clearCart();
 
     } catch (error) {
       setBoletoLoading(false)
@@ -179,15 +183,9 @@ const Pay = () => {
 
 
       setCreditCard(response.data)
-      // if (response.data) {
+     
+      await clearCart();
 
-      //   navigate("/success");
-      // }else{
-      //   navigate("/");
-
-      // }
-
-      // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
       setCreditCardLoading(false)
       console.error("Erro ao enviar informações do usuário:", error);
