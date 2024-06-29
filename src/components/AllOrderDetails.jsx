@@ -109,37 +109,37 @@ const AllOrderDetails = () => {
                   <span className={styles.span}>Status</span>
                 </div>
                 <div className={styles.justifyContent}>
-                  <span  className={styles.span}>{order.billingType}</span>
+                  <span className={styles.span}>{order.billingType}</span>
 
                   <span className={styles.value}>R$ {order.value}</span>
 
-                  <span  className={styles.span}>{order.shippingFee}</span>
+                  <span className={styles.span}>{order.shippingFee}</span>
 
 
-                  <span  className={styles.span}>{order.totalQuantity} unidades</span>
+                  <span className={styles.span}>{order.totalQuantity} unidades</span>
 
 
 
-       
+
                   <span className={`${styles.status} ${styles[order.status.toLowerCase()]
-                        }`}>
-                        {" "}
-                        {(() => {
-                          switch (order.status) {
-                            case "RECEIVED":
-                              return "PAGO";
-                            case "CONFIRMED":
-                              return "COBRANÇA CONFIMADA";
-                            case "PENDING":
-                              return "PENDENTE";
-                            case "OVERDUE":
-                              return "COBRANÇA VENCIDA";
-                            default:
-                              return;
-                          }
-                        })()}
-                      </span>
-   
+                    }`}>
+                    {" "}
+                    {(() => {
+                      switch (order.status) {
+                        case "RECEIVED":
+                          return "PAGO";
+                        case "CONFIRMED":
+                          return "COBRANÇA CONFIMADA";
+                        case "PENDING":
+                          return "PENDENTE";
+                        case "OVERDUE":
+                          return "COBRANÇA VENCIDA";
+                        default:
+                          return;
+                      }
+                    })()}
+                  </span>
+
                 </div>
 
 
@@ -199,14 +199,14 @@ const AllOrderDetails = () => {
 
 
                       </div >
-                      <div>                      <span className={styles.price}>R${product.price}</span>
+                      <div>                      <span className={styles.price}>R${product.price && product.price}</span>
                       </div>
 
                     </div>
                   </>
                 ))}
               </div>
-              
+
 
 
 
@@ -218,57 +218,153 @@ const AllOrderDetails = () => {
         {pix &&
           pix.map((order, index) => (
             <div>
-              <span>Status</span>
-              <span>
-                {" "}
-                {(() => {
-                  switch (order.status) {
-                    case "RECEIVED":
-                      return "pago";
-                    case "CONFIRMED":
-                      return "Cobrança confirmada";
-                    case "PENDING":
-                      return "Pendente";
-                    case "OVERDUE":
-                      return "Cobrança vencida";
-                    default:
-                      return;
-                  }
-                })()}
-              </span>
-              <div>{order.trackingCode}</div>
+              
+              <div
+              key={index}
+              className={styles.boletoContainer}
+            >
+              <div className={styles.TotalAmountContainer}>
+
+
+
+
+                <div className={styles.justifyContent}>
+                  <span className={styles.span}>Tipo</span>
+
+                  <span className={styles.span}>Total do pedido
+
+                  </span>
+
+                  <span className={styles.span}>Valor da entrega</span>
+                  <span className={styles.span}>Quantidade total</span>
+
+
+                  <span className={styles.span}>Status</span>
+                </div>
+                <div className={styles.justifyContent}>
+                  <span className={styles.span}>{order.billingType}</span>
+
+                  <span className={styles.value}>R$ {order.value}</span>
+
+                  <span className={styles.span}>{order.shippingFee}</span>
+
+
+                  <span className={styles.span}>{order.totalQuantity} unidades</span>
+
+
+
+
+                  <span className={`${styles.status} ${styles[order.status.toLowerCase()]
+                    }`}>
+                    {" "}
+                    {(() => {
+                      switch (order.status) {
+                        case "RECEIVED":
+                          return "PAGO";
+                        case "CONFIRMED":
+                          return "COBRANÇA CONFIMADA";
+                        case "PENDING":
+                          return "PENDENTE";
+                        case "OVERDUE":
+                          return "COBRANÇA VENCIDA";
+                        default:
+                          return;
+                      }
+                    })()}
+                  </span>
+
+                </div>
+
+
+
+              </div>
               {order.status === "PENDING" ? (
-                <div>
+
+                <div >
+                   {order.status === "PENDING" ? (
+                <div className={styles.pixCodeContainer}>
                   {order.encodedImage && (
-                    <ImageComponent encodedImage={order.encodedImage} />
+                    <ImageComponent encodedImage={order.encodedImage}  className={styles.pixCodeContainer___encodedImage}/>
                   )}
                   {order.encodedImage && (
-                    <>
-                      <p style={{ width: "10vw" }}>{order.payload}</p>
+                    <div className={styles.pixCodeContainer___Container} >
+                      <p className={styles.pixCodeContainer___p}>{order.payload}</p>
                       <div>
-                        <button onClick={() => handleClick(order.payload)}>
+                        <button onClick={() => handleClick(order.payload)} className={styles.pixCodeContainer___button}>
                           Copiar
                         </button>
                       </div>
-                    </>
+                      <div className={styles.pixCodeContainer__span}>
+                    <WatchLaterOutlinedIcon />
+                    <span >
+                      Este Boleto expira em
+                      24 horas</span>
+                  </div>
+
+                    </div>
                   )}
                 </div>
               ) : (
                 ""
               )}
-              <span>{product.price}</span>
+                 
 
+
+                </div>
+
+
+              ) : (
+                ""
+              )}
+
+
+              <div >
+
+
+
+                <div>{order.trackingCode}</div>
+
+
+
+              </div>
               <div>
                 {order.products.map((product, prodIndex) => (
-                  <div key={prodIndex}>
-                    <img
-                      src={product.image}
-                      alt={`Produto ${product.productId}`}
-                      style={{ width: "10vw" }}
-                    />
-                  </div>
+                  <>
+                    <div key={prodIndex} className={styles.boletoContainer__card}>
+                      <img
+                        src={product.image}
+                        alt={`Produto ${product.productId}`}
+                        className={styles.boletoContainer__img}
+                      />
+                      <div className={styles.boletoContainer__text}>
+
+                        <span>{truncateName(product.name)}</span>
+
+                        <span className={styles.size}>{product.size}</span>
+
+
+
+                        <span className={styles.quantity}> {product.quantity}</span>
+
+
+                      </div >
+                      <div>                      <span className={styles.price}>R${product.price && product.price}</span>
+                      </div>
+
+                    </div>
+                  </>
                 ))}
               </div>
+
+
+
+
+
+
+
+            </div>
+            
+             
             </div>
           ))}
 
@@ -302,7 +398,7 @@ const AllOrderDetails = () => {
                       alt={`Produto ${product.productId}`}
                       style={{ width: "10vw" }}
                     />
-                    <span>{product.price}</span>
+                    <span>{product.price && product.price}</span>
 
                   </div>
                 ))}

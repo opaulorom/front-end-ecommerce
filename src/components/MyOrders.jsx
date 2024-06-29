@@ -133,6 +133,9 @@ const MyOrders = () => {
                   <div
 
                   >
+                     <Link to={`/order/${order.custumerId}/${order._id}`} style={{
+                          textDecoration: 'none',
+                        }} >
                     {" "}
                     <div className={styles.flex}>
                       <span className={styles.textStyle}>{order.billingType === "CREDIT_CARD" ? "  CARTÃO DE CREDITO" : order.billingType}</span>
@@ -169,6 +172,7 @@ const MyOrders = () => {
                         })()}
                       </span>
                     </div>
+                    </Link>
                     <div
                       className={styles.flex}
                     >

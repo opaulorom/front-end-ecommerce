@@ -151,6 +151,41 @@
 
 
 
+.pixCodeContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pixCodeContainer___p{
+    font-family: "poppins", sans-serif;
+    font-size: .6rem;
+    text-align: center;
+
+    
+}
+.pixCodeContainer___encodedImage{
+    width: 5vw;
+}
+
+.pixCodeContainer___button{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: #05070A;
+    color: white;
+    padding: 1rem;
+    width: 30vw;
+    border: 0;
+    margin-top: 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    font-weight: 600;
+
+
+}
 
 .pending {
     color: rgb(236, 162, 23); /* Cor para estado Pendente */
@@ -172,6 +207,36 @@
     color: gray; /* Cor para estado Desconhecido */
   }
 
+  .pixCodeContainer{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    border: 1px solid #ccc;
+    /* border: 3px double #333; Cor sólida e espessura de 3px com borda dupla */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 80vw;
+    height: auto;
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    margin-top: 2rem;
+
+    padding: 1rem;
+    margin-bottom: 3rem;
+    font-size: 1rem;
+    
+  }
+
+  .pixCodeContainer___Container{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pixCodeContainer__span{
+    display: flex;
+    margin: 0 auto;
+    gap: .5rem;
+  }
 
 @media screen and (min-width: 700px) {
     .boletoContainer__buttonContainer {
@@ -206,6 +271,21 @@
         justify-content: center;
 
     }
+    .pixCodeContainer___p{
+        font-family: "poppins", sans-serif;
+        width: 25vw;
+        text-align: center;
+        
+    }
+    .pixCodeContainer{
+        display: flex;
+        justify-content: space-between;
+        width: 40vw;
+    }
+    .pixCodeContainer___button{
+        width: 12vw;
+    }
+    
     
 }
 
@@ -228,5 +308,26 @@
     }
     .TotalAmountContainer{
         width: 60vw;
+    }
+    .pixCodeContainer{
+        display: flex;
+        flex-direction: column;
+    }
+}
+@media only screen and (min-width: 800px) and (max-width: 1575px) and (orientation: landscape) {
+    .boletoContainer__button {
+        width: 10vw;
+    }
+
+    .TotalAmountContainer {
+        width: 40vw;
+    }
+
+    .boletoContainer__card {
+        width: 40vw;
+    }
+
+    .boletoContainer__buttonContainer {
+        width: 40vw;
     }
 }

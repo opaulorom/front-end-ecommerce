@@ -1,5 +1,5 @@
 import React from 'react';
-
+import styles from "./ImageComponent.module.css"
 class ImageComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -38,7 +38,7 @@ class ImageComponent extends React.Component {
     return (
       <div>
         {imageUrl &&
-          <img src={imageUrl} alt="Imagem Decodificada" />
+          <img src={imageUrl} alt="Imagem Decodificada" className={styles.imageUrl}/>
         }
       </div>
     );
