@@ -16,6 +16,8 @@ const AllOrderDetails = () => {
   const [pix, setPix] = useState([]);
   const [creditCard, setCreditCard] = useState([]);
   const { id } = useParams(); // Certifique-se de que o parâmetro corresponde ao nome na URL
+  
+  const [payload, setPayload] = useState(false);
 
   const [expanded, setExpanded] = useState({});
 
@@ -56,6 +58,7 @@ const AllOrderDetails = () => {
 
   const handleClick = (payload) => {
     navigator.clipboard.writeText(payload);
+    setPayload(payload)
   };
 
 
@@ -291,7 +294,7 @@ const AllOrderDetails = () => {
                       <p className={styles.pixCodeContainer___p}>{order.payload}</p>
                       <div>
                         <button onClick={() => handleClick(order.payload)} className={styles.pixCodeContainer___button}>
-                          Copiar
+                          {payload ? "Copiado": "Copiar"}
                         </button>
                       </div>
                       <div className={styles.pixCodeContainer__span}>
