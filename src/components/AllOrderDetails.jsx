@@ -96,49 +96,49 @@ const AllOrderDetails = () => {
 
 
                 <div className={styles.justifyContent}>
-                  <span>Tipo</span>
+                  <span className={styles.span}>Tipo</span>
 
-                  <span>Total do pedido
+                  <span className={styles.span}>Total do pedido
 
                   </span>
 
-                  <span>Valor da entrega</span>
-                  <span>Quantidade total</span>
+                  <span className={styles.span}>Valor da entrega</span>
+                  <span className={styles.span}>Quantidade total</span>
 
 
-                  <span>Status</span>
+                  <span className={styles.span}>Status</span>
                 </div>
                 <div className={styles.justifyContent}>
-                  <span>{order.billingType}</span>
+                  <span  className={styles.span}>{order.billingType}</span>
 
-                  <span className={styles.value}>R${order.value}</span>
+                  <span className={styles.value}>R$ {order.value}</span>
 
-                  <span>{order.shippingFee}</span>
+                  <span  className={styles.span}>{order.shippingFee}</span>
 
 
-                  <span>{order.totalQuantity} unidades</span>
+                  <span  className={styles.span}>{order.totalQuantity} unidades</span>
 
 
 
        
-
-                    <span>
-                      {" "}
-                      {(() => {
-                        switch (order.status) {
-                          case "RECEIVED":
-                            return "pago";
-                          case "CONFIRMED":
-                            return "Cobrança confirmada";
-                          case "PENDING":
-                            return "Pendente";
-                          case "OVERDUE":
-                            return "Cobrança vencida";
-                          default:
-                            return;
-                        }
-                      })()}
-                    </span>
+                  <span className={`${styles.status} ${styles[order.status.toLowerCase()]
+                        }`}>
+                        {" "}
+                        {(() => {
+                          switch (order.status) {
+                            case "RECEIVED":
+                              return "PAGO";
+                            case "CONFIRMED":
+                              return "COBRANÇA CONFIMADA";
+                            case "PENDING":
+                              return "PENDENTE";
+                            case "OVERDUE":
+                              return "COBRANÇA VENCIDA";
+                            default:
+                              return;
+                          }
+                        })()}
+                      </span>
    
                 </div>
 
@@ -206,17 +206,7 @@ const AllOrderDetails = () => {
                   </>
                 ))}
               </div>
-              <div className={styles.boletoContainer__price}>
-                {order.products.map((product, prodIndex) => (
-                  <>
-                    <div key={prodIndex}>
-                      <span>{product.price}</span>
-
-
-                    </div>
-                  </>
-                ))}
-              </div>
+              
 
 
 

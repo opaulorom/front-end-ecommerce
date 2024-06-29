@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 15rem;
+    margin-top: 10rem;
 
 }
 
@@ -102,8 +102,12 @@
 
 }
 .value{
-    color: #05070A;
-}
+    color: black;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: Poppins, arial, sans-serif;
+  }
+
 
 
 .boletoContainer__card{
@@ -145,6 +149,30 @@
     color: #05070A;
 }
 
+
+
+
+.pending {
+    color: rgb(236, 162, 23); /* Cor para estado Pendente */
+  }
+  
+  .received {
+    color: green; /* Cor para estado Pago */
+  }
+  
+  .overdue {
+    color: rgb(236, 62, 62); /* Cor para estado Cobrança vencida */
+  }
+  
+  .confirmed {
+    color: #5454c5; /* Cor para estado Cobrança confirmada */
+  }
+  
+  .unknown {
+    color: gray; /* Cor para estado Desconhecido */
+  }
+
+
 @media screen and (min-width: 700px) {
     .boletoContainer__buttonContainer {
         display: flex;
@@ -154,5 +182,51 @@
 
     .boletoContainer__button {
         width: 10vw;
+    }
+    .boletoContainer__card{
+        width: 40vw;
+        
+    }
+    .TotalAmountContainer{
+        width: 40vw;
+    }
+    .span{
+        font-size: .9rem;
+    }
+    .status{
+        font-size: .9rem;
+
+    }
+    .boletoContainer__img{
+        width: 10vw;
+    }
+    .boletoContainer__buttonContainer{
+        width: 40vw;
+        display: flex;
+        justify-content: center;
+
+    }
+    
+}
+
+
+@media screen and (min-width: 800px){
+    .boletoContainer__buttonContainer{
+        width: 60vw;
+        display: flex;
+        justify-content: center;
+        
+
+    }
+    .boletoContainer__button{
+        width: 20vw;
+
+    }
+    .boletoContainer__card{
+        width: 60vw;
+        
+    }
+    .TotalAmountContainer{
+        width: 60vw;
     }
 }
