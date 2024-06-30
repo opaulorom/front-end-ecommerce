@@ -251,6 +251,7 @@
     .boletoContainer__card{
         width: 40vw;
         
+        
     }
     .TotalAmountContainer{
         width: 40vw;
@@ -284,6 +285,11 @@
     }
     .pixCodeContainer___button{
         width: 12vw;
+    }
+    .boletoContainer__text{
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
     }
     
     

@@ -194,11 +194,11 @@ const AllOrderDetails = () => {
 
                         <span>{truncateName(product.name)}</span>
 
-                        <span className={styles.size}>{product.size}</span>
+                        <span className={styles.size}>Tamanho: {product.size}</span>
 
 
 
-                        <span className={styles.quantity}> {product.quantity}</span>
+                        <span className={styles.quantity}>Quantidade: {product.quantity}</span>
 
 
                       </div >
