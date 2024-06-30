@@ -200,7 +200,7 @@
   }
   
   .confirmed {
-    color: #5454c5; /* Cor para estado Cobrança confirmada */
+    color: green; /* Cor para estado Pago */
   }
   
   .unknown {
