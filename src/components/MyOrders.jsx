@@ -45,7 +45,13 @@ const MyOrders = () => {
           setPix(response.data.pix);
           setCreditCard(response.data.creditCard);
           setTotalOrders(response.data.totalOrders);
-          setLoading(false);
+          if(loggedIn === false){
+            setLoading(false);
+
+          } else {
+            setLoading(true);
+
+          }
         })
         .catch((error) => {
           console.error("Erro ao obter os pedidos:", error);
@@ -84,7 +90,19 @@ const MyOrders = () => {
     <>
       <Header />
       <Navbar />
-      {loading ? (
+      { loading  && <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: "20rem",
+              }}
+            >
+              
+              <p>Faça login pra ver essa pagina </p>
+            </div>}
+      {loading && loggedIn === true ? (
         <div
           style={{
             display: "flex",
@@ -100,7 +118,8 @@ const MyOrders = () => {
           <div className={styles.EXdataContainer}
           >
             <div className={styles.h1Container}>
-              <h1 className={styles.h1}>MEUS PEDIDOS</h1>
+              {loggedIn === true &&  <h1 className={styles.h1}>MEUS PEDIDOS</h1>}
+             
             </div>
 
             {[...boletos, ...pix, ...creditCard].map((order, index) => (
@@ -197,7 +216,7 @@ const MyOrders = () => {
 
 
           </div>
-          <div
+          {loggedIn === true &&  <div
             style={{
               display: "flex",
               alignItems: "center",
@@ -217,7 +236,8 @@ const MyOrders = () => {
                 onChange={handlePageChange}
               />
             </Stack>
-          </div>
+          </div>}
+         
         </>
       )}
     </>

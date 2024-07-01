@@ -249,7 +249,7 @@ const Cart = () => {
       <Navbar />
       {loading ? ( // Se estiver carregando, exibimos o CircularProgress
         <div className={styles.loading}>
-          {/* <CircularProgress /> */}
+          <CircularProgress />
         </div>
       ) : (
         <>
