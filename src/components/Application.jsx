@@ -121,6 +121,7 @@ const Application = ({selectedImageUrl}) => {
           <span
             ref={overlayRef}
             style={overlayStyle}
+            className='application__spanStyle'
           />
         )}
         {showOverlay && !isZoomOnSide && (

@@ -36,7 +36,7 @@
     position: relative
   }
   
-  span {
+  .application__spanStyle {
     position: absolute;
     background: white;
     width: 100px;

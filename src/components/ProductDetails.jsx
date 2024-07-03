@@ -659,7 +659,7 @@ const ProductDetails = () => {
                         index
                     )
                     .map((variation, index) => (
-                      <div key={index} className="thumbnail-wrapper">
+                      <div key={index} className="thumbnail-wrapper" >
                         <span className="color-name">{`${variation.color}`}</span>
 
                         <img
@@ -674,6 +674,7 @@ const ProductDetails = () => {
                             setShowBorder(index);
                             handleThumbnailClick(index);
                           }}
+                          
                         />
                       </div>
                     ))}
