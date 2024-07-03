@@ -15,8 +15,11 @@ import { useAuth } from "../context/AuthContext";
 import { TrendingUpOutlined } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { width } from "@mui/system";
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
-const ProductDetails = () => {
+
+const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 200, zoomLevel = 2,  magnifierImg}) => {
   const { productId } = useParams();
   const [product, setProduct] = useState({ variations: [] });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -40,11 +43,15 @@ const ProductDetails = () => {
   const [selectedSizeId, setSelectedSizeId] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-  const [changeUrlLink, setChangeUrlLink] =  useState(0)
+  const [changeUrlLink, setChangeUrlLink] = useState(0)
+  const [showMagnifier, setShowMagnifier] = useState(false);
+  const [[imageWidth, imageHeight], setSize] = useState([0, 0]);
+  const [[x, y], setXY] = useState([0, 0]);
+
   const hendleButtonDisabled = () => {
     setIsButtonDisabled(true)
   }
-  
+
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
   };
@@ -175,6 +182,7 @@ const ProductDetails = () => {
     setCurrentImageIndex(colorIndex);
     setSelectedColorId(product.variations[colorIndex]._id); // Armazena o ID da cor selecionada
     setActiveColorIndex(colorIndex);
+    setCurrentPage(0); // Reset the page to the first when the color changes
 
     setActiveUrlIndex(0); // Assuming we want to show the first image of the selected color
 
@@ -215,31 +223,31 @@ const ProductDetails = () => {
 
   const [imageIndices, setImageIndices] = useState({});
 
-// Inicializando os índices para cada cor no momento da montagem do componente
-useEffect(() => {
-  const indices = {};
-  product.variations.forEach((variation, index) => {
-    indices[variation.color] = 0;  // Inicializa todos os índices de URL como 0
-  });
-  setImageIndices(indices);
-}, [product]);
+  // Inicializando os índices para cada cor no momento da montagem do componente
+  useEffect(() => {
+    const indices = {};
+    product.variations.forEach((variation, index) => {
+      indices[variation.color] = 0;  // Inicializa todos os índices de URL como 0
+    });
+    setImageIndices(indices);
+  }, [product]);
 
-const handleArrowClick = (direction) => {
-  const currentColor = product.variations[selectedColorIndex]?.color;
-  
-  setImageIndices(prevIndices => {
-    const maxIndex = product.variations[selectedColorIndex].urls.length - 1;
-    let newIndex = prevIndices[currentColor];
+  const handleArrowClick = (direction) => {
+    const currentColor = product.variations[selectedColorIndex]?.color;
 
-    if (direction === "prev") {
-      newIndex = newIndex > 0 ? newIndex - 1 : maxIndex;
-    } else {
-      newIndex = newIndex < maxIndex ? newIndex + 1 : 0;
-    }
+    setImageIndices(prevIndices => {
+      const maxIndex = product.variations[selectedColorIndex].urls.length - 1;
+      let newIndex = prevIndices[currentColor];
 
-    return { ...prevIndices, [currentColor]: newIndex };
-  });
-};
+      if (direction === "prev") {
+        newIndex = newIndex > 0 ? newIndex - 1 : maxIndex;
+      } else {
+        newIndex = newIndex < maxIndex ? newIndex + 1 : 0;
+      }
+
+      return { ...prevIndices, [currentColor]: newIndex };
+    });
+  };
 
   const handleAddToCartAndOpenModal = async () => {
     const productId = product._id;
@@ -279,14 +287,14 @@ const handleArrowClick = (direction) => {
         // Adiciona ao carrinho apenas se for um novo produto
         addToCart();
         toast.success("Produto adicionado ao carrinho!");
-     
+
         handleClickOpenCartModal();
-      
+
       } catch (error) {
-        if(loggedIn === false){
+        if (loggedIn === false) {
           toast.error("Precisa fazer login pra adicionar algo ao carrinho!");
 
-        }else{
+        } else {
           console.error("Erro ao adicionar produto ao carrinho:", error);
           toast.error("Produto com essa cor e tamanho indisponível.");
 
@@ -339,17 +347,17 @@ const handleArrowClick = (direction) => {
         fontWeight: "500",
         fontFamily: "poppins, sans-serif",
         cursor: "pointer",
-        display:"flex",
+        display: "flex",
         margin: "0 auto",
-        marginTop:"3rem",
-        width:"80vw",
-         justifyContent:"center",
-        fontSize:"1.3rem",
+        marginTop: "3rem",
+        width: "80vw",
+        justifyContent: "center",
+        fontSize: "1.3rem",
       };
-    } else if(max300And895, isPortrait){
+    } else if (max300And895, isPortrait) {
       return {
         backgroundColor: "red",
-        width:"10vw",
+        width: "10vw",
 
 
       }
@@ -363,12 +371,12 @@ const handleArrowClick = (direction) => {
         fontWeight: "500",
         fontFamily: "poppins, sans-serif",
         cursor: "pointer",
-        display:"flex",
+        display: "flex",
         margin: "0 auto",
-        marginTop:"5rem",
-        width:"15vw",
-         justifyContent:"center",
-        fontSize:"1rem",
+        marginTop: "5rem",
+        width: "15vw",
+        justifyContent: "center",
+        fontSize: "1rem",
       };
     } else if (isLargeScreen) {
       return {
@@ -387,7 +395,7 @@ const handleArrowClick = (direction) => {
 
 
 
-  
+
   const getbuttonStyleB = () => {
     if (isSmallScreen) {
       return {
@@ -399,12 +407,12 @@ const handleArrowClick = (direction) => {
         fontWeight: "500",
         fontFamily: "poppins, sans-serif",
         cursor: "pointer",
-        display:"flex",
+        display: "flex",
         margin: "0 auto",
-         marginTop:"5rem",
-        width:"80vw",
-        justifyContent:"center",
-        fontSize:"1.3rem",
+        marginTop: "5rem",
+        width: "80vw",
+        justifyContent: "center",
+        fontSize: "1.3rem",
       };
     } else if (isMediumScreen) {
       return {
@@ -416,12 +424,12 @@ const handleArrowClick = (direction) => {
         fontWeight: "500",
         fontFamily: "poppins, sans-serif",
         cursor: "pointer",
-        display:"flex",
+        display: "flex",
         margin: "0 auto",
-         marginTop:"5rem",
-        width:"15vw",
-        justifyContent:"center",
-        fontSize:"1rem",
+        marginTop: "5rem",
+        width: "15vw",
+        justifyContent: "center",
+        fontSize: "1rem",
       };
     } else if (isLargeScreen) {
       return {
@@ -452,15 +460,20 @@ const handleArrowClick = (direction) => {
       return nextUrlIndex;
     });
   };
-  
+
 
   const [activeColorIndex, setActiveColorIndex] = useState(0);
   const [activeUrlIndex, setActiveUrlIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const IMAGES_PER_PAGE = 5;
 
   const handleDotChangeClick = (variationIndex, urlIndex) => {
     setActiveColorIndex(variationIndex);
     setActiveUrlIndex(urlIndex);
+    setCurrentPage(0); // Reset the page to the first when the color changes
   };
+
   const handleNextClick = () => {
     setActiveUrlIndex((prevIndex) => (prevIndex + 1) % product.variations[activeColorIndex].urls.length);
   };
@@ -471,6 +484,14 @@ const handleArrowClick = (direction) => {
 
 
 
+  const handlePageNext = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.floor(product.variations[activeColorIndex].urls.length / IMAGES_PER_PAGE)));
+  };
+
+  const handlePagePrev = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
+
   const validVariations = product && product.variations && product.variations.length > 0;
   const validActiveColorIndex = validVariations && activeColorIndex < product.variations.length;
   const validUrls = validActiveColorIndex && product.variations[activeColorIndex].urls && product.variations[activeColorIndex].urls.length > 0;
@@ -480,6 +501,40 @@ const handleArrowClick = (direction) => {
     ? product.variations[activeColorIndex].urls[activeUrlIndex]
     : "";
 
+  const startIndex = currentPage * IMAGES_PER_PAGE;
+  const endIndex = Math.min(startIndex + IMAGES_PER_PAGE, validUrls ? product.variations[activeColorIndex].urls.length : 0);
+  const currentImages = validUrls ? product.variations[activeColorIndex].urls.slice(startIndex, endIndex) : [];
+
+
+
+
+const mouseEnter = (e) => {
+  const element = e.currentTarget;
+
+  const {width, height} = element.getBoundingClientRect();
+  setSize([width, height]);
+  setShowMagnifier(true)
+
+}
+
+const mouseLeave = (e) => {
+  e.preventDefault();
+  setShowMagnifier(false);
+}
+
+
+const mouseMove = (e) => {
+  const element = e.currentTarget;
+  const {top, left} = element.getBoundingClientRect();
+
+  const x = e.pageX - left - window.scrollX;
+  const y = e.pageY - top - window.scrollY;
+
+
+  setXY([x, y]);
+
+}
+  
   return (
     <>
       <div>
@@ -518,53 +573,92 @@ const handleArrowClick = (direction) => {
             </div>
           )}
         </div>
-        <div>
-        <div>
-      {validActiveUrlIndex ? (
-        <div>
-          <img src={selectedImageUrl} alt="Selected product" style={{ width: "20vw", marginBottom: "2rem" }} />
+        <div className={styles.DesktopCarrosel}>
+
           <div>
-            <button onClick={handlePrevClick}>&lt; Previous</button>
-            <button onClick={handleNextClick}>Next &gt;</button>
+            {validActiveUrlIndex ? (
+              <div style={{
+                position:"relative"
+              }}>
+                <img src={selectedImageUrl} alt="Selected product" style={{ width: "20vw", marginBottom: "2rem", marginTop:"11rem" }}   className={magnifierImg}
+                      width={width}
+                      height={height}
+                      onMouseEnter={(e) => mouseEnter(e)}
+                      onMouseLeave={(e) => mouseLeave(e)}
+                      onMouseMove={(e) => mouseMove(e)} />
+                  <div style={{   
+                  display: showMagnifier ? '' : 'none',
+                  position: "absolute",
+                  width: `${magnifierWidth}` , 
+                  height: `${magnifierHeight}` , 
+                  pointerEvents:"none",
+                  opacity:"1",
+                  border:"2px solid gray",
+                  backgroundColor:"white",
+                  borderRadius: "5px",
+                  backgroundImage: `url('${selectedImageUrl}')`,
+                  backgroundRepeat: "no-repeat",
+                  top: `${y - magnifierHeight / 2}px`,
+                  left: `${x - magnifierWidth / 2}px`,
+                  backgroundSize: `${imageWidth * zoomLevel}px ${imageHeight * zoomLevel}px`,
+                  backgroundPositionX: `${-x * zoomLevel - magnifierWidth / 2}px`,
+                  backgroundPositionY: `${-y * zoomLevel + magnifierHeight / 2}px`
+
+                }}>
+
+                </div>      
+                <div>
+                  <KeyboardArrowLeftIcon onClick={handlePrevClick}></KeyboardArrowLeftIcon>
+                  <KeyboardArrowRightIcon onClick={handleNextClick}></KeyboardArrowRightIcon>
+                </div>
+              </div>
+            ) : (
+              <p>No image available</p>
+            )}
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "5rem" }}>
+              {validUrls && product.variations[activeColorIndex].urls.length > IMAGES_PER_PAGE && (
+                <button onClick={handlePagePrev} disabled={currentPage === 0}>
+                  &lt;
+                </button>
+              )}
+              <div style={{ display: "flex", flexDirection: "row", position:"relative" }}>
+                {currentImages.map((url, urlIndex) => (
+                  <div key={startIndex + urlIndex}>
+                    <img
+                      src={url}
+                      alt={`Image ${startIndex + urlIndex} for ${product.variations[activeColorIndex].color}`}
+                      style={{ width: "10vw", cursor: "pointer", border: startIndex + urlIndex === activeUrlIndex ? "2px solid blue" : "none" }}
+                      onClick={() => setActiveUrlIndex(startIndex + urlIndex)}
+                    
+
+                    />
+                    
+                  </div>
+                ))}
+              
+              </div>
+              {validUrls && product.variations[activeColorIndex].urls.length > IMAGES_PER_PAGE && (
+                <button onClick={handlePageNext} disabled={endIndex >= product.variations[activeColorIndex].urls.length} >
+                  &gt;
+                </button>
+              )}
+            </div>
           </div>
         </div>
-      ) : (
-        <p>No image available</p>
-      )}
-      <div style={{ display: "flex", flexDirection: "row", marginTop: "5rem" }}>
-        {validVariations ? product.variations[activeColorIndex].urls.map((url, urlIndex) => (
-          <div key={urlIndex}>
-            <img
-              src={url}
-              alt={`Image ${urlIndex} for ${product.variations[activeColorIndex].color}`}
-              style={{ width: "10vw", cursor: "pointer", border: urlIndex === activeUrlIndex ? "2px solid blue" : "none" }}
-              onClick={() => setActiveUrlIndex(urlIndex)}
-            />
-          </div>
-        )) : (
-          <p>No variations available</p>
-        )}
-      </div>
-    </div>
-    </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-            marginTop: "24rem",
-          }}
-        >
+
+
+        <div className={styles.carroselMobile}>
           <div key={currentImageIndex} className="image-container">
             {product.variations[currentImageIndex] && (
-            <img
-            src={product.variations[selectedColorIndex]?.urls[imageIndices[product.variations[selectedColorIndex]?.color]] || selectedImageUrl}
-            alt={product.variations[selectedColorIndex]?.color}
-            style={{ width: "25vw" }}
-            onClick={() => {handleImageClick, handleDotChangeClick(variationIndex, urlIndex)}} // Se você ainda precisa deste manipulador de cliques
-          />
-          
+              <img
+                src={product.variations[selectedColorIndex]?.urls[imageIndices[product.variations[selectedColorIndex]?.color]] || selectedImageUrl}
+                alt={product.variations[selectedColorIndex]?.color}
+                style={{ width: "25vw" }}
+
+                onClick={() => { handleImageClick, handleDotChangeClick(variationIndex, urlIndex) }} // Se você ainda precisa deste manipulador de cliques
+              />
+
             )}
 
             <div className="navigation-arrows">
@@ -583,20 +677,40 @@ const handleArrowClick = (direction) => {
               </div>
             </div>
 
-           
-      <div className="dot-container">
-        {product.variations?.map((variation, index) => (
-          <span
-            key={index}
-            className={`dot ${
-              index === selectedColorIndex ? "active" : ""
-            }`}
-            onClick={() => handleDotClick(index)}
-          />
-        ))}
-      </div>
-    </div>
-    
+
+            <div className="dot-container">
+              {product.variations?.map((variation, index) => (
+                <span
+                  key={index}
+                  className={`dot ${index === selectedColorIndex ? "active" : ""
+                    }`}
+                  onClick={() => handleDotClick(index)}
+                />
+              ))}
+            </div>
+
+          </div>
+        </div>
+
+
+        <div>
+
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+              marginTop: "10rem",
+            }}
+
+          >
+
+
+
+          </div>
+
+
 
 
           <div>
@@ -635,7 +749,7 @@ const handleArrowClick = (direction) => {
                     Tamanhos disponíveis para{" "}
                     {product.variations[selectedColorIndex]?.color}:
                   </h3>
-                  <div style={{ display: "flex", flexDirection: "row", alignItems:"center" }}>
+                  <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                     {sizesFromDatabase[selectedColorIndex]?.sizes &&
                       sizesFromDatabase[selectedColorIndex].sizes.map(
                         (size, sizeIndex) => (
@@ -645,16 +759,15 @@ const handleArrowClick = (direction) => {
                               marginLeft: "1rem",
                               display: "flex",
                               flexDirection: "column",
-                             
+
                             }}
                           >
                             <button
-                              className={`size-button ${
-                                size.size === selectedSize ? "active" : ""
-                                
-                              }`}
+                              className={`size-button ${size.size === selectedSize ? "active" : ""
+
+                                }`}
                               style={{
-                                border:size.inStockSize === true ? "2px dashed #ccc" : "",
+                                border: size.inStockSize === true ? "2px dashed #ccc" : "",
                                 color: size.inStockSize === true ? "#888" : "",
                                 cursor: size.inStockSize === true ? "" : "pointer",
 
@@ -665,9 +778,9 @@ const handleArrowClick = (direction) => {
                               }
                             >
                               {size.size}
-                              
+
                             </button>
-                       
+
 
                           </div>
                         )
@@ -680,7 +793,7 @@ const handleArrowClick = (direction) => {
             {!showCartButton && (
               <button
                 onClick={handleAddToCartAndOpenModal}
-           
+
                 style={buttonStyleA}
 
               >
@@ -691,7 +804,7 @@ const handleArrowClick = (direction) => {
             {showCartButton && (
               <button
                 onClick={handleClickOpenModal}
-             
+
                 style={buttonStyleB}
               >
                 COMPRAR
