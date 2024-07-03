@@ -17,6 +17,7 @@ import { useMediaQuery } from "@mui/material";
 import { width } from "@mui/system";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import Application from "./Application";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState({ variations: [] });
@@ -543,6 +544,7 @@ const ProductDetails = () => {
           <div>
             {validActiveUrlIndex ? (
               <div>
+                <Application selectedImageUrl={selectedImageUrl}/>
                 <img src={selectedImageUrl} alt="Selected product" style={{ width: "20vw", marginBottom: "2rem" }} />
                 <div>
                   <KeyboardArrowLeftIcon onClick={handlePrevClick}></KeyboardArrowLeftIcon>
