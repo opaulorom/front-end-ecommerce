@@ -104,7 +104,8 @@ const AllOrderDetails = () => {
                   <span className={styles.span}>Total do pedido
 
                   </span>
-                      <span className={styles.span}>Valor da entrega</span>
+                  {order.shippingFee ?   <span className={styles.span}>Valor da entrega</span> : ""}
+                    
             
                   <span className={styles.span}>Quantidade total</span>
                   {order.trackingCode ? <a href="https://www.kangu.com.br/rastreio/" target="_blank" className={styles.span} style={{}} >
@@ -117,14 +118,14 @@ const AllOrderDetails = () => {
                   <span className={styles.span}>{order.billingType}</span>
 
                   <span className={styles.value}>R$ {order.value}</span>
-
-                  <span className={styles.span}>{order.shippingFee}</span>
+                  {order.shippingFee ?   <span className={styles.span}>{order.shippingFee}</span> : ""}
+                
 
 
                   <span className={styles.span}>{order.totalQuantity} unidades</span>
 
 
-                  {order.shippingFee != true && <span className={styles.span}>{order.trackingCode}</span>
+                  {order.trackingCode ? <span className={styles.span}>{order.trackingCode}</span> : ""
                   }
 
 
