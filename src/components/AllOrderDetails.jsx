@@ -16,7 +16,7 @@ const AllOrderDetails = () => {
   const [pix, setPix] = useState([]);
   const [creditCard, setCreditCard] = useState([]);
   const { id } = useParams(); // Certifique-se de que o parâmetro corresponde ao nome na URL
-  
+
   const [payload, setPayload] = useState(false);
 
   const [expanded, setExpanded] = useState({});
@@ -104,10 +104,12 @@ const AllOrderDetails = () => {
                   <span className={styles.span}>Total do pedido
 
                   </span>
-
-                  <span className={styles.span}>Valor da entrega</span>
+                  {order.shippingFee != true &&                   <span className={styles.span}>Valor da entrega</span>
+                } 
                   <span className={styles.span}>Quantidade total</span>
-
+                  {order.shippingFee != true && <a href="https://www.kangu.com.br/rastreio/" target="_blank" className={styles.span} style={{}}>
+                    Rastrear Pedido
+                  </a>}
 
                   <span className={styles.span}>Status</span>
                 </div>
@@ -121,6 +123,9 @@ const AllOrderDetails = () => {
 
                   <span className={styles.span}>{order.totalQuantity} unidades</span>
 
+
+                  {order.shippingFee != true && <span className={styles.span}>{order.trackingCode}</span>
+                  }
 
 
 
@@ -172,15 +177,6 @@ const AllOrderDetails = () => {
               )}
 
 
-              <div >
-
-
-
-                <div>{order.trackingCode}</div>
-
-
-
-              </div>
               <div>
                 {order.products.map((product, prodIndex) => (
                   <>
@@ -221,8 +217,154 @@ const AllOrderDetails = () => {
         {pix &&
           pix.map((order, index) => (
             <div>
-              
+
               <div
+                key={index}
+                className={styles.boletoContainer}
+              >
+                <div className={styles.TotalAmountContainer}>
+
+
+
+
+                  <div className={styles.justifyContent}>
+                    <span className={styles.span}>Tipo</span>
+
+                    <span className={styles.span}>Total do pedido
+
+                    </span>
+                    {order.shippingFee && <span className={styles.span}>Valor da entrega</span>}
+
+                    <span className={styles.span}>Quantidade total</span>
+
+                    <a href="https://www.kangu.com.br/rastreio/" target="_blank" className={styles.span} style={{}}>
+                      Rastrear Pedido
+                    </a>
+                    <span className={styles.span}>Status</span>
+                  </div>
+                  <div className={styles.justifyContent}>
+                    <span className={styles.span}>{order.billingType}</span>
+
+                    <span className={styles.value}>R$ {order.value}</span>
+                    {order.shippingFee && <span className={styles.span}>{order.shippingFee}</span>
+                    }
+
+
+                    <span className={styles.span}>{order.totalQuantity} unidades</span>
+
+
+                    {order.status === "RECEIVED" || "CONFIRMED" && <span className={styles.span}>{order.trackingCode}</span>
+                    }
+
+
+                    <span className={`${styles.status} ${styles[order.status.toLowerCase()]
+                      }`}>
+                      {" "}
+                      {(() => {
+                        switch (order.status) {
+                          case "RECEIVED":
+                            return "PAGO";
+                          case "CONFIRMED":
+                            return "COBRANÇA CONFIMADA";
+                          case "PENDING":
+                            return "PENDENTE";
+                          case "OVERDUE":
+                            return "COBRANÇA VENCIDA";
+                          default:
+                            return;
+                        }
+                      })()}
+                    </span>
+
+                  </div>
+
+
+
+                </div>
+                {order.status === "PENDING" ? (
+
+                  <div >
+                    {order.status === "PENDING" ? (
+                      <div className={styles.pixCodeContainer}>
+                        {order.encodedImage && (
+                          <ImageComponent encodedImage={order.encodedImage} className={styles.pixCodeContainer___encodedImage} />
+                        )}
+                        {order.encodedImage && (
+                          <div className={styles.pixCodeContainer___Container} >
+                            <p className={styles.pixCodeContainer___p}>{order.payload}</p>
+                            <div>
+                              <button onClick={() => handleClick(order.payload)} className={styles.pixCodeContainer___button}>
+                                {payload ? "Copiado" : "Copiar"}
+                              </button>
+                            </div>
+                            <div className={styles.pixCodeContainer__span}>
+                              <WatchLaterOutlinedIcon />
+                              <span >
+                                Este Boleto expira em
+                                24 horas</span>
+                            </div>
+
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      ""
+                    )}
+
+
+
+                  </div>
+
+
+                ) : (
+                  ""
+                )}
+
+
+                <div>
+                  {order.products.map((product, prodIndex) => (
+                    <>
+                      <div key={prodIndex} className={styles.boletoContainer__card}>
+                        <img
+                          src={product.image}
+                          alt={`Produto ${product.productId}`}
+                          className={styles.boletoContainer__img}
+                        />
+                        <div className={styles.boletoContainer__text}>
+
+                          <span>{truncateName(product.name)}</span>
+
+                          <span className={styles.size}>{product.size}</span>
+
+
+
+                          <span className={styles.quantity}> {product.quantity}</span>
+
+
+                        </div >
+                        <div>                      <span className={styles.price}>R${product.price && product.price}</span>
+                        </div>
+
+                      </div>
+                    </>
+                  ))}
+                </div>
+
+
+
+
+
+
+
+              </div>
+
+
+            </div>
+          ))}
+
+        {creditCard &&
+          creditCard.map((order, index) => (
+            <div
               key={index}
               className={styles.boletoContainer}
             >
@@ -233,29 +375,34 @@ const AllOrderDetails = () => {
 
                 <div className={styles.justifyContent}>
                   <span className={styles.span}>Tipo</span>
+                  <span className={styles.span}>Numero de Parcelas</span>
+                  <span className={styles.span}>Total do pedido</span>
+                  {order.shippingFee && <span className={styles.span}>Valor da entrega</span>}
 
-                  <span className={styles.span}>Total do pedido
-
-                  </span>
-
-                  <span className={styles.span}>Valor da entrega</span>
                   <span className={styles.span}>Quantidade total</span>
 
 
+                  <a href="https://www.kangu.com.br/rastreio/" target="_blank" className={styles.span} style={{}}>
+                    Rastrear Pedido
+                  </a>
                   <span className={styles.span}>Status</span>
                 </div>
                 <div className={styles.justifyContent}>
-                  <span className={styles.span}>{order.billingType}</span>
+                  <span className={styles.span}>{order.billingType === "CREDIT_CARD" && "Cartão de Credito"}</span>
+
+                  <span className={styles.installmentCount}>{order.installmentCount}</span>
 
                   <span className={styles.value}>R$ {order.value}</span>
+                  {order.shippingFee && <span className={styles.span}>{order.shippingFee}</span>}
 
-                  <span className={styles.span}>{order.shippingFee}</span>
 
 
                   <span className={styles.span}>{order.totalQuantity} unidades</span>
 
 
 
+                  {order.status === "RECEIVED" || "CONFIRMED" && <span className={styles.span}>{order.trackingCode}</span>
+                  }
 
                   <span className={`${styles.status} ${styles[order.status.toLowerCase()]
                     }`}>
@@ -276,6 +423,7 @@ const AllOrderDetails = () => {
                     })()}
                   </span>
 
+
                 </div>
 
 
@@ -283,34 +431,18 @@ const AllOrderDetails = () => {
               </div>
               {order.status === "PENDING" ? (
 
-                <div >
-                   {order.status === "PENDING" ? (
-                <div className={styles.pixCodeContainer}>
-                  {order.encodedImage && (
-                    <ImageComponent encodedImage={order.encodedImage}  className={styles.pixCodeContainer___encodedImage}/>
-                  )}
-                  {order.encodedImage && (
-                    <div className={styles.pixCodeContainer___Container} >
-                      <p className={styles.pixCodeContainer___p}>{order.payload}</p>
-                      <div>
-                        <button onClick={() => handleClick(order.payload)} className={styles.pixCodeContainer___button}>
-                          {payload ? "Copiado": "Copiar"}
-                        </button>
-                      </div>
-                      <div className={styles.pixCodeContainer__span}>
+                <div className={styles.boletoContainer__buttonContainer}>
+                  <Link to={order.bankSlipUrl} style={{ textDecoration: "none" }}>
+                    {" "}
+                    <button className={styles.boletoContainer__button}>Ver boleto</button>{" "}
+                  </Link>
+                  <div className={styles.boletoContainer__span}>
                     <WatchLaterOutlinedIcon />
                     <span >
                       Este Boleto expira em
                       24 horas</span>
                   </div>
 
-                    </div>
-                  )}
-                </div>
-              ) : (
-                ""
-              )}
-                 
 
 
                 </div>
@@ -325,7 +457,6 @@ const AllOrderDetails = () => {
 
 
 
-                <div>{order.trackingCode}</div>
 
 
 
@@ -343,11 +474,11 @@ const AllOrderDetails = () => {
 
                         <span>{truncateName(product.name)}</span>
 
-                        <span className={styles.size}>{product.size}</span>
+                        <span className={styles.size}>Tamanho: {product.size}</span>
 
 
 
-                        <span className={styles.quantity}> {product.quantity}</span>
+                        <span className={styles.quantity}>Quantidade: {product.quantity}</span>
 
 
                       </div >
@@ -366,141 +497,6 @@ const AllOrderDetails = () => {
 
 
             </div>
-            
-             
-            </div>
-          ))}
-
-        {creditCard &&
-          creditCard.map((order, index) => (
-            <div
-            key={index}
-            className={styles.boletoContainer}
-          >
-            <div className={styles.TotalAmountContainer}>
-
-
-
-
-              <div className={styles.justifyContent}>
-                <span className={styles.span}>Tipo</span>
-                <span className={styles.span}>Numero de Parcelas</span>
-                <span className={styles.span}>Total do pedido</span>
-
-                <span className={styles.span}>Valor da entrega</span>
-                <span className={styles.span}>Quantidade total</span>
-
-
-                <span className={styles.span}>Status</span>
-              </div>
-              <div className={styles.justifyContent}>
-                <span className={styles.span}>{order.billingType === "CREDIT_CARD" && "Cartão de Credito"}</span>
-                
-                <span className={styles.installmentCount}>{order.installmentCount}</span>
-
-                <span className={styles.value}>R$ {order.value}</span>
-
-                <span className={styles.span}>{order.shippingFee}</span>
-
-
-                <span className={styles.span}>{order.totalQuantity} unidades</span>
-
-
-
-
-                <span className={`${styles.status} ${styles[order.status.toLowerCase()]
-                  }`}>
-                  {" "}
-                  {(() => {
-                    switch (order.status) {
-                      case "RECEIVED":
-                        return "PAGO";
-                      case "CONFIRMED":
-                        return "COBRANÇA CONFIMADA";
-                      case "PENDING":
-                        return "PENDENTE";
-                      case "OVERDUE":
-                        return "COBRANÇA VENCIDA";
-                      default:
-                        return;
-                    }
-                  })()}
-                </span>
-
-              </div>
-
-
-
-            </div>
-            {order.status === "PENDING" ? (
-
-              <div className={styles.boletoContainer__buttonContainer}>
-                <Link to={order.bankSlipUrl} style={{ textDecoration: "none" }}>
-                  {" "}
-                  <button className={styles.boletoContainer__button}>Ver boleto</button>{" "}
-                </Link>
-                <div className={styles.boletoContainer__span}>
-                  <WatchLaterOutlinedIcon />
-                  <span >
-                    Este Boleto expira em
-                    24 horas</span>
-                </div>
-
-
-
-              </div>
-
-
-            ) : (
-              ""
-            )}
-
-
-            <div >
-
-
-
-              <div>{order.trackingCode}</div>
-
-
-
-            </div>
-            <div>
-              {order.products.map((product, prodIndex) => (
-                <>
-                  <div key={prodIndex} className={styles.boletoContainer__card}>
-                    <img
-                      src={product.image}
-                      alt={`Produto ${product.productId}`}
-                      className={styles.boletoContainer__img}
-                    />
-                    <div className={styles.boletoContainer__text}>
-
-                      <span>{truncateName(product.name)}</span>
-
-                      <span className={styles.size}>Tamanho: {product.size}</span>
-
-
-
-                      <span className={styles.quantity}>Quantidade: {product.quantity}</span>
-
-
-                    </div >
-                    <div>                      <span className={styles.price}>R${product.price && product.price}</span>
-                    </div>
-
-                  </div>
-                </>
-              ))}
-            </div>
-
-
-
-
-
-
-
-          </div>
           ))}
 
 

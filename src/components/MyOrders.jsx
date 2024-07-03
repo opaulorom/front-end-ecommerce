@@ -179,7 +179,7 @@ const MyOrders = () => {
                       className={styles.flex}
                     >
                       <a href="https://www.kangu.com.br/rastreio/" target="_blank">
-                        <span>Rastrear Encomenda</span>
+                        <span>Rastrear Pedido</span>
                       </a>
                       <span>{order.trackingCode}</span>
                     </div>
