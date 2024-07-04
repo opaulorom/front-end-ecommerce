@@ -199,7 +199,7 @@ const AllOrderDetails = () => {
 
 
                       </div >
-                      <div>                      <span className={styles.price}>R${product.price && product.price}</span>
+                      <div>                      <span  className={styles.value}>R${product.price && product.price}</span>
                       </div>
 
                     </div>
