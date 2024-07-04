@@ -126,7 +126,7 @@
     margin-top: 2rem;
 
     padding: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 10rem;
     font-size: 1rem;
     
     
@@ -150,7 +150,9 @@
     color: #05070A;
 }
 
-
+.span{
+    font-size: .9rem;
+}
 
 .pixCodeContainer{
     display: flex;
@@ -187,6 +189,8 @@
 
 
 }
+
+
 
 .pending {
     color: rgb(236, 162, 23); /* Cor para estado Pendente */
@@ -321,6 +325,7 @@
         flex-direction: column;
     }
 }
+
 @media only screen and (min-width: 800px) and (max-width: 1575px) and (orientation: landscape) {
     .boletoContainer__button {
         width: 10vw;
@@ -336,5 +341,17 @@
 
     .boletoContainer__buttonContainer {
         width: 40vw;
+    }
+}
+
+@media only screen and (min-width: 1117px) and (max-width: 1728px) and (orientation: landscape) {
+    @media not screen and (min-width: 800px) and (max-width: 1575px) and (orientation: landscape) {
+        .pixCodeContainer {
+            width: 60vw;
+        }
+
+        .span{
+            font-size: 1rem;
+        }
     }
 }

@@ -237,10 +237,10 @@ const AllOrderDetails = () => {
                     {order.shippingFee && <span className={styles.span}>Valor da entrega</span>}
 
                     <span className={styles.span}>Quantidade total</span>
-
-                    <a href="https://www.kangu.com.br/rastreio/" target="_blank" className={styles.span} style={{}}>
+{order.trackingCode ? <a href="https://www.kangu.com.br/rastreio/" target="_blank" className={styles.span} >
                       Rastrear Pedido
-                    </a>
+                    </a> : ""}
+                    
                     <span className={styles.span}>Status</span>
                   </div>
                   <div className={styles.justifyContent}>
@@ -254,7 +254,7 @@ const AllOrderDetails = () => {
                     <span className={styles.span}>{order.totalQuantity} unidades</span>
 
 
-                    {order.status === "RECEIVED" || "CONFIRMED" && <span className={styles.span}>{order.trackingCode}</span>
+                    {order.trackingCode ? <span className={styles.span}>{order.trackingCode}</span>: ""
                     }
 
 
