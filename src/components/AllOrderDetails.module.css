@@ -124,10 +124,10 @@
     border-radius: 8px;
     /* Bordas arredondadas */
     margin-top: 2rem;
+    margin-bottom: 2rem;
 
     padding: 1rem;
-    margin-bottom: 10rem;
-    font-size: 1rem;
+ 
     
     
 }
@@ -153,7 +153,10 @@
 .span{
     font-size: .9rem;
 }
+.text{
+    font-size: .9rem;
 
+}
 .pixCodeContainer{
     display: flex;
     flex-direction: column;
@@ -261,11 +264,17 @@
     .TotalAmountContainer{
         width: 40vw;
     }
-    .span{
+    
+  .span{
+     font-size: .9rem;
+  }
+    .text{
         font-size: .9rem;
     }
+
+
     .status{
-        font-size: .9rem;
+        font-size: 1rem;
 
     }
     .boletoContainer__img{

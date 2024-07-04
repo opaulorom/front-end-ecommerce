@@ -20,7 +20,7 @@ const AllOrderDetails = () => {
   const [payload, setPayload] = useState(false);
 
   const [expanded, setExpanded] = useState({});
-
+  const [maxLength, setMaxLength] = useState(10); // Inicialize com um valor padrão
   const token = Cookies.get('token'); // Obtenha o token do cookie
   const [loading, setLoading] = useState(true);
 
@@ -63,7 +63,28 @@ const AllOrderDetails = () => {
 
 
 
-  const maxLength = 35; // Defina o limite de caracteres desejado
+
+  useEffect(() => {
+    // Lógica para definir maxLength dinamicamente
+    const updateMaxLength = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth < 600) {
+        setMaxLength(20); // Exemplo: define maxLength para 15 em telas menores que 768px
+      }  else if  (screenWidth > 700) {
+        setMaxLength(35); // Exemplo: define maxLength para 30 em telas maiores ou iguais a 768px
+      }
+    };
+
+    // Chama a função ao carregar a página e redimensionar a janela
+    updateMaxLength();
+    window.addEventListener('resize', updateMaxLength);
+
+    // Limpa o event listener quando o componente é desmontado
+    return () => {
+      window.removeEventListener('resize', updateMaxLength);
+    };
+  }, []);
+
 
   const truncateName = (name) => {
     if (name.length > maxLength) {
@@ -104,9 +125,9 @@ const AllOrderDetails = () => {
                   <span className={styles.span}>Total do pedido
 
                   </span>
-                  {order.shippingFee ?   <span className={styles.span}>Valor da entrega</span> : ""}
-                    
-            
+                  {order.shippingFee ? <span className={styles.span}>Valor da entrega</span> : ""}
+
+
                   <span className={styles.span}>Quantidade total</span>
                   {order.trackingCode ? <a href="https://www.kangu.com.br/rastreio/" target="_blank" className={styles.span} style={{}} >
                     Rastrear Pedido
@@ -118,8 +139,8 @@ const AllOrderDetails = () => {
                   <span className={styles.span}>{order.billingType}</span>
 
                   <span className={styles.value}>R$ {order.value}</span>
-                  {order.shippingFee ?   <span className={styles.span}>{order.shippingFee}</span> : ""}
-                
+                  {order.shippingFee ? <span className={styles.span}>{order.shippingFee}</span> : ""}
+
 
 
                   <span className={styles.span}>{order.totalQuantity} unidades</span>
@@ -181,6 +202,7 @@ const AllOrderDetails = () => {
               <div>
                 {order.products.map((product, prodIndex) => (
                   <>
+                                       <Link to={`/products/${product.productId}`} style={{ textDecoration: "none", color: "inherit" }}>
                     <div key={prodIndex} className={styles.boletoContainer__card}>
                       <img
                         src={product.image}
@@ -189,20 +211,24 @@ const AllOrderDetails = () => {
                       />
                       <div className={styles.boletoContainer__text}>
 
-                        <span>{truncateName(product.name)}</span>
+                        <span  className={styles.text}>{truncateName(product.name)}</span>
 
-                        <span className={styles.size}>Tamanho: {product.size}</span>
+                        <span  className={styles.text}>Tamanho: {product.size}</span>
 
 
 
-                        <span className={styles.quantity}>Quantidade: {product.quantity}</span>
+                        <span  className={styles.text}>Quantidade: {product.quantity}</span>
 
 
                       </div >
-                      <div>                      <span  className={styles.value}>R${product.price && product.price}</span>
+                      <div>                      <span className={styles.value}>R$ {product.price && product.price}</span>
                       </div>
 
                     </div>
+                                       
+                                       
+                                       </Link>
+
                   </>
                 ))}
               </div>
@@ -237,10 +263,10 @@ const AllOrderDetails = () => {
                     {order.shippingFee && <span className={styles.span}>Valor da entrega</span>}
 
                     <span className={styles.span}>Quantidade total</span>
-{order.trackingCode ? <a href="https://www.kangu.com.br/rastreio/" target="_blank" className={styles.span} >
+                    {order.trackingCode ? <a href="https://www.kangu.com.br/rastreio/" target="_blank" className={styles.span} >
                       Rastrear Pedido
                     </a> : ""}
-                    
+
                     <span className={styles.span}>Status</span>
                   </div>
                   <div className={styles.justifyContent}>
@@ -254,7 +280,7 @@ const AllOrderDetails = () => {
                     <span className={styles.span}>{order.totalQuantity} unidades</span>
 
 
-                    {order.trackingCode ? <span className={styles.span}>{order.trackingCode}</span>: ""
+                    {order.trackingCode ? <span className={styles.span}>{order.trackingCode}</span> : ""
                     }
 
 
@@ -325,6 +351,8 @@ const AllOrderDetails = () => {
                 <div>
                   {order.products.map((product, prodIndex) => (
                     <>
+                     <Link to={`/products/${product.productId}`} style={{ textDecoration: "none", color: "inherit" }}>
+
                       <div key={prodIndex} className={styles.boletoContainer__card}>
                         <img
                           src={product.image}
@@ -333,20 +361,22 @@ const AllOrderDetails = () => {
                         />
                         <div className={styles.boletoContainer__text}>
 
-                          <span>{truncateName(product.name)}</span>
+                          <span className={styles.text}>{truncateName(product.name)}</span>
 
-                          <span className={styles.size}>{product.size}</span>
+                          <span className={styles.text}>Tamanho: {product.size}</span>
 
 
 
-                          <span className={styles.quantity}> {product.quantity}</span>
+                          <span className={styles.text}>Quantidade: {product.quantity}</span>
 
 
                         </div >
-                        <div>                      <span className={styles.price}>R${product.price && product.price}</span>
+                        <div>                      <span className={styles.value}>R$ {product.price && product.price}</span>
                         </div>
 
                       </div>
+
+                    </Link>
                     </>
                   ))}
                 </div>
@@ -465,28 +495,30 @@ const AllOrderDetails = () => {
               <div>
                 {order.products.map((product, prodIndex) => (
                   <>
-                    <div key={prodIndex} className={styles.boletoContainer__card}>
-                      <img
-                        src={product.image}
-                        alt={`Produto ${product.productId}`}
-                        className={styles.boletoContainer__img}
-                      />
-                      <div className={styles.boletoContainer__text}>
+                    <Link to={`/products/${product.productId}`} style={{ textDecoration: "none", color: "inherit" }}>
+                      <div key={prodIndex} className={styles.boletoContainer__card}>
+                        <img
+                          src={product.image}
+                          className={styles.boletoContainer__img}
+                        />
+                        <div className={styles.boletoContainer__text}>
 
-                        <span>{truncateName(product.name)}</span>
+                          <span  className={styles.text}>{truncateName(product.name)}</span>
 
-                        <span className={styles.size}>Tamanho: {product.size}</span>
-
-
-
-                        <span className={styles.quantity}>Quantidade: {product.quantity}</span>
+                          <span  className={styles.text}>Tamanho: {product.size}</span>
 
 
-                      </div >
-                      <div>                      <span className={styles.price}>R${product.price && product.price}</span>
+
+                          <span  className={styles.text}>Quantidade: {product.quantity}</span>
+
+
+                        </div>
+                        <div>                      <span className={styles.value}>R$ {product.price}</span>
+                        </div>
+
                       </div>
 
-                    </div>
+                    </Link>
                   </>
                 ))}
               </div>
