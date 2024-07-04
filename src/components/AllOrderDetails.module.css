@@ -245,6 +245,11 @@
     gap: .5rem;
   }
 
+
+  @media only screen and (min-width: 600px) and (max-width: 1220px) and (orientation: landscape) {
+    .pixCodeContainer___p{
+min-width: fit-content;    }
+  }
 @media screen and (min-width: 700px) {
     .boletoContainer__buttonContainer {
         display: flex;
