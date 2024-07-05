@@ -70,7 +70,7 @@ const AllOrderDetails = () => {
       const screenWidth = window.innerWidth;
       if (screenWidth < 600) {
         setMaxLength(20); // Exemplo: define maxLength para 15 em telas menores que 768px
-      }  else if  (screenWidth > 700) {
+      } else if (screenWidth > 700) {
         setMaxLength(35); // Exemplo: define maxLength para 30 em telas maiores ou iguais a 768px
       }
     };
@@ -121,11 +121,9 @@ const AllOrderDetails = () => {
 
                 <div className={styles.justifyContent}>
                   <span className={styles.span}>Tipo</span>
+                  {order.shippingFeeData.shippingFeePrice ? <span className={styles.span}>Valor da entrega</span> : ""}
 
-                  <span className={styles.span}>Total do pedido
-
-                  </span>
-                  {order.shippingFee ? <span className={styles.span}>Valor da entrega</span> : ""}
+                  <span className={styles.span}>Total do pedido</span>
 
 
                   <span className={styles.span}>Quantidade total</span>
@@ -137,9 +135,10 @@ const AllOrderDetails = () => {
                 </div>
                 <div className={styles.justifyContent}>
                   <span className={styles.span}>{order.billingType}</span>
+                  {order.shippingFeeData.shippingFeePrice ? <span className={styles.span}>R$ {order.shippingFeeData.shippingFeePrice}</span> : ""}
 
                   <span className={styles.value}>R$ {order.value}</span>
-                  {order.shippingFee ? <span className={styles.span}>{order.shippingFee}</span> : ""}
+
 
 
 
@@ -202,32 +201,32 @@ const AllOrderDetails = () => {
               <div>
                 {order.products.map((product, prodIndex) => (
                   <>
-                                       <Link to={`/products/${product.productId}`} style={{ textDecoration: "none", color: "inherit" }}>
-                    <div key={prodIndex} className={styles.boletoContainer__card}>
-                      <img
-                        src={product.image}
-                        alt={`Produto ${product.productId}`}
-                        className={styles.boletoContainer__img}
-                      />
-                      <div className={styles.boletoContainer__text}>
+                    <Link to={`/products/${product.productId}`} style={{ textDecoration: "none", color: "inherit" }}>
+                      <div key={prodIndex} className={styles.boletoContainer__card}>
+                        <img
+                          src={product.image}
+                          alt={`Produto ${product.productId}`}
+                          className={styles.boletoContainer__img}
+                        />
+                        <div className={styles.boletoContainer__text}>
 
-                        <span  className={styles.text}>{truncateName(product.name)}</span>
+                          <span className={styles.text}>{truncateName(product.name)}</span>
 
-                        <span  className={styles.text}>Tamanho: {product.size}</span>
-
-
-
-                        <span  className={styles.text}>Quantidade: {product.quantity}</span>
+                          <span className={styles.text}>Tamanho: {product.size}</span>
 
 
-                      </div >
-                      <div>                      <span className={styles.value}>R$ {product.price && product.price}</span>
+
+                          <span className={styles.text}>Quantidade: {product.quantity}</span>
+
+
+                        </div >
+                        <div>                      <span className={styles.value}>R$ {product.price && product.price}</span>
+                        </div>
+
                       </div>
 
-                    </div>
-                                       
-                                       
-                                       </Link>
+
+                    </Link>
 
                   </>
                 ))}
@@ -256,11 +255,10 @@ const AllOrderDetails = () => {
 
                   <div className={styles.justifyContent}>
                     <span className={styles.span}>Tipo</span>
+                    {order.shippingFeeData.shippingFeePrice && <span className={styles.span}>Valor da entrega</span>}
 
                     <span className={styles.span}>Total do pedido
-
-                    </span>
-                    {order.shippingFee && <span className={styles.span}>Valor da entrega</span>}
+</span>
 
                     <span className={styles.span}>Quantidade total</span>
                     {order.trackingCode ? <a href="https://www.kangu.com.br/rastreio/" target="_blank" className={styles.span} >
@@ -272,10 +270,10 @@ const AllOrderDetails = () => {
                   <div className={styles.justifyContent}>
                     <span className={styles.span}>{order.billingType}</span>
 
-                    <span className={styles.value}>R$ {order.value}</span>
-                    {order.shippingFee && <span className={styles.span}>{order.shippingFee}</span>
+                    {order.shippingFeeData.shippingFeePrice && <span className={styles.span}> R$ {order.shippingFeeData.shippingFeePrice}</span>
                     }
 
+<span className={styles.value}>R$ {order.value}</span>
 
                     <span className={styles.span}>{order.totalQuantity} unidades</span>
 
@@ -351,32 +349,32 @@ const AllOrderDetails = () => {
                 <div>
                   {order.products.map((product, prodIndex) => (
                     <>
-                     <Link to={`/products/${product.productId}`} style={{ textDecoration: "none", color: "inherit" }}>
+                      <Link to={`/products/${product.productId}`} style={{ textDecoration: "none", color: "inherit" }}>
 
-                      <div key={prodIndex} className={styles.boletoContainer__card}>
-                        <img
-                          src={product.image}
-                          alt={`Produto ${product.productId}`}
-                          className={styles.boletoContainer__img}
-                        />
-                        <div className={styles.boletoContainer__text}>
+                        <div key={prodIndex} className={styles.boletoContainer__card}>
+                          <img
+                            src={product.image}
+                            alt={`Produto ${product.productId}`}
+                            className={styles.boletoContainer__img}
+                          />
+                          <div className={styles.boletoContainer__text}>
 
-                          <span className={styles.text}>{truncateName(product.name)}</span>
+                            <span className={styles.text}>{truncateName(product.name)}</span>
 
-                          <span className={styles.text}>Tamanho: {product.size}</span>
-
-
-
-                          <span className={styles.text}>Quantidade: {product.quantity}</span>
+                            <span className={styles.text}>Tamanho: {product.size}</span>
 
 
-                        </div >
-                        <div>                      <span className={styles.value}>R$ {product.price && product.price}</span>
+
+                            <span className={styles.text}>Quantidade: {product.quantity}</span>
+
+
+                          </div >
+                          <div>                      <span className={styles.value}>R$ {product.price && product.price}</span>
+                          </div>
+
                         </div>
 
-                      </div>
-
-                    </Link>
+                      </Link>
                     </>
                   ))}
                 </div>
@@ -407,8 +405,9 @@ const AllOrderDetails = () => {
                 <div className={styles.justifyContent}>
                   <span className={styles.span}>Tipo</span>
                   <span className={styles.span}>Numero de Parcelas</span>
+                  {order.shippingFeeData.shippingFeePrice && <span className={styles.span}>Valor da entrega</span>}
+
                   <span className={styles.span}>Total do pedido</span>
-                  {order.shippingFee && <span className={styles.span}>Valor da entrega</span>}
 
                   <span className={styles.span}>Quantidade total</span>
 
@@ -423,9 +422,9 @@ const AllOrderDetails = () => {
 
                   <span className={styles.installmentCount}>{order.installmentCount}</span>
 
-                  <span className={styles.value}>R$ {order.value}</span>
-                  {order.shippingFee && <span className={styles.span}>{order.shippingFee}</span>}
+                  {order.shippingFeeData.shippingFeePrice ? <span className={styles.span}>R$ {order.shippingFeeData.shippingFeePrice}</span> : ""}
 
+                  <span className={styles.value}>R$ {order.value}</span>
 
 
                   <span className={styles.span}>{order.totalQuantity} unidades</span>
@@ -503,13 +502,13 @@ const AllOrderDetails = () => {
                         />
                         <div className={styles.boletoContainer__text}>
 
-                          <span  className={styles.text}>{truncateName(product.name)}</span>
+                          <span className={styles.text}>{truncateName(product.name)}</span>
 
-                          <span  className={styles.text}>Tamanho: {product.size}</span>
+                          <span className={styles.text}>Tamanho: {product.size}</span>
 
 
 
-                          <span  className={styles.text}>Quantidade: {product.quantity}</span>
+                          <span className={styles.text}>Quantidade: {product.quantity}</span>
 
 
                         </div>
