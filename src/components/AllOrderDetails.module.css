@@ -73,7 +73,7 @@
     display: flex;
     flex-direction: column;
 
-   
+
     white-space: nowrap;
     gap: .5rem;
 }
@@ -94,11 +94,11 @@
    display: flex;
    flex-direction: row;
    justify-content: space-between;
- 
-   
-    
- 
- 
+
+
+
+
+
 
 }
 .value{
@@ -125,9 +125,9 @@
     margin-top: 2rem;
     margin-bottom: 2rem;
     padding: 1rem;
- 
-    
-    
+
+
+
 }
 .boletoContainer__size{
     display: flex;
@@ -164,10 +164,10 @@
 
 .pixCodeContainer___p{
     font-family: "poppins", sans-serif;
-    font-size: .6rem;
+    font-size: .5rem;
     text-align: center;
 
-    
+
 }
 .pixCodeContainer___encodedImage{
     width: 5vw;
@@ -197,19 +197,19 @@
 .pending {
     color: rgb(236, 162, 23); /* Cor para estado Pendente */
   }
-  
+
   .received {
     color: green; /* Cor para estado Pago */
   }
-  
+
   .overdue {
     color: rgb(236, 62, 62); /* Cor para estado Cobrança vencida */
   }
-  
+
   .confirmed {
     color: green; /* Cor para estado Pago */
   }
-  
+
   .unknown {
     color: gray; /* Cor para estado Desconhecido */
   }
@@ -231,7 +231,7 @@
     padding: 1rem;
     margin-bottom: 3rem;
     font-size: 1rem;
-    
+
   }
 
   .pixCodeContainer___Container{
@@ -250,6 +250,7 @@
     .pixCodeContainer___p{
 min-width: fit-content;    }
   }
+  
 @media screen and (min-width: 700px) {
     .boletoContainer__buttonContainer {
         display: flex;
@@ -262,13 +263,13 @@ min-width: fit-content;    }
     }
     .boletoContainer__card{
         width: 40vw;
-        
-        
+
+
     }
     .TotalAmountContainer{
         width: 40vw;
     }
-    
+
   .span{
      font-size: .9rem;
   }
@@ -294,7 +295,7 @@ min-width: fit-content;    }
         font-family: "poppins", sans-serif;
         width: 25vw;
         text-align: center;
-        
+
     }
     .pixCodeContainer{
         display: flex;
@@ -309,8 +310,8 @@ min-width: fit-content;    }
         justify-content: center;
         gap: 1.5rem;
     }
-    
-    
+
+
 }
 
 
@@ -319,7 +320,7 @@ min-width: fit-content;    }
         width: 60vw;
         display: flex;
         justify-content: center;
-        
+
 
     }
     .boletoContainer__button{
@@ -328,7 +329,7 @@ min-width: fit-content;    }
     }
     .boletoContainer__card{
         width: 60vw;
-        
+
     }
     .TotalAmountContainer{
         width: 60vw;
@@ -339,7 +340,7 @@ min-width: fit-content;    }
     }
 }
 
-@media only screen and (min-width: 800px) and (max-width: 1575px) and (orientation: landscape) {
+@media only screen and (min-width: 800px) and (max-width: 1575px)  {
     .boletoContainer__button {
         width: 10vw;
     }
@@ -356,11 +357,33 @@ min-width: fit-content;    }
         width: 40vw;
     }
 }
+@media only screen and (min-width: 820px) and (max-width: 1643x) and (orientation: portrait){
+.pixCodeContainer{
+    width: 60vw;
+
+
+}
+.pixCodeContainer___p{
+   min-width: fit-content;
+
+}
+.boletoContainer__card{
+    width: 60vw;
+
+}
+.TotalAmountContainer{
+    width: 60vw;
+}
+}
 
 @media only screen and (min-width: 1117px) and (max-width: 1728px) and (orientation: landscape) {
     @media not screen and (min-width: 800px) and (max-width: 1575px) and (orientation: landscape) {
+        .boletoContainer {
+            width: 60vw;
+        }
         .pixCodeContainer {
             width: 60vw;
+            
         }
 
         .span{
