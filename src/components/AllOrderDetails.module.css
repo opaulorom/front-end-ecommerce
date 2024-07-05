@@ -357,14 +357,16 @@ min-width: fit-content;    }
         width: 40vw;
     }
 }
-@media only screen and (min-width: 820px) and (max-width: 1643x) and (orientation: portrait){
+@media only screen and (min-width: 820px) and (max-width: 1180px) and (orientation: portrait){
 .pixCodeContainer{
     width: 60vw;
+    background-color: aqua;
 
 
 }
 .pixCodeContainer___p{
    min-width: fit-content;
+   margin-right: 4rem;
 
 }
 .boletoContainer__card{
