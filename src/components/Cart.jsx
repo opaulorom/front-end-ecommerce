@@ -196,25 +196,23 @@ const Cart = () => {
       setSelectedFreteIndex(index);
       localStorage.setItem("selectedFreteIndex", index);
       // After updating the shipping fee, fetch the updated cart data
-      axios
-                                  .get(`http://localhost:3001/api/cart/${userId}`, {
-                                    headers: {
-                                      Authorization: `Bearer ${token}`,
-                                    },
-                                  })
-                                  .then((response) => {
-                                    setGetCart(response.data.cart.products); // Define os produtos do carrinho
-                                    setGetTotal(response.data.cart); // Define o total do carrinho
-                                    setTotalQuantity(response.data.cart.TotalQuantity);
-                                    setLoading(false); // Define o estado de carregamento como falso
-                                  })
-                                  .catch((error) => {
-                                    setLoading(false); // Define o estado de carregamento como falso
-                            
-                                    console.log("Erro ao visualizar frete.", error);
-                                  });
+      const cartResponse = await axios.get(
+        `http://localhost:3001/api/cart/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Update the cart products and total in state variables
+      setGetCart(cartResponse.data.cart.products);
+      setGetTotal(cartResponse.data.cart);
 
       setShippingFee(cartResponse.data.cart.shippingFee);
+      setGetTotal(cartResponse.data.cart); // Define o total do carrinho
+      setTotalQuantity(cartResponse.data.cart.TotalQuantity);
+      setLoading(false); // Define o estado de carregamento como falso
     } catch (error) {
       console.error("Error updating shipping fee:", error);
     }
