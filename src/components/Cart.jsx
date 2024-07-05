@@ -43,6 +43,27 @@ const Cart = () => {
   const [openModal, setOpenModal] = useState(false);
   const modalRef = useRef(null);
   const [totalQuantity, setTotalQuantity] = useState([]);
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+
+  const [isRadioButtonEnabled, setIsRadioButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    // Atualiza o estado do botão baseado nas condições
+    if (selectedFreteIndex !== null || getTotal.totalAmount >= 300) {
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
+    }
+  }, [selectedFreteIndex, getTotal.totalAmount]);
+
+  useEffect(() => {
+    // Atualiza o estado do botão baseado nas condições
+    if (selectedFreteIndex !== null || getTotal.totalAmount <= 300) {
+      setIsRadioButtonEnabled(true);
+    } else {
+      setIsRadioButtonEnabled(false);
+    }
+  }, [selectedFreteIndex, getTotal.totalAmount]);
 
   const handleClickOpenModal = (uniqueId) => {
     setDeleteProductId(uniqueId);
@@ -175,18 +196,23 @@ const Cart = () => {
       setSelectedFreteIndex(index);
       localStorage.setItem("selectedFreteIndex", index);
       // After updating the shipping fee, fetch the updated cart data
-      const cartResponse = await axios.get(
-        `http://localhost:3001/api/cart/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // Update the cart products and total in state variables
-      setGetCart(cartResponse.data.cart.products);
-      setGetTotal(cartResponse.data.cart);
+      axios
+                                  .get(`http://localhost:3001/api/cart/${userId}`, {
+                                    headers: {
+                                      Authorization: `Bearer ${token}`,
+                                    },
+                                  })
+                                  .then((response) => {
+                                    setGetCart(response.data.cart.products); // Define os produtos do carrinho
+                                    setGetTotal(response.data.cart); // Define o total do carrinho
+                                    setTotalQuantity(response.data.cart.TotalQuantity);
+                                    setLoading(false); // Define o estado de carregamento como falso
+                                  })
+                                  .catch((error) => {
+                                    setLoading(false); // Define o estado de carregamento como falso
+                            
+                                    console.log("Erro ao visualizar frete.", error);
+                                  });
 
       setShippingFee(cartResponse.data.cart.shippingFee);
     } catch (error) {
@@ -296,15 +322,11 @@ const Cart = () => {
                     cursor: "pointer",
                     position: "absolute",
                     right: "10px",
-                    pointerEvents:
-                      selectedFreteIndex !== null || getTotal.totalAmount >= 300
-                        ? "auto"
-                        : "none",
-                    opacity:
-                      selectedFreteIndex !== null || getTotal.totalAmount >= 300
-                        ? 1
-                        : 0.5,
+                    pointerEvents: isButtonEnabled ? "auto" : "none",
+                    opacity: isButtonEnabled ? 1 : 0.5,
                   }}
+                  disabled={!isButtonEnabled}
+
                 >
                   Fazer Pedido
                 </button>
@@ -466,6 +488,23 @@ const Cart = () => {
                                       newCart[index].quantity = newQuantity;
                                       return newCart;
                                     });
+                                    axios
+                                    .get(`http://localhost:3001/api/cart/${userId}`, {
+                                      headers: {
+                                        Authorization: `Bearer ${token}`,
+                                      },
+                                    })
+                                    .then((response) => {
+                                      setGetCart(response.data.cart.products); // Define os produtos do carrinho
+                                      setGetTotal(response.data.cart); // Define o total do carrinho
+                                      setTotalQuantity(response.data.cart.TotalQuantity);
+                                      setLoading(false); // Define o estado de carregamento como falso
+                                    })
+                                    .catch((error) => {
+                                      setLoading(false); // Define o estado de carregamento como falso
+                              
+                                      console.log("Erro ao visualizar frete.", error);
+                                    });
                                   })
                                   .catch((error) => {
                                     console.log(
@@ -586,6 +625,24 @@ const Cart = () => {
                                         newQuantity;
                                     }
                                     return newCart;
+                                  });
+
+                                  axios
+                                  .get(`http://localhost:3001/api/cart/${userId}`, {
+                                    headers: {
+                                      Authorization: `Bearer ${token}`,
+                                    },
+                                  })
+                                  .then((response) => {
+                                    setGetCart(response.data.cart.products); // Define os produtos do carrinho
+                                    setGetTotal(response.data.cart); // Define o total do carrinho
+                                    setTotalQuantity(response.data.cart.TotalQuantity);
+                                    setLoading(false); // Define o estado de carregamento como falso
+                                  })
+                                  .catch((error) => {
+                                    setLoading(false); // Define o estado de carregamento como falso
+                            
+                                    console.log("Erro ao visualizar frete.", error);
                                   });
                                 })
                                 .catch((error) => {
@@ -756,6 +813,11 @@ const Cart = () => {
                           value={index}
                           onClick={() => handleRadioClick(index)}
                           checked={selectedFreteIndex === index}
+                          style={{
+                            pointerEvents: isRadioButtonEnabled ? "auto"  :"none"  ,
+                    opacity: isRadioButtonEnabled ? 1  : 0.5,
+                          }}
+                          disabled={!isRadioButtonEnabled}
                         />
                         <img
                           src={item.logo}
