@@ -68,6 +68,7 @@
   margin-top: -2rem;
   margin-left: 1rem;
   z-index: -1;
+
 }
 
 /* Filtered Quantity */
@@ -227,6 +228,7 @@
 
   .ProductsContainer__image {
     width: 40vw;
+    
   }
 }
 
@@ -264,6 +266,10 @@
 
   .priceContainer__image{
     width: 15vw;
+    transition: opacity 0.5s ease-in-out ease-in; /* Transição suave para a opacidade */
+    opacity: 1;
+
+
   }
 }
 

@@ -66,6 +66,8 @@
     
     .IMGContainer{
         width: 15vw;
+        transition: opacity 0.5s ease-in-out ease-in; /* Transição suave para a opacidade */
+        opacity: 1;
     }
     
     .liContainer{
