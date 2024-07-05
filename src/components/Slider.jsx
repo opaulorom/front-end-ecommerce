@@ -4,19 +4,17 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Link, useNavigate } from 'react-router-dom';
 import SliderSkeleton from './SliderSkeleton';
-import './Slider.css'
+import './Slider.css';
+
 const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) => {
   const [categories, setCategories] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Simula um delay de 2 segundos
-        // await new Promise(resolve => setTimeout(resolve, 2000));
-        
         const response = await axios.get('http://localhost:3001/api/categories');
         console.log('Categories Response:', response.data);
 
@@ -28,7 +26,7 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
       } catch (error) {
         console.error('Error fetching categories:', error);
       } finally {
-        setLoading(false);  // Definir carregamento como falso após tentativa de buscar dados
+        setLoading(false);
       }
     };
 
@@ -45,50 +43,52 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
     return () => clearInterval(autoPlayTimer);
   }, [currentIndex, categories, autoPlayInterval]);
 
-
-
-  const arrowStyle = {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    cursor: 'pointer',
-    fontSize: '24px',
+  const handleIndicatorClick = (index) => {
+    setCurrentIndex(index);
   };
 
   return (
-
     <div style={{ position: 'relative', textAlign: 'center' }}>
-    {loading ? (
-      <div style={{
-        marginTop:"15rem"
-      }}><SliderSkeleton/></div>  // Exibir carregamento enquanto os dados não são carregados
-    ) : (
-      <>
-        {categories.map((category, index) => (
-          <div key={index} style={{ display: index === currentIndex ? 'block' : 'none' }}>
-            {category.slider.map((subcategoryImages, subIndex) => (
-              <div key={subIndex}>
-                {subcategoryImages.map((image, imageIndex) => (
-                  <div key={imageIndex} style={{ display: 'inline-block', margin: '10px'  }}>
-                    <Link to={`/categories/${encodeURIComponent(category.name)}`}>
-                      <img src={image.imageUrl} alt={`Image ${image._id}`} class="categoriesImageStyle"/>
-                    </Link>
-                  </div>
-                ))}
-              </div>
+      {loading ? (
+        <div style={{ marginTop: "15rem" }}>
+          <SliderSkeleton />
+        </div>
+      ) : (
+        <>
+          {categories.map((category, index) => (
+            <div key={index} style={{ display: index === currentIndex ? 'block' : 'none' }}>
+              {category.slider.map((subcategoryImages, subIndex) => (
+                <div key={subIndex}>
+                  {subcategoryImages.map((image, imageIndex) => (
+                    <div key={imageIndex} style={{ display: 'inline-block', margin: '10px' }}>
+                      <Link to={`/categories/${encodeURIComponent(category.name)}`}>
+                        <img src={image.imageUrl} alt={`Image ${image._id}`} className="categoriesImageStyle" />
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          ))}
+          <div style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', left: 0, cursor: 'pointer', fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + categories.length) % categories.length)}>
+            <ArrowBackIosIcon style={{ fontSize: '2rem' }} />
+          </div>
+          <div style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', right: 0, cursor: 'pointer', fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % categories.length)}>
+            <ArrowForwardIosIcon style={{ fontSize: '2rem' }} />
+          </div>
+          <div className="indicator-container" style={{ textAlign: 'center', marginTop: '10px' }}>
+            {categories.map((_, index) => (
+              <span
+                key={index}
+                className={`indicator ${index === currentIndex ? 'active' : ''}`}
+                onClick={() => handleIndicatorClick(index)}
+                style={{ cursor: 'pointer', padding: '5px', margin: '0 5px', borderRadius: '50%', background: index === currentIndex ? 'black' : 'gray' }}
+              ></span>
             ))}
           </div>
-        ))}
-        <div style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', left: 0, cursor: 'pointer', fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + categories.length) % categories.length)}>
-          <ArrowBackIosIcon style={{ fontSize: '2rem' }} />
-        </div>
-        <div style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', right: 0, cursor: 'pointer', fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % categories.length)}>
-          <ArrowForwardIosIcon style={{ fontSize: '2rem' }} />
-        </div>
-      </>
-    )}
-  </div>
-
+        </>
+      )}
+    </div>
   );
 };
 
