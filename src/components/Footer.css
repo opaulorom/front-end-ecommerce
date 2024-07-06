@@ -30,4 +30,11 @@
     .imgFooter{
         width: 2rem;
     }
+    .footerH3{
+        color:#4d4d4d;
+        font-family: 'poppins', sans-serif;
+        font-weight: 500;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
 }
