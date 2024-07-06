@@ -9,6 +9,7 @@ import { useAuth } from "../context/AuthContext";
 import IconToggle from "./IconToggle";
 import "./NewArrivals.css";
 import NewArrivalsSkeleton from "./NewArrivalsSkeleton";
+import zIndex from "@mui/material/styles/zIndex";
 
 const NewArrivals = () => {
   const [newArrivals, setNewArrivals] = useState([]);
@@ -45,7 +46,14 @@ const NewArrivals = () => {
 
   return (
     <div>
-      <Header />
+      <div style={{
+        
+        zIndex:"3",
+        position:"absolute"
+      }}>
+      <Header  />
+
+      </div>
       <Navbar />
       {loading ? (
         <NewArrivalsSkeleton /> // Exibir carregamento enquanto os dados não são carregados
@@ -55,7 +63,7 @@ const NewArrivals = () => {
             {newArrivals.map((product, index) => (
               <li key={product._id} className="liContainer">
                 <div className="IconToggleContainer">
-                  <IconToggle productId={product._id} />
+                  <IconToggle productId={product._id}  />
                 </div>
                 <Link to={`/products/${product._id}`} className="LinkContainer">
                   {product.variations &&

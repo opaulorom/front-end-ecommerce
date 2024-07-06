@@ -1,7 +1,12 @@
 import "./Footer.css"
+import FooterList from "./FooterList";
 export default function Footer() {
     return (
         <footer className="footerContainer">
+              <div>
+                <h3  className="footerH3">Categorias</h3>
+                <FooterList />
+            </div>
             <div>
                 <h3  className="footerH3">Sobre Nós</h3>
                 <p>Informações sobre a empresa.</p>

@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import styles from "./CategoriesList.module.css"
-import CategoriesDesktop from './CategoriesDesktop';
+import styles from "./FooterList.module.css"
 import ClearIcon from '@mui/icons-material/Clear';
 
-const CategoriesList = () => {
+const FooterList = () => {
   const [categories, setCategories] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [categoriesHovered, setCategoriesHovered] = useState(false);
@@ -73,20 +72,13 @@ const CategoriesList = () => {
   }, [modalOpen]);
 
   return (
-    <div style={{ marginTop: '15rem', overflow: 'hidden'}} className={styles.CategoriesList}>
+    <div  >
       
       <ul 
-        style={{ listStyleType: 'none', padding: 0, display: 'flex', flexDirection: 'row', gap: '2.5rem' }}
+        style={{ listStyleType: 'none',  }}
       >
         
-        <li 
-          style={{ textDecoration: 'none', color: "black", fontWeight: "700", whiteSpace: "nowrap", cursor:"pointer" }}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeaveCategories}
-        >
-          Categorias
-        </li>
-
+       
         {modalOpen && (
           <div 
             className={styles.modal} 
@@ -100,6 +92,7 @@ const CategoriesList = () => {
           </div>
         )}
         
+        <div className={styles.FooterList}>
         {categories.map((category) => (
           <li key={category.category}>
             <Link to={`/categories/${category.category}`} style={{ textDecoration: 'none', color: "black", fontWeight: "700", whiteSpace: "nowrap",  }}>
@@ -107,18 +100,16 @@ const CategoriesList = () => {
             </Link>
           </li>
         ))}
-        {/* <li>
-          <Link to={"/whatsNew"} style={{ color: 'white', textDecoration: 'none' }}>
-
-          <span style={{fontSize:"1rem"}}>Promoções</span>
-          </Link>
-        </li> */}
-        <li>
+          
+          <li>
         <Link to={"/newArrivals"} style={{ color: 'black', textDecoration: 'none' }}>
 
           <span style={{fontSize:"1rem"}}>Novidades</span>
         </Link>
         </li>
+        </div>
+       
+     
         
       </ul>
       
@@ -126,4 +117,4 @@ const CategoriesList = () => {
   );
 };
 
-export default CategoriesList;
+export default FooterList;

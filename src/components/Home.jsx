@@ -9,6 +9,7 @@ import NewArrivals from "./NewArrivals";
 import Slider from "../components/Slider";
 import Footer from "./Footer";
 import AccordionFooter from "../components/AccordionFooter";
+import CategoriesList from "./CategoriesList";
 
 
 const Home = () => {
@@ -16,15 +17,17 @@ const Home = () => {
   
   return (
     <div>
+              <CategoriesList />
+
       <Slider />
       <Categories />
       <CategoryCarousel />
       <Header />
+   
       <div
         style={{ display: "flex", marginTop: "3rem", flexDirection: "column" }}
       >
         <h1 style={{ marginTop: "1rem" }}>Novidades</h1>
-
         <NewArrivals />{" "}
       </div>
 
