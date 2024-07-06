@@ -3,6 +3,10 @@
 .Accordion{
     margin-bottom: 5rem;
 }
+
+.socialMedia{
+    list-style: none;
+}
 @media screen and (min-width: 700px) {
     .Accordion{
         display: none;

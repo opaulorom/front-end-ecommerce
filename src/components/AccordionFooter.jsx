@@ -80,10 +80,9 @@ export default function CustomizedAccordions() {
         </AccordionSummary>
         <AccordionDetails>
           <nav aria-label="social media">
-            <ul>
-              <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-              <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a></li>
-              <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <ul className='socialMedia'>
+              <li style={{marginBottom:"1rem"}}><a href="https://www.facebook.com/profile.php?id=100078800343826&locale=pt_BR" target="_blank" rel="noopener noreferrer" style={{textDecoration:"none", color:"inherit"}}>Facebook</a></li>
+              <li><a href="https://www.instagram.com/filipealvesr2019/" target="_blank" rel="noopener noreferrer" style={{textDecoration:"none", color:"inherit"}}>Instagram</a></li>
             </ul>
           </nav>
         </AccordionDetails>

@@ -15,7 +15,7 @@ export default function Footer() {
             <div>
                 <h3>Redes Sociais</h3>
                 <ul className="footer__ul">
-                    <li><a href="https://imgur.com/xH6qf2B" ><img src="https://i.imgur.com/xH6qf2B.png" title="source: imgur.com"  className="imgFooter"/></a></li>
+                    <li><a href="https://www.facebook.com/profile.php?id=100078800343826&locale=pt_BR" ><img src="https://i.imgur.com/xH6qf2B.png" title="source: imgur.com"  className="imgFooter"/></a></li>
                     <li><a href="https://www.instagram.com/filipealvesr2019/"><img src="https://i.ibb.co/bNBsmQr/instagram.png" alt="" /></a></li>
                     {/* <li><a href="https://instagram.com">Instagram</a></li> */}
                 </ul>
