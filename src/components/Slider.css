@@ -64,7 +64,19 @@
   .arrowContainer{
     display: none;
   }
+.arrowIcon{
+  width: 40px;;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.6); /* Branco com 50% de opacidade */
 
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, border-color 0.3s;
+  border: 0;
+}
 @media screen and (min-width: 700px) {
   .arrowContainer{
     display: block;

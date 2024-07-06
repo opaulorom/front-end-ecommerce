@@ -77,18 +77,19 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
                 key={index}
                 className={`indicator ${index === currentIndex ? 'active' : ''}`}
                 onClick={() => handleIndicatorClick(index)}
-                style={{ cursor: 'pointer', padding: '5px', margin: '0 5px', borderRadius: '50%', background: index === currentIndex ? 'black' : 'gray' }}
+                style={{ cursor: 'pointer', border:"none" , padding: '5px', margin: '0 5px', borderRadius: '50%', background: index === currentIndex ? '#000' : '#999' }}
               ></span>
             ))}
           </div>
             </div>
           ))}
           <div className='arrowContainer'>
-          <div style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', left: 0, cursor: 'pointer', fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + categories.length) % categories.length)} >
+          <div               className="arrowIcon"
+ style={{ position: 'absolute', top: '55%', transform: 'translateY(-50%)', left: "50px", cursor: 'pointer', color: "black", fontSize: '24px', }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + categories.length) % categories.length)} >
             <ArrowBackIosIcon style={{ fontSize: '2rem' }} />
           </div>
-          <div style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', right: 0, cursor: 'pointer', fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % categories.length)}>
-            <ArrowForwardIosIcon style={{ fontSize: '2rem' }} />
+          <div  className="arrowIcon" style={{ position: 'absolute', top: '55%', transform: 'translateY(-50%)', right: "60px", cursor: 'pointer', color: "black",  fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % categories.length)}>
+            <ArrowForwardIosIcon style={{ fontSize: '2rem', position:"absolute", }} />
           </div>
 
           </div>
