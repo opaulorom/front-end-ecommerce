@@ -63,11 +63,24 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
                     <div key={imageIndex} style={{ display: 'inline-block', margin: '10px' }}>
                       <Link to={`/categories/${encodeURIComponent(category.name)}`}>
                         <img src={image.imageUrl} alt={`Image ${image._id}`} className="categoriesImageStyle" />
+                      
                       </Link>
+                      
                     </div>
                   ))}
+                  
                 </div>
               ))}
+               <div className="indicator-container" style={{ textAlign: 'center', marginTop: '10px' }}>
+            {categories.map((_, index) => (
+              <span
+                key={index}
+                className={`indicator ${index === currentIndex ? 'active' : ''}`}
+                onClick={() => handleIndicatorClick(index)}
+                style={{ cursor: 'pointer', padding: '5px', margin: '0 5px', borderRadius: '50%', background: index === currentIndex ? 'black' : 'gray' }}
+              ></span>
+            ))}
+          </div>
             </div>
           ))}
           <div className='arrowContainer'>
@@ -79,16 +92,7 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
           </div>
 
           </div>
-          <div className="indicator-container" style={{ textAlign: 'center', marginTop: '10px' }}>
-            {categories.map((_, index) => (
-              <span
-                key={index}
-                className={`indicator ${index === currentIndex ? 'active' : ''}`}
-                onClick={() => handleIndicatorClick(index)}
-                style={{ cursor: 'pointer', padding: '5px', margin: '0 5px', borderRadius: '50%', background: index === currentIndex ? 'black' : 'gray' }}
-              ></span>
-            ))}
-          </div>
+         
         </>
       )}
     </div>
