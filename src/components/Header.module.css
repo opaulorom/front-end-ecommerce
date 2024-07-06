@@ -376,9 +376,7 @@ body {
 
 
 @media  (min-width: 575px) and (max-width: 767px) and (orientation: portrait){
-  .ContainerHeaderMobile{
 
-  }
 
   .MobileHeader__Container{
     gap: 17rem;
@@ -387,9 +385,7 @@ body {
 
 
 @media  (min-width: 575px) and (max-width: 822px) {
-  .ContainerHeaderMobile{
-
-  }
+ 
 
   .MobileHeader__Container{
     gap: 15rem;
