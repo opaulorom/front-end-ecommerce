@@ -1,10 +1,7 @@
-import AccordionFooter from "./AccordionFooter";
 import "./Footer.css"
-import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 export default function Footer() {
     return (
         <footer className="footerContainer">
-            <AccordionFooter />
        
             <div>
                 <h3>Sobre Nós</h3>

@@ -1,4 +1,8 @@
 
+
+.Accordion{
+    margin-bottom: 5rem;
+}
 @media screen and (min-width: 700px) {
     .Accordion{
         display: none;

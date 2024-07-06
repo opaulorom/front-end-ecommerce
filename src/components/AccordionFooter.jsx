@@ -6,6 +6,7 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import "./AccordionFooter.css"
+import Navbar from './Navbar';
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -69,6 +70,7 @@ export default function CustomizedAccordions() {
           <div>
             <Typography component="p">Email: <a href="mailto:contato@exemplo.com">contato@exemplo.com</a></Typography>
             <Typography component="p">Telefone: <a href="tel:+0012345678">(00) 1234-5678</a></Typography>
+            Copyright © 2024  - 2024 
           </div>
         </AccordionDetails>
       </Accordion>
@@ -91,7 +93,7 @@ export default function CustomizedAccordions() {
 
 
 
-
+ <Navbar  />
       
     </div>
   );

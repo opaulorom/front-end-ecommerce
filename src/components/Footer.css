@@ -4,9 +4,10 @@
 }
 
 @media screen and (max-width: 699px) {
-    .footer{
+    .footerContainer{
         display: none;
     }
+    
 }
 
 @media screen and (min-width: 700px) {
