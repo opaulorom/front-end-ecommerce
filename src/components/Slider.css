@@ -59,3 +59,14 @@
   background: black;
 }
 
+
+
+  .arrowContainer{
+    display: none;
+  }
+
+@media screen and (min-width: 700px) {
+  .arrowContainer{
+    display: block;
+  }
+}

@@ -70,11 +70,14 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
               ))}
             </div>
           ))}
-          <div style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', left: 0, cursor: 'pointer', fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + categories.length) % categories.length)}>
+          <div className='arrowContainer'>
+          <div style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', left: 0, cursor: 'pointer', fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + categories.length) % categories.length)} >
             <ArrowBackIosIcon style={{ fontSize: '2rem' }} />
           </div>
           <div style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', right: 0, cursor: 'pointer', fontSize: '24px' }} onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % categories.length)}>
             <ArrowForwardIosIcon style={{ fontSize: '2rem' }} />
+          </div>
+
           </div>
           <div className="indicator-container" style={{ textAlign: 'center', marginTop: '10px' }}>
             {categories.map((_, index) => (
