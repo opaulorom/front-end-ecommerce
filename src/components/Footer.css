@@ -1,5 +1,32 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
 @media screen and (max-width: 699px) {
     .footer{
         display: none;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .footerContainer{
+        background-color: #f2f1ef;
+        height: 30vh;
+        display: flex;
+        justify-content: space-around;
+
+        align-items: center; /* Centraliza os itens verticalmente */
+
+    }
+    
+    .footer__ul{
+        display: flex;
+        justify-content: space-around;
+       list-style: none;
+       gap: 2rem;
+    }
+    .imgFooter{
+        width: 2rem;
     }
 }

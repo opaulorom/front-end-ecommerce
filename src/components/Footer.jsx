@@ -1,10 +1,11 @@
 import AccordionFooter from "./AccordionFooter";
 import "./Footer.css"
+import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 export default function Footer() {
     return (
-        <footer>
+        <footer className="footerContainer">
             <AccordionFooter />
-            <div className="footer">
+       
             <div>
                 <h3>Sobre Nós</h3>
                 <p>Informações sobre a empresa.</p>
@@ -16,14 +17,15 @@ export default function Footer() {
             </div>
             <div>
                 <h3>Redes Sociais</h3>
-                <ul>
-                    <li><a href="https://facebook.com">Facebook</a></li>
-                    <li><a href="https://twitter.com">Twitter</a></li>
-                    <li><a href="https://instagram.com">Instagram</a></li>
+                <ul className="footer__ul">
+                    <li><a href="https://imgur.com/xH6qf2B" ><img src="https://i.imgur.com/xH6qf2B.png" title="source: imgur.com"  className="imgFooter"/></a></li>
+                    <li><a href="https://www.instagram.com/filipealvesr2019/"><img src="https://i.ibb.co/bNBsmQr/instagram.png" alt="" /></a></li>
+                    {/* <li><a href="https://instagram.com">Instagram</a></li> */}
                 </ul>
             </div>
-            </div>
-           
+            {/* <p>            Copyright © 2024  - 2024 
+            </p> */}
+         
         </footer>
     );
 }
