@@ -7,6 +7,7 @@ import CategoryCarousel from "./CategoryCarousel";
 import DiscountImageCarousel from "./DiscountImageCarousel ";
 import NewArrivals from "./NewArrivals";
 import Slider from "../components/Slider";
+import Footer from "./Footer";
 
 const Home = () => {
  
@@ -26,7 +27,8 @@ const Home = () => {
       </div>
 
       <Navbar></Navbar>
-     
+     <Footer/>
+
       
     </div>
   );
