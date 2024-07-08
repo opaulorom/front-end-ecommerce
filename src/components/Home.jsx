@@ -9,7 +9,6 @@ import NewArrivals from "./NewArrivals";
 import Slider from "../components/Slider";
 import Footer from "./Footer";
 import AccordionFooter from "../components/AccordionFooter";
-import CategoriesList from "./CategoriesList";
 
 
 const Home = () => {
@@ -17,7 +16,7 @@ const Home = () => {
   
   return (
     <div>
-              <CategoriesList />
+    
 
       <Slider />
       <Categories />
