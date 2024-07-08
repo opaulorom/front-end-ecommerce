@@ -5,11 +5,7 @@ import Stack from "@mui/material/Stack";
 
 import Header from "./Header";
 import IconToggle from "./IconToggle";
-import CustomPagination from "./CustomPagination";
-
-import styles from "./CategorySubcategories.module.css";
-import TuneIcon from "@mui/icons-material/Tune";
-import CircularIndeterminate from "./CircularIndeterminate";
+import styles from "./SearchResults.module.css"
 import colorMap from "./colorMap";
 import Navbar from "./Navbar";
 const SearchResults = () => {
@@ -344,45 +340,16 @@ const SearchResults = () => {
   };
 
   return (
-    <div style={{
-      display:"flex",
-      alignItems:"center",
-      justifyContent:"space-between"
-    }}>
+    <div >
       <Header />
 
 
 
-      <div
-        style={{
-          marginTop: "15rem",
-        }}
-      >
 
-        <div>
-
-          
-        </div>
-       
-
-      </div>
-
-
-      <div>
-        <div style={{ marginTop: "10rem" }}>
-
-            <>
-              <div>
+              <div className={styles.SearchResultsCotainer}>
                 <ul
-                  style={{
-                    listStyleType: "none",
-                    padding: 0,
-                    margin: 0,
-                    display: "grid",
-                    gridTemplateColumns: "repeat(4, 1fr)",
-                    gap: "1rem",
-                    marginTop: "13rem",
-                  }}
+               
+                  className={styles.ul}
                 >
                   {searchResults.length === 0 && (
                     <div
@@ -405,28 +372,26 @@ const SearchResults = () => {
                     </div>
                   )}
                   {searchResults.map((product) => (
-                    <li key={product._id}>
+                    <li key={product._id} className={styles.li}>
                       <Link
                         to={`/products/${product._id}`}
                         style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          marginBottom: "2rem",
-                          alignItems: "center",
+                      
                           color: "black",
                           textDecoration: "none",
+                          position:"relative"
                         }}
+                        className={styles.Link}
                       >
+                        <div className={styles.IconToggle}>
                         <IconToggle productId={product._id} />
+
+                        </div>
                         <img
                           src={product.variations[0].urls[0]}
                           alt=""
-                          style={{
-                            width: "15vw",
-                            marginTop: "-2rem",
-                            zIndex: "-1",
-                            marginLeft: "1rem",
-                          }}
+                      
+                          className={styles.SearchResultsCotainer__image}
                         />
                         <div
                           style={{
@@ -472,6 +437,7 @@ const SearchResults = () => {
                     justifyContent: "center",
                     marginBottom: "2rem",
                   }}
+                  className={styles.Pagination}
                 >
                   <Stack spacing={2}>
                     <Pagination
@@ -484,10 +450,9 @@ const SearchResults = () => {
                     />
                   </Stack>
                 </div>
-              </div>
-            </>
+
           
-        </div>
+      
       </div>
       <Navbar />
     </div>
