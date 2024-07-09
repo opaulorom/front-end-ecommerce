@@ -23,13 +23,15 @@ const NewArrivals = () => {
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
-        const response = await fetch(
+        await new Promise((resolve) => setTimeout(resolve, 10000));
+                      const response = await fetch(
           `http://localhost:3001/api/products/new-arrivals?page=${currentPage}`
         );
         const data = await response.json();
         console.log("Data from server:", data);
         setNewArrivals(data.newArrivals);
         setTotalProducts(data.totalProducts);
+
         setLoading(false); // Define loading como falso após obter os dados
       } catch (error) {
         setLoading(false); // Definir carregamento como falso após tentativa de buscar dados
@@ -55,9 +57,7 @@ const NewArrivals = () => {
 
       </div>
       <Navbar />
-      {loading ? (
-        <NewArrivalsSkeleton /> // Exibir carregamento enquanto os dados não são carregados
-      ) : (
+   
         <div style={{ marginTop: "20rem" }}>
           <ul className="ulContainer">
             {newArrivals.map((product, index) => (
@@ -137,7 +137,7 @@ const NewArrivals = () => {
             </Stack>
           </div>
         </div>
-      )}
+
     </div>
   );
 };
