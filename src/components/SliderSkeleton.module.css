@@ -11,6 +11,6 @@
 
 @media screen and (width >= 700px) {
     .SliderSkeletonContainer{
-        margin-top: -13rem;
+        margin-top: 1rem;
     }
 }
