@@ -11,7 +11,7 @@ import "./NewArrivals.css";
 import NewArrivalsSkeleton from "./NewArrivalsSkeleton";
 import zIndex from "@mui/material/styles/zIndex";
 
-const NewArrivals = () => {
+const NewArrivals = ({ onNewArrivalsUpdate }) => {
   const [newArrivals, setNewArrivals] = useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,13 +24,14 @@ const NewArrivals = () => {
     const fetchSearchResults = async () => {
       try {
         await new Promise((resolve) => setTimeout(resolve, 10000));
-                      const response = await fetch(
+        const response = await fetch(
           `http://localhost:3001/api/products/new-arrivals?page=${currentPage}`
         );
         const data = await response.json();
         console.log("Data from server:", data);
         setNewArrivals(data.newArrivals);
         setTotalProducts(data.totalProducts);
+        onNewArrivalsUpdate(data.newArrivals); // Atualiza o estado no componente pai
 
         setLoading(false); // Define loading como falso após obter os dados
       } catch (error) {
@@ -40,7 +41,7 @@ const NewArrivals = () => {
     };
 
     fetchSearchResults();
-  }, [currentPage]);
+  }, [currentPage, onNewArrivalsUpdate]);
 
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
@@ -57,7 +58,9 @@ const NewArrivals = () => {
 
       </div>
       <Navbar />
-   
+      {loading ? (
+        <NewArrivalsSkeleton /> // Exibir carregamento enquanto os dados não são carregados
+      ) : (
         <div style={{ marginTop: "20rem" }}>
           <ul className="ulContainer">
             {newArrivals.map((product, index) => (
@@ -137,7 +140,7 @@ const NewArrivals = () => {
             </Stack>
           </div>
         </div>
-
+      )}
     </div>
   );
 };

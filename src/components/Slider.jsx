@@ -15,7 +15,7 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 10000));
+        // await new Promise((resolve) => setTimeout(resolve, 10000));
         const response = await axios.get('http://localhost:3001/api/categories');
         console.log('Categories Response:', response.data);
 

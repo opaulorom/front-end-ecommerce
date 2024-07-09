@@ -68,7 +68,7 @@ const CategoryCarousel = () => {
     console.log('Clicked on image. Redirecting to category subcategories:', categoryName, subcategoryName);
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve,10000));
 
       const response = await axios.get(`http://localhost:3001/api/subcategories/${categoryName}`);
       const subcategories = response.data;
@@ -133,7 +133,7 @@ const CategoryCarousel = () => {
 
                   {category.images.map((subcategoryImages, index) => (
                     subcategoryImages.map(image => (
-                      <div key={image._id} style={{ width: '150px', height: '150px', display: 'inline-block' }}>
+                      <div key={image._id} style={{ width: '150px', height: '150px', display: 'inline-block', marginTop:"-6rem" }}>
                         <div onClick={() => handleImageClick(category.name, subcategoryImages.name)}>
                           <Link to={`/categories/${encodeURIComponent(category.name)}`} style={{ gap: "1rem" }}>
                             <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "50%", aspectRatio: "1/1" }} />
@@ -142,7 +142,7 @@ const CategoryCarousel = () => {
                       </div>
                     ))
                   ))}
-                  <div style={{ marginTop: '1rem' }}>{category.name}</div>
+                  <span style={{ marginTop: '1rem', fontFamily:"poppins, sans serif ", color:"#666", fontSize:".9rem", fontWeight:"400" }}>{category.name}</span>
                 </div>
               ))}
             </div>

@@ -53,7 +53,7 @@ const ImageGallery = () => {
   return (
     <div style={{ position: 'relative' }}>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', position: 'relative' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', position: 'relative', marginTop:"-10rem" }}>
         {categories.slice(startIndex, endIndex).map((category, index) => (
           <div key={index} style={{ width: '150px', height: '150px', margin: '10px', textAlign: 'center' }}>
             {category.images.map((subcategoryImages, index) => (
@@ -62,7 +62,7 @@ const ImageGallery = () => {
                   <Link to={`/categories/${encodeURIComponent(category.name)}`}>
                     <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "50%", aspectRatio: "1/1" }} />
                   </Link>
-                  <div style={{ marginTop: '5px', fontFamily:"poppins", fontWeight:"400", fontSize:".9rem" }}>{category.name}</div>
+                  <span style={{ marginTop: '5px', fontFamily:"poppins", fontWeight:"400", fontSize:".9rem", color:"#666" }}>{category.name}</span>
                 </div>
               ))
             ))}
