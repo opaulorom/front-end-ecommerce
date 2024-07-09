@@ -77,7 +77,8 @@ const Slider = ({ alt, imageWidth, imageHeight, autoPlayInterval, dataFetch }) =
                     key={index}
                     className={`indicator ${index === currentIndex ? 'active' : ''}`}
                     onClick={() => handleIndicatorClick(index)}
-                    style={{ cursor: 'pointer', border: "none", padding: '5px', margin: '0 5px', borderRadius: '50%', background: index === currentIndex ? '#000' : '#999' }}
+                    style={{  background: index === currentIndex ? '#000' : '#999' }}
+                    
                   ></span>
                 ))}
               </div>
