@@ -26,7 +26,6 @@ const Home = () => {
       <div
         style={{ display: "flex", marginTop: "3rem", flexDirection: "column" }}
       >
-        <h1 style={{ marginTop: "1rem" }}>Novidades</h1>
         <NewArrivals  />{" "}
       </div>
 
