@@ -8,7 +8,7 @@ import DiscountImageCarousel from "./DiscountImageCarousel ";
 import NewArrivals from "./NewArrivals";
 import Slider from "../components/Slider";
 import Footer from "./Footer";
-import AccordionFooter from "../components/AccordionFooter";
+
 
 
 const Home = () => {
@@ -31,7 +31,7 @@ const Home = () => {
 
       <Navbar></Navbar>
      <Footer/>
-     <AccordionFooter />
+   
 
       
     </div>

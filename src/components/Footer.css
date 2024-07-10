@@ -1,41 +1,89 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
-
-@media screen and (max-width: 699px) {
-    .footerContainer{
-        display: none;
-    }
-    
+.footer__li a {
+  text-decoration: none;
+  color: white;
 }
+.footerContainer {
+  background-color: #05070a;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+}
+.footerContainer__div{
+    margin-top: 2rem;
+ 
+}
+.footer__ul {
+    display: flex;
+    flex-direction: column;
+  justify-content: space-around;
+  max-width: fit-content;
+  list-style: none;
+  gap: 2rem;
+}
+.footer__p {
+  color: #d3d3d3;
+}
+.imgFooter {
+  width: 2rem;
+}
+.footerH3 {
+  color: white;
+  font-family: "poppins", sans-serif;
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  max-width: fit-content;
+}
+.footer__li{
+   
 
+}
 @media screen and (min-width: 700px) {
-    .footerContainer{
-        background-color: #f2f1ef;
-        height: 40vh;
-        display: flex;
-        justify-content: space-around;
+  .footerContainer {
+    background-color: #05070a;
+    height: 40vh;
+    display: flex;
+    flex-direction: row;
 
-        align-items: center; /* Centraliza os itens verticalmente */
+    justify-content: space-around;
 
-    }
-    
-    .footer__ul{
-        display: flex;
-        justify-content: space-around;
-       list-style: none;
-       gap: 2rem;
-    }
-    .imgFooter{
-        width: 2rem;
-    }
-    .footerH3{
-        color:#4d4d4d;
-        font-family: 'poppins', sans-serif;
-        font-weight: 500;
-        font-size: 1.3rem;
-        margin-bottom: 1rem;
-    }
-    
+    align-items: center; /* Centraliza os itens verticalmente */
+  }
+
+  .footer__ul {
+    display: flex;
+    flex-direction: column;
+
+
+    max-width: fit-content;
+
+    list-style: none;
+    gap: 1rem;
+  }
+
+  .footer__li{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .footer__p {
+    color: #d3d3d3;
+  }
+  .imgFooter {
+    width: 2rem;
+  }
+  .footerH3 {
+    color: white;
+    font-family: "poppins", sans-serif;
+    font-weight: 500;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
 }
