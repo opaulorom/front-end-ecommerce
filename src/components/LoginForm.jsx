@@ -14,7 +14,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
   const navigate = useNavigate(); // Inicialize o hook   const [attemptedLogin, setAttemptedLogin] = useState(false);
   const [attemptedLogin, setAttemptedLogin] = useState(false);
-
+const [hideMessage, setHideMessage] = useState(false)
   const handleLogin = () => {
     setAttemptedLogin(true)
     if (validateForm()) {
@@ -32,7 +32,7 @@ const LoginForm = () => {
     if (!password.trim()) {
       errors.password = 'Campo obrigatório';
     }
-
+    setHideMessage(true)
     setFormErrors(errors);
 
     return Object.keys(errors).length === 0;
@@ -58,8 +58,10 @@ const LoginForm = () => {
                 Tentativas restantes: <span style={{ color: "blue" }}>{remainingAttempts}</span>
               </div>
             ) : (
-              <span style={{ color: "red" }}>Usuário bloqueado tente mais tarde.</span>
-            )
+              
+              email.trim() && password.trim() ?
+              <span style={{ color: "red" }}>Usuário bloqueado, tente mais tarde.</span>
+              : null            )
           )}
           <div className='loginStyle__inputLabel'>
 

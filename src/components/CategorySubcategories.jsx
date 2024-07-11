@@ -501,6 +501,7 @@ const CategorySubcategories = () => {
                   default:
                     imageUrl = selectedColorVariation.urls[0];
                 }
+                
                 return (
 
                   <>

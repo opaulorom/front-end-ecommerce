@@ -1,0 +1,25 @@
+.nav {
+    text-align: center; /* Centraliza o <ul> dentro do <nav> */
+    
+  }
+  
+  .ul {
+    list-style-type: none; /* Remove marcadores da lista */
+    padding: 0;
+    margin: 0 auto; /* Centraliza o <ul> */
+    display: inline-block; /* Permite centralizar o <ul> dentro do <nav> */
+    text-align: left; /* Alinha o texto à esquerda dentro do <ul> */
+   
+  }
+  
+  .Link {
+    display: block; /* Garante que o texto esteja à esquerda */
+    text-decoration: none;
+    color: rgb(52, 52, 54);
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-family: 'poppins', sans-serif;
+    
+  }
+  

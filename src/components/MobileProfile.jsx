@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import Header from "./Header";
 import LoginForm from "./LoginForm";
-import Protected from "./Protected";
+import styles from "./MobileProfile.module.css";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 const MobileProfile = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const [showButton, setShowButton] = useState(false);
@@ -23,15 +24,15 @@ const MobileProfile = () => {
       <div style={{ marginTop: "10rem" }}>
         {loggedIn === true ? (
           <>
-            <nav>
-              <ul>
-                <Link to={"/protected"}>
+            <nav className={styles.nav}>
+              <ul className={styles.ul}>
+                <Link to={"/protected"} className={styles.Link}>
                   <li>Minha conta</li>
                 </Link>
-                <Link to={"/orders"}>
+                <Link to={"/orders"}  className={styles.Link}>
                   <li>Historico de Compras</li>
                 </Link>
-                <Link to={"/forgotPassword"}>
+                <Link to={"/forgotPassword"} className={styles.Link}>
                   <li>Alterar senha</li>
                 </Link>
               </ul>
