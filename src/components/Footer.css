@@ -40,10 +40,7 @@
   margin-bottom: 1rem;
   max-width: fit-content;
 }
-.footer__li{
-   
 
-}
 @media screen and (min-width: 700px) {
   .footerContainer {
     background-color: #05070a;

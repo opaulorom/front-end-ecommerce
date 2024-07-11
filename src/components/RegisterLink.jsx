@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Header from "./Header";
-
+import styles from "./RegisterLink.module.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const RegisterLink = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +19,8 @@ const RegisterLink = () => {
       setEmail("");
       setPassword("");
       setError("");
-      alert("Link enviado com sucesso!");
+      toast.success("Email enviado com sucesso cheque a sua caixa de email!");
+
     } catch (err) {
       setError(err.response.data.message);
     }
@@ -25,26 +28,42 @@ const RegisterLink = () => {
 
   return (
     <>
-    <Header/>
-    <Navbar/>
-    
-    <div style={{marginTop:"15rem"}}>
-      <h2>Enviar link (Customer)</h2>
-      {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-    
-        <button type="submit">enviar</button>
-      </form>
-    </div>
+      <Header />
+      <Navbar />
+
+      <div  className={styles.formContainer}>
+        <h1 className={styles.formContainer__h1}>Digite seu email</h1>
+        {error && <p>{error}</p>}
+        <form onSubmit={handleSubmit} className={styles.formContainer__form}>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          style={{ marginTop: "8rem" }}
+        />
+            <label className={styles.formContainer__label}>Email:</label>
+            <div className={styles.formContainer__div}>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={styles.formContainer__input}
+                placeholder="email@exemplo.com"
+              />
+            <button type="submit" className={styles.formContainer__button}>enviar</button>
+
+
+          </div>
+        </form>
+      </div>
     </>
   );
 };
