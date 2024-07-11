@@ -58,7 +58,7 @@ const RegisterLink = () => {
                 className={styles.formContainer__input}
                 placeholder="email@exemplo.com"
               />
-            <button type="submit" className={styles.formContainer__button}>enviar</button>
+            <button type="submit" className={styles.formContainer__button}>Enviar</button>
 
 
           </div>

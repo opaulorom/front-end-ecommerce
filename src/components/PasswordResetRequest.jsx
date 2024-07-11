@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Header from './Header';
 import Navbar from './Navbar';
-
+import styles from './PasswordResetRequest.module.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const PasswordResetRequest = () => {
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -16,7 +17,8 @@ const PasswordResetRequest = () => {
 
     try {
       const response = await axios.post('http://localhost:3001/forgot-password', { email });
-      setMessage(response.data.message);
+      toast.success("Email de recuperação enviado com sucesso cheque a sua caixa de email!");
+
     } catch (error) {
       setMessage(error.response.data.message);
     }
@@ -24,21 +26,35 @@ const PasswordResetRequest = () => {
 
   return (
     <>
-    <Header/>
-      <Navbar/>
-    <div style={{marginTop:"15rem"}}>
-   
+      <Header />
+      <Navbar />
+      <div className={styles.formContainer}>
+        <h1 className={styles.formContainer__h1}>Redefinir Senha</h1>
+        <label className={styles.formContainer__label}>
+              Email:
+            </label>
+        <form onSubmit={handleSubmit} className={styles.formContainer__form}>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          style={{ marginTop: "8rem" }}
+        />
+        
+           
+            <input type="email" value={email} onChange={handleEmailChange} placeholder='email@exemplo.com' required className={styles.formContainer__input} />
+     
+          <button type="submit" className={styles.formContainer__button}>Enviar</button>
+        </form>
   
-      <h2>Solicitar Redefinição de Senha</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email:
-          <input type="email" value={email} onChange={handleEmailChange} required />
-        </label>
-        <button type="submit">Enviar Email</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
+      </div>
     </>
   );
 };
