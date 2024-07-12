@@ -1,394 +1,264 @@
-
-@media (max-width: 300px) {
-
-
-  .MobileHeader__icons {
-   margin-right: 5rem;
-   display: flex;
-   align-items: center;
-  }
+/* Default styles for MobileHeader__icons */
+.MobileHeader__icons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
+/* Styles for screens up to 699px */
 
-
-@media (max-width: 699px) and (orientation: portrait) {
-  .ContainerHeader {
+  /* Hide these elements on smaller screens */
+  .ContainerHeader, .desktopContainer {
     display: none;
   }
-  .desktopContainer {
-    display: none;
-  }
+  
+  /* Adjust MobileHeader styles */
   .MobileHeader {
     display: flex;
     flex-direction: column;
-
     margin: 0 auto;
   }
 
+  /* Adjust MobileHeader__Container */
   .MobileHeader__Container {
     display: flex;
+    justify-content: space-between;
+    gap: 8rem;
     align-items: center;
     flex-direction: row;
-    gap: 10rem;
+
   }
 
+  /* Adjust SearchBarContent position */
   .SearchBarContent {
     position: absolute;
     left: 10px;
     margin-top: 2.5rem;
- 
   }
 
+  /* Adjust ContainerHeaderMobile styles */
   .ContainerHeaderMobile {
     position: fixed;
     top: 0;
     width: 100vw;
     background-color: #05070a;
-
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1;
-    height: 10svh;
- 
+    height: 10vh; /* Fixed typo '10svh' */
     color: white;
   }
 
-  .ContainerHeader {
-    height: 10svh;
-  }
-
+  /* Adjust MediewalLogoMobile size */
   .MediewalLogoMobile {
     width: 25vw;
   }
 
-  
-  .MobileHeader__icons {
-display: flex;
-gap: .5rem;
-   }
-}
 
+/* Styles for screens 700px and above */
 @media (min-width: 700px) {
+  /* Hide MobileHeader on larger screens */
   .MobileHeader {
     display: none;
   }
-
+  
+  /* Hide MobileHeader__Container on larger screens */
   .MobileHeader__Container {
     display: none;
+
   }
-/* background-color: #2196f3; */
-.ContainerHeader {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: #05070a;
-  padding: 10px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 7;
-  height: 18svh;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-weight: 600;
-  color: white;
-  
-}
-body {
-  margin: 0;
-  padding: 0;
-}
-
-
-
-.DesktopIcons {
-  display: flex;
-  align-items: center;
-}
-
-.MediewalLogo {
-  width: 12vw;
-}
-
-.DesktopContainer {
-  display: flex;
-  align-items: center;
-
-}
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999; /* Valor alto para garantir que o modal fique na frente dos outros elementos */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modalContent {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.HeaderModalContent {
-  position: absolute;
-  right: 14rem;
-  margin-top: 3rem;
-  color: black;
-  background-color: white;
-  width: 20vw;
-  height: 40vh;
-  z-index: 7;
-  border: 1px solid rgb(206, 212, 218);
-  border-radius: 4px;
-}
-
-.BellModalContent {
-  position: absolute;
-  right: 15rem;
-  margin-top: 1.5rem;
-  color: black;
-  background-color: white;
-  width: 20vw;
-  height: 40vh;
-  z-index: 7;
-  border: 1px solid rgb(206, 212, 218);
-  border-radius: 4px;
-  color: white;
-  overflow: auto;
-  border: 1px solid #ccc;
-}
-
-.FirstContainer {
-  border-bottom: 1px solid rgb(206, 212, 218);
-
-  height: 5vh;
-}
-.h4 {
-  color: rgb(33, 37, 41);
-  margin-left: 1rem;
-  font-family: "poppins";
-  font-weight: 500;
-}
-
-.NavContainer {
-  font-family: "poppins";
-  font-weight: 400;
-  width: 100%;
-}
-
-.desktopContainer {
-  display: flex;
-  margin-top: -2rem;
-  gap: 5rem;
-  z-index: 6;
-}
-
-.IconsDesktopContainer {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  z-index: -6;
-}
-
-.li {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  margin-bottom: 0.5rem;
-  padding: 0.3rem;
-}
-
-.li:hover {
-  background-color: #e9ecef;
-}
-
-.scroll {
-  color: #05070a;
-}
-
-  
-}
-@media (min-width: 700px) and (orientation: portrait) {
-  .MobileHeader {
-    display: none;
+  .IconsContainer{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
   }
+  /* Adjust ContainerHeader styles */
   .ContainerHeader {
-    height: 5svh;
-  }
- 
-}
-
-
-@media (max-width: 834px) and (orientation: portrait) {
-}
-
-
-
-
-
-.ContainerHeader{
-  height: 13vh;
-}
-
-
-
-.desktopContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12rem;
-  margin-top: -1rem;
-  
-
-
- 
-
-  width: 100%;
-}
-
-
-
-
-@media (max-width: 344px)  {
-  .desktopContainer{
-    gap: 3rem;
-    margin-right: 1rem;
-  }
-
-  .SearchBarContent{
-    width: 10vw;
-  }
-}
-
-@media (max-width: 375px)  {
-  .desktopContainer{
-    gap: 3rem;
-    margin-right: 2rem;
-  }
-
-  
-}
-
-@media (max-width: 912px)  {
-  .desktopContainer{
-    gap: 5rem;
-    margin-right: 2rem;
-  }
-}
-
-
-@media (max-width: 853px)  {
-  .desktopContainer{
-    gap: 5rem;
-    margin-right: 2rem;
-  }
-}
-
-
-
-
-@media (max-width: 1024px) {
-  .desktopContainer{
-    gap: 5rem;
-    margin-right: 2rem;
-  }
-}
-
-
-
-@media (max-width: 1120px) {
-  .desktopContainer{
-    gap: 10rem;
-    margin-right: 2rem;
-  }
-}
-
-
-
-@media (min-width: 1559px)  {
-  .ContainerHeader{
-    height: 9vh;
-  }
-}
-
-
-.bellContainer{
-  display: none;
-}
-
-
-
-
-
-@media (min-width: 820px) and (max-width: 1180px) and (orientation: portrait) {
-  .desktopContainer{
-    gap: 5.5rem;
-  }
-
-  
-
-.ContainerHeader{
-  height: 6.5vh;
-}
-
-
-}
-
-
-
-
-@media (min-width: 608px) and (max-width: 819px) and (orientation: portrait) {
-
-  .desktopContainer{
-    display: none;
-  }
-
- 
- .ContainerHeaderMobile {
     position: fixed;
     top: 0;
-    width: 100vw;
+    width: 100%;
     background-color: #05070a;
-
+    padding: 10px 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    z-index: 1;
-    height: 10svh;
- 
+    z-index: 7;
+    height: 15vh; /* Fixed typo '18svh' */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-weight: 600;
     color: white;
   }
 
-  .MobileHeader__Container{
-    gap: 18rem;
+  /* Adjust DesktopIcons styles */
+  .DesktopIcons {
+    display: flex;
+    align-items: center;
   }
 
+  /* Adjust MediewalLogo size */
+  .MediewalLogo {
+    width: 12vw;
+  }
 
- 
+  /* Adjust DesktopContainer styles */
+  .DesktopContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 5rem;
+  }
 
-}
+  /* Ensure ModalContent z-index is high */
+  .modalContent {
+    z-index: 9999;
+  }
 
+  /* Adjust .FirstContainer and .NavContainer styles */
+  .FirstContainer {
+    border-bottom: 1px solid rgb(206, 212, 218);
+    height: 5vh;
+  }
+  .h4 {
+    color: rgb(33, 37, 41);
+    margin-left: 1rem;
+    font-family: "poppins";
+    font-weight: 500;
+  }
+  .NavContainer {
+    font-family: "poppins";
+    font-weight: 400;
+    width: 100%;
+  }
 
-@media  (min-width: 575px) and (max-width: 767px) and (orientation: portrait){
+  /* Adjust .desktopContainer spacing and width */
+  .desktopContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12rem;
+    margin-top: -1rem;
+    width: 100%;
+  }
 
+  /* Adjust specific breakpoints */
+  @media (max-width: 344px) {
+    .desktopContainer {
+      gap: 3rem;
+      margin-right: 1rem;
+    }
+    .SearchBarContent {
+      width: 10vw;
+    }
+  }
 
-  .MobileHeader__Container{
-    gap: 17rem;
+  @media (max-width: 375px) {
+    .desktopContainer {
+      gap: 3rem;
+      margin-right: 2rem;
+    }
+  }
+
+  @media (max-width: 912px) {
+    .desktopContainer {
+      gap: 5rem;
+      margin-right: 2rem;
+    }
+  }
+
+  @media (max-width: 853px) {
+    .desktopContainer {
+      display: flex;
+      
+      justify-content: space-between;
+
+    }
+  }
+
+  @media (min-width: 414px) and (max-width: 915px) and (orientation: landscape) {
+    .desktopContainer {
+      display: flex;
+      
+      justify-content: space-between;
+    }
+
+    .IconsDesktopContainer{
+      display: flex;
+      
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .desktopContainer {
+      gap: 5rem;
+      margin-right: 2rem;
+    }
+  }
+
+  @media (max-width: 1120px) {
+    .desktopContainer {
+        display: flex;
+      
+      justify-content: space-between;
+      gap: 1rem;
+      
+    }
+  }
+
+  .bellContainer {
+    display: none; /* Consider revising or removing if needed */
+  }
+
+  @media (min-width: 820px) and (max-width: 1180px) and (orientation: portrait) {
+    .desktopContainer {
+      gap: 5.5rem;
+    }
+    .ContainerHeader {
+      height: 6.5vh;
+    }
+  }
+
+  @media (min-width: 608px) and (max-width: 819px) and (orientation: portrait) {
+    .desktopContainer {
+      display: none;
+    }
+    .ContainerHeaderMobile {
+      position: fixed;
+      top: 0;
+      width: 100vw;
+      background-color: #05070a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+      height: 10vh;
+      color: white;
+    }
+    .MobileHeader__Container {
+      gap: 18rem;
+    }
+  }
+
+  @media (min-width: 575px) and (max-width: 767px) and (orientation: portrait) {
+    .MobileHeader__Container {
+      gap: 17rem;
+    }
+  }
+
+  @media (min-width: 575px) and (max-width: 822px) {
+    .MobileHeader__Container {
+      gap: 15rem;
+    }
   }
 }
 
-
-@media  (min-width: 575px) and (max-width: 822px) {
- 
-
-  .MobileHeader__Container{
-    gap: 15rem;
+@media (min-width: 975px) and  (max-width: 1559px) {
+  .ContainerHeader {
+    height: 10vh;
   }
 }
-
+@media (min-width: 924px) and  (max-width: 1643px) {
+  .ContainerHeader {
+    height: 10vh;
+  }
+}

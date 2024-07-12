@@ -290,6 +290,8 @@ const Header = () => {
                     </div>
                   )}
                 </div>
+
+                <div className={styles.IconsContainer}>
                 <Link to={loggedIn === true ? " " : "/perfil"}>
                   {" "}
                   <img
@@ -334,6 +336,9 @@ const Header = () => {
                     {loggedIn ? localCartItemCount : 0}
                   </span>
                 </Link>
+
+                </div>
+              
               </div>
             </div>
           </div>

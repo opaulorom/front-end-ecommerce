@@ -155,3 +155,17 @@
 .ProductsContainer{
   margin-right: 10rem;
 }
+
+@media (min-width: 729px) and (orientation:  landscape) {
+  .inputContainer{
+    padding: .3rem;
+ 
+  }
+}
+
+@media (max-width: 1559px) {
+  .inputContainer{
+    padding: .3rem;
+ 
+  }
+}
