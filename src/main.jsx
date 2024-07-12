@@ -100,7 +100,7 @@ const Root = () => (
     <Route path="/register/:token" element={<Register/>} />
     <Route path="/forgotPassword" element={<PasswordResetRequest/>} />
     <Route path="/reset-password/:token" element={<ResetPasswordPage/>} />
-    npm create vite@latest
+
     <Route path="/whatsNew" element={<WhatsNew/>} />
     <Route path="/newArrivals" element={<NewArrivals/>} />
     <Route path="/signUp" element={<SignUpForm/>} />

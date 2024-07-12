@@ -30,9 +30,7 @@ const PasswordResetRequest = () => {
       <Navbar />
       <div className={styles.formContainer}>
         <h1 className={styles.formContainer__h1}>Redefinir Senha</h1>
-        <label className={styles.formContainer__label}>
-              Email:
-            </label>
+     
         <form onSubmit={handleSubmit} className={styles.formContainer__form}>
         <ToastContainer
           position="top-center"
@@ -47,11 +45,13 @@ const PasswordResetRequest = () => {
           theme="light"
           style={{ marginTop: "8rem" }}
         />
-        
+  
+            <input type="email" value={email} onChange={handleEmailChange} placeholder='digite seu email...' required className={styles.formContainer__input} />
+
+
            
-            <input type="email" value={email} onChange={handleEmailChange} placeholder='email@exemplo.com' required className={styles.formContainer__input} />
-     
-          <button type="submit" className={styles.formContainer__button}>Enviar</button>
+     <div>          <button type="submit" className={styles.formContainer__button}>Enviar</button>
+     </div>
         </form>
   
       </div>
