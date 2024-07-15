@@ -219,7 +219,7 @@
   }
   @media (max-width: 1180px) {
     .desktopContainer {
-     gap: 1rem;
+      gap: 1.5rem;
     }
   }
   @media (min-width: 608px) and (max-width: 819px) and (orientation: portrait) {
