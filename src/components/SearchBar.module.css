@@ -169,9 +169,16 @@
  
   }
 }
-@media (min-width: 720px) and  (max-width: 1600px) and (orientation:  landscape) {
+@media only screen and (min-width: 720px) and  (max-width: 1600px) and (orientation:  landscape) {
   .inputContainer{
     padding: 1rem;
+ 
+  }
+}
+
+@media (min-width: 700px)  {
+  .inputContainer{
+    padding: .3rem;
  
   }
 }
