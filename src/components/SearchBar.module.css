@@ -10,6 +10,8 @@
     border-radius: 24px;
     outline: none;
     padding-left: 1rem;
+    padding: 1rem;
+
   }
   
   .searchIcon {
@@ -155,6 +157,12 @@
 .ProductsContainer{
   margin-right: 10rem;
 }
+@media (min-width: 700px)  {
+  .inputContainer{
+    padding: .3rem;
+ 
+  }
+}
 
 @media (min-width: 729px) and (orientation:  landscape) {
   .inputContainer{
@@ -169,16 +177,10 @@
  
   }
 }
-@media only screen and (min-width: 720px) and  (max-width: 1600px) and (orientation:  landscape) {
+/* @media only screen and (min-width: 720px) and  (max-width: 1600px) and (orientation:  landscape) {
   .inputContainer{
     padding: 1rem;
  
   }
 }
-
-@media (min-width: 700px)  {
-  .inputContainer{
-    padding: .3rem;
- 
-  }
-}
+ */
