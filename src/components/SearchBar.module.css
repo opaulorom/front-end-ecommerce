@@ -160,17 +160,12 @@
 }
 @media (min-width: 700px)  {
   .inputContainer{
-    height: 4vh;
- 
-  }
-}
-
-@media (min-width: 729px) and (orientation:  landscape) {
-  .inputContainer{
     padding: .5rem;
  
   }
 }
+
+
 @media (max-width: 1280px) {
   .inputContainer{
     height: 4vh;
@@ -179,21 +174,21 @@
 }
 @media (max-width: 1559px) {
   .inputContainer{
-    height: 4vh;
+    padding: .5rem;
  
   }
 }
 @media only screen and (min-width: 720px) and  (max-width: 1600px) and (orientation:  landscape) {
   @media not (min-width: 700px)  {
   .inputContainer{
-    padding: .5rem;
+    padding: 1rem;
  
   }
 }
 }
 @media (max-width: 1643px) {
   .inputContainer{
-    height: 4vh;
+    padding: .2rem;
  
   }
 }
