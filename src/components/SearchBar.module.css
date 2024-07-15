@@ -1,100 +1,232 @@
 .inputWrapper {
-  position: relative;
-  width: 40vw; /* ou o tamanho desejado */
-}
+    position: relative;
+    width: 40vw; /* ou o tamanho que você deseja */
+  }
+  
+  .inputContainer {
+    width: 100%;
+    height: 6.5vh;
+    border: 0;
+    border-radius: 50px;
+    outline: none;
+    padding-left: 1rem;
+    padding: 1rem;
 
-.inputContainer {
-  width: 100%;
-  height: 6.5vh;
-  border: 0;
-  border-radius: 50px;
-  outline: none;
-  padding: 0.4rem; /* Preenchimento uniforme */
-  padding-left: 1rem;
-}
-
-.searchIcon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  max-width: fit-content;
-}
-
+  }
+  
+  .searchIcon {
+    position: absolute;
+    right: 10px; /* ou o valor que você preferir */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    max-width: fit-content;
+  }
+  
+ 
+ 
+  
 @media (max-width: 699px) and (orientation: portrait) {
   .inputWrapper {
-    width: 60vw;
+    position: relative;
+    width: 60vw; /* ou o tamanho que você deseja */
+    height: auto;
+  
+    top: 90%;
     transform: translateY(-90%);
   }
 
-  .inputContainer {
+  .inputContainer{
     
     height: 5vh;
   }
 
-  .searchIcon {
+  .searchIcon{
     display: none;
+  }
+
+}
+
+
+
+
+@media (min-width: 1559px) and (orientation: landscape)  {
+  .inputWrapper{
+    height: 3rem;
+  }
+  .inputContainer{
+    height: 5vh;
+    
   }
 }
 
-@media (min-width: 820px) and (max-width: 1180px) {
-  .inputContainer {
+
+@media (max-width: 768px)  and (orientation: portrait) {
+  .inputContainer{
     width: 40vw;
-    padding: 0.2rem;
-    margin-top: 0.5rem;
-  }
-
-  .searchIcon {
-    display: none;
+    height: 5vh;
   }
 }
 
-@media (min-width: 608px) and (max-width: 819px) and (orientation: portrait) {
-  .inputContainer {
-    width: 25vw;
-    margin-right: 12rem; /* Verifique se este valor é necessário */
-  }
 
-  .searchIcon {
-    display: none;
+@media (max-width: 820px)  {
+  .inputContainer{
+    width: 40vw;
+    height: 4vh;
   }
 }
 
-@media (max-width: 375px), (max-width: 600px) {
-  .inputContainer {
+
+
+
+@media (max-width: 853px)  and (orientation: portrait) {
+  .inputContainer{
+    width: 40vw;
+    height: 4vh;
+  }
+}
+
+
+
+@media (max-width: 912px)  {
+  .inputContainer{
+    width: 40vw;
+    height: 4vh;
+  }
+}
+
+
+
+
+
+
+@media (max-width: 1024px) and (max-width: 600px)   {
+  .inputContainer{
+    width: 40vw;
+    height: 7vh;
+  }
+}
+
+
+@media (max-width: 375px){
+  .inputContainer{
     width: 30vw;
-    padding: 0.1rem;
+    
   }
 }
 
-@media (max-width: 490px), (max-width: 575px) {
-  .inputContainer {
+@media (max-width: 600px){
+  .inputContainer{
+    width: 30vw;
+    padding: .1rem;
+    
+  }
+}
+
+
+@media (max-width: 490px){
+  .inputContainer{
+    width: 60vw;
+    height: 5vh;
+    margin-top: -10rem;
+  }
+}
+
+
+
+@media (max-width: 575px){
+  .inputContainer{
+    width: 60vw;
+    height: 5vh;
+    margin-top: -10rem;
+  }
+}
+
+
+@media (max-width: 581px){
+  .inputContainer{
     width: 60vw;
     height: 5vh;
   }
 }
 
-@media (min-width: 700px) {
-  .inputContainer {
-    padding: 0.4rem;
+@media (min-width: 608px) and (max-width: 819px) and (orientation: portrait){
+ .inputContainer{
+  width: 25vw;
+  margin-right: 12rem;
+ }
+ 
+ .searchIcon{
+  display: none;
+}
+
+}
+
+@media only screen and (min-width: 820px) and (max-width: 1180px) {
+  .inputContainer{
+   width: 40vw;
+
+   padding: 0.2rem;
+   margin-top: .5rem;
+  }
+  
+  .searchIcon{
+   display: none;
+ }
+ 
+ }
+
+.ProductsContainer{
+  margin-right: 10rem;
+}
+@media (min-width: 700px)  {
+  .inputContainer{
+    padding: .4rem;
+ 
   }
 }
 
-@media (min-width: 729px) and (orientation: landscape) {
-  .inputContainer {
-    padding: 0.4rem;
+@media (min-width: 729px) and (orientation:  landscape) {
+  .inputContainer{
+    padding: .4rem;
+ 
   }
 }
 
-@media (min-width: 820px) and (max-width: 1180px) and (orientation: landscape) {
-  .inputContainer {
-    margin-top: -3rem; /* Verifique a necessidade deste ajuste */
-  }
-}
-
-@media (max-width: 1643px) {
-  .inputContainer {
+@media (max-width: 1280px) {
+  .inputContainer{
     height: 4vh;
+ 
+  }
+}
+
+@media (max-width: 1559px) {
+  .inputContainer{
+    height: 4vh;
+ 
+  }
+}
+@media only screen and (min-width: 720px) and  (max-width: 1600px) and (orientation:  landscape) {
+  @media not (min-width: 700px)  {
+  .inputContainer{
+    padding: 1rem;
+ 
+  }
+}
+}
+
+
+@media only screen and (min-width: 820px) and  (max-width: 1180px) and (orientation:  landscape) {
+
+  .inputContainer{
+   margin-top: -3rem;
+ 
+
+}
+}
+@media (max-width: 1643px) {
+  .inputContainer{
+    height: 4vh;
+ 
   }
 }
