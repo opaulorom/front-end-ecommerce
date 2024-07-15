@@ -217,7 +217,11 @@
       height: 6.5vh;
     }
   }
-
+  @media (max-width: 1180px) {
+    .desktopContainer {
+     gap: 1rem;
+    }
+  }
   @media (min-width: 608px) and (max-width: 819px) and (orientation: portrait) {
     .desktopContainer {
       display: none;
