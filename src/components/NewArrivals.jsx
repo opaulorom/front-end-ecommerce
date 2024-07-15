@@ -23,7 +23,7 @@ const NewArrivals = ({ onNewArrivalsUpdate }) => {
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 10000));
+        // await new Promise((resolve) => setTimeout(resolve, 10000));
         const response = await fetch(
           `http://localhost:3001/api/products/new-arrivals?page=${currentPage}`
         );

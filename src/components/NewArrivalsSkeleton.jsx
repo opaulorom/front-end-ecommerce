@@ -21,6 +21,12 @@ export default function NewArrivalsSkeleton() {
           justifyContent: "center" /* Centraliza as colunas horizontalmente */,
           alignItems:"center"
         },
+        "@media only screen and (min-width: 820px) and (orientation: portrait)": {
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)" /* Colunas responsivas */,
+          justifyContent: "center" /* Centraliza as colunas horizontalmente */,
+          alignItems:"center"
+            },
       }}
     >
       <Box  style={{ textAlign: "center", width: "100%" }}>
@@ -33,21 +39,9 @@ export default function NewArrivalsSkeleton() {
               width: "13vw",
               height: "40vh",
             },
-          }}
-        />
-        <Skeleton width={80} />
-        <Skeleton width={160} />
-      </Box >
-
-      <Box  style={{ textAlign: "center", width: "100%" }}>
-        <Skeleton
-          variant="rectangular"
-          sx={{
-            width: "100%",
-            height: "30vh",
-            "@media (min-width: 700px)": {
-              width: "13vw",
-              height: "40vh",
+            "@media only screen and (min-width: 820px) and (orientation: portrait)": {
+              width: "28vw",
+              height: "30vh",
             },
           }}
         />
@@ -65,36 +59,9 @@ export default function NewArrivalsSkeleton() {
               width: "13vw",
               height: "40vh",
             },
-          }}
-        />
-        <Skeleton width={80} />
-        <Skeleton width={160} />
-      </Box >
-
-      <Box  style={{ textAlign: "center", width: "100%" }}>
-        <Skeleton
-          variant="rectangular"
-          sx={{
-            width: "100%",
-            height: "30vh",
-            "@media (min-width: 700px)": {
-              width: "13vw",
-              height: "40vh",
-            },
-          }}
-        />
-        <Skeleton width={80} />
-        <Skeleton width={160} />
-      </Box >
-      <Box  style={{ textAlign: "center", width: "100%" }}>
-        <Skeleton
-          variant="rectangular"
-          sx={{
-            width: "100%",
-            height: "30vh",
-            "@media (min-width: 700px)": {
-              width: "13vw",
-              height: "40vh",
+            "@media only screen and (min-width: 820px) and (orientation: portrait)": {
+              width: "28vw",
+              height: "30vh",
             },
           }}
         />
@@ -112,21 +79,9 @@ export default function NewArrivalsSkeleton() {
               width: "13vw",
               height: "40vh",
             },
-          }}
-        />
-        <Skeleton width={80} />
-        <Skeleton width={160} />
-      </Box >
-
-      <Box  style={{ textAlign: "center", width: "100%" }}>
-        <Skeleton
-          variant="rectangular"
-          sx={{
-            width: "100%",
-            height: "30vh",
-            "@media (min-width: 700px)": {
-              width: "13vw",
-              height: "40vh",
+            "@media only screen and (min-width: 820px) and (orientation: portrait)": {
+              width: "28vw",
+              height: "30vh",
             },
           }}
         />
@@ -143,6 +98,89 @@ export default function NewArrivalsSkeleton() {
             "@media (min-width: 700px)": {
               width: "13vw",
               height: "40vh",
+            },
+            "@media only screen and (min-width: 820px) and (orientation: portrait)": {
+              width: "28vw",
+              height: "30vh",
+            },
+          }}
+        />
+        <Skeleton width={80} />
+        <Skeleton width={160} />
+      </Box >
+      <Box  style={{ textAlign: "center", width: "100%" }}>
+        <Skeleton
+          variant="rectangular"
+          sx={{
+            width: "100%",
+            height: "30vh",
+            "@media (min-width: 700px)": {
+              width: "13vw",
+              height: "40vh",
+            },
+            "@media only screen and (min-width: 820px) and (orientation: portrait)": {
+              width: "28vw",
+              height: "30vh",
+            },
+          }}
+        />
+        <Skeleton width={80} />
+        <Skeleton width={160} />
+      </Box >
+
+      <Box  style={{ textAlign: "center", width: "100%" }}>
+        <Skeleton
+          variant="rectangular"
+          sx={{
+            width: "100%",
+            height: "30vh",
+            "@media (min-width: 700px)": {
+              width: "13vw",
+              height: "40vh",
+            },
+            "@media only screen and (min-width: 820px) and (orientation: portrait)": {
+              width: "28vw",
+              height: "30vh",
+            },
+          }}
+        />
+        <Skeleton width={80} />
+        <Skeleton width={160} />
+      </Box >
+
+      <Box  style={{ textAlign: "center", width: "100%" }}>
+        <Skeleton
+          variant="rectangular"
+          sx={{
+            width: "100%",
+            height: "30vh",
+            "@media (min-width: 700px)": {
+              width: "13vw",
+              height: "40vh",
+            },
+            "@media only screen and (min-width: 820px) and (orientation: portrait)": {
+              width: "28vw",
+              height: "30vh",
+            },
+          }}
+        />
+        <Skeleton width={80} />
+        <Skeleton width={160} />
+      </Box >
+
+      <Box  style={{ textAlign: "center", width: "100%" }}>
+        <Skeleton
+          variant="rectangular"
+          sx={{
+            width: "100%",
+            height: "30vh",
+            "@media (min-width: 700px)": {
+              width: "13vw",
+              height: "40vh",
+            },
+            "@media only screen and (min-width: 820px) and (orientation: portrait)": {
+              width: "28vw",
+              height: "30vh",
             },
           }}
         />
