@@ -162,6 +162,19 @@
 
 }
 
+@media only screen and (min-width: 820px) and (max-width: 1180px) {
+  .inputContainer{
+   width: 40vw;
+
+   padding: 0.2rem;
+   margin-top: .5rem;
+  }
+  
+  .searchIcon{
+   display: none;
+ }
+ 
+ }
 
 .ProductsContainer{
   margin-right: 10rem;
@@ -179,12 +192,14 @@
  
   }
 }
+
 @media (max-width: 1280px) {
   .inputContainer{
     height: 4vh;
  
   }
 }
+
 @media (max-width: 1559px) {
   .inputContainer{
     height: 4vh;
@@ -197,6 +212,16 @@
     padding: 1rem;
  
   }
+}
+}
+
+
+@media only screen and (min-width: 820px) and  (max-width: 1180px) and (orientation:  landscape) {
+
+  .inputContainer{
+   margin-top: -3rem;
+ 
+
 }
 }
 @media (max-width: 1643px) {
