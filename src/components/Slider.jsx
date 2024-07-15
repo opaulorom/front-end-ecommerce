@@ -137,6 +137,7 @@ const Slider = ({
                 style={{ fontSize: "2rem", position: "absolute" }}
               />
             </div>
+            
           </div>
         </>
       )}

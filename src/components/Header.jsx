@@ -375,10 +375,13 @@ const Header = () => {
             </div>
 
             <div className={styles.MobileHeader__icons}>
+              <div className={styles.MobileHeader__SearchIcon}>
               <SearchIcon
                 onClick={handleOpenInput}
                 style={{ fontSize: "2.1rem" }}
               />
+              <div>
+
               {showInput && (
                 <div ref={modalRef} className={styles.SearchBarContent}>
                   <div>
@@ -386,6 +389,10 @@ const Header = () => {
                   </div>
                 </div>
               )}
+
+              </div>
+
+              </div>
 
  
               <Link
