@@ -512,7 +512,7 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div>
+      <div  className={styles.ProductDetailsContainer}>
         <ToastContainer
           position="top-center"
           autoClose={5000}

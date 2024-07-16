@@ -206,4 +206,11 @@
       display: grid;
       grid-template-columns: repeat(8, 1fr);
     }
+
+    .ProductDetailsContainer{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 5rem;
+    }
   }
