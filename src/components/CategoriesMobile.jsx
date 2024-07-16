@@ -35,6 +35,7 @@ const CategoriesMobile = () => {
     
 
     }} className={styles.ImageGalleryMobile}>
+      
             <ImageGalleryMobile />
     <Navbar/>
 

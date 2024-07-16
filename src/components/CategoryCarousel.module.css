@@ -12,4 +12,8 @@
     
   }
 
-
+.hide-on-large{
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
