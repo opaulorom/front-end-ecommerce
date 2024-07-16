@@ -8,6 +8,7 @@ import DiscountImageCarousel from "./DiscountImageCarousel ";
 import NewArrivals from "./NewArrivals";
 import Slider from "../components/Slider";
 import Footer from "./Footer";
+import SkeletonCategories from "./SkeletonCategories";
 
 
 
@@ -28,11 +29,11 @@ const Home = () => {
       >
         <NewArrivals  />{" "}
       </div>
-
+      <SkeletonCategories />
       <Navbar></Navbar>
      <Footer/>
    
-
+ 
       
     </div>
   );

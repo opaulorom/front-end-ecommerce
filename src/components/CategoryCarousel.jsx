@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from "./CategoryCarousel.module.css"
 import CategoryCarouselSkeleton from './CategoryCarouselSkeleton';
+import MobileSkeletonCategories from './MobileSkeletonCategories';
 const CategoryCarousel = () => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
@@ -94,8 +95,7 @@ const CategoryCarousel = () => {
 
   return (
     <>
-    
-<div
+    { loading  ? <MobileSkeletonCategories /> : <div
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -157,7 +157,8 @@ const CategoryCarousel = () => {
                     ></span> */}
           </div>
         </div>
-      </div>
+      </div>}
+
 
     </>
 
