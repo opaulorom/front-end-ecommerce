@@ -5,7 +5,7 @@ import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRound
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import CategoryCarouselSkeleton from './CategoryCarouselSkeleton';
 import SkeletonCategories from './SkeletonCategories';
-
+import styles from "./ImageGallery.module.css"
 const ImageGallery = () => {
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -17,7 +17,7 @@ const ImageGallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
         const response = await axios.get('http://localhost:3001/api/categories');
         console.log('Categories Response:', response.data);
 
@@ -77,10 +77,10 @@ const ImageGallery = () => {
         </div>
       ))}
     </div>
-    {categories.length > 0 ? <><div style={{ position: 'absolute', top: '50%', left: '10%', transform: 'translateY(-50%)' }}>
+    {categories.length > 0 ? <><div style={{ position: 'absolute', top: '50%', left: '10%', transform: 'translateY(-50%)' }} className={styles.arrowLeft}>
       <ArrowBackIosNewRoundedIcon onClick={prevPage} disabled={isBackDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', color: isBackDisabled ? "rgb(189, 189, 189)" : "" }} />
     </div>
-    <div style={{ position: 'absolute', top: '50%', right: '10%', transform: 'translateY(-50%)' }}>
+    <div style={{ position: 'absolute', top: '50%', right: '10%', transform: 'translateY(-50%)' }} className={styles.arrowRight}>
       <ArrowForwardIosRoundedIcon onClick={nextPage} disabled={isForwardDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', color: isForwardDisabled ? "rgb(189, 189, 189)" : "" }} />
     </div></> :"" }
     

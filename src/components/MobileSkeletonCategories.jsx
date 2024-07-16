@@ -4,14 +4,13 @@ import "./MobileSkeletonCategories.css"; // Arquivo CSS onde você definiu a cla
 const MobileSkeletonCategories = () => {
   return (
     <>
-      <div className="skeletonMobileContainer">
-        mobile
+      <div className="skeletonMobileContainer" style={{
+        display:"flex"
+      }}>
+   
         <div className="Mobileskeleton"></div>
         <div className="Mobileskeleton"></div> 
-        <div className="Mobileskeleton"></div>{" "}
-        <div className="Mobileskeleton"></div> 
-        <div className="Mobileskeleton"></div>{" "}
-        <div className="Mobileskeleton"></div>
+    
       </div>
     </>
   );

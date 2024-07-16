@@ -154,10 +154,14 @@
   
   .carroselMobile{
     display: block;
-    margin-top: 100rem;
+    margin-top: 65rem;
 
   }
   
+  .colorContainer{
+    display: flex;
+    align-items: center;
+  }
   
   
  
@@ -165,7 +169,10 @@
   display: none;
 
 }
-
+.buttonContainer{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
    
   @media (max-width: 600px) {
     .secondCartModal{
@@ -194,5 +201,9 @@
     .DesktopCarrosel{
       display: block;
     
+    }
+    .buttonContainer{
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
     }
   }

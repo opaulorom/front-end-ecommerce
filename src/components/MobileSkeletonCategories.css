@@ -1,7 +1,20 @@
 
+
+@media screen and (min-width: 700px) {
+    .skeletonMobileContainer{
+        display: none;
+    }
+    .Mobileskeleton{
+        display: none;
+    }
+}
+
+ 
+@media screen and ( 699px >=  width ) {
+    
 .Mobileskeleton {
-    width:50vw; /* Ajustado para 10% da largura da viewport */
-    height: 50vw; /* Ajustado para 10% da largura da viewport */
+    width:35vw; /* Ajustado para 10% da largura da viewport */
+    height: 35vw; /* Ajustado para 10% da largura da viewport */
     background-color: rgba(200, 200, 200, 0.2); /* Cinza mais forte */
     border-radius: 50%;
     animation: pulse 1.5s ease-in-out infinite;
@@ -19,28 +32,16 @@
       background-color: rgba(200, 200, 200, 0.2); /* Cinza final */
     }
   }
-  
-  .skeletonMobileContainer {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Cria colunas automáticas com mínimo de 200px e máximo de 1fr */
-    gap: 10px; /* Espaçamento entre as bolinhas */
-    justify-content: center; /* Centraliza as bolinhas horizontalmente */
-    padding: 20px; /* Espaçamento interno do container */
-  }
+ 
   .skeletonMobileContainer{
     display: block;
+    margin-top: 4rem;
+    gap: 1rem;
 }
  
-@media screen and (width >= 700px) {
-    .skeletonMobileContainer{
-        display: none;
-    }
-}
-
- 
-@media screen and ( 699px >=  width ) {
     .skeletonMobileContainer{
         display: block;
+        
     }
 }
 
