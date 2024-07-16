@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import CategoryCarouselSkeleton from './CategoryCarouselSkeleton';
+import SkeletonCategories from './SkeletonCategories';
 
 const ImageGallery = () => {
   const [categories, setCategories] = useState([]);
@@ -58,34 +59,34 @@ const ImageGallery = () => {
 
   return (
 
-    <>
-  <div style={{ position: 'relative' }}>
+    <>{loading ? <SkeletonCategories /> :  <div style={{ position: 'relative' }}>
 
-<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', position: 'relative', marginTop:"-10rem" }}>
-  {categories.slice(startIndex, endIndex).map((category, index) => (
-    <div key={index} style={{ width: '150px', height: '150px', margin: '10px', textAlign: 'center' }}>
-      {category.images.map((subcategoryImages, index) => (
-        subcategoryImages.map(image => (
-          <div key={image._id}>
-            <Link to={`/categories/${encodeURIComponent(category.name)}`}>
-              <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "50%", aspectRatio: "1/1" }} />
-            </Link>
-            <span style={{ marginTop: '5px', fontFamily:"poppins", fontWeight:"400", fontSize:".9rem", color:"#666" }}>{category.name}</span>
-          </div>
-        ))
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', position: 'relative', marginTop:"-10rem" }}>
+      {categories.slice(startIndex, endIndex).map((category, index) => (
+        <div key={index} style={{ width: '150px', height: '150px', margin: '10px', textAlign: 'center' }}>
+          {category.images.map((subcategoryImages, index) => (
+            subcategoryImages.map(image => (
+              <div key={image._id}>
+                <Link to={`/categories/${encodeURIComponent(category.name)}`}>
+                  <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "50%", aspectRatio: "1/1" }} />
+                </Link>
+                <span style={{ marginTop: '5px', fontFamily:"poppins", fontWeight:"400", fontSize:".9rem", color:"#666" }}>{category.name}</span>
+              </div>
+            ))
+          ))}
+        </div>
       ))}
     </div>
-  ))}
-</div>
-{categories.length > 0 ? <><div style={{ position: 'absolute', top: '50%', left: '10%', transform: 'translateY(-50%)' }}>
-  <ArrowBackIosNewRoundedIcon onClick={prevPage} disabled={isBackDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', color: isBackDisabled ? "rgb(189, 189, 189)" : "" }} />
-</div>
-<div style={{ position: 'absolute', top: '50%', right: '10%', transform: 'translateY(-50%)' }}>
-  <ArrowForwardIosRoundedIcon onClick={nextPage} disabled={isForwardDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', color: isForwardDisabled ? "rgb(189, 189, 189)" : "" }} />
-</div></> :"" }
-
-</div>
-   
+    {categories.length > 0 ? <><div style={{ position: 'absolute', top: '50%', left: '10%', transform: 'translateY(-50%)' }}>
+      <ArrowBackIosNewRoundedIcon onClick={prevPage} disabled={isBackDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', color: isBackDisabled ? "rgb(189, 189, 189)" : "" }} />
+    </div>
+    <div style={{ position: 'absolute', top: '50%', right: '10%', transform: 'translateY(-50%)' }}>
+      <ArrowForwardIosRoundedIcon onClick={nextPage} disabled={isForwardDisabled} style={{ fontSize: '2.5rem', cursor: 'pointer', color: isForwardDisabled ? "rgb(189, 189, 189)" : "" }} />
+    </div></> :"" }
+    
+    </div>
+       }
+ 
     </>
   );
 };
