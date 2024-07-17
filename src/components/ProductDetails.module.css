@@ -189,12 +189,34 @@ margin-bottom: 2rem;
 
   
 }
+
+
+.descriptionContainer{
+  margin-left: 1rem;
+}
+.h1{
+  font-family: 'poppins', sans-serif;
+  font-size: 1rem;
+  margin-top: 2rem;
+  margin-bottom: .5rem;
+  min-width: fit-content;
+}
+.description{
+  font-family: 'poppins', sans-serif;
+  font-size: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  min-width: fit-content;
+
+}
 .name{
   font-family: 'poppins', sans-serif;
   font-size: 1rem;
   margin-bottom: 2rem;
   
 }
+
+
 .color{
   font-family: 'poppins', sans-serif;
   font-weight: 400;
@@ -217,6 +239,8 @@ margin-bottom: 2rem;
 
 
 }
+
+
   @media (max-width: 600px) {
     .secondCartModal{
       display: none;

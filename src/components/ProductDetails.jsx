@@ -771,6 +771,13 @@ const ProductDetails = () => {
                           )
                         )}
                     </div>
+
+                    <div className={styles.descriptionContainer}>
+                      <h1 className={styles.h1}>Descrição
+                      </h1>
+                      <span className={styles.description}> {product.description}</span>
+
+                    </div>
                   </div>
                 </div>
               </div>
@@ -786,7 +793,8 @@ const ProductDetails = () => {
             )}
 
             {showCartButton && (
-              <button onClick={handleClickOpenModal} style={buttonStyleB}>
+              <button onClick={handleClickOpenModal}  className={styles.buttons}
+>
                 COMPRAR
               </button>
             )}
