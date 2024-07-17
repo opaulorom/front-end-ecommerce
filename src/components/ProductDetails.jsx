@@ -18,6 +18,8 @@ import { width } from "@mui/system";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Application from "./Application";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState({ variations: [] });
@@ -447,7 +449,7 @@ const ProductDetails = () => {
   const [activeUrlIndex, setActiveUrlIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const IMAGES_PER_PAGE = 5;
+  const IMAGES_PER_PAGE = 3;
 
   const handleDotChangeClick = (variationIndex, urlIndex) => {
     setActiveColorIndex(variationIndex);
@@ -551,10 +553,33 @@ const ProductDetails = () => {
           )}
         </div>
         <div className={styles.DesktopCarrosel}>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-
-          <div>
-          {currentImages.map((url, urlIndex) => (
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className={styles.containerImage}>
+              <div  className={styles.containerImage__miniature} style={{
+              marginTop: validUrls &&
+                product.variations[activeColorIndex].urls.length >
+                  IMAGES_PER_PAGE ? "-1.5rem" : ""
+              }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    cursor:"pointer"
+             
+                  }}
+                >
+                  {validUrls &&
+                    product.variations[activeColorIndex].urls.length >
+                      IMAGES_PER_PAGE && (
+                      <KeyboardArrowUpIcon
+                        onClick={handlePagePrev}
+                        disabled={currentPage === 0}
+                      ></KeyboardArrowUpIcon>
+                    )}
+                </div>
+              <div>
+              {currentImages.map((url, urlIndex) => (
                   <div key={startIndex + urlIndex}>
                     <img
                       src={url}
@@ -574,59 +599,49 @@ const ProductDetails = () => {
                   </div>
                 ))}
               </div>
-          <div className={styles.containerImage}>
-            {validActiveUrlIndex ? (
-              <div>
-                <Application selectedImageUrl={selectedImageUrl} />
-                <img
+              
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    cursor:"pointer"
+
+                  }}
+                >
+                  {validUrls &&
+                    product.variations[activeColorIndex].urls.length >
+                      IMAGES_PER_PAGE && (
+                      <KeyboardArrowDownIcon
+                        onClick={handlePageNext}
+                        disabled={
+                          endIndex >=
+                          product.variations[activeColorIndex].urls.length
+                        }
+                      ></KeyboardArrowDownIcon>
+                    )}
+                </div>
+              </div>
+              {validActiveUrlIndex ? (
+                <div>
+                  <Application selectedImageUrl={selectedImageUrl} />
+                  <div>
+                    <KeyboardArrowLeftIcon
+                      onClick={handlePrevClick}
+                    ></KeyboardArrowLeftIcon>
+                    <KeyboardArrowRightIcon
+                      onClick={handleNextClick}
+                    ></KeyboardArrowRightIcon>
+                  </div>
+                  {/* <img
                   src={selectedImageUrl}
                   alt="Selected product"
                   style={{ width: "20vw", marginBottom: "2rem" }}
-                />
-                <div>
-                  <KeyboardArrowLeftIcon
-                    onClick={handlePrevClick}
-                  ></KeyboardArrowLeftIcon>
-                  <KeyboardArrowRightIcon
-                    onClick={handleNextClick}
-                  ></KeyboardArrowRightIcon>
-                </div>
-              </div>
-            ) : (
-              <p>No image available</p>
-            )}
-
-          </div>
+                /> */}
                
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                marginTop: "5rem",
-              }}
-            >
-              {validUrls &&
-                product.variations[activeColorIndex].urls.length >
-                  IMAGES_PER_PAGE && (
-                  <button onClick={handlePagePrev} disabled={currentPage === 0}>
-                    &lt;
-                  </button>
-                )}
-          
-              {validUrls &&
-                product.variations[activeColorIndex].urls.length >
-                  IMAGES_PER_PAGE && (
-                  <button
-                    onClick={handlePageNext}
-                    disabled={
-                      endIndex >=
-                      product.variations[activeColorIndex].urls.length
-                    }
-                  >
-                    &gt;
-                  </button>
-                )}
+                </div>
+              ) : (
+                <p>No image available</p>
+              )}
             </div>
           </div>
         </div>
@@ -731,7 +746,7 @@ const ProductDetails = () => {
 
                     <span className={styles.price}>
                       {" "}
-                       Preço:<strong> R$ {selectedPrice}</strong>
+                      Preço:<strong> R$ {selectedPrice}</strong>
                     </span>
                   </div>
                   <div className={styles.sizeContainer}>
@@ -779,31 +794,33 @@ const ProductDetails = () => {
                     </div>
 
                     {!showCartButton && (
-              <button
-                onClick={handleAddToCartAndOpenModal}
-                style={buttonStyleA}
-              >
-                COMPRAR
-              </button>
-            )}
+                      <button
+                        onClick={handleAddToCartAndOpenModal}
+                        style={buttonStyleA}
+                      >
+                        COMPRAR
+                      </button>
+                    )}
 
-            {showCartButton && (
-              <button onClick={handleClickOpenModal}  className={styles.buttons}
->
-                COMPRAR
-              </button>
-            )}
+                    {showCartButton && (
+                      <button
+                        onClick={handleClickOpenModal}
+                        className={styles.buttons}
+                      >
+                        COMPRAR
+                      </button>
+                    )}
                     <div className={styles.descriptionContainer}>
-                      <h1 className={styles.h1}>Descrição
-                      </h1>
-                      <span className={styles.description}> {product.description}</span>
-
+                      <h1 className={styles.h1}>Descrição</h1>
+                      <span className={styles.description}>
+                        {" "}
+                        {product.description}
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
 
             {openCartModal && (
               <div className={styles.cartModal}>

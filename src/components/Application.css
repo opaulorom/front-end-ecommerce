@@ -2,9 +2,11 @@
   
   .OriginalImageContainer {
     display: inline-block;
-    height: 50vh;
-    width: 60vw;
+    height: 100vh;
+    width: 30vw;
     overflow: hidden;
+    object-fit: contain;
+ 
     
   }
     

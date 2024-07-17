@@ -289,8 +289,20 @@ margin-bottom: 2rem;
     }
     .containerImage{
       display: flex;
+   
+
+      margin-top: 2rem;
+      gap: 1rem;
     }
-    
+    .miniatureContainer{
+      display: flex;
+      align-items: center;
+      
+    }
+    .containerImage__miniature{
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   
