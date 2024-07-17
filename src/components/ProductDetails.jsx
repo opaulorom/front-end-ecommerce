@@ -512,7 +512,7 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div  className={styles.ProductDetailsContainer}>
+      <div className={styles.ProductDetailsContainer}>
         <ToastContainer
           position="top-center"
           autoClose={5000}
@@ -686,90 +686,92 @@ const ProductDetails = () => {
           <div>
             <div>
               <div>
-                <div className="thumbnail-container">
-                  {product.variations
-                    ?.filter(
-                      (variation, index, self) =>
-                        self.findIndex((v) => v.color === variation.color) ===
-                        index
-                    )
-                    .map((variation, index) => (
-                      <div key={index} className="thumbnail-wrapper">
-                        <span className="color-name">{`${variation.color}`}</span>
-
-                        <img
-                          src={variation.urls[0]}
-                          alt={variation.color}
-                          className={
-                            index === showBorder
-                              ? "thumbnail selected"
-                              : "thumbnail"
-                          }
-                          onClick={() => {
-                            setShowBorder(index);
-                            handleThumbnailClick(index);
-                          }}
-                        />
-                      </div>
-                    ))}
-                </div>
                 <div>
-                  <div className={styles.colorContainer}>
-                    <span>Cor: </span>
-                 
-                  <h3>
-                     {product.variations[selectedColorIndex]?.color}
-                  </h3>
+                  <div className={styles.spanContainer}>
+                    <span className={styles.name}> {product.name}</span>
 
-                  </div>
-                  <span>Selecione um Tamanho</span>
-
-                  <div
-                  
-                    className={styles.buttonContainer}
-                  >
-                    {sizesFromDatabase[selectedColorIndex]?.sizes &&
-                      sizesFromDatabase[selectedColorIndex].sizes.map(
-                        (size, sizeIndex) => (
-                          <div
-                            key={sizeIndex}
-                            style={{
-                              marginLeft: "1rem",
-                              display: "flex",
-                              flexDirection: "column",
-                            
-                            }}
-                          >
-                            <button
-                              className={`size-button ${
-                                size.size === selectedSize ? "active" : ""
-                              }`}
-                              style={{
-                                border:
-                                  size.inStockSize === true
-                                    ? "2px dashed #ccc"
-                                    : "",
-                                color: size.inStockSize === true ? "#888" : "",
-                                cursor:
-                                  size.inStockSize === true ? "" : "pointer",
-                              }}
-                              disabled={
-                                size.inStockSize === true
-                                  ? isButtonDisabled
-                                  : false
-                              }
-                              onClick={() =>
-                                handleSizeSelection(size.size, size.price)
-                              }
-                            >
-                              {size.size}
-                            </button>
-                          </div>
+                    <div>
+                      <span className={styles.color}>Cor: </span>
+                      <strong className={styles.strong}>
+                        {product.variations[selectedColorIndex]?.color}
+                      </strong>
+                    </div>
+                    <div className="thumbnail-container">
+                      {product.variations
+                        ?.filter(
+                          (variation, index, self) =>
+                            self.findIndex(
+                              (v) => v.color === variation.color
+                            ) === index
                         )
-                      )}
-                  </div>
-                  Preço: R$ {selectedPrice}
+                        .map((variation, index) => (
+                          <div key={index} className="thumbnail-wrapper">
+                            <img
+                              src={variation.urls[0]}
+                              alt={variation.color}
+                              className={
+                                index === showBorder
+                                  ? "thumbnail selected"
+                                  : "thumbnail"
+                              }
+                              onClick={() => {
+                                setShowBorder(index);
+                                handleThumbnailClick(index);
+                              }}
+                            />
+                          </div>
+                        ))}
+                    </div>
 
+                    <span className={styles.price}>
+                      {" "}
+                       Preço:<strong> R$ {selectedPrice}</strong>
+                    </span>
+                  </div>
+                  <div className={styles.sizeContainer}>
+                    <span className={styles.span}>Selecione um Tamanho</span>
+                    <div className={styles.buttonContainer}>
+                      {sizesFromDatabase[selectedColorIndex]?.sizes &&
+                        sizesFromDatabase[selectedColorIndex].sizes.map(
+                          (size, sizeIndex) => (
+                            <div
+                              key={sizeIndex}
+                              style={{
+                                marginLeft: "1rem",
+                                display: "flex",
+                                flexDirection: "column",
+                              }}
+                            >
+                              <button
+                                className={`size-button ${
+                                  size.size === selectedSize ? "active" : ""
+                                }`}
+                                style={{
+                                  border:
+                                    size.inStockSize === true
+                                      ? "2px dashed #ccc"
+                                      : "",
+                                  color:
+                                    size.inStockSize === true ? "#888" : "",
+                                  cursor:
+                                    size.inStockSize === true ? "" : "pointer",
+                                }}
+                                disabled={
+                                  size.inStockSize === true
+                                    ? isButtonDisabled
+                                    : false
+                                }
+                                onClick={() =>
+                                  handleSizeSelection(size.size, size.price)
+                                }
+                              >
+                                {size.size}
+                              </button>
+                            </div>
+                          )
+                        )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
