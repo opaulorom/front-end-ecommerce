@@ -551,7 +551,30 @@ const ProductDetails = () => {
           )}
         </div>
         <div className={styles.DesktopCarrosel}>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+
           <div>
+          {currentImages.map((url, urlIndex) => (
+                  <div key={startIndex + urlIndex}>
+                    <img
+                      src={url}
+                      alt={`Image ${startIndex + urlIndex} for ${
+                        product.variations[activeColorIndex].color
+                      }`}
+                      style={{
+                        width: "6vw",
+                        cursor: "pointer",
+                        border:
+                          startIndex + urlIndex === activeUrlIndex
+                            ? "1px solid black"
+                            : "none",
+                      }}
+                      onClick={() => setActiveUrlIndex(startIndex + urlIndex)}
+                    />
+                  </div>
+                ))}
+              </div>
+          <div className={styles.containerImage}>
             {validActiveUrlIndex ? (
               <div>
                 <Application selectedImageUrl={selectedImageUrl} />
@@ -572,6 +595,9 @@ const ProductDetails = () => {
             ) : (
               <p>No image available</p>
             )}
+
+          </div>
+               
             <div
               style={{
                 display: "flex",
@@ -587,27 +613,7 @@ const ProductDetails = () => {
                     &lt;
                   </button>
                 )}
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                {currentImages.map((url, urlIndex) => (
-                  <div key={startIndex + urlIndex}>
-                    <img
-                      src={url}
-                      alt={`Image ${startIndex + urlIndex} for ${
-                        product.variations[activeColorIndex].color
-                      }`}
-                      style={{
-                        width: "10vw",
-                        cursor: "pointer",
-                        border:
-                          startIndex + urlIndex === activeUrlIndex
-                            ? "2px solid blue"
-                            : "none",
-                      }}
-                      onClick={() => setActiveUrlIndex(startIndex + urlIndex)}
-                    />
-                  </div>
-                ))}
-              </div>
+          
               {validUrls &&
                 product.variations[activeColorIndex].urls.length >
                   IMAGES_PER_PAGE && (
@@ -772,18 +778,7 @@ const ProductDetails = () => {
                         )}
                     </div>
 
-                    <div className={styles.descriptionContainer}>
-                      <h1 className={styles.h1}>Descrição
-                      </h1>
-                      <span className={styles.description}> {product.description}</span>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {!showCartButton && (
+                    {!showCartButton && (
               <button
                 onClick={handleAddToCartAndOpenModal}
                 style={buttonStyleA}
@@ -798,6 +793,17 @@ const ProductDetails = () => {
                 COMPRAR
               </button>
             )}
+                    <div className={styles.descriptionContainer}>
+                      <h1 className={styles.h1}>Descrição
+                      </h1>
+                      <span className={styles.description}> {product.description}</span>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             {openCartModal && (
               <div className={styles.cartModal}>

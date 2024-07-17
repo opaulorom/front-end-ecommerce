@@ -15,11 +15,10 @@ import { useAuth } from "../context/AuthContext";
 import { TrendingUpOutlined } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { width } from "@mui/system";
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-
-
-const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 200, zoomLevel = 2,  magnifierImg}) => {
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import Application from "./Application";
+const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState({ variations: [] });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -41,16 +40,12 @@ const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedColorId, setSelectedColorId] = useState("");
   const [selectedSizeId, setSelectedSizeId] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-  const [changeUrlLink, setChangeUrlLink] = useState(0)
-  const [showMagnifier, setShowMagnifier] = useState(false);
-  const [[imageWidth, imageHeight], setSize] = useState([0, 0]);
-  const [[x, y], setXY] = useState([0, 0]);
-
+  const [changeUrlLink, setChangeUrlLink] = useState(0);
   const hendleButtonDisabled = () => {
-    setIsButtonDisabled(true)
-  }
+    setIsButtonDisabled(true);
+  };
 
   const handleShowBorder = () => {
     setShowBorder(!showBorder);
@@ -218,16 +213,13 @@ const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 
     setChangeUrlLink(0); // Reseta o índice da URL ao selecionar uma nova cor
   };
 
-
-
-
   const [imageIndices, setImageIndices] = useState({});
 
   // Inicializando os índices para cada cor no momento da montagem do componente
   useEffect(() => {
     const indices = {};
     product.variations.forEach((variation, index) => {
-      indices[variation.color] = 0;  // Inicializa todos os índices de URL como 0
+      indices[variation.color] = 0; // Inicializa todos os índices de URL como 0
     });
     setImageIndices(indices);
   }, [product]);
@@ -235,7 +227,7 @@ const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 
   const handleArrowClick = (direction) => {
     const currentColor = product.variations[selectedColorIndex]?.color;
 
-    setImageIndices(prevIndices => {
+    setImageIndices((prevIndices) => {
       const maxIndex = product.variations[selectedColorIndex].urls.length - 1;
       let newIndex = prevIndices[currentColor];
 
@@ -289,15 +281,12 @@ const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 
         toast.success("Produto adicionado ao carrinho!");
 
         handleClickOpenCartModal();
-
       } catch (error) {
         if (loggedIn === false) {
           toast.error("Precisa fazer login pra adicionar algo ao carrinho!");
-
         } else {
           console.error("Erro ao adicionar produto ao carrinho:", error);
           toast.error("Produto com essa cor e tamanho indisponível.");
-
         }
       }
     } else {
@@ -326,18 +315,17 @@ const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 
     );
   };
 
+  const max300And895 = useMediaQuery("(min-width:393px) and (max-width:853px)");
 
-  const max300And895 = useMediaQuery('(min-width:393px) and (max-width:853px)');
+  const isSmallScreen = useMediaQuery("(max-width:699px)");
 
-  const isSmallScreen = useMediaQuery('(max-width:699px)');
+  const isMediumScreen = useMediaQuery("(min-width:700px)");
 
-  const isMediumScreen = useMediaQuery('(min-width:700px)');
-
-  const isLargeScreen = useMediaQuery('(min-width:1025px)');
-  const isPortrait = useMediaQuery('(orientation: portrait)');
+  const isLargeScreen = useMediaQuery("(min-width:1025px)");
+  const isPortrait = useMediaQuery("(orientation: portrait)");
 
   const getbuttonStyleA = () => {
-    if (isSmallScreen, isPortrait) {
+    if ((isSmallScreen, isPortrait)) {
       return {
         backgroundColor: "#5070E3",
         color: "white",
@@ -350,17 +338,15 @@ const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 
         display: "flex",
         margin: "0 auto",
         marginTop: "3rem",
-        width: "80vw",
+        width: "90vw",
         justifyContent: "center",
         fontSize: "1.3rem",
       };
-    } else if (max300And895, isPortrait) {
+    } else if ((max300And895, isPortrait)) {
       return {
         backgroundColor: "red",
         width: "10vw",
-
-
-      }
+      };
     } else if (isMediumScreen) {
       return {
         backgroundColor: "#5070E3",
@@ -380,21 +366,18 @@ const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 
       };
     } else if (isLargeScreen) {
       return {
-        width: '13vw',
-        height: '40vh',
+        width: "13vw",
+        height: "40vh",
       };
     } else {
       return {
-        width: '13vw',
-        height: '40vh',
+        width: "13vw",
+        height: "40vh",
       };
     }
   };
 
   const buttonStyleA = getbuttonStyleA();
-
-
-
 
   const getbuttonStyleB = () => {
     if (isSmallScreen) {
@@ -433,18 +416,17 @@ const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 
       };
     } else if (isLargeScreen) {
       return {
-        width: '13vw',
-        height: '40vh',
+        width: "13vw",
+        height: "40vh",
       };
     } else {
       return {
-        width: '13vw',
-        height: '40vh',
+        width: "13vw",
+        height: "40vh",
       };
     }
   };
   const buttonStyleB = getbuttonStyleB();
-
 
   const handleImageClick = () => {
     setChangeUrlLink((currentUrlIndex) => {
@@ -461,7 +443,6 @@ const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 
     });
   };
 
-
   const [activeColorIndex, setActiveColorIndex] = useState(0);
   const [activeUrlIndex, setActiveUrlIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -475,69 +456,63 @@ const ProductDetails = ({width, height,magnifierWidth = 200,  magnifierHeight = 
   };
 
   const handleNextClick = () => {
-    setActiveUrlIndex((prevIndex) => (prevIndex + 1) % product.variations[activeColorIndex].urls.length);
+    setActiveUrlIndex(
+      (prevIndex) =>
+        (prevIndex + 1) % product.variations[activeColorIndex].urls.length
+    );
   };
 
   const handlePrevClick = () => {
-    setActiveUrlIndex((prevIndex) => (prevIndex - 1 + product.variations[activeColorIndex].urls.length) % product.variations[activeColorIndex].urls.length);
+    setActiveUrlIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + product.variations[activeColorIndex].urls.length) %
+        product.variations[activeColorIndex].urls.length
+    );
   };
 
-
-
   const handlePageNext = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.floor(product.variations[activeColorIndex].urls.length / IMAGES_PER_PAGE)));
+    setCurrentPage((prevPage) =>
+      Math.min(
+        prevPage + 1,
+        Math.floor(
+          product.variations[activeColorIndex].urls.length / IMAGES_PER_PAGE
+        )
+      )
+    );
   };
 
   const handlePagePrev = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
-  const validVariations = product && product.variations && product.variations.length > 0;
-  const validActiveColorIndex = validVariations && activeColorIndex < product.variations.length;
-  const validUrls = validActiveColorIndex && product.variations[activeColorIndex].urls && product.variations[activeColorIndex].urls.length > 0;
-  const validActiveUrlIndex = validUrls && activeUrlIndex < product.variations[activeColorIndex].urls.length;
+  const validVariations =
+    product && product.variations && product.variations.length > 0;
+  const validActiveColorIndex =
+    validVariations && activeColorIndex < product.variations.length;
+  const validUrls =
+    validActiveColorIndex &&
+    product.variations[activeColorIndex].urls &&
+    product.variations[activeColorIndex].urls.length > 0;
+  const validActiveUrlIndex =
+    validUrls &&
+    activeUrlIndex < product.variations[activeColorIndex].urls.length;
 
   const selectedImageUrl = validActiveUrlIndex
     ? product.variations[activeColorIndex].urls[activeUrlIndex]
     : "";
 
   const startIndex = currentPage * IMAGES_PER_PAGE;
-  const endIndex = Math.min(startIndex + IMAGES_PER_PAGE, validUrls ? product.variations[activeColorIndex].urls.length : 0);
-  const currentImages = validUrls ? product.variations[activeColorIndex].urls.slice(startIndex, endIndex) : [];
+  const endIndex = Math.min(
+    startIndex + IMAGES_PER_PAGE,
+    validUrls ? product.variations[activeColorIndex].urls.length : 0
+  );
+  const currentImages = validUrls
+    ? product.variations[activeColorIndex].urls.slice(startIndex, endIndex)
+    : [];
 
-
-
-
-const mouseEnter = (e) => {
-  const element = e.currentTarget;
-
-  const {width, height} = element.getBoundingClientRect();
-  setSize([width, height]);
-  setShowMagnifier(true)
-
-}
-
-const mouseLeave = (e) => {
-  e.preventDefault();
-  setShowMagnifier(false);
-}
-
-
-const mouseMove = (e) => {
-  const element = e.currentTarget;
-  const {top, left} = element.getBoundingClientRect();
-
-  const x = e.pageX - left - window.scrollX;
-  const y = e.pageY - top - window.scrollY;
-
-
-  setXY([x, y]);
-
-}
-  
   return (
     <>
-      <div>
+      <div className={styles.ProductDetailsContainer}>
         <ToastContainer
           position="top-center"
           autoClose={5000}
@@ -568,97 +543,110 @@ const mouseMove = (e) => {
                   </span>
                 </div>
 
-                <div className={styles.CartB}><CartB /></div>
+                <div className={styles.CartB}>
+                  <CartB />
+                </div>
               </div>
             </div>
           )}
         </div>
         <div className={styles.DesktopCarrosel}>
+        <div style={{ display: "flex", flexDirection: "row" }}>
 
           <div>
+          {currentImages.map((url, urlIndex) => (
+                  <div key={startIndex + urlIndex}>
+                    <img
+                      src={url}
+                      alt={`Image ${startIndex + urlIndex} for ${
+                        product.variations[activeColorIndex].color
+                      }`}
+                      style={{
+                        width: "6vw",
+                        cursor: "pointer",
+                        border:
+                          startIndex + urlIndex === activeUrlIndex
+                            ? "1px solid black"
+                            : "none",
+                      }}
+                      onClick={() => setActiveUrlIndex(startIndex + urlIndex)}
+                    />
+                  </div>
+                ))}
+              </div>
+          <div className={styles.containerImage}>
             {validActiveUrlIndex ? (
-              <div style={{
-                position:"relative"
-              }}>
-                <img src={selectedImageUrl} alt="Selected product" style={{ width: "20vw", marginBottom: "2rem", marginTop:"11rem" }}   className={magnifierImg}
-                      width={width}
-                      height={height}
-                      onMouseEnter={(e) => mouseEnter(e)}
-                      onMouseLeave={(e) => mouseLeave(e)}
-                      onMouseMove={(e) => mouseMove(e)} />
-                  <div style={{   
-                  display: showMagnifier ? '' : 'none',
-                  position: "absolute",
-                  width: `${magnifierWidth}` , 
-                  height: `${magnifierHeight}` , 
-                  pointerEvents:"none",
-                  opacity:"1",
-                  border:"2px solid gray",
-                  backgroundColor:"white",
-                  borderRadius: "5px",
-                  backgroundImage: `url('${selectedImageUrl}')`,
-                  backgroundRepeat: "no-repeat",
-                  top: `${y - magnifierHeight / 2}px`,
-                  left: `${x - magnifierWidth / 2}px`,
-                  backgroundSize: `${imageWidth * zoomLevel}px ${imageHeight * zoomLevel}px`,
-                  backgroundPositionX: `${-x * zoomLevel - magnifierWidth / 2}px`,
-                  backgroundPositionY: `${-y * zoomLevel + magnifierHeight / 2}px`
-
-                }}>
-
-                </div>      
+              <div>
+                <Application selectedImageUrl={selectedImageUrl} />
+                <img
+                  src={selectedImageUrl}
+                  alt="Selected product"
+                  style={{ width: "20vw", marginBottom: "2rem" }}
+                />
                 <div>
-                  <KeyboardArrowLeftIcon onClick={handlePrevClick}></KeyboardArrowLeftIcon>
-                  <KeyboardArrowRightIcon onClick={handleNextClick}></KeyboardArrowRightIcon>
+                  <KeyboardArrowLeftIcon
+                    onClick={handlePrevClick}
+                  ></KeyboardArrowLeftIcon>
+                  <KeyboardArrowRightIcon
+                    onClick={handleNextClick}
+                  ></KeyboardArrowRightIcon>
                 </div>
               </div>
             ) : (
               <p>No image available</p>
             )}
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: "5rem" }}>
-              {validUrls && product.variations[activeColorIndex].urls.length > IMAGES_PER_PAGE && (
-                <button onClick={handlePagePrev} disabled={currentPage === 0}>
-                  &lt;
-                </button>
-              )}
-              <div style={{ display: "flex", flexDirection: "row", position:"relative" }}>
-                {currentImages.map((url, urlIndex) => (
-                  <div key={startIndex + urlIndex}>
-                    <img
-                      src={url}
-                      alt={`Image ${startIndex + urlIndex} for ${product.variations[activeColorIndex].color}`}
-                      style={{ width: "10vw", cursor: "pointer", border: startIndex + urlIndex === activeUrlIndex ? "2px solid blue" : "none" }}
-                      onClick={() => setActiveUrlIndex(startIndex + urlIndex)}
-                    
 
-                    />
-                    
-                  </div>
-                ))}
-              
-              </div>
-              {validUrls && product.variations[activeColorIndex].urls.length > IMAGES_PER_PAGE && (
-                <button onClick={handlePageNext} disabled={endIndex >= product.variations[activeColorIndex].urls.length} >
-                  &gt;
-                </button>
-              )}
+          </div>
+               
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: "5rem",
+              }}
+            >
+              {validUrls &&
+                product.variations[activeColorIndex].urls.length >
+                  IMAGES_PER_PAGE && (
+                  <button onClick={handlePagePrev} disabled={currentPage === 0}>
+                    &lt;
+                  </button>
+                )}
+          
+              {validUrls &&
+                product.variations[activeColorIndex].urls.length >
+                  IMAGES_PER_PAGE && (
+                  <button
+                    onClick={handlePageNext}
+                    disabled={
+                      endIndex >=
+                      product.variations[activeColorIndex].urls.length
+                    }
+                  >
+                    &gt;
+                  </button>
+                )}
             </div>
           </div>
         </div>
-
-
 
         <div className={styles.carroselMobile}>
           <div key={currentImageIndex} className="image-container">
             {product.variations[currentImageIndex] && (
               <img
-                src={product.variations[selectedColorIndex]?.urls[imageIndices[product.variations[selectedColorIndex]?.color]] || selectedImageUrl}
+                src={
+                  product.variations[selectedColorIndex]?.urls[
+                    imageIndices[product.variations[selectedColorIndex]?.color]
+                  ] || selectedImageUrl
+                }
                 alt={product.variations[selectedColorIndex]?.color}
-                style={{ width: "25vw" }}
-
-                onClick={() => { handleImageClick, handleDotChangeClick(variationIndex, urlIndex) }} // Se você ainda precisa deste manipulador de cliques
+                style={{ width: "100vw" }}
+                onClick={() => {
+                  handleImageClick,
+                    handleDotChangeClick(variationIndex, urlIndex);
+                }} // Se você ainda precisa deste manipulador de cliques
               />
-
             )}
 
             <div className="navigation-arrows">
@@ -677,139 +665,145 @@ const mouseMove = (e) => {
               </div>
             </div>
 
-
             <div className="dot-container">
               {product.variations?.map((variation, index) => (
                 <span
                   key={index}
-                  className={`dot ${index === selectedColorIndex ? "active" : ""
-                    }`}
+                  className={`dot ${
+                    index === selectedColorIndex ? "active" : ""
+                  }`}
                   onClick={() => handleDotClick(index)}
                 />
               ))}
             </div>
-
           </div>
         </div>
 
-
         <div>
-
-
           <div
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-around",
-              marginTop: "10rem",
+              marginTop: "2rem",
             }}
-
-          >
-
-
-
-          </div>
-
-
-
+          ></div>
 
           <div>
             <div>
-              <div >
-                <div className="thumbnail-container">
-                  {product.variations
-                    ?.filter(
-                      (variation, index, self) =>
-                        self.findIndex((v) => v.color === variation.color) ===
-                        index
-                    )
-                    .map((variation, index) => (
-                      <div key={index} className="thumbnail-wrapper">
-                        <span className="color-name">{`${variation.color}`}</span>
-
-                        <img
-                          src={variation.urls[0]}
-                          alt={variation.color}
-                          className={
-                            index === showBorder
-                              ? "thumbnail selected"
-                              : "thumbnail"
-                          }
-                          onClick={() => {
-                            setShowBorder(index);
-                            handleThumbnailClick(index);
-                          }}
-                        />
-                      </div>
-                    ))}
-                </div>
-                Preço: R$ {selectedPrice}
+              <div>
                 <div>
-                  <h3>
-                    Tamanhos disponíveis para{" "}
-                    {product.variations[selectedColorIndex]?.color}:
-                  </h3>
-                  <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                    {sizesFromDatabase[selectedColorIndex]?.sizes &&
-                      sizesFromDatabase[selectedColorIndex].sizes.map(
-                        (size, sizeIndex) => (
-                          <div
-                            key={sizeIndex}
-                            style={{
-                              marginLeft: "1rem",
-                              display: "flex",
-                              flexDirection: "column",
+                  <div className={styles.spanContainer}>
+                    <span className={styles.name}> {product.name}</span>
 
-                            }}
-                          >
-                            <button
-                              className={`size-button ${size.size === selectedSize ? "active" : ""
-
-                                }`}
-                              style={{
-                                border: size.inStockSize === true ? "2px dashed #ccc" : "",
-                                color: size.inStockSize === true ? "#888" : "",
-                                cursor: size.inStockSize === true ? "" : "pointer",
-
-                              }}
-                              disabled={size.inStockSize === true ? isButtonDisabled : false}
-                              onClick={() =>
-                                handleSizeSelection(size.size, size.price)
-                              }
-                            >
-                              {size.size}
-
-                            </button>
-
-
-                          </div>
+                    <div>
+                      <span className={styles.color}>Cor: </span>
+                      <strong className={styles.strong}>
+                        {product.variations[selectedColorIndex]?.color}
+                      </strong>
+                    </div>
+                    <div className="thumbnail-container">
+                      {product.variations
+                        ?.filter(
+                          (variation, index, self) =>
+                            self.findIndex(
+                              (v) => v.color === variation.color
+                            ) === index
                         )
-                      )}
-                  </div>
-                </div>
-              </div>
-            </div>
+                        .map((variation, index) => (
+                          <div key={index} className="thumbnail-wrapper">
+                            <img
+                              src={variation.urls[0]}
+                              alt={variation.color}
+                              className={
+                                index === showBorder
+                                  ? "thumbnail selected"
+                                  : "thumbnail"
+                              }
+                              onClick={() => {
+                                setShowBorder(index);
+                                handleThumbnailClick(index);
+                              }}
+                            />
+                          </div>
+                        ))}
+                    </div>
 
-            {!showCartButton && (
+                    <span className={styles.price}>
+                      {" "}
+                       Preço:<strong> R$ {selectedPrice}</strong>
+                    </span>
+                  </div>
+                  <div className={styles.sizeContainer}>
+                    <span className={styles.span}>Selecione um Tamanho</span>
+                    <div className={styles.buttonContainer}>
+                      {sizesFromDatabase[selectedColorIndex]?.sizes &&
+                        sizesFromDatabase[selectedColorIndex].sizes.map(
+                          (size, sizeIndex) => (
+                            <div
+                              key={sizeIndex}
+                              style={{
+                                marginLeft: "1rem",
+                                display: "flex",
+                                flexDirection: "column",
+                              }}
+                            >
+                              <button
+                                className={`size-button ${
+                                  size.size === selectedSize ? "active" : ""
+                                }`}
+                                style={{
+                                  border:
+                                    size.inStockSize === true
+                                      ? "2px dashed #ccc"
+                                      : "",
+                                  color:
+                                    size.inStockSize === true ? "#888" : "",
+                                  cursor:
+                                    size.inStockSize === true ? "" : "pointer",
+                                }}
+                                disabled={
+                                  size.inStockSize === true
+                                    ? isButtonDisabled
+                                    : false
+                                }
+                                onClick={() =>
+                                  handleSizeSelection(size.size, size.price)
+                                }
+                              >
+                                {size.size}
+                              </button>
+                            </div>
+                          )
+                        )}
+                    </div>
+
+                    {!showCartButton && (
               <button
                 onClick={handleAddToCartAndOpenModal}
-
                 style={buttonStyleA}
-
               >
                 COMPRAR
               </button>
             )}
 
             {showCartButton && (
-              <button
-                onClick={handleClickOpenModal}
-
-                style={buttonStyleB}
-              >
+              <button onClick={handleClickOpenModal}  className={styles.buttons}
+>
                 COMPRAR
               </button>
             )}
+                    <div className={styles.descriptionContainer}>
+                      <h1 className={styles.h1}>Descrição
+                      </h1>
+                      <span className={styles.description}> {product.description}</span>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             {openCartModal && (
               <div className={styles.cartModal}>
