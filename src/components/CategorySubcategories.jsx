@@ -555,6 +555,7 @@ const CategorySubcategories = () => {
                               width: '15vw',
                               color: 'rgb(114, 114, 114)',
                               fontSize: '.8rem',
+                              
                             }}
                           >
                             {product.name}
@@ -767,6 +768,7 @@ const CategorySubcategories = () => {
                       </p>
                       <div onClick={handleClickCloseModal}>
                         <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
+                          
                           {subcategories.map((subcategory, index) => (
                             <li
                               key={index}
@@ -963,16 +965,17 @@ const CategorySubcategories = () => {
                   fontWeight: "600",
                   fontSize: "1.2rem",
                   color: "rgb(52, 52, 54)",
+                 
                 }}
               >
                 Categorias
               </p>
               <div onClick={handleClickCloseModal}>
-                <ul style={{ listStyle: "none", marginBottom: "3rem" }}>
+                <ul style={{ listStyle: "none", marginBottom: "3rem",  cursor:"pointer" }}>
                   {subcategories.map((subcategory, index) => (
                     <li
                       key={index}
-                      style={{ marginLeft: "-2.5rem" }}
+                      
                       className={styles.myLinks}
                       onClick={() => { handleSubcategoryClick(subcategory), setContent('2') }}
                     >
@@ -984,12 +987,7 @@ const CategorySubcategories = () => {
 
               <div style={{ marginBottom: "3rem" }}>
                 <h3
-                  style={{
-                    fontFamily: "Montserrat, arial, sans-serif",
-                    fontWeight: "600",
-                    fontSize: "1.2rem",
-                    color: "rgb(52, 52, 54)",
-                  }}
+                   className={styles.Cores}
                 >
                   Cores
                 </h3>
@@ -1003,7 +1001,10 @@ const CategorySubcategories = () => {
                       justifyItems: "center",
                       marginTop: "1rem",
                       cursor: "pointer"
+                      
                     }}
+                    className={styles.colorContainer}
+
                     onClick={() => {
                       handleColorClick(color), setContent('1')
                     }}
@@ -1024,8 +1025,10 @@ const CategorySubcategories = () => {
                         cursor: "pointer",
                         fontWeight: selectedColor === color ? "600" : "400",
                         fontSize: selectedColor === color ? "1.1rem" : "1rem",
-                        fontFamily: "Montserrat, arial, sans-serif",
+                        fontFamily: "poppins,  sans-serif",
                       }}
+                      className={styles.colorContainer__color}
+
                     >
                       {color}
                     </div>
@@ -1034,10 +1037,11 @@ const CategorySubcategories = () => {
 
                 <h3
                   style={{
-                    fontFamily: "Montserrat, arial, sans-serif",
+                    fontFamily: "poppins, sans-serif",
                     fontWeight: "600",
                     fontSize: "1.2rem",
                     color: "rgb(52, 52, 54)",
+
                   }}
                 >
                   Tamanhos
@@ -1086,6 +1090,7 @@ const CategorySubcategories = () => {
                     fontWeight: "600",
                     fontSize: "1.2rem",
                     color: "rgb(52, 52, 54)",
+                    marginTop:"2rem"
                   }}
                 >
                   Faixas de Preços

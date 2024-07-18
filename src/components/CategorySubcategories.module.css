@@ -1,16 +1,27 @@
 /* Links */
 .myLinks {
   margin-top: 1rem;
+  font-family: "poppins", sans-serif;
+}
+.Cores{
+  font-family: "poppins", sans-serif;
+  font-weight: 500;
 }
 
+.colorContainer__color{
+  font-family: "poppins", sans-serif;
+  font-weight: 500;
+}
 .myLinks a {
   color: inherit;
   text-decoration: none;
-  font-family: Montserrat, Arial, sans-serif;
+  font-family: "poppins", sans-serif;
   font-weight: 500;
   font-size: 1rem;
 }
-
+.colorContainer{
+  margin-bottom: 1rem;
+}
 /* Filter Modal */
 .FilterModal {
   display: block;
@@ -64,7 +75,7 @@
 }
 
 .ProductsContainer__image {
-  width: 30vw;
+  width: 18vw;
   margin-top: -2rem;
   margin-left: 1rem;
   z-index: -1;
@@ -197,7 +208,7 @@
   position: absolute;
   top: 100%;
 }
-@media (max-width: 600px) {
+@media (max-width: 699px) {
   .DesktopFilter,
   .ProductsDesktopContainer,
   .TabletContainerProducts {
@@ -210,7 +221,7 @@
     grid-template-columns: repeat(2, 1fr);
     margin-left: -5rem;
   }
-
+ 
   .img {
     width: 30vw;
   }
@@ -273,6 +284,7 @@
   }
   
   
+  
 }
 
 @media (max-width: 800px) and (orientation: portrait) {
@@ -291,3 +303,27 @@
     display: none;
   }
 }
+
+
+@media only screen and (min-width: 608px) and (max-width: 926px) {
+  .ProductsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    list-style-type: none;
+  }
+  .ProductsContainer__image{
+    width: 28vw;
+  }
+
+}
+@media only screen and (min-width: 800px) and (max-width: 1180px) {
+  .ProductsContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    list-style-type: none;
+  }
+  .ProductsContainer__image{
+    width: 28vw;
+  }
+}
+
