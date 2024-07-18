@@ -26,16 +26,3 @@
   justify-content: center;
 }
 
-@media screen and (min-width: 700px){
-    .formContainer{
-        display: none;
-      
-    }
-    .inputCep{
-        display: none;
-    }
-    .buttonCep{
-        display: none;
-
-    }
-}
