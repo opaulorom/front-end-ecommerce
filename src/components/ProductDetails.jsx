@@ -791,6 +791,7 @@ const ProductDetails = () => {
                             </div>
                           )
                         )}
+                        
                     </div>
 <div className={styles.buttonsContainer}>
                     {!showCartButton && (
@@ -844,7 +845,8 @@ const ProductDetails = () => {
               </div>
             )}
 
-            <FreteComponent />
+            <FreteComponent  />
+
           </div>
         </div>
         <Navbar />

@@ -1,0 +1,27 @@
+
+.inputCep {
+  height: 4vh;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 0;
+  border:  1px solid gray;
+}
+.formContainer{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.buttonCep {
+  background-color: #5070e3;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  width: 8vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchIcon from "@mui/icons-material/Search";
 import Cookies from 'js-cookie';
-
+import  styles from "./FreteComponent.module.css"
 const FreteComponent = () => {
   const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
@@ -54,7 +54,7 @@ const FreteComponent = () => {
       const responseGet = await axios.get(`http://localhost:3001/api/frete/${userId}`,{
       headers: {
         Authorization: `Bearer ${token}`,
-        Credentials: credentials,
+      
       },
     });
       console.log('log', userId)
@@ -67,33 +67,19 @@ const FreteComponent = () => {
   };
 
   return (
-    <div style={{marginTop:"2rem", position:"relative"}}>
-      <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center", gap: ".3rem" }}>
+    <div >
+      <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center" }}    className={styles.formContainer}>
         <input
           type="text"
           value={cep}
           onChange={(event) => setCep(event.target.value)}
           placeholder="Digite o CEP"
-          style={{ height: "4vh" }}
+            className={styles.inputCep}
         />
         <button type="submit"
-         style={{
-          backgroundColor: "#5070E3",
-          color: "white",
-          border: "none",
-          padding: ".8rem",
-          borderRadius: "5px",
-          fontWeight: "500",
-          fontFamily: "poppins, sans-serif",
-          cursor: "pointer",
-          position: "absolute",
-          right: "10px",
-          width:"8vw", 
-          display:"flex",
-          alignItems:"center",
-          gap:".3rem"
-        }}
         
+        className={styles.buttonCep}
+
         ><SearchIcon />Salvar</button>
       </form>
 
