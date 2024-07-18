@@ -354,7 +354,7 @@ const ProductDetails = () => {
         backgroundColor: "#5070E3",
         color: "white",
         border: "none",
-        padding: ".8rem",
+        padding: ".7rem",
         borderRadius: "8px",
         fontWeight: "500",
         fontFamily: "poppins, sans-serif",
@@ -362,7 +362,7 @@ const ProductDetails = () => {
         display: "flex",
         margin: "0 auto",
         marginTop: "5rem",
-        width: "15vw",
+        width: "20vw",
         justifyContent: "center",
         fontSize: "1rem",
       };
@@ -622,9 +622,9 @@ const ProductDetails = () => {
                 </div>
               </div>
               {validActiveUrlIndex ? (
-                <div>
-                  <Application selectedImageUrl={selectedImageUrl} />
-                  <div>
+                <div style={{display:"flex",flexDirection:"column", justifyContent:"space-between"}}>
+                  <Application selectedImageUrl={selectedImageUrl} s/>
+                  <div style={{position:"absolute", cursor:"pointer"}}>
                     <KeyboardArrowLeftIcon
                       onClick={handlePrevClick}
                     ></KeyboardArrowLeftIcon>
@@ -792,7 +792,7 @@ const ProductDetails = () => {
                           )
                         )}
                     </div>
-
+<div className={styles.buttonsContainer}>
                     {!showCartButton && (
                       <button
                         onClick={handleAddToCartAndOpenModal}
@@ -810,6 +810,8 @@ const ProductDetails = () => {
                         COMPRAR
                       </button>
                     )}
+
+</div>
                     <div className={styles.descriptionContainer}>
                       <h1 className={styles.h1}>Descrição</h1>
                       <span className={styles.description}>

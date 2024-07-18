@@ -7,7 +7,6 @@ const FreteComponent = () => {
   const [cep, setCep] = useState(localStorage.getItem('cep') || '');
   const [frete, setFrete] = useState(null);
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
-  const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
   const token = Cookies.get('token'); // Obtenha o token do cookie
   useEffect(() => {
@@ -24,7 +23,7 @@ const FreteComponent = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            Credentials: credentials,
+           
           },
         }
       );
@@ -46,7 +45,7 @@ const FreteComponent = () => {
       await axios.post(`http://localhost:3001/api/frete/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-          Credentials: credentials,
+       
         },
       }, { cep }
      );

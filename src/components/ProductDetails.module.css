@@ -271,7 +271,7 @@ margin-bottom: 2rem;
     }
     .buttonContainer{
       display: grid;
-      grid-template-columns: repeat(8, 1fr);
+      grid-template-columns: repeat(5, 1fr);
     }
 
     .ProductDetailsContainer{
@@ -303,6 +303,22 @@ margin-bottom: 2rem;
       display: flex;
       flex-direction: column;
     }
+    .buttonsContainer{
+      margin-top: -4rem;
+    }
   }
-
-  
+  @media (min-width: 1280px){
+    .ProductDetailsContainer{
+      margin-top: 7rem;
+    }
+  }
+  @media (min-width: 1559px){
+    .ProductDetailsContainer{
+      margin-top: 10rem;
+    }
+  }
+  @media (min-width: 1643px){
+    .ProductDetailsContainer{
+      margin-top: 10rem;
+    }
+  }
