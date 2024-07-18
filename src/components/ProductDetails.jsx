@@ -693,7 +693,7 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
-
+        <FreteComponent  />
         <div>
           <div
             style={{
