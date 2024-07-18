@@ -1,4 +1,8 @@
-
+.formContainer{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
 .inputCep {
   height: 4vh;
   padding: 0.5rem;
@@ -6,11 +10,7 @@
   border: 0;
   border:  1px solid gray;
 }
-.formContainer{
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
+
 .buttonCep {
   background-color: #5070e3;
   color: white;
@@ -24,4 +24,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media screen and (min-width: 700px){
+    .formContainer{
+        display: none;
+      
+    }
+    .inputCep{
+        display: none;
+    }
+    .buttonCep{
+        display: none;
+
+    }
 }
