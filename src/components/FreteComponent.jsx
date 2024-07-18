@@ -68,7 +68,9 @@ const FreteComponent = () => {
 
   return (
     <div >
+      
       <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center" }}    className={styles.formContainer}>
+      
         <input
           type="text"
           value={cep}

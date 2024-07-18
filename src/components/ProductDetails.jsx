@@ -555,18 +555,23 @@ const ProductDetails = () => {
         <div className={styles.DesktopCarrosel}>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div className={styles.containerImage}>
-              <div  className={styles.containerImage__miniature} style={{
-              marginTop: validUrls &&
-                product.variations[activeColorIndex].urls.length >
-                  IMAGES_PER_PAGE ? "-1.5rem" : ""
-              }}>
+              <div
+                className={styles.containerImage__miniature}
+                style={{
+                  marginTop:
+                    validUrls &&
+                    product.variations[activeColorIndex].urls.length >
+                      IMAGES_PER_PAGE
+                      ? "-1.5rem"
+                      : "",
+                }}
+              >
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "center",
-                    cursor:"pointer"
-             
+                    cursor: "pointer",
                   }}
                 >
                   {validUrls &&
@@ -578,34 +583,33 @@ const ProductDetails = () => {
                       ></KeyboardArrowUpIcon>
                     )}
                 </div>
-              <div>
-              {currentImages.map((url, urlIndex) => (
-                  <div key={startIndex + urlIndex}>
-                    <img
-                      src={url}
-                      alt={`Image ${startIndex + urlIndex} for ${
-                        product.variations[activeColorIndex].color
-                      }`}
-                      style={{
-                        width: "6vw",
-                        cursor: "pointer",
-                        border:
-                          startIndex + urlIndex === activeUrlIndex
-                            ? "1px solid black"
-                            : "none",
-                      }}
-                      onClick={() => setActiveUrlIndex(startIndex + urlIndex)}
-                    />
-                  </div>
-                ))}
-              </div>
-              
+                <div>
+                  {currentImages.map((url, urlIndex) => (
+                    <div key={startIndex + urlIndex}>
+                      <img
+                        src={url}
+                        alt={`Image ${startIndex + urlIndex} for ${
+                          product.variations[activeColorIndex].color
+                        }`}
+                        style={{
+                          width: "6vw",
+                          cursor: "pointer",
+                          border:
+                            startIndex + urlIndex === activeUrlIndex
+                              ? "1px solid black"
+                              : "none",
+                        }}
+                        onClick={() => setActiveUrlIndex(startIndex + urlIndex)}
+                      />
+                    </div>
+                  ))}
+                </div>
+
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "center",
-                    cursor:"pointer"
-
+                    cursor: "pointer",
                   }}
                 >
                   {validUrls &&
@@ -622,9 +626,15 @@ const ProductDetails = () => {
                 </div>
               </div>
               {validActiveUrlIndex ? (
-                <div style={{display:"flex",flexDirection:"column", justifyContent:"space-between"}}>
-                  <Application selectedImageUrl={selectedImageUrl} s/>
-                  <div style={{position:"absolute", cursor:"pointer"}}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Application selectedImageUrl={selectedImageUrl} s />
+                  <div style={{ position: "absolute", cursor: "pointer" }}>
                     <KeyboardArrowLeftIcon
                       onClick={handlePrevClick}
                     ></KeyboardArrowLeftIcon>
@@ -637,7 +647,6 @@ const ProductDetails = () => {
                   alt="Selected product"
                   style={{ width: "20vw", marginBottom: "2rem" }}
                 /> */}
-               
                 </div>
               ) : (
                 <p>No image available</p>
@@ -792,26 +801,28 @@ const ProductDetails = () => {
                           )
                         )}
                     </div>
-<div className={styles.buttonsContainer}>
-                    {!showCartButton && (
-                      <button
-                        onClick={handleAddToCartAndOpenModal}
-                        style={buttonStyleA}
-                      >
-                        COMPRAR
-                      </button>
-                    )}
+                    <div className={styles.buttonsContainer}>
+                      {!showCartButton && (
+                        <button
+                          onClick={handleAddToCartAndOpenModal}
+                          style={buttonStyleA}
+                        >
+                          COMPRAR
+                        </button>
+                      )}
 
-                    {showCartButton && (
-                      <button
-                        onClick={handleClickOpenModal}
-                        className={styles.buttons}
-                      >
-                        COMPRAR
-                      </button>
-                    )}
+                      {showCartButton && (
+                        <button
+                          onClick={handleClickOpenModal}
+                          className={styles.buttons}
+                        >
+                          COMPRAR
+                        </button>
+                      )}
+                
+                      <FreteComponent />
+                    </div>
 
-</div>
                     <div className={styles.descriptionContainer}>
                       <h1 className={styles.h1}>Descrição</h1>
                       <span className={styles.description}>
@@ -843,8 +854,6 @@ const ProductDetails = () => {
                 </div>
               </div>
             )}
-
-            <FreteComponent  />
           </div>
         </div>
         <Navbar />
