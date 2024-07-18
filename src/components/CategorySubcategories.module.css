@@ -314,7 +314,19 @@
   .ProductsContainer__image{
     width: 28vw;
   }
+  .subcategoriesDataContainer{
+    grid-template-columns: repeat(3, 1fr);
 
+  }
+
+  .priceContainer{
+    grid-template-columns: repeat(3, 1fr);
+
+  }
+  .priceContainer__image{
+    width: 25vw;
+
+  }
 }
 @media only screen and (min-width: 800px) and (max-width: 1180px) {
   .ProductsContainer {
@@ -324,6 +336,23 @@
   }
   .ProductsContainer__image{
     width: 28vw;
+  }
+  .subcategoriesDataContainer{
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+  .subcategoriesDataContainer__image{
+    width: 22vw;
+
+  }
+
+  .priceContainer{
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+  .priceContainer__image{
+    width: 22vw;
+
   }
 }
 
