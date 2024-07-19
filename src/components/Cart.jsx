@@ -400,6 +400,7 @@ const Cart = () => {
                   className={styles.ExternalContainer}
                 >
                   <div className={styles.ProductsContainer}>
+                    <div>
                     {item.productId &&
                       item.productId.variations && ( // Add null check for productId and variations
                         <img
@@ -414,6 +415,8 @@ const Cart = () => {
                         />
                       )}
 
+                    </div>
+                
                     <div
                       style={{
                         display: "flex",
