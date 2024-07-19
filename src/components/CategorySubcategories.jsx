@@ -772,7 +772,7 @@ const CategorySubcategories = () => {
                           {subcategories.map((subcategory, index) => (
                             <li
                               key={index}
-                              style={{ marginLeft: "-2.5rem" }}
+                         
                               className={styles.myLinks}
                               onClick={() => { handleSubcategoryClick(subcategory), setContent('2') }}
 
@@ -794,50 +794,52 @@ const CategorySubcategories = () => {
                         >
                           Cores
                         </h3>
-                        <div style={{
-                          display: "grid",
-                          gridTemplateColumns: "repeat(4, 1fr)",
-                        }}>
+                        <div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(4, 1fr)",
+  }}
+>
+  {colors.map((color, index) => (
+    <div
+      key={index}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyItems: "center",
+        marginTop: "1rem",
+        position: "relative",
+      }}
+      onClick={() => { handleColorClick(color); handleSelectBorder(index); }}
+    >
+      <div
+        style={{
+          width: "30px",
+          height: "30px",
+          borderRadius: "50%",
+          backgroundColor: colorMap[color],
+          marginRight: "10px",
+          border: `1px solid ${doubleBorder === index ? "transparent" : "gray"}`,
+          position: "relative",
+        }}
+      ></div>
+      {doubleBorder === index && (
+        <div
+          style={{
+            width: "38px",
+            height: "38px",
+            borderRadius: "50%",
+            border: `2px solid ${colorMap[color]}`, // Usando a cor selecionada para a borda
+            position: "absolute",
+            top: "-5px",
+            left: "-5px",
+          }}
+        ></div>
+      )}
+    </div>
+  ))}
+</div>
 
-                          {colors.map((color, index) => (
-                            <div
-                              key={index}
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyItems: "center",
-                                marginTop: "1rem",
-                                position: "relative"
-                              }}
-                              onClick={() => { handleColorClick(color); handleSelectBorder(index); }}
-                            >
-                              <div
-                                style={{
-                                  width: "20px",
-                                  height: "20px",
-                                  borderRadius: "50%",
-                                  backgroundColor: colorMap[color],
-                                  marginRight: "10px",
-                                  border: `1px solid ${doubleBorder === index ? "transparent" : "gray"}`,
-                                  position: "relative" // Adicionando posição relativa para referência
-                                }}
-                              ></div>
-                              {doubleBorder === index && (
-                                <div
-                                  style={{
-                                    width: "28px", // Tamanho do círculo externo
-                                    height: "28px", // Tamanho do círculo externo
-                                    borderRadius: "50%",
-                                    border: "2px solid black",
-                                    position: "absolute",
-                                    top: "-5px", // Ajustando para manter a centralização vertical
-                                    left: "-5px", // Ajustando para manter a centralização horizontal
-                                  }}
-                                ></div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
 
 
                       </div>
