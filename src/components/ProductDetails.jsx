@@ -20,6 +20,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Application from "./Application";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import CloseIcon from "@mui/icons-material/Close";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState({ variations: [] });
@@ -819,7 +820,7 @@ const ProductDetails = () => {
                           COMPRAR
                         </button>
                       )}
-                
+
                       <FreteComponent />
                     </div>
 
@@ -838,19 +839,27 @@ const ProductDetails = () => {
             {openCartModal && (
               <div className={styles.cartModal}>
                 <div ref={modalRef} className={styles.cartModalContent}>
-                  <span
+                  <CloseIcon
                     className={styles.cartClose}
                     onClick={handleClickCloseModal}
-                  >
-                    &times;
-                  </span>
-                  <p>
-                    vc nao ainda nao cadastrou os dados necessarios pra compra
-                    se cadastre
+                  />
+                  <div className={styles.cartModalContent__div}>
+                  <p className={styles.cartModalContent__p}>
+                    Você ainda não possui cadastro. Para fazer compras, por
+                    favor, cadastre-se.
                   </p>
-                  <Link to={"/signUp"}>
-                    <button>cadastre-se</button>
+                  <Link
+                    to={"/signUp"}
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    <button className={styles.cartModalContent__button}>
+                      cadastre-se
+                    </button>
                   </Link>
+                  </div>
+                 
                 </div>
               </div>
             )}
