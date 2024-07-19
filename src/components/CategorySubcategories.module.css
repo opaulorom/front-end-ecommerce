@@ -81,12 +81,19 @@
   z-index: -1;
 }
 
-/* Filtered Quantity */
-.filteredQuantity {
+
+.filteredQuantity{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2rem auto;
+  margin: 0 auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+/* Filtered Quantity */
+.filteredQuantity__button {
+ 
+
   width: 80vw;
   background-color: #0C0C0C;
   color: white;
