@@ -1,83 +1,197 @@
 .linha {
-    width: 50vw;
-    height: 1px; /* Altura da linha */
-    position: absolute;
-    top: -1rem;
-    margin-top: 5rem;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra para a linha */
+  width: 50vw;
+  height: 1px; /* Altura da linha */
+  position: absolute;
+  top: -1rem;
+  margin-top: 5rem;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra para a linha */
 }
 
 div h3:nth-last-of-type(3){
-    margin-left: auto;
+  margin-left: auto;
 }
 
 
-@media (max-width: 600px) {
-
+.ExternalContainer{
+  margin-top: 14rem;
+  margin-left: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 .ProductsContainer{
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid #e9e9e9;
+  display: flex;
+flex-direction: column;
+  justify-content: center;
+  border: 1px solid #e9e9e9;
+  border: 1px solid #e9e9e9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
 
+  height: auto;
+ 
+
+  padding: 1rem;
+  gap: 2rem;
+}
+.ProductsContainer__image{
+  width: 20vw;
 }
 
 .textsContainer{
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .loading{
-    margin-top: 20rem;
-    display: flex;
-    justify-content: center;
+  margin-top: 20rem;
+  display: flex;
+  justify-content: center;
 }
 
 .inputContainer{
-    width: 2vw;
+  width: 2vw;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+-webkit-appearance: none;
+margin: 0;
 }
 
 
 .Modal {
-    display: block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.ModalContent {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50vw;
+  height: 40vh;
+}
+
+
+.Close {
+  color: #aaa;
+  float: right;
+  font-size: 4rem;
+  font-weight: bold;
+  margin-top: -2rem;
+}
+
+.Close:hover,
+.Close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+  @media screen and (min-width: 700px) {
+    .linha {
+      width: 50vw;
+      height: 1px; /* Altura da linha */
+      position: absolute;
+      top: -1rem;
+      margin-top: 5rem;
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra para a linha */
   }
   
-  .ModalContent {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50vw;
-    height: 40vh;
+  div h3:nth-last-of-type(3){
+      margin-left: auto;
   }
   
   
-  .Close {
-    color: #aaa;
-    float: right;
-    font-size: 4rem;
-    font-weight: bold;
-    margin-top: -2rem;
+  
+  
+  .ProductsContainer{
+      display: flex;
+  
+      justify-content: center;
+      border: 1px solid #e9e9e9;
+      border: 1px solid #e9e9e9;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      width: 35vw;
+      height: auto;
+     
+  
+      padding: 1rem;
+      gap: 2rem;
+  }
+  .ProductsContainer__image{
+    width: 10vw;
+  }
+  .textsContainer{
+      display: flex;
+      flex-direction: column;
   }
   
-  .Close:hover,
-  .Close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+  .loading{
+      margin-top: 20rem;
+      display: flex;
+      justify-content: center;
+  }
+  
+  .inputContainer{
+      width: 2vw;
+  }
+  
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  
+  .Modal {
+      display: block;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    
+    .ModalContent {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 50vw;
+      height: 40vh;
+    }
+    
+    
+    .Close {
+      color: #aaa;
+      float: right;
+      font-size: 4rem;
+      font-weight: bold;
+      margin-top: -2rem;
+    }
+    
+    .Close:hover,
+    .Close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  
   }

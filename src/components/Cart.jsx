@@ -396,13 +396,8 @@ const Cart = () => {
               {getCart.map((item, index) => (
                 <div
                   key={item._id} // Use o _id do produto como chave
-                  style={{
-                    marginTop: "14rem",
-                    marginLeft: "3rem",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "1rem",
-                  }}
+               
+                  className={styles.ExternalContainer}
                 >
                   <div className={styles.ProductsContainer}>
                     {item.productId &&
@@ -414,7 +409,8 @@ const Cart = () => {
                             )?.urls[0]
                           }
                           alt={item.productId.name}
-                          style={{ width: "10vw", marginBottom: "10px" }}
+                        
+                          className={styles.ProductsContainer__image}
                         />
                       )}
 
