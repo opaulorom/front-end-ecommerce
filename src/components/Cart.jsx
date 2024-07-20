@@ -283,18 +283,18 @@ const Cart = () => {
             <div className={styles.cartContainer__totalQuantity}>
               <div className={styles.justifyContent}>
                 <span className={styles.span}>Quatidade Total</span>
-                {totalQuantity > 0 && <p>{totalQuantity}</p>}
+                {totalQuantity > 0 && <p className={styles.span}>{totalQuantity}</p>}
                 
               </div>
 
               <div className={styles.justifyContent}>
                  <span className={styles.span}>valor do frete</span>
-              <span>0</span>
+              <span className={styles.span}>0</span>
               
               </div>
               <div className={styles.justifyContent}>
               <span className={styles.span}>Valor total</span>
-              <span>1855</span>
+              <span className={styles.total}>R$ 1855</span>
               </div>
           
             </div>
