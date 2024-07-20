@@ -338,6 +338,11 @@ const Cart = () => {
             </>
           )}
 
+
+
+
+
+
           {getCart.length === 0 && !loggedIn && (
             <>
               <div
@@ -347,6 +352,7 @@ const Cart = () => {
                   justifyContent: "center",
                   marginTop: "15rem",
                 }}
+              
               >
                 <div
                   style={{
@@ -379,7 +385,92 @@ const Cart = () => {
               </div>
             </>
           )}
+ {getCart.length > 0 && (
+            <div
+              className={styles.shippingFeeContainer}
+            >
+              {/* <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
+              {getTotal &&
+                typeof getTotal === "object" &&
+                getTotal.totalAmount && (
+                  <div style={{ marginTop: "10rem" }}>
+                    Total do Carrinho: R$ {getTotal.totalAmount.toFixed(2)}
+                  </div>
+                )} */}
 
+              <form
+                style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+              >
+                <input
+                  type="text"
+                  value={cep}
+                  onChange={(event) => setCep(event.target.value)}
+                  placeholder="Digite um cep..."
+           
+                  className={styles.shippingFeeContainer__input}
+                />
+
+                <button
+                  type="submit"
+               
+                  onClick={handleSubmit}
+                  className={styles.shippingFeeContainer__button}
+
+                >
+                  {" "}
+                  <SearchIcon /> Buscar{" "}
+                </button>
+              </form>
+
+              {frete && (
+                <div>
+                  {frete.map((item, index) => (
+                    <div key={index}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "1rem",
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          name="selectedFrete"
+                          value={index}
+                          onClick={() => handleRadioClick(index)}
+                          checked={selectedFreteIndex === index}
+                          style={{
+                            pointerEvents: isRadioButtonEnabled
+                              ? "auto"
+                              : "none",
+                            opacity: isRadioButtonEnabled ? 1 : 0.5,
+                          }}
+                          disabled={!isRadioButtonEnabled}
+                        />
+                        <img
+                          src={item.logo}
+                          alt="logo das transportadoras"
+                          style={{ width: "10vw" }}
+                        />
+
+                        <p>{item.nomeTransportadora}</p>
+                        <p>
+                          {" "}
+                          {item.dataPrevistaEntrega
+                            .split("T")[0]
+                            .split("-")
+                            .reverse()
+                            .join("/")}
+                        </p>
+                        <p> {item.prazoEntrega}</p>
+                        <p> valor do frete:{item.valorFrete}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
           {getCart.length === 0 && loggedIn === true ? (
             <div
               style={{
@@ -780,108 +871,7 @@ const Cart = () => {
             </div>
           )}
 
-          {getCart.length > 0 && (
-            <div
-              style={{
-                marginLeft: "14rem",
-                position: "absolute",
-                right: "10px",
-                marginTop: "25rem",
-            
-              }}
-            >
-              <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
-              {getTotal &&
-                typeof getTotal === "object" &&
-                getTotal.totalAmount && (
-                  <div style={{ marginTop: "10rem" }}>
-                    Total do Carrinho: R$ {getTotal.totalAmount.toFixed(2)}
-                  </div>
-                )}
-
-              <form
-                style={{ display: "flex", alignItems: "center", gap: "1rem" }}
-              >
-                <input
-                  type="text"
-                  value={cep}
-                  onChange={(event) => setCep(event.target.value)}
-                  placeholder="Digite pra pesquisar um cep."
-                  style={{ height: "4vh" }}
-                />
-
-                <button
-                  type="submit"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    backgroundColor: "#5070E3",
-                    color: "white",
-                    border: "none",
-                    padding: ".4rem",
-                    borderRadius: "5px",
-                    fontWeight: "500",
-                    fontFamily: "poppins, sans-serif",
-                    cursor: "pointer",
-                    width: "8vw",
-                    justifyContent: "center",
-                  }}
-                  onClick={handleSubmit}
-                >
-                  {" "}
-                  <SearchIcon /> Buscar{" "}
-                </button>
-              </form>
-
-              {frete && (
-                <div>
-                  {frete.map((item, index) => (
-                    <div key={index}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "1rem",
-                        }}
-                      >
-                        <input
-                          type="radio"
-                          name="selectedFrete"
-                          value={index}
-                          onClick={() => handleRadioClick(index)}
-                          checked={selectedFreteIndex === index}
-                          style={{
-                            pointerEvents: isRadioButtonEnabled
-                              ? "auto"
-                              : "none",
-                            opacity: isRadioButtonEnabled ? 1 : 0.5,
-                          }}
-                          disabled={!isRadioButtonEnabled}
-                        />
-                        <img
-                          src={item.logo}
-                          alt="logo das transportadoras"
-                          style={{ width: "10vw" }}
-                        />
-
-                        <p>{item.nomeTransportadora}</p>
-                        <p>
-                          {" "}
-                          {item.dataPrevistaEntrega
-                            .split("T")[0]
-                            .split("-")
-                            .reverse()
-                            .join("/")}
-                        </p>
-                        <p> {item.prazoEntrega}</p>
-                        <p> valor do frete:{item.valorFrete}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+         
         </>
       )}
     </div>
