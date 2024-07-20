@@ -466,7 +466,7 @@ const Cart = () => {
                         )}
                       </div>
                       <span className={styles.span}>
-                      ResponsiveText 
+ 
   {item.productId.name.length > charLimit ? item.productId.name.substring(0, charLimit) + '...' : item.productId.name}
 </span>
 
