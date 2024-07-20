@@ -266,6 +266,9 @@ const Cart = () => {
     return sizeObj ? sizeObj.quantityAvailable : 0;
   };
 
+
+  const charLimit = 24;
+
   return (
     <div style={{ position: "relative" }} className={styles.cartContainer}>
       <Header />
@@ -462,7 +465,10 @@ const Cart = () => {
                           <p className={styles.p}>0 unidades em estoque</p>
                         )}
                       </div>
-                      <span className={styles.span}> {item.productId.name}</span>
+                      <span className={styles.span}>
+                      ResponsiveText 
+  {item.productId.name.length > charLimit ? item.productId.name.substring(0, charLimit) + '...' : item.productId.name}
+</span>
 
                       <span className={styles.span}> Tamanho: {item.size}</span>
                       <span  className={styles.span}>Cor: {item.color}</span>
