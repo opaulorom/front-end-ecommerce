@@ -289,12 +289,12 @@ const Cart = () => {
 
               <div className={styles.justifyContent}>
                  <span className={styles.span}>valor do frete</span>
-              <span className={styles.span}>0</span>
+              <span className={styles.span}>R$ {shippingFee.toFixed(2) == 0 ? "0": shippingFee.toFixed(2)  }</span>
               
               </div>
               <div className={styles.justifyContent}>
               <span className={styles.span}>Valor total</span>
-              <span className={styles.total}>R$ 1855</span>
+              <span className={styles.total}>R$ {getTotal.totalAmount.toFixed(2)}</span>
               </div>
           
             </div>
@@ -787,7 +787,7 @@ const Cart = () => {
                 position: "absolute",
                 right: "10px",
                 marginTop: "25rem",
-                display: "none",
+            
               }}
             >
               <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
