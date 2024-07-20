@@ -12,7 +12,7 @@ div h3:nth-last-of-type(3) {
 }
 
 .ExternalContainer {
-  margin-top: 14rem;
+  margin-top: 3rem;
 
   display: flex;
   flex-direction: column;
@@ -208,6 +208,7 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer;
   justify-content: center;
   border-radius: 8px;
+  
 }
 .shippingFeeContainer{
   display: flex;
@@ -222,12 +223,13 @@ input[type="number"]::-webkit-outer-spin-button {
   color: white;
   border: none;
   padding: 0.8rem;
-  border-radius: 5px;
+  border-radius: 8px;
   font-weight: 500;
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
   width: 90vw;
   font-size: 1rem;
+  
 }
 .total{
   font-weight: 500;
@@ -256,7 +258,7 @@ input[type="number"]::-webkit-outer-spin-button {
     border: 1px solid #e9e9e9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    width: 35vw;
+    width: 40vw;
     height: auto;
 
     padding: 1rem;
@@ -276,9 +278,7 @@ input[type="number"]::-webkit-outer-spin-button {
     justify-content: center;
   }
 
-  .inputContainer {
-    width: 2vw;
-  }
+
 
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
@@ -321,4 +321,22 @@ input[type="number"]::-webkit-outer-spin-button {
     text-decoration: none;
     cursor: pointer;
   }
+  .cartContainer__totalQuantity{
+    width: 40vw;
+  }
+
+  .LinkContainer__button{
+    width: 42vw;
+
+  }
+
+  .shippingFeeContainer__input{
+    width: 20vw;
+
+  }
+  .shippingFeeContainer__button{
+    width: 18vw;
+
+  }
+  
 }
