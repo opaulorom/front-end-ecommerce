@@ -269,7 +269,7 @@ const Cart = () => {
   const charLimit = 24;
 
   return (
-    <div style={{ position: "relative" }} className={styles.cartContainer}>
+    <div className={styles.cartContainer}>
       <Header />
 
       <Navbar />
@@ -279,10 +279,25 @@ const Cart = () => {
         </div>
       ) : (
         <>
-          <div className={styles.cartContainer__totalQuantity}>
-            {totalQuantity > 0 && (
-              <p>Total de {totalQuantity} produtos no carrinho</p>
-            )}
+          <div className={styles.totalQuantityContainer}>
+            <div className={styles.cartContainer__totalQuantity}>
+              <div className={styles.justifyContent}>
+                <span className={styles.span}>Quatidade Total</span>
+                {totalQuantity > 0 && <p>{totalQuantity}</p>}
+                
+              </div>
+
+              <div className={styles.justifyContent}>
+                 <span className={styles.span}>valor do frete</span>
+              <span>0</span>
+              
+              </div>
+              <div className={styles.justifyContent}>
+              <span className={styles.span}>Valor total</span>
+              <span>1855</span>
+              </div>
+          
+            </div>
           </div>
 
           {getCart.length > 0 && (
@@ -306,24 +321,16 @@ const Cart = () => {
                     ? "/payment"
                     : "#"
                 }
+                className={styles.LinkContainer}
               >
                 <button
                   onClick={handleAddShippingFee}
                   style={{
-                    backgroundColor: "#5070E3",
-                    color: "white",
-                    border: "none",
-                    padding: ".8rem",
-                    borderRadius: "5px",
-                    fontWeight: "500",
-                    fontFamily: "poppins, sans-serif",
-                    cursor: "pointer",
-                    position: "absolute",
-                    right: "10px",
                     pointerEvents: isButtonEnabled ? "auto" : "none",
                     opacity: isButtonEnabled ? 1 : 0.5,
                   }}
                   disabled={!isButtonEnabled}
+                  className={styles.LinkContainer__button}
                 >
                   Fazer Pedido
                 </button>
@@ -686,7 +693,12 @@ const Cart = () => {
                         onClick={() => handleClickOpenModal(item._id)}
                       >
                         <DeleteIcon style={{}} />
-                        <span style={{ fontWeight: "600", }}  className={styles.deleteIconContainer__Excluir}>Excluir</span>
+                        <span
+                          style={{ fontWeight: "600" }}
+                          className={styles.deleteIconContainer__Excluir}
+                        >
+                          Excluir
+                        </span>
                       </div>
                       <div className={styles.texts}>
                         <span

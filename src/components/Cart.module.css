@@ -156,18 +156,48 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-direction: column;
   justify-content: center;
 }
-.cartContainer__totalQuantity {
-  margin-top: 10rem;
-  border: 1px solid #ccc;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 80vw;
-  height: 30vh;
+.totalQuantityContainer{
   display: flex;
   justify-content: center;
-  margin-bottom: 15rem;
-  display: none;
+  
+}
+.cartContainer__totalQuantity {
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 80vw;
+  height: 15vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 10rem;
+
+  padding: 1rem;
 }
 
+.LinkContainer{
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  text-decoration: none;
+}
+
+.justifyContent{
+  display: flex;
+  justify-content: space-between;
+}
+.LinkContainer__button{
+  background-color: #5070E3;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 5px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  width: 80vw;
+  font-size: 1rem;
+}
 @media screen and (min-width: 700px) {
   .linha {
     width: 50vw;
