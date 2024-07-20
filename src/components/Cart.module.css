@@ -29,17 +29,24 @@ div h3:nth-last-of-type(3) {
 .deleteIconContainer__DeleteIcon {
   display: flex;
   align-items: center;
+
+}
+.deleteIconContainer__Excluir{
+  font-size: 1rem;
+  font-family: Poppins, arial, sans-serif;
+
 }
 .quantityContainer {
   display: flex;
   gap: 0.7rem;
+  justify-content: center;
   align-items: center;
 }
 
 .spanName {
   font-family: Poppins, arial, sans-serif;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 .ProductsContainer__firstContainer {
   display: flex;

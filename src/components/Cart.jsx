@@ -686,7 +686,7 @@ const Cart = () => {
                         onClick={() => handleClickOpenModal(item._id)}
                       >
                         <DeleteIcon style={{}} />
-                        <span style={{ fontWeight: "600" }}>Excluir</span>
+                        <span style={{ fontWeight: "600", }}  className={styles.deleteIconContainer__Excluir}>Excluir</span>
                       </div>
                       <div className={styles.texts}>
                         <span
