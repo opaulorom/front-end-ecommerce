@@ -267,7 +267,7 @@ const Cart = () => {
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative" }} className={styles.cartContainer}>
       <Header />
 
       <Navbar />
@@ -278,13 +278,20 @@ const Cart = () => {
       ) : (
         <>
           <div
-            style={{
-              marginTop: "10rem",
-            }}
+      
+            className={styles.cartContainer__totalQuantity}
           >
            
             {totalQuantity > 0  &&  <p>Total de {totalQuantity} produtos no carrinho</p>}
           </div>
+
+
+
+
+
+
+
+          
           {getCart.length > 0 && (
             <>
               {selectedFreteIndex === null && getTotal.totalAmount < 300 && (
@@ -374,6 +381,19 @@ const Cart = () => {
             </>
           )}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
           {getCart.length === 0 && loggedIn === true ? (
             <div
               style={{
@@ -400,6 +420,8 @@ const Cart = () => {
                   className={styles.ExternalContainer}
                 >
                   <div className={styles.ProductsContainer}>
+
+                    <div className={styles.ProductsContainer__firstContainer}>
                     <div>
                     {item.productId &&
                       item.productId.variations && ( // Add null check for productId and variations
@@ -424,7 +446,7 @@ const Cart = () => {
                       }}
                       className={styles.textsContainer}
                     >
-                      <div className={styles.quantity}>
+                      <div  className={styles.span}>
                         {" "}
                         {item.productId.variations &&
                         item.productId.variations.some((variation) =>
@@ -436,27 +458,18 @@ const Cart = () => {
                             item
                           )} unidades em estoque`}</p>
                         ) : (
+                          
                           <p className={styles.p}>0 unidades em estoque</p>
                         )}
                       </div>
-                      <span>{item.productId && item.productId.name}</span>
-                      <span> {item.size}</span>
-                      <span> {item.color}</span>
+                      <span className={styles.span}> {item.productId.name}</span>
 
-                      <div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: ".5rem",
-                            color: "rgb(236, 62, 62)",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => handleClickOpenModal(item._id)}
-                        >
-                          <DeleteIcon style={{}} />
-                          <span style={{ fontWeight: "600" }}>Excluir</span>
-                        </div>
+                      <span className={styles.span}> Tamanho: {item.size}</span>
+                      <span  className={styles.span}>Cor: {item.color}</span>
+                      <div className={styles.price}>R$ {item.price}</div> 
+
+                      <div  >
+                      
                         <div className={styles.quantityContainer}>
                           <RemoveIcon
                             onClick={() => {
@@ -660,7 +673,32 @@ const Cart = () => {
                             }}
                           />
                         </div>
+                      
+
                       </div>
+
+                  
+
+                      </div>
+
+
+                    </div>
+                   
+                      <div className={styles.deleteIconContainer}>
+                      <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: ".5rem",
+                            color: "rgb(236, 62, 62)",
+                            cursor: "pointer",
+                          }}
+                          className={styles.deleteIconContainer__DeleteIcon}
+                          onClick={() => handleClickOpenModal(item._id)}
+                        >
+                          <DeleteIcon style={{}} />
+                          <span style={{ fontWeight: "600" }}>Excluir</span>
+                        </div>
                       <div className={styles.texts}>
                         <span
                           className={styles.spanName}
@@ -676,8 +714,8 @@ const Cart = () => {
                             : "Produto em estoque"}
                         </span>
                       </div>
+                 
                     </div>
-                    <div>R${item.price}</div>
                   </div>
                 </div>
               ))}
@@ -748,6 +786,8 @@ const Cart = () => {
                 marginLeft: "14rem",
                 position: "absolute",
                 right: "10px",
+                marginTop:"25rem",
+                display:"none"
               }}
             >
               <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
