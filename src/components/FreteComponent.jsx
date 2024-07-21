@@ -23,7 +23,8 @@ const FreteComponent = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-           
+            'Content-Type': 'application/json', // Adicionando content-type
+
           },
         }
       );
@@ -59,7 +60,10 @@ const FreteComponent = () => {
     });
       console.log('log', userId)
       setFrete(responseGet.data);
-      await axios.get(`http://localhost:3001/api/cart/${userId}/total-price`);
+      await axios.get(`http://localhost:3001/api/cart/${userId}`,{ headers: {
+        Authorization: `Bearer ${token}`,
+      
+      }});
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -98,6 +102,8 @@ const FreteComponent = () => {
 
             </div>
           ))}
+
+          
         </div>
       )}
      
