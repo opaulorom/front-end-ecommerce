@@ -84,6 +84,7 @@ margin-left: .5rem;
     display: inline-block;
     vertical-align: top;
     margin-right: 20px; /* Adicione margem entre os produtos */
+    margin-top: 3rem;
   }
   
   .verticalScroll::-webkit-scrollbar {
@@ -144,3 +145,10 @@ margin-left: .5rem;
 
 
 }
+
+@media screen and (max-width: 699px) {
+  .container{
+    display: none;
+  }
+}
+

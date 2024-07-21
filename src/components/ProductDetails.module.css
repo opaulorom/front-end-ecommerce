@@ -251,12 +251,12 @@
 
 @media (max-width: 699px) {
   .secondCartModal {
-    width: 100%;
+    display: none;
   }
 
 
   .secondCartModalContent {
-    width: 100%;
+    display: none;
 
   }
  
@@ -313,6 +313,9 @@
   .buttonsContainer {
     margin-top: -4rem;
   }
+  .CartB{
+    z-index: 2;
+  }
   
 }
 
@@ -351,9 +354,7 @@
   .cartModalContent__button {
     width: 30vw;
   }
-  .CartB{
-    display: block;
-  }
+ 
 }
 
 @media (min-width: 1280px) {

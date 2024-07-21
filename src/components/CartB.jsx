@@ -66,7 +66,7 @@ const CartB = () => {
   }, [getCart]);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative" }} className={styles.container}>
       {getCart.length === 0 && !loggedIn && (
         <>
           <div
