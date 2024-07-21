@@ -100,8 +100,8 @@ const FreteComponent = () => {
                 <b></b> <img src={item.logo && item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
 
                 <p>{item.nomeTransportadora}</p>
-                <p>Data Prevista de Entrega: { item.dataPrevistaEntrega && item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}({item.prazoEntrega && item.prazoEntrega})</p>
-                <p>Prazo de Entrega: </p>
+                <p>Data Prevista de Entrega: { item.dataPrevistaEntrega && item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}({item.prazoEntrega && item.prazoEntrega} dias)</p>
+
                 <p>Valor do Frete: R$  {item.valorFrete && item.valorFrete}</p>
              
               </>
