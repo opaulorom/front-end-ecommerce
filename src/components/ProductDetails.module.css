@@ -251,12 +251,15 @@
 
 @media (max-width: 699px) {
   .secondCartModal {
-    display: none;
+    width: 100%;
   }
 
+
   .secondCartModalContent {
-    display: none;
+    width: 100%;
+
   }
+ 
 }
 
 @media (min-width: 700px) {
@@ -310,6 +313,7 @@
   .buttonsContainer {
     margin-top: -4rem;
   }
+  
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1180px) {
@@ -348,7 +352,7 @@
     width: 30vw;
   }
   .CartB{
-    display: none;
+    display: block;
   }
 }
 
