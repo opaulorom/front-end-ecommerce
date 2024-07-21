@@ -458,7 +458,7 @@ const Cart = () => {
                         <p>{item.nomeTransportadora}</p>
                         <p>
                           {" "}
-                          {item.dataPrevistaEntrega
+                          { item.dataPrevistaEntrega && item.dataPrevistaEntrega
                             .split("T")[0]
                             .split("-")
                             .reverse()
