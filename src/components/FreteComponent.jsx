@@ -57,8 +57,10 @@ const FreteComponent = () => {
         Authorization: `Bearer ${token}`,
       
       },
+   
     });
-      console.log('log', userId)
+
+      console.log('log', responseGet)
       setFrete(responseGet.data);
       await axios.get(`http://localhost:3001/api/cart/${userId}`,{ headers: {
         Authorization: `Bearer ${token}`,
@@ -93,12 +95,17 @@ const FreteComponent = () => {
         <div>
           {frete.map((item, index) => (
             <div key={index}>
-              <b></b> <img src={item.logo && item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
+              {!frete ? "" : <>
+              
+                <b></b> <img src={item.logo && item.logo} alt="logo das transportadoras" style={{ width: "10vw" }} />
 
-              <p>{item.nomeTransportadora}</p>
-              <p>Data Prevista de Entrega: { item.dataPrevistaEntrega && item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}</p>
-              <p>Prazo de Entrega: {item.prazoEntrega && item.prazoEntrega}</p>
-              <p>Valor do Frete: R$  {item.valorFrete && item.valorFrete}</p>
+                <p>{item.nomeTransportadora}</p>
+                <p>Data Prevista de Entrega: { item.dataPrevistaEntrega && item.dataPrevistaEntrega.split('T')[0].split('-').reverse().join('/')}({item.prazoEntrega && item.prazoEntrega})</p>
+                <p>Prazo de Entrega: </p>
+                <p>Valor do Frete: R$  {item.valorFrete && item.valorFrete}</p>
+             
+              </>
+}
 
             </div>
           ))}

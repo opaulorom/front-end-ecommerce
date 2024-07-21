@@ -212,6 +212,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .shippingFeeContainer{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin-top: 3rem;
 

@@ -463,8 +463,8 @@ const Cart = () => {
                             .split("-")
                             .reverse()
                             .join("/")}
+                            ({item.prazoEntrega} dias)
                         </p>
-                        <p> {item.prazoEntrega}</p>
                         <p> valor do frete:{item.valorFrete}</p>
                       </div>
                     </div>
