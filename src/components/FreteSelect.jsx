@@ -9,6 +9,8 @@ const FreteSelect = () => {
   const [selectedFreteIndex, setSelectedFreteIndex] = useState(
     localStorage.getItem("selectedFreteIndex") || null
   );
+  const token = Cookies.get("token"); // Obtenha o token do cookie
+
   const [getTotal, setGetTotal] = useState({});
 
   const userId = Cookies.get("userId");
@@ -21,7 +23,12 @@ const FreteSelect = () => {
     const fetchFrete = async () => {
       try {
         const responseGet = await axios.get(
-          `http://localhost:3001/api/frete/${userId}`
+          `http://localhost:3001/api/frete/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              // Remova 'Credentials: credentials'
+            },
+          }
         );
         setFrete(responseGet.data);
       } catch (error) {
@@ -38,43 +45,12 @@ const FreteSelect = () => {
     }
   }, [frete]);
 
-  const [shippingFee, setShippingFee] = useState(0);
+ 
 
-  const handleRadioClick = async (index) => {
-    try {
-      const freteId = frete[index]._id;
-      await axios.put(
-        `http://localhost:3001/api/cart/${userId}/shippingFee/${freteId}`
-      );
-      setSelectedFreteIndex(index);
-      localStorage.setItem("selectedFreteIndex", index);
-
-      const response = await axios.get(
-        `http://localhost:3001/api/cart/${userId}/total-price`
-      );
-
-      if (
-        response &&
-        response.data &&
-        response.data.totalAmount !== getTotal.totalAmount
-      ) {
-        setGetTotal(response.data);
-      }
-      const res = await axios.get(`http://localhost:3001/api/cart/${userId}`);
-      setShippingFee(res.data.cart.shippingFee);
-    } catch (error) {
-      console.error("Error updating shipping fee:", error);
-    }
-  };
 
   return (
     <div>
-        <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
-      {getTotal && typeof getTotal === "object" && getTotal.totalAmount && (
-        <div style={{ marginTop: "10rem" }}>
-          total que muda:{getTotal.totalAmount}
-        </div>
-      )}
+     
       <form style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
         <input
           type="text"
@@ -115,13 +91,7 @@ const FreteSelect = () => {
               <div
                 style={{ display: "flex", alignItems: "center", gap: "1rem" }}
               >
-                <input
-                  type="radio"
-                  name="selectedFrete"
-                  value={index}
-                  onClick={() => handleRadioClick(index)}
-                  checked={selectedFreteIndex === index}
-                />
+            
                 <img
                   src={item.logo}
                   alt="logo das transportadoras"

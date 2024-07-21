@@ -21,6 +21,7 @@ import Application from "./Application";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
+import FreteSelect from "./FreteSelect";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState({ variations: [] });
@@ -821,7 +822,7 @@ const ProductDetails = () => {
                         </button>
                       )}
 
-                      <FreteComponent />
+                      <FreteSelect />
                     </div>
 
                     <div className={styles.descriptionContainer}>
