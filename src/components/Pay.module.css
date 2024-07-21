@@ -12,7 +12,7 @@
     font-size: 1rem;
     border-radius: 8px;
     border: 1px solid #CDCDCD;
-    width: 30vw;
+    width: 80vw;
 
 }
 
@@ -49,7 +49,7 @@
     background-color: #05070A;
     color: white;
     padding: 1rem;
-    width: 30vw;
+    width: 90vw;
     border: 0;
     margin-top: 2rem;
     border-radius: 8px;
@@ -90,3 +90,47 @@
 
 
 }
+
+.paymentDetails {
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    width: 80vw;
+    height: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 2rem;
+  
+    padding: 1rem;
+  }
+
+  .justifyContent{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+
+  
+.span {
+    margin: 0px;
+    font-size: 1rem;
+    font-family: Poppins, arial, sans-serif;
+    color: gray;
+    font-size: 0.9rem;
+    font-weight: 400;
+    
+  }
+  
+  .price {
+    font-family: Poppins, arial, sans-serif;
+    font-weight: 600;
+    color: black;
+    font-size: 1.4rem;
+  }
+  .total{
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+  }

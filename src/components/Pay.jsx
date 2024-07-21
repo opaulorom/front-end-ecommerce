@@ -4,9 +4,9 @@ import Navbar from "./Navbar";
 import Cookies from "js-cookie";
 import ImageComponent from "./ImageComponent";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
-import styles from "./Pay.module.css"
+import styles from "./Pay.module.css";
 import { useCart } from "../context/CartContext";
 
 const Pay = () => {
@@ -31,7 +31,7 @@ const Pay = () => {
   const [boletoLoading, setBoletoLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
 
   const { clearCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
-
+  const { quantity, shippingFee, totalPrice } = useParams();
 
   const handleChangeContentClick = () => {
     setShowContent(false);
@@ -62,7 +62,6 @@ const Pay = () => {
     setPaymentMethod(value);
   };
 
-
   // pagar com pix sem checkout transparente
   const handlePixPayment = async () => {
     setPixLoading(true); // Ativar o loader
@@ -81,15 +80,14 @@ const Pay = () => {
       const data = await response.json();
       setPixLoading(false); // Desativar o loader
 
-      setPix(data)
-      handleChangeContentClick()
+      setPix(data);
+      handleChangeContentClick();
 
       // Redirecionar para a URL de pagamento PIX
       setEncodedImage(data.encodedImage);
       setPixCode(data.payload);
       console.log("pixQRcodeStatico", data);
       await clearCart();
-
     } catch (error) {
       setPixLoading(false); // Certifique-se de desativar o loader em caso de erro
 
@@ -99,7 +97,7 @@ const Pay = () => {
 
   // pagar boleto sem checkout transparente
   const handleBoletoPayment = async () => {
-    setBoletoLoading(true)
+    setBoletoLoading(true);
 
     try {
       const response = await fetch(
@@ -113,17 +111,16 @@ const Pay = () => {
         }
       );
       const data = await response.json();
-      setBoletoLoading(false)
+      setBoletoLoading(false);
       console.log(data);
-      setBoleto(data)
+      setBoleto(data);
       // // Redirecionar para a URL de pagamento PIX
       window.location.href = data.bankSlipUrl;
 
       // Atualiza o estado com a URL do boleto
       await clearCart();
-
     } catch (error) {
-      setBoletoLoading(false)
+      setBoletoLoading(false);
       console.error(error);
     }
   };
@@ -148,20 +145,17 @@ const Pay = () => {
     ccv: "",
   });
 
-
   const formatCreditCardNumber = (value) => {
     const formattedValue = value.replace(/\D/g, "");
     const maskedValue = formattedValue.replace(/(\d{4})(?=\d)/g, "$1 ");
     return maskedValue;
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtonClicked(true); // Define o estado como true quando o botão é clicado
-    setCreditCardLoading(true)
+    setCreditCardLoading(true);
     try {
-
       const updatedFormData = {
         ...formData,
         installmentCount: formData.pacelas,
@@ -177,17 +171,14 @@ const Pay = () => {
         }
       );
       console.log();
-      setCreditCardLoading(false)
-      handleChangeContentClick()
+      setCreditCardLoading(false);
+      handleChangeContentClick();
 
+      setCreditCard(response.data);
 
-
-      setCreditCard(response.data)
-     
       await clearCart();
-
     } catch (error) {
-      setCreditCardLoading(false)
+      setCreditCardLoading(false);
       console.error("Erro ao enviar informações do usuário:", error);
       // Trate erros aqui, como exibir uma mensagem para o usuário
     }
@@ -201,15 +192,12 @@ const Pay = () => {
         },
       })
       .then((response) => {
-
         setGetTotal(response.data.cart);
       })
       .catch((error) => {
         console.log("Erro ao visualizar frete.", error);
       });
   }, [userId, getTotal]);
-
-
 
   return (
     <div
@@ -218,319 +206,402 @@ const Pay = () => {
       <PaymentHeader />
       <Navbar />
 
-      <div style={{ textAlign: 'center', marginTop: '10rem' }}>
+      <div style={{ textAlign: "center", marginTop: "10rem" }}>
         {showContent ? (
           <div>
             {pixLoading || creditCardLoading || boletoLoading ? (
               <>
-                <div style={{
-                  marginTop: "10rem"
-                }}>
+                <div
+                  style={{
+                    marginTop: "10rem",
+                  }}
+                >
                   <CircularProgress />
                   <p>Carregando...</p>
-
                 </div>
-
               </>
-            ) : (<>
-
-              <div id="div1">
-                <div style={{ marginTop: "8rem" }}>
-                  <h1
+            ) : (
+              <>
+                <div id="div1">
+                  <div
                     style={{
-                      fontFamily: "poppins",
-                      fontWeight: "500",
-                      fontSize: "1.1rem",
+                      marginTop: "5rem",
+                      display: "flex",
+                      flexDirection: "column",
                     }}
                   >
-                    Escolha o método de pagamento:
-                  </h1>
 
-
-                  <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
-                    <input
-                      type="radio"
-                      id="pix"
-                      name="paymentMethod"
-                      value="pix"
-                      checked={paymentMethod === "pix"}
-                      onChange={handleChangePixAndBoleto}
-                    />
-                    <label
-                      htmlFor="pix"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: ".5rem",
-                        fontFamily: "poppins",
-                        fontWeight: "600",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      <img
-                        src="https://i.ibb.co/dfvK4s0/icons8-foto-48.png"
-                        alt=""
+<div>
+                      <h1
                         style={{
-                          maxWidth: "14vw",
-                        }}
-                      />{" "}
-                      PIX
-                    </label>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
-                    <input
-                      type="radio"
-                      id="boleto"
-                      name="paymentMethod"
-                      value="boleto"
-                      checked={paymentMethod === "boleto"}
-                      onClick={handleChangePixAndBoleto}
-                    />
-                    <label
-                      htmlFor="boleto"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: ".5rem",
-                        fontFamily: "poppins",
-                        fontWeight: "600",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      <img
-                        src="https://i.ibb.co/LNrSsZt/icons8-boleto-bankario-48.png"
-                        alt=""
-                        style={{ maxWidth: "14vw" }}
-                      />{" "}
-                      Boleto
-                    </label>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
-                    <input
-                      type="radio"
-                      id="cartao"
-                      name="paymentMethod"
-                      value="cartao"
-                      checked={paymentMethod === "cartao"}
-                      onClick={handleCreditCardPayment}
-                      onChange={handleChange}
-                    />
-                    <label
-                      htmlFor="cartao"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: ".5rem",
-                        fontFamily: "poppins",
-                        fontWeight: "600",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      {" "}
-                      <img
-                        src="https://i.ibb.co/HtWhHR0/icons8-emoji-de-cart-o-de-cr-dito-48.png"
-                        alt=""
-                      />{" "}
-                      Cartão de Crédito
-                    </label>
-
-                  </div>
-
-                  <div> {paymentMethod === "cartao" && (
-                    <>
-                      <form
-                        onSubmit={handleSubmit}
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
                           fontFamily: "poppins",
-                          fontWeight: "400",
+                          fontWeight: "500",
                           fontSize: "1.1rem",
-                          marginBottom: "1rem",
                         }}
                       >
-                        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-                        <div className={styles.childContainer}>
+                        Escolha o método de pagamento:
+                      </h1>
 
-                          <div className={styles.child}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: ".5rem",
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          id="pix"
+                          name="paymentMethod"
+                          value="pix"
+                          checked={paymentMethod === "pix"}
+                          onChange={handleChangePixAndBoleto}
+                        />
+                        <label
+                          htmlFor="pix"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: ".5rem",
+                            fontFamily: "poppins",
+                            fontWeight: "600",
+                            fontSize: "1.1rem",
+                          }}
+                        >
+                          <img
+                            src="https://i.ibb.co/dfvK4s0/icons8-foto-48.png"
+                            alt=""
+                            style={{
+                              maxWidth: "14vw",
+                            }}
+                          />{" "}
+                          PIX
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: ".5rem",
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          id="boleto"
+                          name="paymentMethod"
+                          value="boleto"
+                          checked={paymentMethod === "boleto"}
+                          onClick={handleChangePixAndBoleto}
+                        />
+                        <label
+                          htmlFor="boleto"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: ".5rem",
+                            fontFamily: "poppins",
+                            fontWeight: "600",
+                            fontSize: "1.1rem",
+                          }}
+                        >
+                          <img
+                            src="https://i.ibb.co/LNrSsZt/icons8-boleto-bankario-48.png"
+                            alt=""
+                            style={{ maxWidth: "14vw" }}
+                          />{" "}
+                          Boleto
+                        </label>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: ".5rem",
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          id="cartao"
+                          name="paymentMethod"
+                          value="cartao"
+                          checked={paymentMethod === "cartao"}
+                          onClick={handleCreditCardPayment}
+                          onChange={handleChange}
+                        />
+                        <label
+                          htmlFor="cartao"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: ".5rem",
+                            fontFamily: "poppins",
+                            fontWeight: "600",
+                            fontSize: "1.1rem",
+                          }}
+                        >
+                          {" "}
+                          <img
+                            src="https://i.ibb.co/HtWhHR0/icons8-emoji-de-cart-o-de-cr-dito-48.png"
+                            alt=""
+                          />{" "}
+                          Cartão de Crédito
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className={styles.paymentDetails}>
+                      <div className={styles.justifyContent}>
+                        <span className={styles.span}>Quatidade Total</span>
+                        {quantity > 0 && (
+                          <p className={styles.span}>{quantity}</p>
+                        )}
+                      </div>
+
+                      <div className={styles.justifyContent}>
+                        <span className={styles.span}>valor do frete</span>
+                        <span className={styles.span}>R$ {shippingFee}</span>
+                      </div>
+                      <div className={styles.justifyContent}>
+                        <span className={styles.span}>Valor total</span>
+                        <span className={styles.total}>R$ {totalPrice}</span>
+                      </div>
+                      
+                    </div>
+                    {paymentMethod === "pix" && (
+                      <button onClick={handlePixPayment}           className={styles.ButtonDataCustomer}>Pagar com Pix</button>
+                    )}
+                    {paymentMethod === "boleto" && (
+                      <button onClick={handleBoletoPayment}           className={styles.ButtonDataCustomer}>
+                        Pagar com Boleto
+                      </button>
+                    )}
 
 
-                            <label className={styles.label}>
-                              nome do titular:
-
-                            </label>
-                            <input
-                              type="text"
-                              name="holderName"
-                              onChange={handleChange}
-                              value={formData.holderName}
-                              style={{
-                                border:
-                                  !formData.holderName.trim() && buttonClicked
-                                    ? "1px solid red"
-                                    : "1px solid #ccc",
-                              }}
-                              placeholder="carla alves"
-                              className={styles.input}
-
-                            />
-                          </div>
-                          <div className={styles.child}>
-                            <label className={styles.label}>
-                              numero do cartão:
-
-                            </label>
-
-                            <input
-                              type="number"
-                              name="number"
-                              onChange={handleChange}
-                              value={formData.number}
-                              style={{
-                                border:
-                                  !formData.number.trim() && buttonClicked
-                                    ? "1px solid red"
-                                    : "1px solid #ccc",
-                              }}
-                              placeholder="1234 567890 12345"
-                              className={styles.input}
-
-                            />
-                          </div>
-
-                          <div className={styles.child}>
-                            <label className={styles.label}>
-                              mês de vencimento:
-
-                            </label>
-                            <input
-                              type="text"
-                              name="expiryMonth"
-                              onChange={handleChange}
-                              value={formData.expiryMonth}
-                              style={{
-                                border:
-                                  !formData.expiryMonth.trim() && buttonClicked
-                                    ? "1px solid red"
-                                    : "1px solid #ccc",
-                              }}
-                              className={styles.input}
-                              placeholder="05"
-                            />
-                          </div>
-
-                          <div className={styles.child}>
-                            <label className={styles.label}>
-                              Ano de vencimento:
-
-                            </label>
-                            <input
-                              type="text"
-                              name="expiryYear"
-                              onChange={handleChange}
-                              value={formData.expiryYear}
-                              style={{
-                                border:
-                                  !formData.expiryYear.trim() && buttonClicked
-                                    ? "1px solid red"
-                                    : "1px solid #ccc",
-                              }}
-                              placeholder="2025"
-                              className={styles.input}
-
-                            />
-                          </div>
-
-                          <div className={styles.child}>
-                            <label className={styles.label}>
-                              CVV:
-
-                            </label>
-                            <input
-                              type="text"
-                              name="ccv"
-                              onChange={handleChange}
-                              value={formData.ccv}
-                              style={{
-                                border:
-                                  !formData.ccv.trim() && buttonClicked
-                                    ? "1px solid red"
-                                    : "1px solid #ccc",
-                              }}
-                              className={styles.input}
-                              placeholder="123"
-                            />
-                          </div>
-
-
-                        </div>
-                        <div className={styles.child}>
-                          <label className={styles.label}>Parcelas:</label>
-                          <select
-                            name="pacelas"
-                            onChange={handleChange}
-                            value={formData.installmentCount} // Definindo o valor do select
-                            className={styles.select}
+<div>
+                      {" "}
+                      {paymentMethod === "cartao" && (
+                        <>
+                          <form
+                            onSubmit={handleSubmit}
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              fontFamily: "poppins",
+                              fontWeight: "400",
+                              fontSize: "1.1rem",
+                              marginBottom: "1rem",
+                            }}
                           >
-                            <option value="1">1 x de {getTotal.totalAmount / 1}</option>
-                            <option value="2">2 x de {getTotal.totalAmount / 2}</option>
-                            <option value="3">3 x de {getTotal.totalAmount / 3}</option>
-                            <option value="4">4 x de {getTotal.totalAmount / 4}</option>
-                            <option value="5">5 x de {getTotal.totalAmount / 5}</option>
-                            <option value="6">6 x de {getTotal.totalAmount / 6}</option>
-                            <option value="7">7 x de {getTotal.totalAmount / 7}</option>
-                            <option value="8">8 x de {getTotal.totalAmount / 8}</option>
-                            <option value="9">9 x de {getTotal.totalAmount / 9}</option>
-                            <option value="10">
-                              10 x de {getTotal.totalAmount / 10}
-                            </option>
-                            <option value="11">11 x de {getTotal.totalAmount / 11}</option>
-                            <option value="12">12 x de {getTotal.totalAmount / 12}</option>
-                          </select>
-                        </div>
+                            {errorMessage && (
+                              <p style={{ color: "red" }}>{errorMessage}</p>
+                            )}
+                            <div className={styles.childContainer}>
+                              <div className={styles.child}>
+                                <label className={styles.label}>
+                                  nome do titular:
+                                </label>
+                                <input
+                                  type="text"
+                                  name="holderName"
+                                  onChange={handleChange}
+                                  value={formData.holderName}
+                                  style={{
+                                    border:
+                                      !formData.holderName.trim() &&
+                                      buttonClicked
+                                        ? "1px solid red"
+                                        : "1px solid #ccc",
+                                  }}
+                                  placeholder="carla alves"
+                                  className={styles.input}
+                                />
+                              </div>
+                              <div className={styles.child}>
+                                <label className={styles.label}>
+                                  numero do cartão:
+                                </label>
 
+                                <input
+                                  type="number"
+                                  name="number"
+                                  onChange={handleChange}
+                                  value={formData.number}
+                                  style={{
+                                    border:
+                                      !formData.number.trim() && buttonClicked
+                                        ? "1px solid red"
+                                        : "1px solid #ccc",
+                                  }}
+                                  placeholder="1234 567890 12345"
+                                  className={styles.input}
+                                />
+                              </div>
 
+                              <div className={styles.child}>
+                                <label className={styles.label}>
+                                  mês de vencimento:
+                                </label>
+                                <input
+                                  type="text"
+                                  name="expiryMonth"
+                                  onChange={handleChange}
+                                  value={formData.expiryMonth}
+                                  style={{
+                                    border:
+                                      !formData.expiryMonth.trim() &&
+                                      buttonClicked
+                                        ? "1px solid red"
+                                        : "1px solid #ccc",
+                                  }}
+                                  className={styles.input}
+                                  placeholder="05"
+                                />
+                              </div>
 
-                        <button type="submit" className={styles.ButtonDataCustomer}>Finalisar Compra</button>
-                      </form>
-                    </>
-                  )}</div>
-                  {paymentMethod === "pix" && <button onClick={handlePixPayment}>Pagar com Pix</button>
-                  }
-                  {paymentMethod === "boleto" && <button onClick={handleBoletoPayment}>Pagar com Boleto</button>}
+                              <div className={styles.child}>
+                                <label className={styles.label}>
+                                  Ano de vencimento:
+                                </label>
+                                <input
+                                  type="text"
+                                  name="expiryYear"
+                                  onChange={handleChange}
+                                  value={formData.expiryYear}
+                                  style={{
+                                    border:
+                                      !formData.expiryYear.trim() &&
+                                      buttonClicked
+                                        ? "1px solid red"
+                                        : "1px solid #ccc",
+                                  }}
+                                  placeholder="2025"
+                                  className={styles.input}
+                                />
+                              </div>
 
+                              <div className={styles.child}>
+                                <label className={styles.label}>CVV:</label>
+                                <input
+                                  type="text"
+                                  name="ccv"
+                                  onChange={handleChange}
+                                  value={formData.ccv}
+                                  style={{
+                                    border:
+                                      !formData.ccv.trim() && buttonClicked
+                                        ? "1px solid red"
+                                        : "1px solid #ccc",
+                                  }}
+                                  className={styles.input}
+                                  placeholder="123"
+                                />
+                              </div>
+                            </div>
+
+                            <div className={styles.child}>
+                              <label className={styles.label}>Parcelas:</label>
+                              <select
+                                name="pacelas"
+                                onChange={handleChange}
+                                value={formData.installmentCount} // Definindo o valor do select
+                                className={styles.select}
+                              >
+                                <option value="1">
+                                  1 x de {getTotal.totalAmount / 1}
+                                </option>
+                                <option value="2">
+                                  2 x de {getTotal.totalAmount / 2}
+                                </option>
+                                <option value="3">
+                                  3 x de {getTotal.totalAmount / 3}
+                                </option>
+                                <option value="4">
+                                  4 x de {getTotal.totalAmount / 4}
+                                </option>
+                                <option value="5">
+                                  5 x de {getTotal.totalAmount / 5}
+                                </option>
+                                <option value="6">
+                                  6 x de {getTotal.totalAmount / 6}
+                                </option>
+                                <option value="7">
+                                  7 x de {getTotal.totalAmount / 7}
+                                </option>
+                                <option value="8">
+                                  8 x de {getTotal.totalAmount / 8}
+                                </option>
+                                <option value="9">
+                                  9 x de {getTotal.totalAmount / 9}
+                                </option>
+                                <option value="10">
+                                  10 x de {getTotal.totalAmount / 10}
+                                </option>
+                                <option value="11">
+                                  11 x de {getTotal.totalAmount / 11}
+                                </option>
+                                <option value="12">
+                                  12 x de {getTotal.totalAmount / 12}
+                                </option>
+                              </select>
+                            </div>
+
+                            <button
+                              type="submit"
+                              className={styles.ButtonDataCustomer}
+                            >
+                              Finalisar Compra
+                            </button>
+                          </form>
+                        </>
+                      )}
+                    </div>
+                   
+                
+                 
+                  </div>
                 </div>
-              </div>
-            </>)}
-
-
+              </>
+            )}
           </div>
         ) : (
           <div id="div2">
             <p>
-
               <div>
                 {paymentMethod === "cartao" && (
                   <>
-                    <div style={{
-                      marginTop: "15rem"
-                    }}>
-                      <a href="https://imgbb.com/"><img src="https://i.ibb.co/Zcn8dp8/verified.png" alt="verified" border="0" /></a>              pagamento comfirmado
-
+                    <div
+                      style={{
+                        marginTop: "15rem",
+                      }}
+                    >
+                      <a href="https://imgbb.com/">
+                        <img
+                          src="https://i.ibb.co/Zcn8dp8/verified.png"
+                          alt="verified"
+                          border="0"
+                        />
+                      </a>{" "}
+                      pagamento comfirmado
                     </div>
                   </>
                 )}
 
                 {paymentMethod === "pix" && (
                   <p>
-
                     <div>
-                      {encodedImage && <ImageComponent encodedImage={encodedImage} />}
+                      {encodedImage && (
+                        <ImageComponent encodedImage={encodedImage} />
+                      )}
                       {encodedImage && (
                         <div className={styles.pixCodeContainer}>
-                          <p  className={styles.pixCodeContainer___p}>{pixCode}</p>
+                          <p className={styles.pixCodeContainer___p}>
+                            {pixCode}
+                          </p>
                           <div>
-                            <button onClick={handleClick} className={styles.pixCodeContainer___button}>
+                            <button
+                              onClick={handleClick}
+                              className={styles.pixCodeContainer___button}
+                            >
                               {status === "copiar" ? "Copiar" : "Copiado"}
                             </button>
                           </div>
@@ -540,17 +611,12 @@ const Pay = () => {
                   </p>
                 )}
 
-                {paymentMethod === "boleto" && (
-                  <p>
-                    Boleto
-                  </p>
-                )}
-
-              </div></p>
+                {paymentMethod === "boleto" && <p>Boleto</p>}
+              </div>
+            </p>
           </div>
         )}
       </div>
-
     </div>
   );
 };

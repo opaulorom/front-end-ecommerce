@@ -59,7 +59,7 @@ const Root = () => (
 
 
     <Route path="/products/:productId" element={<ProductDetails  />} />{" "}
-    <Route path="/payment" element={<Pay />} />
+    <Route path="/payment/:quantity/:shippingFee/:totalPrice" element={<Pay />} />
     <Route path="/" element={<Categories />} />
     <Route path="/categories/:category" element={<CategorySubcategories />} />
     <Route

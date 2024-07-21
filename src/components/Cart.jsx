@@ -318,7 +318,7 @@ const Cart = () => {
               <Link
                 to={
                   selectedFreteIndex !== null || getTotal.totalAmount >= 300
-                    ? "/payment"
+                    ? `/payment/${totalQuantity}/${shippingFee.toFixed(2) == 0 ? "0": shippingFee.toFixed(2)  }/${getTotal.totalAmount.toFixed(2)}`
                     : "#"
                 }
                 className={styles.LinkContainer}
