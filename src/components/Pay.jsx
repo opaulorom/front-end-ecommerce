@@ -224,11 +224,7 @@ const Pay = () => {
               <>
                 <div id="div1">
                   <div
-                    style={{
-                      marginTop: "5rem",
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
+                className={styles.paymentContainer}
                   >
 
 <div>
@@ -349,6 +345,10 @@ const Pay = () => {
                       </div>
                     </div>
 
+
+
+<div>
+  
                     <div className={styles.paymentDetails}>
                       <div className={styles.justifyContent}>
                         <span className={styles.span}>Quatidade Total</span>
@@ -557,6 +557,7 @@ const Pay = () => {
                     </div>
                    
                 
+</div>
                  
                   </div>
                 </div>

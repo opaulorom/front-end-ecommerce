@@ -134,3 +134,33 @@
     font-family: 'Poppins', sans-serif;
     font-size: 1.2rem;
   }
+  .paymentContainer{
+
+        display: flex;
+        flex-direction: column;
+
+
+  }
+
+  @media screen and (min-width: 700px) {
+    .paymentContainer{
+
+        display: flex;
+        flex-direction: row;
+        gap: 8rem;
+
+
+  }
+
+  .paymentDetails{
+    width: 30vw;
+    display: flex;
+    justify-content: space-between;
+  }
+  .input{
+    width: 30vw;
+  }
+  .ButtonDataCustomer{
+    width: 33vw;
+  }
+  }
