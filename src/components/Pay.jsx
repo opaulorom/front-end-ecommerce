@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PaymentHeader from "./PaymentHeader";
 import Navbar from "./Navbar";
 import Cookies from "js-cookie";
 import ImageComponent from "./ImageComponent";
@@ -8,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import styles from "./Pay.module.css";
 import { useCart } from "../context/CartContext";
+import Header from "./Header";
 
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState("pix");
@@ -203,7 +203,9 @@ const Pay = () => {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <PaymentHeader />
+
+      <Header />
+   
       <Navbar />
 
       <div style={{ textAlign: "center", marginTop: "10rem" }}>

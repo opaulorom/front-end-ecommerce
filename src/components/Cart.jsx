@@ -279,7 +279,7 @@ const Cart = () => {
         </div>
       ) : (
         <>
-          <div className={styles.totalQuantityContainer}>
+        {getCart.length === 0 && loggedIn === true ? '' : <> <div className={styles.totalQuantityContainer}>
             <div className={styles.cartContainer__totalQuantity}>
               <div className={styles.justifyContent}>
                 <span className={styles.span}>Quatidade Total</span>
@@ -294,11 +294,12 @@ const Cart = () => {
               </div>
               <div className={styles.justifyContent}>
               <span className={styles.span}>Valor total</span>
-              <span className={styles.total}>R$ {getTotal.totalAmount.toFixed(2)}</span>
+              <span className={styles.total}>R$ { getTotal.totalAmount && getTotal.totalAmount.toFixed(2)}</span>
               </div>
           
             </div>
-          </div>
+          </div></>}
+         
 
           {getCart.length > 0 && (
             <>
@@ -478,7 +479,7 @@ const Cart = () => {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                marginTop: "2rem",
+                marginTop: "12rem",
               }}
             >
               <img src="https://i.ibb.co/x765V9y/bag-4.png" alt="" />
