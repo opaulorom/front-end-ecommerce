@@ -591,7 +591,8 @@ const Pay = () => {
 
                 {paymentMethod === "pix" && (
                   <p>
-                    <div>
+                    <span className={styles.labelPIX}>Pagar Com PIX QR Code</span>
+                    <div className={styles.EXpixCodeContainer}>
                       {encodedImage && (
                         <ImageComponent encodedImage={encodedImage} />
                       )}

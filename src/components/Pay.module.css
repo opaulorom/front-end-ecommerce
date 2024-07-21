@@ -144,6 +144,12 @@
 
   }
 
+  .labelPIX{
+    font-family: Poppins, arial, sans-serif;
+    font-weight: 600;
+    color: black;
+    font-size: 1.4rem;
+  }
   @media screen and (min-width: 700px) {
     .paymentContainer{
 
@@ -170,5 +176,21 @@
   .ButtonDataCustomer:hover{
     background-color: #05070A;
 
+}
+.pixCodeContainer{
+    display: flex;
+    flex-direction: column;
+}
+.EXpixCodeContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.pixCodeContainer___p{
+    width: 40vw;
+}
+
+.pixCodeContainer___button{
+    width: 25vw;
 }
   }
