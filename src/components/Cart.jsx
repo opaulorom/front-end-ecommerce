@@ -238,6 +238,7 @@ const Cart = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json', // Adicionando content-type
           },
         }
       );
