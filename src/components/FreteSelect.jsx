@@ -43,6 +43,39 @@ const FreteSelect = () => {
     }
   }, [frete]);
 
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      // Faz a solicitação POST para obter os dados do frete com o novo CEP
+      await axios.post(
+        `http://localhost:3001/api/frete/${userId}`,
+        { cep },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json', // Adicionando content-type
+          },
+        }
+      );
+
+      // Atualiza o estado do frete com os dados do frete da requisição GET
+      const responseGet = await axios.get(
+        `http://localhost:3001/api/frete/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("log", userId);
+      setFrete(responseGet.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   return (
     <div>
       <form className={styles.formContainer}>
@@ -57,6 +90,8 @@ const FreteSelect = () => {
         <button
           type="submit"
           className={styles.formContainer__button}
+          onClick={handleSubmit}
+
         >
           <SearchIcon /> Buscar
         </button>
@@ -66,12 +101,19 @@ const FreteSelect = () => {
         <div>
           {frete.map((item, index) => (
             <div key={index} className={styles.freteItemContainer}>
+
+              <div>
               <img
                 src={item.logo}
                 alt="logo das transportadoras"
                 style={{ width: "10vw" }}
               />
               <p className={styles.p}>{item.nomeTransportadora}</p>
+              </div>
+              
+
+              <div>
+<span>Data de entrega</span>
               <p className={styles.p}>
                 {item.dataPrevistaEntrega
                   .split("T")[0]
@@ -79,6 +121,8 @@ const FreteSelect = () => {
                   .reverse()
                   .join("/")} ({item.prazoEntrega} dias)
               </p>
+              </div>
+           
               <p className={styles.p}>valor do frete: {item.valorFrete}</p>
             </div>
           ))}
