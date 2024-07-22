@@ -238,7 +238,7 @@ const Cart = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json', // Adicionando content-type
+            "Content-Type": "application/json", // Adicionando content-type
           },
         }
       );
@@ -280,27 +280,40 @@ const Cart = () => {
         </div>
       ) : (
         <>
-        {getCart.length === 0 && loggedIn === true ? '' : <> <div className={styles.totalQuantityContainer}>
-            <div className={styles.cartContainer__totalQuantity}>
-              <div className={styles.justifyContent}>
-                <span className={styles.span}>Quatidade Total</span>
-                {totalQuantity > 0 && <p className={styles.span}>{totalQuantity}</p>}
-                
-              </div>
+          {getCart.length === 0 && loggedIn === true ? (
+            ""
+          ) : (
+            <>
+              {" "}
+              <div className={styles.totalQuantityContainer}>
+                <div className={styles.cartContainer__totalQuantity}>
+                  <div className={styles.justifyContent}>
+                    <span className={styles.span}>Quatidade Total</span>
+                    {totalQuantity > 0 && (
+                      <p className={styles.span}>{totalQuantity}</p>
+                    )}
+                  </div>
 
-              <div className={styles.justifyContent}>
-                 <span className={styles.span}>valor do frete</span>
-              <span className={styles.span}>R$ {shippingFee.toFixed(2) == 0 ? "0": shippingFee.toFixed(2)  }</span>
-              
+                  <div className={styles.justifyContent}>
+                    <span className={styles.span}>valor do frete</span>
+                    <span className={styles.span}>
+                      R${" "}
+                      {shippingFee.toFixed(2) == 0
+                        ? "0"
+                        : shippingFee.toFixed(2)}
+                    </span>
+                  </div>
+                  <div className={styles.justifyContent}>
+                    <span className={styles.span}>Valor total</span>
+                    <span className={styles.total}>
+                      R${" "}
+                      {getTotal.totalAmount && getTotal.totalAmount.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className={styles.justifyContent}>
-              <span className={styles.span}>Valor total</span>
-              <span className={styles.total}>R$ { getTotal.totalAmount && getTotal.totalAmount.toFixed(2)}</span>
-              </div>
-          
-            </div>
-          </div></>}
-         
+            </>
+          )}
 
           {getCart.length > 0 && (
             <>
@@ -320,7 +333,11 @@ const Cart = () => {
               <Link
                 to={
                   selectedFreteIndex !== null || getTotal.totalAmount >= 300
-                    ? `/payment/${totalQuantity}/${shippingFee.toFixed(2) == 0 ? "0": shippingFee.toFixed(2)  }/${getTotal.totalAmount.toFixed(2)}`
+                    ? `/payment/${totalQuantity}/${
+                        shippingFee.toFixed(2) == 0
+                          ? "0"
+                          : shippingFee.toFixed(2)
+                      }/${getTotal.totalAmount.toFixed(2)}`
                     : "#"
                 }
                 className={styles.LinkContainer}
@@ -340,11 +357,6 @@ const Cart = () => {
             </>
           )}
 
-
-
-
-
-
           {getCart.length === 0 && !loggedIn && (
             <>
               <div
@@ -354,7 +366,6 @@ const Cart = () => {
                   justifyContent: "center",
                   marginTop: "15rem",
                 }}
-              
               >
                 <div
                   style={{
@@ -387,10 +398,8 @@ const Cart = () => {
               </div>
             </>
           )}
- {getCart.length > 0 && (
-            <div
-              className={styles.shippingFeeContainer}
-            >
+          {getCart.length > 0 && (
+            <div className={styles.shippingFeeContainer}>
               {/* <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
               {getTotal &&
                 typeof getTotal === "object" &&
@@ -408,16 +417,13 @@ const Cart = () => {
                   value={cep}
                   onChange={(event) => setCep(event.target.value)}
                   placeholder="Digite um cep..."
-           
                   className={styles.shippingFeeContainer__input}
                 />
 
                 <button
                   type="submit"
-               
                   onClick={handleSubmit}
                   className={styles.shippingFeeContainer__button}
-
                 >
                   {" "}
                   <SearchIcon /> Buscar{" "}
@@ -428,10 +434,7 @@ const Cart = () => {
                 <div>
                   {frete.map((item, index) => (
                     <div key={index}>
-                      <div
-                    
-                        className={styles.freteContainer}
-                      >
+                      <div className={styles.freteContainer}>
                         <input
                           type="radio"
                           name="selectedFrete"
@@ -449,40 +452,40 @@ const Cart = () => {
                         />
 
                         <div className={styles.interContainer}>
+                          <div className={styles.flex}>
+                            <img
+                              src={item.logo}
+                              alt="logo das transportadoras"
+                              className={
+                                item.nomeTransportadora === "Jadlog"
+                                  ? styles.Jadlog
+                                  : styles.image
+                              }
+                            />
 
+                            <p>{item.nomeTransportadora}</p>
+                          </div>
 
-<div className={styles.flex}>
-                        <img
-                          src={item.logo}
-                          alt="logo das transportadoras"
-                          className={item.nomeTransportadora === 'Jadlog'?  styles.Jadlog : styles.image}
-                          />
+                          <div className={styles.flex}>
+                            {" "}
+                            <span>Data prevista de entrega</span>{" "}
+                            <p>
+                              {" "}
+                              {item.dataPrevistaEntrega &&
+                                item.dataPrevistaEntrega
+                                  .split("T")[0]
+                                  .split("-")
+                                  .reverse()
+                                  .join("/")}
+                              ({item.prazoEntrega} dias)
+                            </p>
+                          </div>
 
-                        <p>{item.nomeTransportadora}</p>
-
-</div>
-
-<div className={styles.flex}> <span>
-  Data prevista de entrega
-  </span> <p>
-                          {" "}
-                          { item.dataPrevistaEntrega && item.dataPrevistaEntrega
-                            .split("T")[0]
-                            .split("-")
-                            .reverse()
-                            .join("/")}
-                            ({item.prazoEntrega} dias)
-                        </p></div>
-
-<div className={styles.flex}>
-<span> valor do frete:</span>
-<p>{item.valorFrete}</p>
-
-</div>
-
-                      
+                          <div className={styles.flex}>
+                            <span> valor do frete:</span>
+                            <p>{item.valorFrete}</p>
+                          </div>
                         </div>
-                       
                       </div>
                     </div>
                   ))}
@@ -889,8 +892,6 @@ const Cart = () => {
               </div>
             </div>
           )}
-
-         
         </>
       )}
     </div>
