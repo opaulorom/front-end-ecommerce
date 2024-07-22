@@ -455,8 +455,8 @@ const Cart = () => {
                         <img
                           src={item.logo}
                           alt="logo das transportadoras"
-                          style={{ width: "10vw" }}
-                        />
+                          className={item.nomeTransportadora === 'Jadlog'?  styles.Jadlog : styles.image}
+                          />
 
                         <p>{item.nomeTransportadora}</p>
 

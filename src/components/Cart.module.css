@@ -257,6 +257,13 @@ input[type="number"]::-webkit-outer-spin-button {
   
 }
 
+
+.Jadlog{
+  width: 5vw;
+}
+.image{
+  width: 10vw;
+}
 .flex{
   display: flex;
   justify-content: space-between;
@@ -371,7 +378,8 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   .flex{
     width: 80vw;
-
+    flex-direction: column;
+    justify-content: none;
   }
   .freteContainer{
     width: 40vw;
@@ -379,13 +387,20 @@ input[type="number"]::-webkit-outer-spin-button {
     height: auto;
 
   }
+ 
   .interContainer{
     width: 35vw;
-  }
-  .interContainer{
     display: flex;
     flex-direction: row;
-    align-items: center;
+
+    
+  }
+  
+  .Jadlog{
+    width: 2vw;
+  }
+  .image{
+    width: 5vw;
     
   }
 }
