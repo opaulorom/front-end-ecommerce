@@ -3,16 +3,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 2rem;
     margin-bottom: 2rem;
   }
   
   .formContainer__input {
     padding: 0.5rem;
     margin-right: 1rem;
+    border-radius: 5px;
+    border: 1px solid #CDCDCD;
+
   }
   
   .formContainer__button {
     display: flex;
+    justify-content: center;
     align-items: center;
     background-color: #5070e3;
     color: white;
@@ -22,6 +27,7 @@
     font-weight: 500;
     font-family: "poppins", sans-serif;
     cursor: pointer;
+    width: 25vw;
   }
   
   .freteItemContainer {
@@ -30,9 +36,54 @@
     align-items: center;
     justify-content: center;
     margin: 1rem 0;
+    border: 1px solid #ccc;
+    /* border: 3px double #333; Cor sólida e espessura de 3px com borda dupla */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombras para efeito de profundidade */
+
+    border-radius: 8px; /* Bordas arredondadas */
+    width: 90vw;
+    margin: 0 auto;
+    margin-top: 1rem;
+    
+
   }
   
   .p {
     margin: 0.5rem 0;
   }
-  
+  .interContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80vw;
+    
+  }
+  .Jadlog{
+    width: 5vw;
+  }
+  .image{
+    width: 10vw;
+  }
+  @media screen and (min-width: 700px) {
+    .formContainer__button {
+      width: 10vw;
+    }
+    .freteItemContainer{
+      width: 32vw;
+      padding: 1rem;
+
+    }
+    .interContainer{
+      width: 30vw;
+    }
+
+    .Jadlog{
+      width: 2vw;
+    }
+    .image{
+      width: 5vw;
+      
+    }
+ 
+  }
