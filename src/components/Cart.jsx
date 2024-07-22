@@ -429,11 +429,8 @@ const Cart = () => {
                   {frete.map((item, index) => (
                     <div key={index}>
                       <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "1rem",
-                        }}
+                    
+                        className={styles.freteContainer}
                       >
                         <input
                           type="radio"
@@ -449,6 +446,11 @@ const Cart = () => {
                           }}
                           disabled={!isRadioButtonEnabled}
                         />
+
+                        <div className={styles.interContainer}>
+
+
+<div className={styles.flex}>
                         <img
                           src={item.logo}
                           alt="logo das transportadoras"
@@ -456,7 +458,12 @@ const Cart = () => {
                         />
 
                         <p>{item.nomeTransportadora}</p>
-                        <p>
+
+</div>
+
+<div className={styles.flex}> <span>
+  Data prevista de entrega
+  </span> <p>
                           {" "}
                           { item.dataPrevistaEntrega && item.dataPrevistaEntrega
                             .split("T")[0]
@@ -464,8 +471,17 @@ const Cart = () => {
                             .reverse()
                             .join("/")}
                             ({item.prazoEntrega} dias)
-                        </p>
-                        <p> valor do frete:{item.valorFrete}</p>
+                        </p></div>
+
+<div className={styles.flex}>
+<span> valor do frete:</span>
+<p>{item.valorFrete}</p>
+
+</div>
+
+                      
+                        </div>
+                       
                       </div>
                     </div>
                   ))}
