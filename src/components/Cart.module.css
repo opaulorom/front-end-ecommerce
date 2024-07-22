@@ -370,18 +370,22 @@ input[type="number"]::-webkit-outer-spin-button {
 
   }
   .flex{
-    width: 35vw;
+    width: 80vw;
 
   }
   .freteContainer{
     width: 40vw;
+    padding: .6rem;
+    height: auto;
 
   }
   .interContainer{
-    width: 30vw;
+    width: 35vw;
   }
-  .radio{
-    margin-right:3rem;
-  
+  .interContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
   }
 }
