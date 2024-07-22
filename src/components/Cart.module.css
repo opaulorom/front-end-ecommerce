@@ -262,6 +262,10 @@ input[type="number"]::-webkit-outer-spin-button {
   align-items: center;
   width:70vw;
 }
+.radio{
+  margin-right: 2rem;
+  
+}
 @media screen and (min-width: 700px) {
   .linha {
     width: 50vw;

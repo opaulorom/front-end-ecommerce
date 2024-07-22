@@ -445,6 +445,7 @@ const Cart = () => {
                             opacity: isRadioButtonEnabled ? 1 : 0.5,
                           }}
                           disabled={!isRadioButtonEnabled}
+                          className={styles.radio}
                         />
 
                         <div className={styles.interContainer}>
