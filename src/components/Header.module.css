@@ -4,74 +4,90 @@
   gap: 0.5rem;
   align-items: center;
 }
-.MobileHeader__SearchIcon{
+.MobileHeader__SearchIcon {
   display: flex;
   align-items: center;
 }
 /* Styles for screens up to 699px */
 
-  /* Hide these elements on smaller screens */
-  .ContainerHeader, .desktopContainer {
-    display: none;
-  }
-  
-  /* Adjust MobileHeader styles */
-  .MobileHeader {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-  }
+/* Hide these elements on smaller screens */
+.ContainerHeader,
+.desktopContainer {
+  display: none;
+}
 
-  /* Adjust MobileHeader__Container */
-  .MobileHeader__Container {
-    display: flex;
-    justify-content: space-between;
-    gap: 8rem;
-    align-items: center;
-    flex-direction: row;
+/* Adjust MobileHeader styles */
+.MobileHeader {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
 
-  }
+/* Adjust MobileHeader__Container */
+.MobileHeader__Container {
+  display: flex;
+  justify-content: space-between;
+  gap: 8rem;
+  align-items: center;
+  flex-direction: row;
+}
 
-  /* Adjust SearchBarContent position */
-  .SearchBarContent {
-    position: absolute;
-    left: 10px;
-    margin-top: 1.1rem;
-  }
+/* Adjust SearchBarContent position */
+.SearchBarContent {
+  position: absolute;
+  left: 10px;
+  margin-top: 1.1rem;
+}
 
-  /* Adjust ContainerHeaderMobile styles */
-  .ContainerHeaderMobile {
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    background-color: #05070a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    height: 10vh; /* Fixed typo '10svh' */
-    color: white;
-  }
+/* Adjust ContainerHeaderMobile styles */
+.ContainerHeaderMobile {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  background-color: #05070a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  height: 10vh; /* Fixed typo '10svh' */
+  color: white;
+}
 
-  /* Adjust MediewalLogoMobile size */
-  .MediewalLogoMobile {
-    width: 25vw;
-  }
+/* Adjust MediewalLogoMobile size */
+.MediewalLogoMobile {
+  width: 25vw;
+}
+/* .HeaderModal{
 
+  } */
+.HeaderModalContent {
+  position: absolute;
+  top: 80%;
+  right: 13%;
+  background-color: white;
+  border: 1px solid rgb(206, 212, 218);
+  border-radius: 8px;
+  padding: 1rem;
+}
 
+.li {
+  margin-top: 0.5rem;
+}
+.FirstContainer {
+  margin-bottom: 1rem;
+}
 /* Styles for screens 700px and above */
 @media (min-width: 700px) {
   /* Hide MobileHeader on larger screens */
   .MobileHeader {
     display: none;
   }
-  
+
   /* Hide MobileHeader__Container on larger screens */
   .MobileHeader__Container {
     display: none;
-
   }
-  .IconsContainer{
+  .IconsContainer {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
@@ -88,7 +104,9 @@
     align-items: center;
     z-index: 7;
     height: 15vh; /* Fixed typo '18svh' */
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+      sans-serif;
     font-weight: 600;
     color: white;
   }
@@ -140,7 +158,7 @@
     justify-content: center;
     align-items: center;
     gap: 12rem;
-    margin-top: -.2rem;
+    margin-top: -0.2rem;
     width: 100%;
   }
 
@@ -172,22 +190,20 @@
   @media (max-width: 853px) {
     .desktopContainer {
       display: flex;
-      
-      justify-content: space-between;
 
+      justify-content: space-between;
     }
   }
 
   @media (min-width: 414px) and (max-width: 915px) and (orientation: landscape) {
     .desktopContainer {
       display: flex;
-      
+
       justify-content: space-between;
     }
 
-    .IconsDesktopContainer{
+    .IconsDesktopContainer {
       display: flex;
-      
     }
   }
 
@@ -195,16 +211,6 @@
     .desktopContainer {
       gap: 5rem;
       margin-right: 2rem;
-    }
-  }
-
-  @media (max-width: 1120px) {
-    .desktopContainer {
-        display: flex;
-      
-      justify-content: space-between;
-      gap: 1rem;
-      
     }
   }
 
@@ -245,7 +251,7 @@
       gap: 18rem;
     }
   }
- 
+
   @media (min-width: 575px) and (max-width: 767px) and (orientation: portrait) {
     .MobileHeader__Container {
       gap: 17rem;
@@ -255,26 +261,34 @@
   @media (min-width: 575px) and (max-width: 822px) {
     .MobileHeader__Container {
       gap: 15rem;
-
     }
   }
 }
 
-@media (min-width: 975px) and  (max-width: 1559px) {
+@media (min-width: 975px) and (max-width: 1559px) {
   .ContainerHeader {
     height: 10vh;
   }
 }
-@media (min-width: 924px) and  (max-width: 1643px) {
+@media (min-width: 924px) and (max-width: 1643px) {
   .ContainerHeader {
     height: 10vh;
   }
-} @media  only screen and (min-width: 608px) and (max-width: 926px) {
+}
+@media only screen and (min-width: 608px) and (max-width: 926px) {
   .MobileHeader__Container {
     gap: 15rem;
-
   }
-  .MediewalLogo{
+  .MediewalLogo {
     width: 22vw;
+  }
+}
+
+@media only screen and (min-width: 630px) and (max-width: 1120px) and (orientation: landscape) {
+  .desktopContainer {
+    display: flex;
+
+
+    gap: 8rem;
   }
 }

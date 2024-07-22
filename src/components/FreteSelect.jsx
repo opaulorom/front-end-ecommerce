@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import SearchIcon from "@mui/icons-material/Search";
+import styles from './FreteSelect.module.css';
 
 const FreteSelect = () => {
   const [cep, setCep] = useState(localStorage.getItem("cep") || "");
@@ -10,8 +11,6 @@ const FreteSelect = () => {
     localStorage.getItem("selectedFreteIndex") || null
   );
   const token = Cookies.get("token"); // Obtenha o token do cookie
-
-  const [getTotal, setGetTotal] = useState({});
 
   const userId = Cookies.get("userId");
 
@@ -26,7 +25,6 @@ const FreteSelect = () => {
           `http://localhost:3001/api/frete/${userId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
-              // Remova 'Credentials: credentials'
             },
           }
         );
@@ -45,70 +43,43 @@ const FreteSelect = () => {
     }
   }, [frete]);
 
- 
-
-
   return (
     <div>
-     
-      <form style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+      <form className={styles.formContainer}>
         <input
           type="text"
           value={cep}
           onChange={(event) => setCep(event.target.value)}
           placeholder="Digite pra pesquisar um cep."
-          style={{ height: "4vh" }}
+          className={styles.formContainer__input}
         />
 
         <button
           type="submit"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            backgroundColor: "#5070E3",
-            color: "white",
-            border: "none",
-            padding: ".4rem",
-            borderRadius: "5px",
-            fontWeight: "500",
-            fontFamily: "poppins, sans-serif",
-            cursor: "pointer",
-            width:"8vw", 
-            justifyContent:'center',
-      
-          }}
+          className={styles.formContainer__button}
         >
-          {" "}
-          <SearchIcon /> Buscar{" "}
+          <SearchIcon /> Buscar
         </button>
       </form>
-    
 
       {frete && (
         <div>
           {frete.map((item, index) => (
-            <div key={index}>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "1rem" }}
-              >
-            
-                <img
-                  src={item.logo}
-                  alt="logo das transportadoras"
-                  style={{ width: "10vw" }}
-                />
-                <p>{item.nomeTransportadora}</p>
-                <p>
-                  {" "}
-                  {item.dataPrevistaEntrega
-                    .split("T")[0]
-                    .split("-")
-                    .reverse()
-                    .join("/")}
-                </p>
-                <p> {item.prazoEntrega}</p>
-                <p> valor do frete:{item.valorFrete}</p>
-              </div>
+            <div key={index} className={styles.freteItemContainer}>
+              <img
+                src={item.logo}
+                alt="logo das transportadoras"
+                style={{ width: "10vw" }}
+              />
+              <p className={styles.p}>{item.nomeTransportadora}</p>
+              <p className={styles.p}>
+                {item.dataPrevistaEntrega
+                  .split("T")[0]
+                  .split("-")
+                  .reverse()
+                  .join("/")} ({item.prazoEntrega} dias)
+              </p>
+              <p className={styles.p}>valor do frete: {item.valorFrete}</p>
             </div>
           ))}
         </div>

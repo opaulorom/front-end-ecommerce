@@ -1,0 +1,38 @@
+/* FreteSelect.module.css */
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .formContainer__input {
+    padding: 0.5rem;
+    margin-right: 1rem;
+  }
+  
+  .formContainer__button {
+    display: flex;
+    align-items: center;
+    background-color: #5070e3;
+    color: white;
+    border: none;
+    padding: 0.4rem;
+    border-radius: 5px;
+    font-weight: 500;
+    font-family: "poppins", sans-serif;
+    cursor: pointer;
+  }
+  
+  .freteItemContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+  
+  .p {
+    margin: 0.5rem 0;
+  }
+  
