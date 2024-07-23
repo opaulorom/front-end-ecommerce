@@ -77,7 +77,17 @@ margin-bottom: 2rem;
   font-weight: 400;
   
 }
+.priceValue{
+  
+  margin: 0.5rem 0;
+  font-family: poppins, sans-serif;
+  font-size: 1.2rem;
+  font-family: Poppins, arial, sans-serif;
+  color: black;
+  font-size: 0.9rem;
+  font-weight: 600;
 
+}
 .price {
   font-family: Poppins, arial, sans-serif;
   font-weight: 600;
@@ -264,6 +274,9 @@ input[type="number"]::-webkit-outer-spin-button {
 .image{
   width: 10vw;
 }
+.span{
+  font-family: poppins, sans-serif;
+}
 .flex{
   display: flex;
   justify-content: space-between;
@@ -274,6 +287,9 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-right: 2rem;
 
 }
+.span{
+  margin-top: 1.5rem;
+ }
 @media screen and (min-width: 700px) {
   .linha {
     width: 50vw;
@@ -403,4 +419,5 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 5vw;
     
   }
+  
 }

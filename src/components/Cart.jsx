@@ -463,15 +463,14 @@ const Cart = () => {
                               }
                             />
 
-                            <p>{item.nomeTransportadora}</p>
+                            <p className={styles.span}>{item.nomeTransportadora}</p>
                           </div>
 
                           <div className={styles.flex}>
                             {" "}
-                            <span>Data prevista de entrega</span>{" "}
-                            <p>
+                            <p className={styles.span}>
                               {" "}
-                              {item.dataPrevistaEntrega &&
+                              entrega em {item.dataPrevistaEntrega &&
                                 item.dataPrevistaEntrega
                                   .split("T")[0]
                                   .split("-")
@@ -482,8 +481,7 @@ const Cart = () => {
                           </div>
 
                           <div className={styles.flex}>
-                            <span> valor do frete:</span>
-                            <p>{item.valorFrete}</p>
+                            <p className={styles.span}>valor: <b  className={styles.priceValue}>R$ {item.valorFrete}</b></p>
                           </div>
                         </div>
                       </div>

@@ -113,7 +113,7 @@ const FreteSelect = () => {
               </div>
 
               <div className={styles.interContainer}>
-                <span>Data de entrega</span>
+                <span className={styles.p}>Data de entrega</span>
                 <p className={styles.p}>
                   {item.dataPrevistaEntrega
                     .split("T")[0]
@@ -125,8 +125,8 @@ const FreteSelect = () => {
               </div>
 
               <div className={styles.interContainer}>
-                <span>valor do frete: </span>
-                <p className={styles.p}>R$ {item.valorFrete}</p>
+                <span className={styles.p}>valor do frete: </span>
+                <p className={styles.price}>R$ {item.valorFrete}</p>
               </div>
               <div></div>
             </div>
