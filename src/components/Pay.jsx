@@ -177,6 +177,12 @@ const Pay = () => {
       setCreditCard(response.data);
 
       await clearCart();
+      
+    if (response.data) {
+   
+      navigate("/success");
+    }
+
     } catch (error) {
       setCreditCardLoading(false);
       console.error("Erro ao enviar informações do usuário:", error);

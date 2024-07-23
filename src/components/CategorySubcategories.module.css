@@ -75,7 +75,7 @@
 }
 
 .ProductsContainer__image {
-  width: 18vw;
+  width: 15vw;
   margin-top: -2rem;
   margin-left: 1rem;
   z-index: -1;
@@ -286,6 +286,7 @@
   .priceContainer__image {
     width: 15vw;
     transition: opacity 0.5s ease-in-out;
+    
   }
 
   .priceContainer__productcard {
