@@ -9,6 +9,7 @@ import NewArrivals from "./NewArrivals";
 import Slider from "../components/Slider";
 import Footer from "./Footer";
 
+import Register from "../components/Register";
 
 
 const Home = () => {
@@ -16,7 +17,7 @@ const Home = () => {
   
   return (
     <div>
-    
+{/*     
 
       <Slider />
       <Categories />
@@ -30,9 +31,9 @@ const Home = () => {
       </div>
       <Navbar></Navbar>
      <Footer/>
-   
+    */}
  
-      
+      <Register />  
     </div>
   );
 };
