@@ -106,7 +106,7 @@ function RegisterUser() {
             </span>
           </div>
           <button type="submit" style={{ backgroundColor: isAddButtonDisabled ? "#ccc" : "#14337C" }} disabled={isAddButtonDisabled} className={styles.formContainer__button}>
-            Register
+            Cadastrar
           </button>
         </form>
       </div>
