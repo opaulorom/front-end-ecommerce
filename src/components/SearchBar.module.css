@@ -235,3 +235,22 @@
   }
 }
 
+
+@media only screen and (min-width: 360px) and (max-width: 760px) and (orientation: landscape) {
+  .inputContainer{
+    padding: .6rem;
+ 
+  }
+  .searchIcon{
+    width: 3vw;
+  }
+}
+@media only screen and (min-width: 360px) and (max-width: 800px) and (orientation: landscape) {
+  .inputContainer{
+    padding: .6rem;
+ 
+  }
+  .searchIcon{
+    width: 3vw;
+  }
+}
