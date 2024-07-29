@@ -292,3 +292,20 @@
     gap: 8rem;
   }
 }
+
+@media only screen and (min-width: 412px) and (max-width: 915px) and (orientation: landscape) {
+  .desktopContainer {
+    display: flex;
+
+
+
+
+  }
+  .MediewalLogo{
+    width: 12vw;
+  }
+  .IconsDesktopContainer{
+    margin-right: 5rem;
+  }
+}
+

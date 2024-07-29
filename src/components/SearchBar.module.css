@@ -179,12 +179,6 @@
 .ProductsContainer{
   margin-right: 10rem;
 }
-@media (min-width: 700px)  {
-  .inputContainer{
-    padding: .4rem;
- 
-  }
-}
 
 @media (min-width: 729px) and (orientation:  landscape) {
   .inputContainer{
@@ -200,10 +194,13 @@
   }
 }
 
-@media (max-width: 1559px) {
+@media only screen and (min-width: 975px) and (max-width: 1559px) {
   .inputContainer{
     height: 4vh;
  
+  }
+  .inputContainer{
+    padding: .2rem;
   }
 }
 @media only screen and (min-width: 720px) and  (max-width: 1600px) and (orientation:  landscape) {
@@ -212,6 +209,7 @@
     padding: 1rem;
  
   }
+ 
 }
 }
 
@@ -230,3 +228,10 @@
  
   }
 }
+@media  (min-width: 700px)  {
+  .inputContainer{
+    padding: .4rem;
+ 
+  }
+}
+
