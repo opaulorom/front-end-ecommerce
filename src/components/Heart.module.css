@@ -76,3 +76,19 @@
         grid-template-columns: repeat(3, 1fr); /* Duas colunas */
     }
   }
+  @media only screen and (min-width: 975px)  and (max-width: 1643px){
+    @media not screen and (min-width: 924px)  and (max-width: 1559px){
+    .HeartContainer {
+        
+        margin-top: 10%;
+       
+    }
+}
+  }
+  @media not screen and (min-width: 924px)  and (max-width: 1559px){
+    .HeartContainer {
+        
+        margin-top: 10%;
+   
+    }
+}
