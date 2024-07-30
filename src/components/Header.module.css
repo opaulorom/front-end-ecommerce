@@ -288,7 +288,6 @@
   .desktopContainer {
     display: flex;
 
-
     gap: 8rem;
   }
 }
@@ -296,38 +295,105 @@
 @media only screen and (min-width: 412px) and (max-width: 915px) and (orientation: landscape) {
   .desktopContainer {
     display: flex;
-
-
-
-
   }
-  .MediewalLogo{
+  .MediewalLogo {
     width: 12vw;
   }
-  .IconsDesktopContainer{
+  .IconsDesktopContainer {
     margin-right: 5rem;
   }
 }
 
-
 @media only screen and (min-width: 360px) and (max-width: 760px) and (orientation: landscape) {
   .desktopContainer {
     display: flex;
-
-
-
-
   }
-  .MediewalLogo{
+  .MediewalLogo {
     width: 12vw;
   }
-  .IconsDesktopContainer{
+  .IconsDesktopContainer {
     margin-left: -5rem;
   }
 }
 
 @media only screen and (min-width: 360px) and (max-width: 800px) and (orientation: landscape) {
-  .IconsDesktopContainer{
+  .IconsDesktopContainer {
     margin-left: -4rem;
+  }
+}
+
+@media only screen and (min-width: 384px) and (max-width: 854px) and (orientation: landscape) {
+  .IconsDesktopContainer {
+    margin-left: -5rem;
+  }
+}
+
+@media only screen and (min-width: 810px) and (max-width: 1080px) {
+  .desktopContainer {
+    display: flex;
+  }
+  .IconsDesktopContainer {
+    margin-right: 2rem;
+  }
+  .ContainerHeader {
+    display: flex;
+    align-items: center;
+    height: 10vh;
+  }
+  .MediewalLogo {
+    width: 15vw;
+  }
+}
+@media only screen and (min-width: 375px) and (max-width: 812px) and (orientation: landscape) {
+  .desktopContainer {
+    display: flex;
+    margin-right: 5rem;
+  }
+  .IconsDesktopContainer {
+    margin-right: 2rem;
+  }
+  .ContainerHeader {
+    display: flex;
+    align-items: center;
+    height: 20vh;
+  }
+  .MediewalLogo {
+    width: 15vw;
+  }
+}
+
+@media only screen and (min-width: 414px) and (max-width: 896px) and (orientation: landscape) {
+  .desktopContainer {
+    display: flex;
+    justify-content: center;
+    margin-left: 1rem;
+  }
+  .IconsDesktopContainer {
+    margin-left: -8rem;
+  }
+  .ContainerHeader {
+    display: flex;
+    align-items: center;
+    height: 20vh;
+  }
+  .MediewalLogo {
+    width: 15vw;
+  }
+}
+
+@media only screen and (min-width: 375px) and (max-width: 667px) and (orientation: landscape) {
+  
+
+  .ContainerHeaderMobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+  }
+  .MediewalLogoMobile {
+    width: 20vw;
+  }
+  .MobileHeader__Container{
+    gap: 22rem;
   }
 }
