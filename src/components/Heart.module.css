@@ -66,16 +66,6 @@
       }
   }
 
-  @media only screen and (min-width: 800px)  and (max-width: 1180px){
-    .HeartContainer {
-        
-        margin-top: 18%;
-    }
-    .HeartUL {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Duas colunas */
-    }
-  }
   @media only screen and (min-width: 975px)  and (max-width: 1643px){
     @media not screen and (min-width: 924px)  and (max-width: 1559px){
     .HeartContainer {
@@ -85,10 +75,28 @@
     }
 }
   }
+  
   @media not screen and (min-width: 924px)  and (max-width: 1559px){
     .HeartContainer {
         
         margin-top: 10%;
    
     }
+}
+
+@media only screen and (min-width: 630px)  and (max-width: 1120px){
+    @media not screen and (min-width: 800px)  and (max-width: 1180px){
+        .HeartContainer {
+            background-color: aqua;
+            margin-top: 8%;
+        }
+        .HeartUL {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Duas colunas */
+        }
+        .HeartIMG {
+            width: 15vw;
+        }
+    }
+   
 }
