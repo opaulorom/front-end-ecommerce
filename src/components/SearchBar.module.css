@@ -13,7 +13,7 @@
     padding: 1rem;
 
   }
-  
+
   .searchIcon {
     position: absolute;
     right: 10px; /* ou o valor que você preferir */
@@ -192,6 +192,7 @@
     height: 4vh;
  
   }
+
 }
 
 @media only screen and (min-width: 975px) and (max-width: 1559px) {
@@ -202,6 +203,7 @@
   .inputContainer{
     padding: .2rem;
   }
+  
 }
 @media only screen and (min-width: 720px) and  (max-width: 1600px) and (orientation:  landscape) {
   @media not (min-width: 700px)  {
@@ -233,6 +235,7 @@
     padding: .4rem;
  
   }
+  
 }
 
 
