@@ -169,6 +169,8 @@ input[type="number"]::-webkit-outer-spin-button {
 .totalQuantityContainer{
   display: flex;
   justify-content: center;
+  align-items: center;
+  
   
 }
 .cartContainer__totalQuantity {
@@ -176,7 +178,7 @@ input[type="number"]::-webkit-outer-spin-button {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   width: 80vw;
-  height: 15vh;
+  height:auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -419,5 +421,10 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 5vw;
     
   }
-  
+
+}
+@media screen and (min-width: 1643px)  {
+  .totalQuantityContainer{
+    margin-top: 5rem;
+  }
 }

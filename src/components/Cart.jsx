@@ -356,7 +356,7 @@ const Cart = () => {
               </Link>
             </>
           )}
-
+{/* {getTotal.totalAmount >= 300 && 'mais de 300 reais'} */}
           {getCart.length === 0 && !loggedIn && (
             <>
               <div
@@ -470,7 +470,7 @@ const Cart = () => {
                             {" "}
                             <p className={styles.span}>
                               {" "}
-                              entrega em {item.dataPrevistaEntrega &&
+                              Entrega Prevista {item.dataPrevistaEntrega &&
                                 item.dataPrevistaEntrega
                                   .split("T")[0]
                                   .split("-")
