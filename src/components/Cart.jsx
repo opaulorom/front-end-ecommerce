@@ -310,53 +310,52 @@ const Cart = () => {
                       {getTotal.totalAmount && getTotal.totalAmount.toFixed(2)}
                     </span>
                   </div>
+                  <span  className={styles.promo}> {getTotal.totalAmount >= 300 ? 'Para compras acima de 300 reais, o frete é grátis' : <span className={styles.green}>Escolha uma opção de frete para prosseguir.</span>}</span>
+                 
                 </div>
               </div>
             </>
           )}
 
-          {getCart.length > 0 && (
-            <>
-              {selectedFreteIndex === null && getTotal.totalAmount < 300 && (
-                <p
-                  style={{
-                    position: "absolute",
-                    right: "10px",
-                    top: "10px",
-                    color: "red",
-                  }}
-                >
-                  Por favor, selecione um frete antes de prosseguir.
-                </p>
-              )}
+{getCart.length > 0 && (
+  <>
+    {selectedFreteIndex === null && getTotal.totalAmount < 300 && (
+      <p
+        style={{
+          position: "absolute",
+          right: "10px",
+          top: "10px",
+          color: "red",
+        }}
+      >
+        Por favor, selecione um frete antes de prosseguir.
+      </p>
+    )}
 
-              <Link
-                to={
-                  selectedFreteIndex !== null || getTotal.totalAmount >= 300
-                    ? `/payment/${totalQuantity}/${
-                        shippingFee.toFixed(2) == 0
-                          ? "0"
-                          : shippingFee.toFixed(2)
-                      }/${getTotal.totalAmount.toFixed(2)}`
-                    : "#"
-                }
-                className={styles.LinkContainer}
-              >
-                <button
-                  onClick={handleAddShippingFee}
-                  style={{
-                    pointerEvents: isButtonEnabled ? "auto" : "none",
-                    opacity: isButtonEnabled ? 1 : 0.5,
-                  }}
-                  disabled={!isButtonEnabled}
-                  className={styles.LinkContainer__button}
-                >
-                  Fazer Pedido
-                </button>
-              </Link>
-            </>
-          )}
-{/* {getTotal.totalAmount >= 300 && 'mais de 300 reais'} */}
+    <Link
+      to={
+        selectedFreteIndex !== null || getTotal.totalAmount >= 300
+          ? `/payment/${totalQuantity}/${shippingFee.toFixed(2) == 0 ? "0" : shippingFee.toFixed(2)}/${getTotal.totalAmount.toFixed(2)}`
+          : "#"
+      }
+      className={styles.LinkContainer}
+    >
+      <button
+        onClick={handleAddShippingFee}
+        style={{
+          pointerEvents: selectedFreteIndex !== null || getTotal.totalAmount >= 300 ? "auto" : "none",
+          opacity: selectedFreteIndex !== null || getTotal.totalAmount >= 300 ? 1 : 0.5,
+        }}
+        disabled={selectedFreteIndex === null && getTotal.totalAmount < 300}
+        className={styles.LinkContainer__button}
+      >
+        Fazer Pedido
+      </button>
+    </Link>
+  </>
+)}
+
+
           {getCart.length === 0 && !loggedIn && (
             <>
               <div
