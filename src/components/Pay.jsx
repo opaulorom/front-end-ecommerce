@@ -177,12 +177,10 @@ const Pay = () => {
       setCreditCard(response.data);
 
       await clearCart();
-      
-    if (response.data) {
-   
-      navigate("/success");
-    }
 
+      if (response.data) {
+        navigate("/success");
+      }
     } catch (error) {
       setCreditCardLoading(false);
       console.error("Erro ao enviar informações do usuário:", error);
@@ -209,9 +207,8 @@ const Pay = () => {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-
       <Header />
-   
+
       <Navbar />
 
       <div style={{ textAlign: "center", marginTop: "10rem" }}>
@@ -231,11 +228,8 @@ const Pay = () => {
             ) : (
               <>
                 <div id="div1">
-                  <div
-                className={styles.paymentContainer}
-                  >
-
-<div>
+                  <div className={styles.paymentContainer}>
+                    <div>
                       <h1
                         style={{
                           fontFamily: "poppins",
@@ -353,220 +347,222 @@ const Pay = () => {
                       </div>
                     </div>
 
+                    <div>
+                      <div className={styles.paymentDetails}>
+                        <div className={styles.justifyContent}>
+                          <span className={styles.span}>Quatidade Total</span>
+                          {quantity > 0 && (
+                            <p className={styles.span}>{quantity}</p>
+                          )}
+                        </div>
 
+                        <div className={styles.justifyContent}>
+                          <span className={styles.span}>valor do frete</span>
+                          <span className={styles.span}>R$ {shippingFee}</span>
+                        </div>
+                        <div className={styles.justifyContent}>
+                          <span className={styles.span}>Valor total</span>
+                          <span className={styles.total}>R$ {totalPrice}</span>
+                        </div>
+                      </div>
+                      {paymentMethod === "pix" && (
+                        <button
+                          onClick={handlePixPayment}
+                          className={styles.ButtonDataCustomer}
+                        >
+                          Pagar com Pix
+                        </button>
+                      )}
+                      {paymentMethod === "boleto" && (
+                        <button
+                          onClick={handleBoletoPayment}
+                          className={styles.ButtonDataCustomer}
+                        >
+                          Pagar com Boleto
+                        </button>
+                      )}
 
-<div>
-  
-                    <div className={styles.paymentDetails}>
-                      <div className={styles.justifyContent}>
-                        <span className={styles.span}>Quatidade Total</span>
-                        {quantity > 0 && (
-                          <p className={styles.span}>{quantity}</p>
+                      <div>
+                        {" "}
+                        {paymentMethod === "cartao" && (
+                          <>
+                            <form
+                              onSubmit={handleSubmit}
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                fontFamily: "poppins",
+                                fontWeight: "400",
+                                fontSize: "1.1rem",
+                                marginBottom: "1rem",
+                              }}
+                            >
+                              {errorMessage && (
+                                <p style={{ color: "red" }}>{errorMessage}</p>
+                              )}
+                              <div className={styles.childContainer}>
+                                <div className={styles.child}>
+                                  <label className={styles.label}>
+                                    nome do titular:
+                                  </label>
+                                  <input
+                                    type="text"
+                                    name="holderName"
+                                    onChange={handleChange}
+                                    value={formData.holderName}
+                                    style={{
+                                      border:
+                                        !formData.holderName.trim() &&
+                                        buttonClicked
+                                          ? "1px solid red"
+                                          : "1px solid #ccc",
+                                    }}
+                                    placeholder="carla alves"
+                                    className={styles.input}
+                                  />
+                                </div>
+                                <div className={styles.child}>
+                                  <label className={styles.label}>
+                                    numero do cartão:
+                                  </label>
+
+                                  <input
+                                    type="number"
+                                    name="number"
+                                    onChange={handleChange}
+                                    value={formData.number}
+                                    style={{
+                                      border:
+                                        !formData.number.trim() && buttonClicked
+                                          ? "1px solid red"
+                                          : "1px solid #ccc",
+                                    }}
+                                    placeholder="1234 567890 12345"
+                                    className={styles.input}
+                                  />
+                                </div>
+
+                                <div className={styles.child}>
+                                  <label className={styles.label}>
+                                    mês de vencimento:
+                                  </label>
+                                  <input
+                                    type="text"
+                                    name="expiryMonth"
+                                    onChange={handleChange}
+                                    value={formData.expiryMonth}
+                                    style={{
+                                      border:
+                                        !formData.expiryMonth.trim() &&
+                                        buttonClicked
+                                          ? "1px solid red"
+                                          : "1px solid #ccc",
+                                    }}
+                                    className={styles.input}
+                                    placeholder="05"
+                                  />
+                                </div>
+
+                                <div className={styles.child}>
+                                  <label className={styles.label}>
+                                    Ano de vencimento:
+                                  </label>
+                                  <input
+                                    type="text"
+                                    name="expiryYear"
+                                    onChange={handleChange}
+                                    value={formData.expiryYear}
+                                    style={{
+                                      border:
+                                        !formData.expiryYear.trim() &&
+                                        buttonClicked
+                                          ? "1px solid red"
+                                          : "1px solid #ccc",
+                                    }}
+                                    placeholder="2025"
+                                    className={styles.input}
+                                  />
+                                </div>
+
+                                <div className={styles.child}>
+                                  <label className={styles.label}>CVV:</label>
+                                  <input
+                                    type="text"
+                                    name="ccv"
+                                    onChange={handleChange}
+                                    value={formData.ccv}
+                                    style={{
+                                      border:
+                                        !formData.ccv.trim() && buttonClicked
+                                          ? "1px solid red"
+                                          : "1px solid #ccc",
+                                    }}
+                                    className={styles.input}
+                                    placeholder="123"
+                                  />
+                                </div>
+                              </div>
+
+                              <div className={styles.child}>
+                                <label className={styles.label}>
+                                  Parcelas:
+                                </label>
+                                <select
+                                  name="pacelas"
+                                  onChange={handleChange}
+                                  value={formData.installmentCount} // Definindo o valor do select
+                                  className={styles.select}
+                                >
+                                  <option value="1">
+                                    1 x de {getTotal.totalAmount / 1}
+                                  </option>
+                                  <option value="2">
+                                    2 x de {getTotal.totalAmount / 2}
+                                  </option>
+                                  <option value="3">
+                                    3 x de {getTotal.totalAmount / 3}
+                                  </option>
+                                  <option value="4">
+                                    4 x de {getTotal.totalAmount / 4}
+                                  </option>
+                                  <option value="5">
+                                    5 x de {getTotal.totalAmount / 5}
+                                  </option>
+                                  <option value="6">
+                                    6 x de {getTotal.totalAmount / 6}
+                                  </option>
+                                  <option value="7">
+                                    7 x de {getTotal.totalAmount / 7}
+                                  </option>
+                                  <option value="8">
+                                    8 x de {getTotal.totalAmount / 8}
+                                  </option>
+                                  <option value="9">
+                                    9 x de {getTotal.totalAmount / 9}
+                                  </option>
+                                  <option value="10">
+                                    10 x de {getTotal.totalAmount / 10}
+                                  </option>
+                                  <option value="11">
+                                    11 x de {getTotal.totalAmount / 11}
+                                  </option>
+                                  <option value="12">
+                                    12 x de {getTotal.totalAmount / 12}
+                                  </option>
+                                </select>
+                              </div>
+
+                              <button
+                                type="submit"
+                                className={styles.ButtonDataCustomer}
+                              >
+                                Finalisar Compra
+                              </button>
+                            </form>
+                          </>
                         )}
                       </div>
-
-                      <div className={styles.justifyContent}>
-                        <span className={styles.span}>valor do frete</span>
-                        <span className={styles.span}>R$ {shippingFee}</span>
-                      </div>
-                      <div className={styles.justifyContent}>
-                        <span className={styles.span}>Valor total</span>
-                        <span className={styles.total}>R$ {totalPrice}</span>
-                      </div>
-                      
                     </div>
-                    {paymentMethod === "pix" && (
-                      <button onClick={handlePixPayment}           className={styles.ButtonDataCustomer}>Pagar com Pix</button>
-                    )}
-                    {paymentMethod === "boleto" && (
-                      <button onClick={handleBoletoPayment}           className={styles.ButtonDataCustomer}>
-                        Pagar com Boleto
-                      </button>
-                    )}
-
-
-<div>
-                      {" "}
-                      {paymentMethod === "cartao" && (
-                        <>
-                          <form
-                            onSubmit={handleSubmit}
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              fontFamily: "poppins",
-                              fontWeight: "400",
-                              fontSize: "1.1rem",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            {errorMessage && (
-                              <p style={{ color: "red" }}>{errorMessage}</p>
-                            )}
-                            <div className={styles.childContainer}>
-                              <div className={styles.child}>
-                                <label className={styles.label}>
-                                  nome do titular:
-                                </label>
-                                <input
-                                  type="text"
-                                  name="holderName"
-                                  onChange={handleChange}
-                                  value={formData.holderName}
-                                  style={{
-                                    border:
-                                      !formData.holderName.trim() &&
-                                      buttonClicked
-                                        ? "1px solid red"
-                                        : "1px solid #ccc",
-                                  }}
-                                  placeholder="carla alves"
-                                  className={styles.input}
-                                />
-                              </div>
-                              <div className={styles.child}>
-                                <label className={styles.label}>
-                                  numero do cartão:
-                                </label>
-
-                                <input
-                                  type="number"
-                                  name="number"
-                                  onChange={handleChange}
-                                  value={formData.number}
-                                  style={{
-                                    border:
-                                      !formData.number.trim() && buttonClicked
-                                        ? "1px solid red"
-                                        : "1px solid #ccc",
-                                  }}
-                                  placeholder="1234 567890 12345"
-                                  className={styles.input}
-                                />
-                              </div>
-
-                              <div className={styles.child}>
-                                <label className={styles.label}>
-                                  mês de vencimento:
-                                </label>
-                                <input
-                                  type="text"
-                                  name="expiryMonth"
-                                  onChange={handleChange}
-                                  value={formData.expiryMonth}
-                                  style={{
-                                    border:
-                                      !formData.expiryMonth.trim() &&
-                                      buttonClicked
-                                        ? "1px solid red"
-                                        : "1px solid #ccc",
-                                  }}
-                                  className={styles.input}
-                                  placeholder="05"
-                                />
-                              </div>
-
-                              <div className={styles.child}>
-                                <label className={styles.label}>
-                                  Ano de vencimento:
-                                </label>
-                                <input
-                                  type="text"
-                                  name="expiryYear"
-                                  onChange={handleChange}
-                                  value={formData.expiryYear}
-                                  style={{
-                                    border:
-                                      !formData.expiryYear.trim() &&
-                                      buttonClicked
-                                        ? "1px solid red"
-                                        : "1px solid #ccc",
-                                  }}
-                                  placeholder="2025"
-                                  className={styles.input}
-                                />
-                              </div>
-
-                              <div className={styles.child}>
-                                <label className={styles.label}>CVV:</label>
-                                <input
-                                  type="text"
-                                  name="ccv"
-                                  onChange={handleChange}
-                                  value={formData.ccv}
-                                  style={{
-                                    border:
-                                      !formData.ccv.trim() && buttonClicked
-                                        ? "1px solid red"
-                                        : "1px solid #ccc",
-                                  }}
-                                  className={styles.input}
-                                  placeholder="123"
-                                />
-                              </div>
-                            </div>
-
-                            <div className={styles.child}>
-                              <label className={styles.label}>Parcelas:</label>
-                              <select
-                                name="pacelas"
-                                onChange={handleChange}
-                                value={formData.installmentCount} // Definindo o valor do select
-                                className={styles.select}
-                              >
-                                <option value="1">
-                                  1 x de {getTotal.totalAmount / 1}
-                                </option>
-                                <option value="2">
-                                  2 x de {getTotal.totalAmount / 2}
-                                </option>
-                                <option value="3">
-                                  3 x de {getTotal.totalAmount / 3}
-                                </option>
-                                <option value="4">
-                                  4 x de {getTotal.totalAmount / 4}
-                                </option>
-                                <option value="5">
-                                  5 x de {getTotal.totalAmount / 5}
-                                </option>
-                                <option value="6">
-                                  6 x de {getTotal.totalAmount / 6}
-                                </option>
-                                <option value="7">
-                                  7 x de {getTotal.totalAmount / 7}
-                                </option>
-                                <option value="8">
-                                  8 x de {getTotal.totalAmount / 8}
-                                </option>
-                                <option value="9">
-                                  9 x de {getTotal.totalAmount / 9}
-                                </option>
-                                <option value="10">
-                                  10 x de {getTotal.totalAmount / 10}
-                                </option>
-                                <option value="11">
-                                  11 x de {getTotal.totalAmount / 11}
-                                </option>
-                                <option value="12">
-                                  12 x de {getTotal.totalAmount / 12}
-                                </option>
-                              </select>
-                            </div>
-
-                            <button
-                              type="submit"
-                              className={styles.ButtonDataCustomer}
-                            >
-                              Finalisar Compra
-                            </button>
-                          </form>
-                        </>
-                      )}
-                    </div>
-                   
-                
-</div>
-                 
                   </div>
                 </div>
               </>
@@ -597,7 +593,9 @@ const Pay = () => {
 
                 {paymentMethod === "pix" && (
                   <p>
-                    <span className={styles.labelPIX}>Pagar Com PIX QR Code</span>
+                    <span className={styles.labelPIX}>
+                      Pagar Com PIX QR Code
+                    </span>
                     <div className={styles.EXpixCodeContainer}>
                       {encodedImage && (
                         <ImageComponent encodedImage={encodedImage} />
