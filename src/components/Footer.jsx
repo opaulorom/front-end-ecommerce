@@ -4,6 +4,8 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 export default function Footer() {
   return (
+
+    <>
     <footer className="footerContainer">
         
       {/* <div>
@@ -19,7 +21,7 @@ export default function Footer() {
         <p className="footer__p">Email: contato@exemplo.com</p>
         <p className="footer__p">Telefone: (00) 1234-5678</p>
         <p className="footer__p">CNPJ: 56.171.368/0001-77 </p>
-         
+      
       </div>
       <div className="footerContainer__div">
         <ul className="footer__ul">
@@ -35,13 +37,21 @@ export default function Footer() {
               <a href="https://www.instagram.com/filipealvesr2019/">
                 <InstagramIcon style={{ width: '35px', height: '35px' }}/>
               </a>
+              
             </li>
+            <p className="footer__Copyright">            Copyright © 2024  - 2024 
+            </p>
             {/* <li><a href="https://instagram.com">Instagram</a></li> */}
           </div>
         </ul>
+       
       </div>
-      <p>            Copyright © 2024  - 2024 
-            </p>
+    
     </footer>
+    
+    </>
+    
+    
+    
   );
 }

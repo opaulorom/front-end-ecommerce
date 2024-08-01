@@ -28,6 +28,8 @@
 }
 .footer__p {
   color: #d3d3d3;
+  margin-top: .5rem;
+  font-family: "poppins", sans-serif;
 }
 .imgFooter {
   width: 2rem;
@@ -45,6 +47,11 @@
   justify-content: center;
   gap: 3rem;
  
+}
+.footer__Copyright{
+  color: #d3d3d3;
+  margin-top: 8rem;
+  
 }
 @media screen and (min-width: 700px) {
   .footerContainer {
