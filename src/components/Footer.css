@@ -2,97 +2,71 @@
   margin: 0;
   padding: 0;
 }
-.footer__li a {
-  text-decoration: none;
-  color: white;
-}
+
 .footerContainer {
   background-color: #05070a;
-  height: 60vh;
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: left;
 }
-.footerContainer__div{
-    margin-top: 2rem;
- 
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 2rem;
 }
-.footer__ul {
-    display: flex;
-    flex-direction: column;
-  justify-content: space-around;
-  max-width: fit-content;
-  list-style: none;
-  gap: 2rem;
+
+.footerSection {
+  margin-bottom: 2rem;
+  text-align: center;
 }
-.footer__p {
-  color: #d3d3d3;
-  margin-top: .5rem;
-  font-family: "poppins", sans-serif;
-}
-.imgFooter {
-  width: 2rem;
-}
+
 .footerH3 {
   color: white;
   font-family: "poppins", sans-serif;
   font-weight: 500;
   font-size: 1.3rem;
   margin-bottom: 1rem;
-  max-width: fit-content;
 }
-.footer__li{
+
+.footer__p {
+  color: #d3d3d3;
+  margin-top: 0.5rem;
+  font-family: "poppins", sans-serif;
+}
+
+.footer__social {
   display: flex;
   justify-content: center;
-  gap: 3rem;
- 
+  gap: 2rem;
+  margin-top: 1rem;
 }
-.footer__Copyright{
+
+.footer__social a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer__Copyright {
   color: #d3d3d3;
-  margin-top: 8rem;
-  
+  font-family: "poppins", sans-serif;
+  text-align: center;
+  margin-top: 4rem;
 }
+
 @media screen and (min-width: 700px) {
-  .footerContainer {
-    background-color: #05070a;
-    height: 40vh;
-    display: flex;
+  .footerContent {
     flex-direction: row;
-
     justify-content: space-around;
-
-    align-items: center; /* Centraliza os itens verticalmente */
+    align-items: flex-start;
   }
 
-  .footer__ul {
-    display: flex;
-    flex-direction: column;
-
-
-    max-width: fit-content;
-
-    list-style: none;
-    gap: 1rem;
-  }
-
-  .footer__li{
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-  }
-  
-  .footer__p {
-    color: #d3d3d3;
-  }
-  .imgFooter {
-    width: 2rem;
-  }
-  .footerH3 {
-    color: white;
-    font-family: "poppins", sans-serif;
-    font-weight: 500;
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
+  .footerSection {
+    margin-bottom: 0;
+    text-align: left;
   }
 }
