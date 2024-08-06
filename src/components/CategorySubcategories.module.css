@@ -292,6 +292,16 @@
   .priceContainer__productcard {
     margin-top: 2rem;
   }
+  .priceContainer__productName{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 15vw;
+    color: rgb(114, 114, 114);
+    font-size: 0.8rem;
+    font-family: 'poppins', sans-serif;
+    font-weight: 400;
+  }
 }
 
 @media (max-width: 800px) and (orientation: portrait) {
