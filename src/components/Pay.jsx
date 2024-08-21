@@ -102,7 +102,7 @@ const Pay = () => {
 
     try {
       const response = await fetch(
-        `${apiUrl}/boleto/${userId}`,
+        `${apiUrl}/api/boleto/${userId}`,
         {
           method: "POST",
           headers: {
