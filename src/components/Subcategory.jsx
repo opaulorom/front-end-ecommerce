@@ -4,6 +4,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import IconToggle from './IconToggle';
 import Header from './Header';
+import { useConfig } from '../context/ConfigContext';
 const Subcategory = () => {
   const { category, subcategory } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
@@ -11,10 +12,11 @@ const Subcategory = () => {
   const [products, setProducts] = useState([]);
 
   const ITEMS_PER_PAGE = 10; // Número de produtos por página
+  const { apiUrl } = useConfig();
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/subcategoriesAndProducts/${category}/${subcategory}?page=${currentPage}`);
+      const response = await fetch(`${apiUrl}/api/subcategoriesAndProducts/${category}/${subcategory}?page=${currentPage}`);
       const { products: productsData } = await response.json();
   
       setProducts(productsData);
@@ -26,7 +28,7 @@ const Subcategory = () => {
 
   const fetchTotalPages = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/subcategoriesAndProducts/${category}/${subcategory}`);
+      const response = await fetch(`${apiUrl}/api/subcategoriesAndProducts/${category}/${subcategory}`);
       const { totalPages } = await response.json();
   
       setTotalPages(totalPages);

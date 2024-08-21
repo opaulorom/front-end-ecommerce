@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ImageGallery from './ImageGallery';
 import styles from "./Categories.module.css"
+import { useConfig } from '../context/ConfigContext';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/allCategories');
+        const response = await fetch(`${apiUrl}/api/allCategories`);
         const data = await response.json();
 
         setCategories(prevCategories => {

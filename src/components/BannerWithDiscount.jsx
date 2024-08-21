@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; // Importe o Link do react-router-dom
+import { useConfig } from '../context/ConfigContext';
 
 const BannerWithDiscount = () => {
   const [banner, setBanner] = useState([]);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchBanner = async () => {
-      const response = await axios.get(`http://localhost:3001/api/bannerByDiscount/70`);
+      const response = await axios.get(`${apiUrl}/api/bannerByDiscount/70`);
       setBanner(response.data.banners);
     };
 

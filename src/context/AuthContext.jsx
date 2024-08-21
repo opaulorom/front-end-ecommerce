@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { useConfig } from './ConfigContext';
 
 const AuthContext = createContext();
 
@@ -12,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [isCustomer, setIsCustomer] = useState(false); // Renomeado para isCustomer
   const [userId, setUserId] = useState(null); // Adicionado userId
   const [remainingAttempts, setRemainingAttempts] = useState(''); // Inicialize como null ou 0
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const storedToken = Cookies.get('token');
@@ -24,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:3001/loginCustumer', {
+      const response = await axios.post(`${apiUrl}/loginCustumer` , {
         email,
         password,
       });

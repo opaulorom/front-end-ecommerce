@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
+import { useConfig } from '../context/ConfigContext';
 
 const DiscountImageLinkPerPercentageAndCategory = ({ alt }) => {
     const [imageUrl, setImageUrl] = useState('');
     const [imageUrl15, setImageUrl15] = useState('');
     const [imageUrl70, setImageUrl70] = useState('');
+    const { apiUrl } = useConfig();
 
     // Fetch image URL from API on component mount
     useEffect(() => {
       const fetchImageUrl = async () => {
         try {
-          const response = await axios.get('http://localhost:3001/api/sliderByDiscount/50');
+          const response = await axios.get(`${apiUrl}/api/sliderByDiscount/50`);
           setImageUrl(response.data.sliders[0].image); // Assuming you want the first banner
         } catch (error) {
           console.error('Error fetching image URL:', error);
@@ -25,7 +27,7 @@ const DiscountImageLinkPerPercentageAndCategory = ({ alt }) => {
     useEffect(() => {
       const fetchImageUrl = async () => {
         try {
-          const response = await axios.get('http://localhost:3001/api/sliderByDiscount/15');
+          const response = await axios.get(`${apiUrl}/api/sliderByDiscount/15`);
           setImageUrl15(response.data.sliders[0].image); // Assuming you want the first banner
         } catch (error) {
           console.error('Error fetching image URL:', error);
@@ -39,7 +41,7 @@ const DiscountImageLinkPerPercentageAndCategory = ({ alt }) => {
     useEffect(() => {
       const fetchImageUrl = async () => {
         try {
-          const response = await axios.get('http://localhost:3001/api/sliderByDiscount/70');
+          const response = await axios.get(`${apiUrl}/api/sliderByDiscount/70`);
           setImageUrl70(response.data.sliders[0].image); // Assuming you want the first banner
         } catch (error) {
           console.error('Error fetching image URL:', error);

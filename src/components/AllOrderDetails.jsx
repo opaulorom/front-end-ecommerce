@@ -9,6 +9,7 @@ import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
 import ImageComponent from "./ImageComponent";
 import CircularIndeterminate from "./CircularIndeterminate";
 import styles from "./AllOrderDetails.module.css"
+import { useConfig } from "../context/ConfigContext";
 const AllOrderDetails = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
@@ -23,6 +24,7 @@ const AllOrderDetails = () => {
   const [maxLength, setMaxLength] = useState(10); // Inicialize com um valor padrão
   const token = Cookies.get('token'); // Obtenha o token do cookie
   const [loading, setLoading] = useState(true);
+  const { apiUrl } = useConfig();
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded((prevExpanded) => ({
@@ -36,7 +38,7 @@ const AllOrderDetails = () => {
 
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/allOrders/${userId}/${id}`,
+        .get(`${apiUrl}/api/allOrders/${userId}/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import SearchIcon from "@mui/icons-material/Search";
 import styles from "./FreteSelect.module.css";
+import { useConfig } from "../context/ConfigContext";
 
 const FreteSelect = () => {
   const [cep, setCep] = useState(localStorage.getItem("cep") || "");
@@ -13,6 +14,7 @@ const FreteSelect = () => {
   const token = Cookies.get("token"); // Obtenha o token do cookie
 
   const userId = Cookies.get("userId");
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     localStorage.setItem("cep", cep);
@@ -22,7 +24,7 @@ const FreteSelect = () => {
     const fetchFrete = async () => {
       try {
         const responseGet = await axios.get(
-          `http://localhost:3001/api/frete/${userId}`,
+          `${apiUrl}/api/frete/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -52,7 +54,7 @@ const FreteSelect = () => {
     try {
       // Faz a solicitação POST para obter os dados do frete com o novo CEP
       await axios.post(
-        `http://localhost:3001/api/frete/${userId}`,
+        `${apiUrl}/api/frete/${userId}`,
         { cep },
         {
           headers: {
@@ -64,7 +66,7 @@ const FreteSelect = () => {
 
       // Atualiza o estado do frete com os dados do frete da requisição GET
       const responseGet = await axios.get(
-        `http://localhost:3001/api/frete/${userId}`,
+        `${apiUrl}/api/frete/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

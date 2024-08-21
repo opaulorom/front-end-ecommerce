@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import Navbar from "./Navbar";
 import Header from "./Header";
 import styles from "./Heart.module.css"; // Importa o módulo CSS
+import { useConfig } from "../context/ConfigContext";
 
 const Heart = () => {
   const [favorites, setFavorites] = useState([]);
@@ -14,11 +15,12 @@ const Heart = () => {
   const { logout, loggedIn } = useAuth();
   const credentials = Cookies.get("role");
   const token = Cookies.get("token");
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/favorites/${userId}`, {
+        .get(`${apiUrl}/api/favorites/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             Credentials: credentials,

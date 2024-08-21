@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 import Heart from "react-heart";
 import {useAuth} from "../context/AuthContext"
+import { useConfig } from "../context/ConfigContext";
 const IconToggle = ({ productId, isFavorite }) => {
   const [active, setActive] = useState(isFavorite ?? false);
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
@@ -9,6 +10,8 @@ const IconToggle = ({ productId, isFavorite }) => {
   const credentials = Cookies.get('role'); // Obtenha as credenciais do cookie
 
   const token = Cookies.get('token'); // Obtenha o token do cookie
+  const { apiUrl } = useConfig();
+
   useEffect(() => {
     setActive(isFavorite);
   }, [isFavorite]);
@@ -23,7 +26,7 @@ const IconToggle = ({ productId, isFavorite }) => {
 
       // Enviar uma requisição POST para adicionar/remover o produto dos favoritos
       const response = await fetch(
-        `http://localhost:3001/api/favorites`,
+        `${apiUrl}/api/favorites`,
         {
           method: "POST",
           headers: {

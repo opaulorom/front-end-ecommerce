@@ -3,16 +3,18 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useConfig } from '../context/ConfigContext';
 const DiscountImageCarousel = ({ alt, imageWidth, imageHeight, autoPlayInterval }) => {
   const [imageUrls, setImageUrls] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchImageUrls = async () => {
       try {
-        const response50 = await axios.get('http://localhost:3001/api/sliderByDiscount/50');
-        const response15 = await axios.get('http://localhost:3001/api/sliderByDiscount/15');
-        const response70 = await axios.get('http://localhost:3001/api/sliderByDiscount/70');
+        const response50 = await axios.get(`${apiUrl}/api/sliderByDiscount/50`);
+        const response15 = await axios.get(`${apiUrl}/api/sliderByDiscount/15`);
+        const response70 = await axios.get(`${apiUrl}/api/sliderByDiscount/70`);
 
         setImageUrls([
           response50.data.sliders[0].image,

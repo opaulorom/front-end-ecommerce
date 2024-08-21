@@ -15,6 +15,7 @@ const LoginForm = () => {
   const navigate = useNavigate(); // Inicialize o hook   const [attemptedLogin, setAttemptedLogin] = useState(false);
   const [attemptedLogin, setAttemptedLogin] = useState(false);
 const [hideMessage, setHideMessage] = useState(false)
+
   const handleLogin = () => {
     setAttemptedLogin(true)
     if (validateForm()) {

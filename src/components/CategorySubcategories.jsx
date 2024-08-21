@@ -14,6 +14,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import ProductList from "./ProductList";
 import NewArrivals from "./NewArrivals";
 import CategorySubcategoriesSkeleton from "./CategorySubcategoriesSkeleton";
+import { useConfig } from "../context/ConfigContext";
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -40,6 +41,7 @@ const CategorySubcategories = () => {
   const [doubleBorder, setDoubleBorder] = useState(null); // Alterar para índice
   const [hideProducts, setHideProducts] = useState(false); // Alterar para índice
   const [priceRange, setPriceRange] = useState([]);
+  const { apiUrl } = useConfig();
 
   const handleSelectBorder = (index) => {
     setDoubleBorder(index);
@@ -175,7 +177,7 @@ const CategorySubcategories = () => {
         .join("&");
 
       const response = await fetch(
-        `http://localhost:3001/api/categories/${category}/mixedProducts?page=${page}&${queryString}`
+        `${apiUrl}/api/categories/${category}/mixedProducts?page=${page}&${queryString}`
       );
       const data = await response.json();
       setMixedProducts(data.mixedProducts);
@@ -195,7 +197,7 @@ const CategorySubcategories = () => {
         // await new Promise(resolve => setTimeout(resolve, 20000));
 
         const response = await fetch(
-          `http://localhost:3001/api/categories/${category}/${selectedSubcategory}`
+          `${apiUrl}/api/categories/${category}/${selectedSubcategory}`
         );
         const data = await response.json();
         setSubcategoriesData(data.subcategoryProducts);
@@ -221,7 +223,7 @@ const CategorySubcategories = () => {
           const { minPrice, maxPrice } = selectedPrice;
 
           const response = await fetch(
-            `http://localhost:3001/api/category/${category}/priceRange?minPrice=${minPrice}&maxPrice=${maxPrice}`
+            `${apiUrl}/api/category/${category}/priceRange?minPrice=${minPrice}&maxPrice=${maxPrice}`
           );
           const data = await response.json();
           setPriceRange(data.products || []);
@@ -245,7 +247,7 @@ const CategorySubcategories = () => {
         // await new Promise(resolve => setTimeout(resolve, 20000));
 
         const response = await fetch(
-          `http://localhost:3001/api/subcategories/${category}`
+          `${apiUrl}/api/subcategories/${category}`
         );
         const data = await response.json();
         setSubcategories(data);
@@ -261,13 +263,13 @@ const CategorySubcategories = () => {
         // await new Promise((resolve) => setTimeout(resolve, 10000));
 
         const colorsResponse = await fetch(
-          `http://localhost:3001/api/categories/${category}/colors`
+          `${apiUrl}/api/categories/${category}/colors`
         );
         const sizesResponse = await fetch(
-          `http://localhost:3001/api/categories/${category}/sizes`
+          `${apiUrl}/api/categories/${category}/sizes`
         );
         const priceResponse = await fetch(
-          `http://localhost:3001/api/categories/${category}/priceRanges`
+          `${apiUrl}/api/categories/${category}/priceRanges`
         );
 
         const colorsData = await colorsResponse.json();
@@ -300,7 +302,7 @@ const CategorySubcategories = () => {
 
         // Alteração na chamada de API para obter produtos misturados específicos
         const response = await fetch(
-          `http://localhost:3001/api/categories/${category}/mixedProducts`
+          `${apiUrl}/api/categories/${category}/mixedProducts`
         );
         setLoading(false); // Define o estado de carregamento como true antes de fazer a chamada à API
 

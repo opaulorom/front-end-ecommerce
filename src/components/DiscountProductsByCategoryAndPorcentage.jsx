@@ -7,12 +7,13 @@ import Header from "./Header";
 const DiscountProductsByCategoryAndPorcentage = () => {
   const [products, setProducts] = useState(null);
   const { discount, category } = useParams();
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/products/discount/${discount}/category/${category}`
+          `${apiUrl}/api/products/discount/${discount}/category/${category}`
         );
         setProducts(response.data.productsWithDiscountAndCategory);
       } catch (error) {

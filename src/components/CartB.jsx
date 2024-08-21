@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthContext";
 import styles from "./CartB.module.css";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { useConfig } from "../context/ConfigContext";
 
 const CartB = () => {
   const [getCart, setGetCart] = useState([]);
@@ -20,11 +21,12 @@ const CartB = () => {
   const [exceedAvailability, setExceedAvailability] = useState(1);
   const [changeStockStatus, setChangeStockStatus] = useState(false);
   const [stockStatus, setStockStatus] = useState({});
+  const { apiUrl } = useConfig();
 
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/cart/${userId}`, {
+      .get(`${apiUrl}/api/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -213,7 +215,7 @@ const CartB = () => {
                             try {
                               // Atualiza a quantidade do produto no backend
                               const response = await axios.put(
-                                `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+                                `${apiUrl}/api/update-quantity/${userId}/${productId}/${color}/${size}`,
                                 { quantity: newQuantity },
                                 {
                                   headers: {
@@ -262,7 +264,7 @@ const CartB = () => {
 
                               // Obtém o estado atualizado do carrinho
                               const resTotal = await axios.get(
-                                `http://localhost:3001/api/cart/${userId}`,
+                                `${apiUrl}/api/cart/${userId}`,
                                 {
                                   headers: {
                                     Authorization: `Bearer ${token}`,
@@ -310,7 +312,7 @@ const CartB = () => {
 
                             // Atualiza a quantidade do produto no backend
                             const response = await axios.put(
-                              `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+                              `${apiUrl}/api/update-quantity/${userId}/${productId}/${color}/${size}`,
                               { quantity: newQuantity },
                               {
                                 headers: {
@@ -359,7 +361,7 @@ const CartB = () => {
 
                             // Obtém o estado atualizado do carrinho
                             const resTotal = await axios.get(
-                              `http://localhost:3001/api/cart/${userId}`,
+                              `${apiUrl}/api/cart/${userId}`,
                               {
                                 headers: {
                                   Authorization: `Bearer ${token}`,

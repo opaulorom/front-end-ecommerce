@@ -6,6 +6,7 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import CategoryCarouselSkeleton from './CategoryCarouselSkeleton';
 import SkeletonCategories from './SkeletonCategories';
 import styles from "./ImageGallery.module.css"
+import { useConfig } from '../context/ConfigContext';
 const ImageGallery = () => {
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -13,12 +14,13 @@ const ImageGallery = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // await new Promise((resolve) => setTimeout(resolve, 1000));
-        const response = await axios.get('http://localhost:3001/api/categories');
+        const response = await axios.get(`${apiUrl}/api/categories`);
         console.log('Categories Response:', response.data);
 
         if (response.data.categories && Array.isArray(response.data.categories)) {

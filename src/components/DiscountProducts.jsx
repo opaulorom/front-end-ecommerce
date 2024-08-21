@@ -5,11 +5,12 @@ import { useParams } from 'react-router-dom';
 const DiscountProducts = () => {
   const [products, setProducts] = useState(null);
   const { discount } = useParams();
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/productsByDiscountPercentage/${discount}`,
+        const response = await axios.get(`${apiUrl}/api/productsByDiscountPercentage/${discount}`,
         );
         setProducts(response.data.productsWithDiscount);
       } catch (error) {

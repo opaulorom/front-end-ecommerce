@@ -8,6 +8,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import styles from './Register.module.css';
+import { useConfig } from '../context/ConfigContext';
 
 function RegisterUser() {
   const [email, setEmail] = useState('');
@@ -21,6 +22,7 @@ function RegisterUser() {
   const [containsCapitalLetter, setContainsCapitalLetter] = useState(false);
   const [containsLowerCase, setContainsLowerCase] = useState(false);
   const [isAddButtonDisabled, setIsAddButtonDisabled] = useState(true);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     // O token agora está disponível aqui, você pode usá-lo como desejar
@@ -59,7 +61,7 @@ function RegisterUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:3001/register/${token}`, { email, password, role });
+      const response = await axios.post(`${apiUrl}/register/${token}`, { email, password, role });
       setMessage(response.data.message);
     } catch (error) {
       setError(error.response.data.error);

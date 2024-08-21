@@ -18,6 +18,7 @@ import { useAuth } from "../context/AuthContext";
 import { CircularProgress } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
+import { useConfig } from "../context/ConfigContext";
 
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
@@ -44,9 +45,8 @@ const Cart = () => {
   const modalRef = useRef(null);
   const [totalQuantity, setTotalQuantity] = useState([]);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-
+  const { apiUrl } = useConfig();
   const [isRadioButtonEnabled, setIsRadioButtonEnabled] = useState(false);
-
   useEffect(() => {
     // Atualiza o estado do botão baseado nas condições
     if (selectedFreteIndex !== null || getTotal.totalAmount >= 300) {
@@ -96,7 +96,7 @@ const Cart = () => {
     setLoading(true); // Define o estado de carregamento como falso
 
     axios
-      .get(`http://localhost:3001/api/cart/${userId}`, {
+      .get(`${apiUrl}/api/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -122,7 +122,7 @@ const Cart = () => {
     (uniqueId) => {
       axios
         .delete(
-          `http://localhost:3001/api/remove-from-cart/${userId}/${uniqueId}`,
+          `${apiUrl}/api/remove-from-cart/${userId}/${uniqueId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -154,7 +154,7 @@ const Cart = () => {
     const fetchFrete = async () => {
       try {
         const responseGet = await axios.get(
-          `http://localhost:3001/api/frete/${userId}`,
+          `${apiUrl}/api/frete/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -182,7 +182,7 @@ const Cart = () => {
     try {
       const freteId = frete[index]._id;
       await axios.put(
-        `http://localhost:3001/api/cart/${userId}/shippingFee/${freteId}`,
+        `${apiUrl}/api/cart/${userId}/shippingFee/${freteId}`,
         {
           // Remova as linhas de cabeçalho daqui
         },
@@ -197,7 +197,7 @@ const Cart = () => {
       localStorage.setItem("selectedFreteIndex", index);
       // After updating the shipping fee, fetch the updated cart data
       const cartResponse = await axios.get(
-        `http://localhost:3001/api/cart/${userId}`,
+        `${apiUrl}/api/cart/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -233,7 +233,7 @@ const Cart = () => {
     try {
       // Faz a solicitação POST para obter os dados do frete com o novo CEP
       await axios.post(
-        `http://localhost:3001/api/frete/${userId}`,
+        `${apiUrl}/api/frete/${userId}`,
         { cep },
         {
           headers: {
@@ -245,7 +245,7 @@ const Cart = () => {
 
       // Atualiza o estado do frete com os dados do frete da requisição GET
       const responseGet = await axios.get(
-        `http://localhost:3001/api/frete/${userId}`,
+        `${apiUrl}/api/frete/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -578,7 +578,7 @@ const Cart = () => {
 
                                   axios
                                     .put(
-                                      `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+                                      `${apiUrl}/api/update-quantity/${userId}/${productId}/${color}/${size}`,
                                       { quantity: newQuantity },
                                       {
                                         headers: {
@@ -594,7 +594,7 @@ const Cart = () => {
                                       });
                                       axios
                                         .get(
-                                          `http://localhost:3001/api/cart/${userId}`,
+                                          `${apiUrl}/api/cart/${userId}`,
                                           {
                                             headers: {
                                               Authorization: `Bearer ${token}`,
@@ -660,7 +660,7 @@ const Cart = () => {
 
                                 axios
                                   .put(
-                                    `http://localhost:3001/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+                                    `${apiUrl}/api/update-quantity/${userId}/${productId}/${color}/${size}`,
                                     { quantity: newQuantity },
                                     {
                                       headers: {
@@ -744,7 +744,7 @@ const Cart = () => {
 
                                     axios
                                       .get(
-                                        `http://localhost:3001/api/cart/${userId}`,
+                                        `${apiUrl}/api/cart/${userId}`,
                                         {
                                           headers: {
                                             Authorization: `Bearer ${token}`,

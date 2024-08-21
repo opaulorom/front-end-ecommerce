@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useConfig } from '../context/ConfigContext';
 
 const CategoryImages = () => {
   const { categoryId } = useParams();
   const [images, setImages] = useState([]);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch(`https://localhost:3001/api/category/${categoryId}/images`);
+        const response = await fetch(`${apiUrl}/api/category/${categoryId}/images`);
         const data = await response.json();
 
         if (response.ok) {

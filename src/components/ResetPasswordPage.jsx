@@ -5,13 +5,14 @@ import Header from './Header';
 import style from "./ResetPasswordPage.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useConfig } from '../context/ConfigContext';
 const ResetPasswordPage = () => {
   const { token } = useParams(); // Extrai o token da URL
 
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-
+  const { apiUrl } = useConfig();
   useEffect(() => {
     // Verifica se o token está presente na URL
     if (!token) {
@@ -28,7 +29,7 @@ const ResetPasswordPage = () => {
       }
 
       // Enviar a solicitação para redefinir a senha
-      const response = await axios.post('http://localhost:3001/reset-password/:token', {
+      const response = await axios.post(`${apiUrl}/reset-password/:token`, {
         token,
         newPassword,
         confirmPassword,

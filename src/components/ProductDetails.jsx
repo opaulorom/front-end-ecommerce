@@ -22,6 +22,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
 import FreteSelect from "./FreteSelect";
+import { useConfig } from "../context/ConfigContext";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState({ variations: [] });
@@ -47,6 +48,8 @@ const ProductDetails = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const [changeUrlLink, setChangeUrlLink] = useState(0);
+  const { apiUrl } = useConfig();
+
   const hendleButtonDisabled = () => {
     setIsButtonDisabled(true);
   };
@@ -89,7 +92,7 @@ const ProductDetails = () => {
     const userId = Cookies.get("userId");
 
     axios
-      .get(`http://localhost:3001/api/custumer/${userId}`, {
+      .get(`${apiUrl}/api/custumer/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -112,7 +115,7 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/product/${productId}`,
+          `${apiUrl}/api/product/${productId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -262,7 +265,7 @@ const ProductDetails = () => {
         // Se o produto não existir no carrinho, adiciona um novo produto
         console.log("Adicionando novo produto ao carrinho.");
         const response = await axios.post(
-          `http://localhost:3001/api/add-to-cart/${userId}`,
+          `${apiUrl}/api/add-to-cart/${userId}`,
           {
             productId: product._id,
             size: selectedSizeId,

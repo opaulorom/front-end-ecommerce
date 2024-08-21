@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useConfig } from '../context/ConfigContext';
 
 const PaginatedProducts = ({ category }) => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/categories/${category}/mixedProducts`, {
+        const response = await axios.get(`${apiUrl}/api/categories/${category}/mixedProducts`, {
           params: { page }
         });
         setProducts(response.data.mixedProducts);

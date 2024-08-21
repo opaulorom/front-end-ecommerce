@@ -2,14 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styles from "./CategoryProducts.module.css"
+import { useConfig } from '../context/ConfigContext';
 const CategoryProducts = () => {
   const { category, subcategory } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { apiUrl } = useConfig();
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`https://localhost:3001/api/subcategoriesAndProductsByName/${category}/${subcategory}`);
+        const response = await fetch(`${apiUrl}/api/subcategoriesAndProductsByName/${category}/${subcategory}`);
         const data = await response.json();
         setProducts(data);
         setLoading(false);

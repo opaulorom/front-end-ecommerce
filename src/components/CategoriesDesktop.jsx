@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom';
 import ImageGalleryDesktop from './ImageGalleryDesktop';
 import styles from "./CategoriesMobile.module.css"
 import Navbar from './Navbar';
+import { useConfig } from '../context/ConfigContext';
 
 const CategoriesDesktop = () => {
   const [categories, setCategories] = useState([]);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/allCategories');
+        const response = await fetch(`${apiUrl}/api/allCategories`);
         const data = await response.json();
 
         setCategories(prevCategories => {

@@ -8,6 +8,7 @@ import { CircularProgress } from "@mui/material";
 import styles from "./Pay.module.css";
 import { useCart } from "../context/CartContext";
 import Header from "./Header";
+import { useConfig } from "../context/ConfigContext";
 
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState("pix");
@@ -32,7 +33,7 @@ const Pay = () => {
 
   const { clearCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
   const { quantity, shippingFee, totalPrice } = useParams();
-
+  const { apiUrl } = useConfig();
   const handleChangeContentClick = () => {
     setShowContent(false);
   };
@@ -68,7 +69,7 @@ const Pay = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/api/pixQRcodeStatico/${userId}`,
+        `${apiUrl}1/api/pixQRcodeStatico/${userId}`,
         {
           method: "POST",
           headers: {
@@ -101,7 +102,7 @@ const Pay = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/api/boleto/${userId}`,
+        `${apiUrl}/api/boleto/${userId}`,
         {
           method: "POST",
           headers: {
@@ -162,7 +163,7 @@ const Pay = () => {
       };
 
       const response = await axios.post(
-        `http://localhost:3001/api/creditCardWithoutTokenization/${userId}`,
+        `${apiUrl}/api/creditCardWithoutTokenization/${userId}`,
         updatedFormData, // Aqui está o corpo da requisição
         {
           headers: {
@@ -190,7 +191,7 @@ const Pay = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/cart/${userId}`, {
+      .get(`${apiUrl}/api/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

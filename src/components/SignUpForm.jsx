@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import styles from "./SignUpForm.module.css"
+import { useConfig } from "../context/ConfigContext";
 
 
 
@@ -38,6 +39,8 @@ const SignUpForm = () => {
     city: "",
     state: "",
   });
+
+  const { apiUrl } = useConfig();
   useEffect(() => {
     // Verifica se todos os campos obrigatórios estão preenchidos
     const requiredFields = [
@@ -137,7 +140,7 @@ const SignUpForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/signup",
+         `${apiUrl}/api/signup`,
         formData
       );
       console.log("Dados enviados com sucesso:", response.data);

@@ -3,17 +3,19 @@ import { Link } from 'react-router-dom';
 import styles from "./CategoriesList.module.css"
 import CategoriesDesktop from './CategoriesDesktop';
 import ClearIcon from '@mui/icons-material/Clear';
+import { useConfig } from '../context/ConfigContext';
 
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [categoriesHovered, setCategoriesHovered] = useState(false);
   const modalRef = useRef(null);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/allCategories');
+        const response = await fetch(`${apiUrl}/api/allCategories`);
         const data = await response.json();
   
         setCategories(prevCategories => {

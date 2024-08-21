@@ -8,6 +8,7 @@ import IconToggle from "./IconToggle";
 import styles from "./SearchResults.module.css"
 import colorMap from "./colorMap";
 import Navbar from "./Navbar";
+import { useConfig } from "../context/ConfigContext";
 const SearchResults = () => {
   const { query } = useParams();
   const [searchResults, setSearchResults] = useState([]);
@@ -38,6 +39,7 @@ const SearchResults = () => {
   const [availableSizes, setAvailableSizes] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState(originalProducts);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
@@ -150,7 +152,7 @@ const SearchResults = () => {
         .join("&");
 
       const response = await fetch(
-        `http://localhost:3001/api/categories/${showCategory}/mixedProducts?page=${page}&${queryString}`
+        `${apiUrl}/api/categories/${showCategory}/mixedProducts?page=${page}&${queryString}`
       );
       const data = await response.json();
       setMixedProducts(data.mixedProducts);
@@ -167,7 +169,7 @@ const SearchResults = () => {
     const fetchSubcategories = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/subcategories/${showCategory}`
+          `${apiUrl}/api/subcategories/${showCategory}`
         );
         const data = await response.json();
         setSubcategories(data);
@@ -182,13 +184,13 @@ const SearchResults = () => {
 
       try {
         const colorsResponse = await fetch(
-          `http://localhost:3001/api/categories/${showCategory}/colors`
+          `${apiUrl}/api/categories/${showCategory}/colors`
         );
         const sizesResponse = await fetch(
-          `http://localhost:3001/api/categories/${showCategory}/sizes`
+          `${apiUrl}/api/categories/${showCategory}/sizes`
         );
         const priceResponse = await fetch(
-          `http://localhost:3001/api/categories/${showCategory}/priceRanges`
+          `${apiUrl}/api/categories/${showCategory}/priceRanges`
         );
         const colorsData = await colorsResponse.json();
         const sizesData = await sizesResponse.json();
@@ -216,7 +218,7 @@ const SearchResults = () => {
 
         // Alteração na chamada de API para obter produtos misturados específicos
         const response = await fetch(
-          `http://localhost:3001/api/categories/${showCategory}/mixedProducts`
+          `${apiUrl}/api/categories/${showCategory}/mixedProducts`
         );
         const data = await response.json();
         setOriginalProducts(data.mixedProducts);
@@ -314,7 +316,7 @@ const SearchResults = () => {
     const fetchSearchResults = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/search/product?searchQuery=${query}&page=${currentPage}&color=${selectedFilters.color}&size=${selectedFilters.size}&priceRange=${selectedFilters.priceRange}`
+          `${apiUrl}/api/search/product?searchQuery=${query}&page=${currentPage}&color=${selectedFilters.color}&size=${selectedFilters.size}&priceRange=${selectedFilters.priceRange}`
         );
         const data = await response.json();
         console.log("category from server:", data.products[0].category);

@@ -8,6 +8,7 @@ import axios from "axios";
 import CircularIndeterminate from "./CircularIndeterminate";
 import { Pagination, Stack } from "@mui/material";
 import styles from "./MyOrders.module.css";
+import { useConfig } from "../context/ConfigContext";
 const MyOrders = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
@@ -22,6 +23,7 @@ const MyOrders = () => {
   const token = Cookies.get('token');
   const [expanded, setExpanded] = useState({});
   const [loading, setLoading] = useState(true);
+  const { apiUrl } = useConfig();
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded((prevExpanded) => ({
@@ -33,7 +35,7 @@ const MyOrders = () => {
   useEffect(() => {
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/allOrders/${userId}`, {
+        .get(`${apiUrl}/api/allOrders/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             Credentials: credentials,

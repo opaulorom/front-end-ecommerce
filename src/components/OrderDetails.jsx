@@ -14,11 +14,12 @@ const OrderDetails = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
   const [boleto, setBoleto] = useState(""); // Usando useState para um único boleto
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/boleto/${id}/${userId}`)
+        .get(`${apiUrl}/api/boleto/${id}/${userId}`)
         .then((response) => {
           console.log("Resposta da API:", response); // Verificar a resposta completa da API
           console.log("Dados recebidos:", response.data); // Verificar os dados recebidos no console

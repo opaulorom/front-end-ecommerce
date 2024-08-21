@@ -5,16 +5,18 @@ import Header from "./Header";
 import styles from "./RegisterLink.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useConfig } from "../context/ConfigContext";
 const RegisterLink = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { apiUrl } = useConfig();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const newUser = { email, password, role: "customer" };
-      await axios.post("http://localhost:3001/register/request", newUser);
+      await axios.post(`${apiUrl}/register/request`, newUser);
       // Limpar o formulário após o envio bem-sucedido
       setEmail("");
       setPassword("");

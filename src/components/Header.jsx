@@ -14,6 +14,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 import AlertComponente from "./AlertComponente";
 import { useUnreadCount } from "../context/UnreadContext";
+import { useConfig } from "../context/ConfigContext";
 const Header = () => {
   const { cartItemCount, addToCart, removeFromCart } = useCart();
   const [localCartItemCount, setLocalCartItemCount] = useState(0);
@@ -25,6 +26,8 @@ const Header = () => {
   const modalRef = useRef(null);
   const [openCartModal, setOpenCartModal] = useState(false);
   const [openBellModal, setOpenBellModal] = useState(false);
+  const { apiUrl } = useConfig();
+
   const { unreadCount } = useUnreadCount(); // Obter o estado do contexto
   const [showInput, setShowInput] = useState(false);
   useEffect(() => {
@@ -37,7 +40,7 @@ const Header = () => {
   useEffect(() => {
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/cart/${userId}`, {
+        .get(`${apiUrl}/api/cart/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

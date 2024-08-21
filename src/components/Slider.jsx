@@ -5,6 +5,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Link, useNavigate } from "react-router-dom";
 import SliderSkeleton from "./SliderSkeleton";
 import "./Slider.css";
+import { useConfig } from "../context/ConfigContext";
 
 const Slider = ({
   alt,
@@ -17,13 +18,14 @@ const Slider = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // await new Promise((resolve) => setTimeout(resolve, 10000));
         const response = await axios.get(
-          "http://localhost:3001/api/categories"
+          `${apiUrl}/api/categories`
         );
         console.log("Categories Response:", response.data);
 

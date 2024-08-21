@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useConfig } from '../context/ConfigContext';
 
 const DiscountedProductsPage = () => {
   const [discountedProducts, setDiscountedProducts] = useState([]);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchDiscountedProducts = async () => {
       try {
         const response = await axios.get(
-          'http://localhost:3001/api/discountedProductsBySubcategory?subcategoryName=Vestidos'
+         `${apiUrl}/api/discountedProductsBySubcategory?subcategoryName=Vestidos`
         );
         setDiscountedProducts(response.data); // Adjust according to your data structure
       } catch (error) {

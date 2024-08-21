@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from "./CategoryCarousel.module.css"
 import CategoryCarouselSkeleton from './CategoryCarouselSkeleton';
 import MobileSkeletonCategories from './MobileSkeletonCategories';
+import { useConfig } from '../context/ConfigContext';
 const CategoryCarousel = () => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
@@ -12,13 +13,14 @@ const CategoryCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         await new Promise(resolve => setTimeout(resolve, 20000));
 
-        const response = await axios.get('http://localhost:3001/api/categories');
+        const response = await axios.get(`${apiUrl}/api/categories`);
         console.log('Categories Response:', response.data);
 
         if (response.data.categories && Array.isArray(response.data.categories)) {
@@ -70,7 +72,7 @@ const CategoryCarousel = () => {
 
     try {
 
-      const response = await axios.get(`http://localhost:3001/api/subcategories/${categoryName}`);
+      const response = await axios.get(`${apiUrl}/api/subcategories/${categoryName}`);
       const subcategories = response.data;
 
       console.log('Fetched subcategories:', subcategories);

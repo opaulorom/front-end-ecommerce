@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import Navbar from './Navbar';
 import { useAuth } from '../context/AuthContext';
 import styles from "./UpdateForm.module.css"
+import { useConfig } from '../context/ConfigContext';
 const UpdateForm = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const token = Cookies.get('token'); // Obtenha o token do cookie
@@ -23,6 +24,7 @@ const UpdateForm = () => {
     state: ''
   });
   console.log('formData:', formData);
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
 
@@ -32,7 +34,7 @@ const UpdateForm = () => {
         const token = Cookies.get('token'); // Obtenha o token do cookie
 
 
-        const response = await axios.get(`http://localhost:3001/api/custumer/${userId}`, {
+        const response = await axios.get(`${apiUrl}/api/custumer/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
 

@@ -5,6 +5,7 @@ import axios from "axios"; // Corrigindo a importação do Axios
 import styles from "./AlertComponente.module.css";
 import { useUnreadCount } from "../context/UnreadContext";
 import { Link } from "react-router-dom";
+import { useConfig } from "../context/ConfigContext";
 const AlertComponente = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
@@ -18,6 +19,7 @@ const AlertComponente = () => {
   const token = Cookies.get("token"); // Obtenha o token do cookie
   const [expanded, setExpanded] = useState({});
   const [loading, setLoading] = useState(true);
+  const { apiUrl } = useConfig();
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded((prevExpanded) => ({
@@ -28,7 +30,7 @@ const AlertComponente = () => {
   useEffect(() => {
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/orders/${userId}`)
+        .get(`${apiUrl}/api/orders/${userId}`)
         .then((response) => {
           setOrders(response.data);
           console.log(response.data);
@@ -47,7 +49,7 @@ const AlertComponente = () => {
   useEffect(() => {
     if (loggedIn) {
       axios
-        .get(`http://localhost:3001/api/allOrders/${userId}`, {
+        .get(`${apiUrl}/api/allOrders/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
      
