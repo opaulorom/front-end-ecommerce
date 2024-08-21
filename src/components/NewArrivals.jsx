@@ -10,6 +10,7 @@ import IconToggle from "./IconToggle";
 import "./NewArrivals.css";
 import NewArrivalsSkeleton from "./NewArrivalsSkeleton";
 import zIndex from "@mui/material/styles/zIndex";
+import { useConfig } from "../context/ConfigContext";
 
 const NewArrivals = ({ onNewArrivalsUpdate }) => {
   const [newArrivals, setNewArrivals] = useState([]);
@@ -19,13 +20,14 @@ const NewArrivals = ({ onNewArrivalsUpdate }) => {
   const [loading, setLoading] = useState(true);
 
   const [hoveredIndex, setHoveredIndex] = useState(-1); // -1 indica que nenhuma imagem está sendo hoverada
+  const { apiUrl } = useConfig();
 
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
         // await new Promise((resolve) => setTimeout(resolve, 10000));
         const response = await fetch(
-          `http://localhost:3001/api/products/new-arrivals?page=${currentPage}`
+          `${apiUrl}/api/products/new-arrivals?page=${currentPage}`
         );
         const data = await response.json();
         console.log("Data from server:", data);
