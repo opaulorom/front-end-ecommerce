@@ -820,6 +820,7 @@ const ProductDetails = () => {
                         <button
                           onClick={handleClickOpenModal}
                           className={styles.buttons}
+                          style={buttonStyleB}
                         >
                           COMPRAR
                         </button>
