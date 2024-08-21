@@ -806,6 +806,13 @@ const ProductDetails = () => {
                           )
                         )}
                     </div>
+                    <div className={styles.descriptionContainer}>
+                      <h1 className={styles.h1}>Descrição</h1>
+                      <span className={styles.description}>
+                        {" "}
+                        {product.description}
+                      </span>
+                    </div>
                     <div className={styles.buttonsContainer}>
                       {!showCartButton && (
                         <button
@@ -829,13 +836,7 @@ const ProductDetails = () => {
                       <FreteSelect />
                     </div>
 
-                    <div className={styles.descriptionContainer}>
-                      <h1 className={styles.h1}>Descrição</h1>
-                      <span className={styles.description}>
-                        {" "}
-                        {product.description}
-                      </span>
-                    </div>
+                    
                   </div>
                 </div>
               </div>

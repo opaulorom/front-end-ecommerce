@@ -792,7 +792,7 @@ const ProductDetails = () => {
 >
                 COMPRAR
               </button>
-            )}
+            )}D
                     <div className={styles.descriptionContainer}>
                       <h1 className={styles.h1}>Descrição
                       </h1>
