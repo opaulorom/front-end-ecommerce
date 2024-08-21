@@ -54,16 +54,11 @@ const [hideMessage, setHideMessage] = useState(false)
           <h1 className="Login">Login</h1>
        
           {attemptedLogin && remainingAttempts !== null && (
-            remainingAttempts > 0 ? (
+        
               <div>
                 Tentativas restantes: <span style={{ color: "blue" }}>{remainingAttempts}</span>
               </div>
-            ) : (
-              
-              attemptedLogin && remainingAttempts &&  email.trim() && password.trim() ?
-              <span style={{ color: "red" }}>Usuário bloqueado, tente mais tarde.</span>
-              : null            )
-          )}
+            )}
           <div className='loginStyle__inputLabel'>
 
             <label className="email" htmlFor="email">Email</label>
