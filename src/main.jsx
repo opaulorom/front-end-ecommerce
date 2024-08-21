@@ -113,8 +113,11 @@ const Root = () => (
 );
 
 createRoot(document.getElementById("root")).render(
+  <ConfigProvider>
+
   <AuthProvider>
-    
+       
+
     <UnreadProvider>
     <CartProvider>
       
@@ -135,4 +138,6 @@ createRoot(document.getElementById("root")).render(
     </UnreadProvider>
 
   </AuthProvider>
+          
+  </ConfigProvider>
 );

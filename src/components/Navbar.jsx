@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { useConfig } from "../context/ConfigContext";
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState(null);
 
@@ -15,6 +16,7 @@ const Navbar = () => {
     return index === activeLink ? "active" : "";
   };
 
+  const { apiUrl } = useConfig();
 
   return (
     <div className="hide">
