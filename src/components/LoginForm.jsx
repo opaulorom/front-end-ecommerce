@@ -60,7 +60,7 @@ const [hideMessage, setHideMessage] = useState(false)
               </div>
             ) : (
               
-              email.trim() && password.trim() ?
+              attemptedLogin && remainingAttempts &&  email.trim() && password.trim() ?
               <span style={{ color: "red" }}>Usuário bloqueado, tente mais tarde.</span>
               : null            )
           )}
