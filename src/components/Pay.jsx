@@ -69,7 +69,7 @@ const Pay = () => {
 
     try {
       const response = await fetch(
-        `${apiUrl}1/api/pixQRcodeStatico/${userId}`,
+        `${apiUrl}/api/pixQRcodeStatico/${userId}`,
         {
           method: "POST",
           headers: {
