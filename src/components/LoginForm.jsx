@@ -56,7 +56,7 @@ const [hideMessage, setHideMessage] = useState(false)
           {attemptedLogin && remainingAttempts !== null && (
         
               <div>
-                Tentativas restantes: <span style={{ color: "blue" }}>{remainingAttempts} </span> epois disso você será bloqueado por 30 minutos.
+                Tentativas restantes: <span style={{ color: "blue" }}>{remainingAttempts} </span> Depois disso você será bloqueado por 30 minutos.
               </div>
             )}
           <div className='loginStyle__inputLabel'>
