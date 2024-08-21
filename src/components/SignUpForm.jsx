@@ -267,7 +267,7 @@ const SignUpForm = () => {
               value={formData.cpfCnpj}
               style={inputStyle}
               className={styles.input}
-              placeholder="123.456.789-09"
+              placeholder="999.999.999-99"
             />
           </div>
 
@@ -303,7 +303,7 @@ const SignUpForm = () => {
               value={formData.mobilePhone}
               style={inputStyle}
               className={styles.input}
-              placeholder="77 88888-8888"
+              placeholder="88 88888-8888"
 
             />
           </div>
