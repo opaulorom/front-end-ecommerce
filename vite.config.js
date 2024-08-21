@@ -7,4 +7,6 @@ export default defineConfig({
   server: {
     port: 5001, // Altere para a porta desejada
   },
+  base: '/', // Certifique-se de que está configurado corretamente para o ambiente de produção
+
 })
