@@ -9,6 +9,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import styles from './Register.module.css';
 import { useConfig } from '../context/ConfigContext';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function RegisterUser() {
   const [email, setEmail] = useState('');
@@ -63,6 +65,8 @@ function RegisterUser() {
     try {
       const response = await axios.post(`${apiUrl}/register/${token}`, { email, password, role });
       setMessage(response.data.message);
+      toast.success("Usuário registrado com sucesso.");
+
     } catch (error) {
       setError(error.response.data.error);
     }
@@ -72,6 +76,19 @@ function RegisterUser() {
     <>
       <Header />
       <Navbar />
+      <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          style={{ marginTop: "8rem" }}
+        />
       <div className={styles.container}>
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           <h2 className={styles.h2}>Cadastro</h2>
