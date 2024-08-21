@@ -45,6 +45,7 @@ import { UnreadProvider } from "./context/UnreadContext";
 import AllOrderDetails from "./components/AllOrderDetails";
 import SuccessPage from "./components/SuccessPage";
 import MobileProfile from "./components/MobileProfile";
+import { ConfigProvider } from './context/ConfigContext';
 
 const Root = () => (
   <Routes>
