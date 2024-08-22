@@ -33,6 +33,8 @@ const Pay = () => {
 
   const { clearCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
   const { quantity, shippingFee, totalPrice } = useParams();
+
+  
   const { apiUrl } = useConfig();
   const handleChangeContentClick = () => {
     setShowContent(false);

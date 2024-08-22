@@ -105,6 +105,7 @@ const ProductDetails = () => {
         } else {
           setShowCartButton(false);
         }
+        console.log("cus",response.data)
       })
       .catch((error) => {
         console.log(error);

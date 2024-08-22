@@ -144,12 +144,7 @@ const SignUpForm = () => {
         formData
       );
       console.log("Dados enviados com sucesso:", response.data);
-
-      if (response.data) {
-
-        navigate("/home");
-      }
-
+      
       // Você pode redirecionar o usuário ou realizar outras ações após o envio bem-sucedido
     } catch (error) {
       console.error("Erro ao enviar informações do usuário:", error);
