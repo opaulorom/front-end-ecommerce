@@ -432,8 +432,9 @@ const Cart = () => {
               {frete && (
                 <div>
                   {frete.map((item, index) => (
-                    <div key={index}>
-                      <div className={styles.freteContainer}>
+                    <div key={index} >
+                      <div className={styles.freteContainer}                           onClick={() => handleRadioClick(index)} 
+                      >
                         <input
                           type="radio"
                           name="selectedFrete"
@@ -450,8 +451,8 @@ const Cart = () => {
                           className={styles.radio}
                         />
 
-                        <div className={styles.interContainer}>
-                          <div className={styles.flex}>
+                        <div className={styles.interContainer}   onClick={() => handleRadioClick(index)} >
+                          <div className={styles.flex} >
                             <img
                               src={item.logo}
                               alt="logo das transportadoras"
@@ -460,6 +461,7 @@ const Cart = () => {
                                   ? styles.Jadlog
                                   : styles.image
                               }
+                              
                             />
 
                             <p className={styles.span}>{item.nomeTransportadora}</p>
