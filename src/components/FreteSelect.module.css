@@ -83,6 +83,13 @@
   .image{
     width: 10vw;
   }
+  .CircularIndeterminate{
+    margin-bottom: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   @media screen and (min-width: 700px) {
     .formContainer__button {
       width: 10vw;

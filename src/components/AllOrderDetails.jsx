@@ -106,7 +106,7 @@ const AllOrderDetails = () => {
             marginTop: "20rem",
           }}
         >
-          <CircularIndeterminate />;
+          <CircularIndeterminate />
         </div>
       ) : (<>
 

@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import SearchIcon from "@mui/icons-material/Search";
 import styles from "./FreteSelect.module.css";
 import { useConfig } from "../context/ConfigContext";
+import CircularIndeterminate from "./CircularIndeterminate";
 
 const FreteSelect = () => {
   const [cep, setCep] = useState(localStorage.getItem("cep") || "");
@@ -11,8 +12,8 @@ const FreteSelect = () => {
   const [selectedFreteIndex, setSelectedFreteIndex] = useState(
     localStorage.getItem("selectedFreteIndex") || null
   );
-  const token = Cookies.get("token"); // Obtenha o token do cookie
-
+  const [isLoading, setIsLoading] = useState(false); // Estado para o loading
+  const token = Cookies.get("token");
   const userId = Cookies.get("userId");
   const { apiUrl } = useConfig();
 
@@ -50,21 +51,20 @@ const FreteSelect = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true); // Inicia o loading
 
     try {
-      // Faz a solicitação POST para obter os dados do frete com o novo CEP
       await axios.post(
         `${apiUrl}/api/frete/${userId}`,
         { cep },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json", // Adicionando content-type
+            "Content-Type": "application/json",
           },
         }
       );
 
-      // Atualiza o estado do frete com os dados do frete da requisição GET
       const responseGet = await axios.get(
         `${apiUrl}/api/frete/${userId}`,
         {
@@ -77,6 +77,8 @@ const FreteSelect = () => {
       setFrete(responseGet.data);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false); // Finaliza o loading
     }
   };
 
@@ -100,40 +102,50 @@ const FreteSelect = () => {
         </button>
       </form>
 
-      {frete && (
-        <div >
-          {frete.map((item, index) => (
-            <div key={index} className={styles.freteItemContainer}>
-              <div className={styles.interContainer}>
-                <img
-                  src={item.logo}
-                  alt="logo das transportadoras"
-            
-                  className={item.nomeTransportadora === 'Jadlog'?  styles.Jadlog : styles.image}
-                />
-                <p className={styles.p}>{item.nomeTransportadora}</p>
-              </div>
-
-              <div className={styles.interContainer}>
-                <span className={styles.p}>Data de entrega</span>
-                <p className={styles.p}>
-                  {item.dataPrevistaEntrega
-                    .split("T")[0]
-                    .split("-")
-                    .reverse()
-                    .join("/")}{" "}
-                  ({item.prazoEntrega} dias)
-                </p>
-              </div>
-
-              <div className={styles.interContainer}>
-                <span className={styles.p}>valor do frete: </span>
-                <p className={styles.price}>R$ {item.valorFrete}</p>
-              </div>
-              <div></div>
-            </div>
-          ))}
+      {isLoading ? ( 
+        <div className={styles.CircularIndeterminate}>
+        <CircularIndeterminate />
+        <p>Carregando...</p> 
         </div>
+      ) : (
+        frete && (
+          <div>
+            {frete.map((item, index) => (
+              <div key={index} className={styles.freteItemContainer}>
+                <div className={styles.interContainer}>
+                  <img
+                    src={item.logo}
+                    alt="logo das transportadoras"
+                    className={
+                      item.nomeTransportadora === "Jadlog"
+                        ? styles.Jadlog
+                        : styles.image
+                    }
+                  />
+                  <p className={styles.p}>{item.nomeTransportadora}</p>
+                </div>
+
+                <div className={styles.interContainer}>
+                  <span className={styles.p}>Data de entrega</span>
+                  <p className={styles.p}>
+                    {item.dataPrevistaEntrega
+                      .split("T")[0]
+                      .split("-")
+                      .reverse()
+                      .join("/")}{" "}
+                    ({item.prazoEntrega} dias)
+                  </p>
+                </div>
+
+                <div className={styles.interContainer}>
+                  <span className={styles.p}>valor do frete: </span>
+                  <p className={styles.price}>R$ {item.valorFrete}</p>
+                </div>
+                <div></div>
+              </div>
+            ))}
+          </div>
+        )
       )}
     </div>
   );
