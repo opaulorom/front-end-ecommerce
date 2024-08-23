@@ -123,14 +123,11 @@ const Cart = () => {
   const handleDelete = useCallback(
     (uniqueId) => {
       axios
-        .delete(
-          `${apiUrl}/api/remove-from-cart/${userId}/${uniqueId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
+        .delete(`${apiUrl}/api/remove-from-cart/${userId}/${uniqueId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           console.log(response.data.message);
           // Atualize o estado do carrinho na sua aplicação, removendo o item correto
@@ -155,14 +152,11 @@ const Cart = () => {
   useEffect(() => {
     const fetchFrete = async () => {
       try {
-        const responseGet = await axios.get(
-          `${apiUrl}/api/frete/${userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const responseGet = await axios.get(`${apiUrl}/api/frete/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setFrete(responseGet.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -198,14 +192,11 @@ const Cart = () => {
       setSelectedFreteIndex(index);
       localStorage.setItem("selectedFreteIndex", index);
       // After updating the shipping fee, fetch the updated cart data
-      const cartResponse = await axios.get(
-        `${apiUrl}/api/cart/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const cartResponse = await axios.get(`${apiUrl}/api/cart/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       // Update the cart products and total in state variables
       setGetCart(cartResponse.data.cart.products);
@@ -247,22 +238,18 @@ const Cart = () => {
       );
 
       // Atualiza o estado do frete com os dados do frete da requisição GET
-      const responseGet = await axios.get(
-        `${apiUrl}/api/frete/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const responseGet = await axios.get(`${apiUrl}/api/frete/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log("log", userId);
       setFrete(responseGet.data);
     } catch (error) {
       console.error("Error fetching data:", error);
-      
     } finally {
-    setIsLoading(false); // Finaliza o loading
-  }
+      setIsLoading(false); // Finaliza o loading
+    }
   };
 
   const getAvailableQuantity = (item) => {
@@ -316,51 +303,70 @@ const Cart = () => {
                       {getTotal.totalAmount && getTotal.totalAmount.toFixed(2)}
                     </span>
                   </div>
-                  <span  className={styles.promo}> {getTotal.totalAmount >= 300 ? 'Para compras acima de 300 reais, o frete é grátis' : <span className={styles.green}>Escolha uma opção de frete para prosseguir.</span>}</span>
-                 
+                  <span className={styles.promo}>
+                    {" "}
+                    {getTotal.totalAmount >= 300 ? (
+                      "Para compras acima de 300 reais, o frete é grátis"
+                    ) : (
+                      <span className={styles.green}>
+                        Escolha uma opção de frete para prosseguir.
+                      </span>
+                    )}
+                  </span>
                 </div>
               </div>
             </>
           )}
 
-{getCart.length > 0 && (
-  <>
-    {selectedFreteIndex === null && getTotal.totalAmount < 300 && (
-      <p
-        style={{
-          position: "absolute",
-          right: "10px",
-          top: "10px",
-          color: "red",
-        }}
-      >
-        Por favor, selecione um frete antes de prosseguir.
-      </p>
-    )}
+          {getCart.length > 0 && (
+            <>
+              {selectedFreteIndex === null && getTotal.totalAmount < 300 && (
+                <p
+                  style={{
+                    position: "absolute",
+                    right: "10px",
+                    top: "10px",
+                    color: "red",
+                  }}
+                >
+                  Por favor, selecione um frete antes de prosseguir.
+                </p>
+              )}
 
-    <Link
-      to={
-        selectedFreteIndex !== null || getTotal.totalAmount >= 300
-          ? `/payment/${totalQuantity}/${shippingFee.toFixed(2) == 0 ? "0" : shippingFee.toFixed(2)}/${getTotal.totalAmount.toFixed(2)}`
-          : "#"
-      }
-      className={styles.LinkContainer}
-    >
-      <button
-        onClick={handleAddShippingFee}
-        style={{
-          pointerEvents: selectedFreteIndex !== null || getTotal.totalAmount >= 300 ? "auto" : "none",
-          opacity: selectedFreteIndex !== null || getTotal.totalAmount >= 300 ? 1 : 0.5,
-        }}
-        disabled={selectedFreteIndex === null && getTotal.totalAmount < 300}
-        className={styles.LinkContainer__button}
-      >
-        Fazer Pedido
-      </button>
-    </Link>
-  </>
-)}
-
+              <Link
+                to={
+                  selectedFreteIndex !== null || getTotal.totalAmount >= 300
+                    ? `/payment/${totalQuantity}/${
+                        shippingFee.toFixed(2) == 0
+                          ? "0"
+                          : shippingFee.toFixed(2)
+                      }/${getTotal.totalAmount.toFixed(2)}`
+                    : "#"
+                }
+                className={styles.LinkContainer}
+              >
+                <button
+                  onClick={handleAddShippingFee}
+                  style={{
+                    pointerEvents:
+                      selectedFreteIndex !== null || getTotal.totalAmount >= 300
+                        ? "auto"
+                        : "none",
+                    opacity:
+                      selectedFreteIndex !== null || getTotal.totalAmount >= 300
+                        ? 1
+                        : 0.5,
+                  }}
+                  disabled={
+                    selectedFreteIndex === null && getTotal.totalAmount < 300
+                  }
+                  className={styles.LinkContainer__button}
+                >
+                  Fazer Pedido
+                </button>
+              </Link>
+            </>
+          )}
 
           {getCart.length === 0 && !loggedIn && (
             <>
@@ -405,7 +411,6 @@ const Cart = () => {
           )}
           {getCart.length > 0 && (
             <div className={styles.shippingFeeContainer}>
-       
               <form
                 style={{ display: "flex", alignItems: "center", gap: "1rem" }}
               >
@@ -426,79 +431,88 @@ const Cart = () => {
                   <SearchIcon /> Buscar{" "}
                 </button>
               </form>
-              {isLoading ? ( 
-        <div className={styles.CircularIndeterminate}>
-        <CircularIndeterminate />
-        <p>Carregando...</p> 
-        </div>
-      ) : (
-        <>
-        {frete && (
-          <div>
-            {frete.map((item, index) => (
-              <div key={index} >
-                <div className={styles.freteContainer}                           onClick={() => handleRadioClick(index)} 
-                >
-                  <input
-                    type="radio"
-                    name="selectedFrete"
-                    value={index}
-                    onClick={() => handleRadioClick(index)}
-                    checked={selectedFreteIndex === index}
-                    style={{
-                      pointerEvents: isRadioButtonEnabled
-                        ? "auto"
-                        : "none",
-                      opacity: isRadioButtonEnabled ? 1 : 0.5,
-                    }}
-                    disabled={!isRadioButtonEnabled}
-                    className={styles.radio}
-                  />
-
-                  <div className={styles.interContainer}   onClick={() => handleRadioClick(index)} >
-                    <div className={styles.flex} >
-                      <img
-                        src={item.logo}
-                        alt="logo das transportadoras"
-                        className={
-                          item.nomeTransportadora === "Jadlog"
-                            ? styles.Jadlog
-                            : styles.image
-                        }
-                        
-                      />
-
-                      <p className={styles.span}>{item.nomeTransportadora}</p>
-                    </div>
-
-                    <div className={styles.flex}>
-                      {" "}
-                      <p className={styles.span}>
-                        {" "}
-                        Entrega Prevista {item.dataPrevistaEntrega &&
-                          item.dataPrevistaEntrega
-                            .split("T")[0]
-                            .split("-")
-                            .reverse()
-                            .join("/")}
-                        ({item.prazoEntrega} dias)
-                      </p>
-                    </div>
-
-                    <div className={styles.flex}>
-                      <p className={styles.span}>valor: <b  className={styles.priceValue}>R$ {item.valorFrete}</b></p>
-                    </div>
-                  </div>
+              {isLoading ? (
+                <div className={styles.CircularIndeterminate}>
+                  <CircularIndeterminate />
+                  <p>Carregando...</p>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-        
-        </>
+              ) : (
+                <>
+                  {frete && (
+                    <div>
+                      {frete.map((item, index) => (
+                        <div key={index}>
+                          <div
+                            className={styles.freteContainer}
+                            onClick={() => handleRadioClick(index)}
+                          >
+                            <input
+                              type="radio"
+                              name="selectedFrete"
+                              value={index}
+                              onClick={() => handleRadioClick(index)}
+                              checked={selectedFreteIndex === index}
+                              style={{
+                                pointerEvents: isRadioButtonEnabled
+                                  ? "auto"
+                                  : "none",
+                                opacity: isRadioButtonEnabled ? 1 : 0.5,
+                              }}
+                              disabled={!isRadioButtonEnabled}
+                              className={styles.radio}
+                            />
 
+                            <div
+                              className={styles.interContainer}
+                              onClick={() => handleRadioClick(index)}
+                            >
+                              <div className={styles.flex}>
+                                <img
+                                  src={item.logo}
+                                  alt="logo das transportadoras"
+                                  className={
+                                    item.nomeTransportadora === "Jadlog"
+                                      ? styles.Jadlog
+                                      : styles.image
+                                  }
+                                />
 
-      )}
+                                <p className={styles.span}>
+                                  {item.nomeTransportadora}
+                                </p>
+                              </div>
+
+                              <div className={styles.flex}>
+                                {" "}
+                                <p className={styles.span}>
+                                  {" "}
+                                  Entrega Prevista{" "}
+                                  {item.dataPrevistaEntrega &&
+                                    item.dataPrevistaEntrega
+                                      .split("T")[0]
+                                      .split("-")
+                                      .reverse()
+                                      .join("/")}
+                                  ({item.prazoEntrega} dias)
+                                </p>
+                              </div>
+
+                              <div className={styles.flex}>
+                                <p className={styles.span}>
+                                  valor:{" "}
+                                  <b className={styles.priceValue}>
+                                    R$ {item.valorFrete}
+                                  </b>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           )}
           {getCart.length === 0 && loggedIn === true ? (
@@ -604,14 +618,11 @@ const Cart = () => {
                                         return newCart;
                                       });
                                       axios
-                                        .get(
-                                          `${apiUrl}/api/cart/${userId}`,
-                                          {
-                                            headers: {
-                                              Authorization: `Bearer ${token}`,
-                                            },
-                                          }
-                                        )
+                                        .get(`${apiUrl}/api/cart/${userId}`, {
+                                          headers: {
+                                            Authorization: `Bearer ${token}`,
+                                          },
+                                        })
                                         .then((response) => {
                                           setGetCart(
                                             response.data.cart.products
@@ -754,14 +765,11 @@ const Cart = () => {
                                     });
 
                                     axios
-                                      .get(
-                                        `${apiUrl}/api/cart/${userId}`,
-                                        {
-                                          headers: {
-                                            Authorization: `Bearer ${token}`,
-                                          },
-                                        }
-                                      )
+                                      .get(`${apiUrl}/api/cart/${userId}`, {
+                                        headers: {
+                                          Authorization: `Bearer ${token}`,
+                                        },
+                                      })
                                       .then((response) => {
                                         setGetCart(response.data.cart.products); // Define os produtos do carrinho
                                         setGetTotal(response.data.cart); // Define o total do carrinho
