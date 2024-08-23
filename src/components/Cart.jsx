@@ -19,6 +19,7 @@ import { CircularProgress } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 import { useConfig } from "../context/ConfigContext";
+import CircularIndeterminate from "./CircularIndeterminate";
 
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
@@ -40,6 +41,7 @@ const Cart = () => {
   const [updatedQuantity, setUpdatedQuantity] = useState(1);
   const [exceedAvailability, setExceedAvailability] = useState(1);
   const [deleteProductId, setDeleteProductId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // Estado para o loading
 
   const [openModal, setOpenModal] = useState(false);
   const modalRef = useRef(null);
@@ -229,6 +231,7 @@ const Cart = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true); // Inicia o loading
 
     try {
       // Faz a solicitação POST para obter os dados do frete com o novo CEP
@@ -256,7 +259,10 @@ const Cart = () => {
       setFrete(responseGet.data);
     } catch (error) {
       console.error("Error fetching data:", error);
-    }
+      
+    } finally {
+    setIsLoading(false); // Finaliza o loading
+  }
   };
 
   const getAvailableQuantity = (item) => {
@@ -399,15 +405,7 @@ const Cart = () => {
           )}
           {getCart.length > 0 && (
             <div className={styles.shippingFeeContainer}>
-              {/* <div>Taxa de Envio selecionada: R$ {shippingFee.toFixed(2)}</div>
-              {getTotal &&
-                typeof getTotal === "object" &&
-                getTotal.totalAmount && (
-                  <div style={{ marginTop: "10rem" }}>
-                    Total do Carrinho: R$ {getTotal.totalAmount.toFixed(2)}
-                  </div>
-                )} */}
-
+       
               <form
                 style={{ display: "flex", alignItems: "center", gap: "1rem" }}
               >
@@ -428,68 +426,79 @@ const Cart = () => {
                   <SearchIcon /> Buscar{" "}
                 </button>
               </form>
+              {isLoading ? ( 
+        <div className={styles.CircularIndeterminate}>
+        <CircularIndeterminate />
+        <p>Carregando...</p> 
+        </div>
+      ) : (
+        <>
+        {frete && (
+          <div>
+            {frete.map((item, index) => (
+              <div key={index} >
+                <div className={styles.freteContainer}                           onClick={() => handleRadioClick(index)} 
+                >
+                  <input
+                    type="radio"
+                    name="selectedFrete"
+                    value={index}
+                    onClick={() => handleRadioClick(index)}
+                    checked={selectedFreteIndex === index}
+                    style={{
+                      pointerEvents: isRadioButtonEnabled
+                        ? "auto"
+                        : "none",
+                      opacity: isRadioButtonEnabled ? 1 : 0.5,
+                    }}
+                    disabled={!isRadioButtonEnabled}
+                    className={styles.radio}
+                  />
 
-              {frete && (
-                <div>
-                  {frete.map((item, index) => (
-                    <div key={index} >
-                      <div className={styles.freteContainer}                           onClick={() => handleRadioClick(index)} 
-                      >
-                        <input
-                          type="radio"
-                          name="selectedFrete"
-                          value={index}
-                          onClick={() => handleRadioClick(index)}
-                          checked={selectedFreteIndex === index}
-                          style={{
-                            pointerEvents: isRadioButtonEnabled
-                              ? "auto"
-                              : "none",
-                            opacity: isRadioButtonEnabled ? 1 : 0.5,
-                          }}
-                          disabled={!isRadioButtonEnabled}
-                          className={styles.radio}
-                        />
+                  <div className={styles.interContainer}   onClick={() => handleRadioClick(index)} >
+                    <div className={styles.flex} >
+                      <img
+                        src={item.logo}
+                        alt="logo das transportadoras"
+                        className={
+                          item.nomeTransportadora === "Jadlog"
+                            ? styles.Jadlog
+                            : styles.image
+                        }
+                        
+                      />
 
-                        <div className={styles.interContainer}   onClick={() => handleRadioClick(index)} >
-                          <div className={styles.flex} >
-                            <img
-                              src={item.logo}
-                              alt="logo das transportadoras"
-                              className={
-                                item.nomeTransportadora === "Jadlog"
-                                  ? styles.Jadlog
-                                  : styles.image
-                              }
-                              
-                            />
-
-                            <p className={styles.span}>{item.nomeTransportadora}</p>
-                          </div>
-
-                          <div className={styles.flex}>
-                            {" "}
-                            <p className={styles.span}>
-                              {" "}
-                              Entrega Prevista {item.dataPrevistaEntrega &&
-                                item.dataPrevistaEntrega
-                                  .split("T")[0]
-                                  .split("-")
-                                  .reverse()
-                                  .join("/")}
-                              ({item.prazoEntrega} dias)
-                            </p>
-                          </div>
-
-                          <div className={styles.flex}>
-                            <p className={styles.span}>valor: <b  className={styles.priceValue}>R$ {item.valorFrete}</b></p>
-                          </div>
-                        </div>
-                      </div>
+                      <p className={styles.span}>{item.nomeTransportadora}</p>
                     </div>
-                  ))}
+
+                    <div className={styles.flex}>
+                      {" "}
+                      <p className={styles.span}>
+                        {" "}
+                        Entrega Prevista {item.dataPrevistaEntrega &&
+                          item.dataPrevistaEntrega
+                            .split("T")[0]
+                            .split("-")
+                            .reverse()
+                            .join("/")}
+                        ({item.prazoEntrega} dias)
+                      </p>
+                    </div>
+
+                    <div className={styles.flex}>
+                      <p className={styles.span}>valor: <b  className={styles.priceValue}>R$ {item.valorFrete}</b></p>
+                    </div>
+                  </div>
                 </div>
-              )}
+              </div>
+            ))}
+          </div>
+        )}
+        
+        </>
+
+
+      )}
             </div>
           )}
           {getCart.length === 0 && loggedIn === true ? (
