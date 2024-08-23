@@ -310,7 +310,6 @@ input[type="number"]::-webkit-outer-spin-button {
  }
 
  .CircularIndeterminate{
-  margin-bottom: 10rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

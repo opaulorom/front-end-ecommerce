@@ -175,6 +175,8 @@ const Cart = () => {
   }, [frete]);
 
   const handleRadioClick = async (index) => {
+    setIsLoading(true); // Inicia o loading
+
     try {
       const freteId = frete[index]._id;
       await axios.put(
@@ -208,6 +210,8 @@ const Cart = () => {
       setLoading(false); // Define o estado de carregamento como falso
     } catch (error) {
       console.error("Error updating shipping fee:", error);
+    } finally {
+      setIsLoading(false); // Finaliza o loading
     }
   };
 
