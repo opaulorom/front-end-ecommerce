@@ -1,6 +1,6 @@
 // Navbar.js
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { Link, useLocation } from "react-router-dom";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
