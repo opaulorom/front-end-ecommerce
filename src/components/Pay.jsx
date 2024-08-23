@@ -159,6 +159,7 @@ const Pay = () => {
     setButtonClicked(true); // Define o estado como true quando o botão é clicado
     setCreditCardLoading(true);
     try {
+
       const updatedFormData = {
         ...formData,
         installmentCount: formData.pacelas,

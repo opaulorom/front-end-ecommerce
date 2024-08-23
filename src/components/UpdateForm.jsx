@@ -75,7 +75,7 @@ const UpdateForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.put(`http://localhost:3001/api/update/${userId}`, {
+      const response = await axios.put(`${apiUrl}/api/update/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
 
