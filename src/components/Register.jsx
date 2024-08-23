@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Header from './Header';
 import Navbar from './Navbar';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -11,6 +11,7 @@ import styles from './Register.module.css';
 import { useConfig } from '../context/ConfigContext';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { logPageView } from '../../analytics';
 
 function RegisterUser() {
   const [email, setEmail] = useState('');
@@ -71,7 +72,11 @@ function RegisterUser() {
       setError(error.response.data.error);
     }
   };
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   return (
     <>
       <Header />

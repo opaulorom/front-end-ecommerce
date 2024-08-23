@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./ProductDetails.css";
 import Header from "./Header";
@@ -23,6 +23,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
 import FreteSelect from "./FreteSelect";
 import { useConfig } from "../context/ConfigContext";
+import { logPageView } from "../../analytics";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState({ variations: [] });
@@ -49,7 +50,11 @@ const ProductDetails = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const [changeUrlLink, setChangeUrlLink] = useState(0);
   const { apiUrl } = useConfig();
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   const hendleButtonDisabled = () => {
     setIsButtonDisabled(true);
   };

@@ -3,12 +3,13 @@ import Navbar from "./Navbar";
 import Cookies from "js-cookie";
 import ImageComponent from "./ImageComponent";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import styles from "./Pay.module.css";
 import { useCart } from "../context/CartContext";
 import Header from "./Header";
 import { useConfig } from "../context/ConfigContext";
+import { logPageView } from "../../analytics";
 
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState("pix");
@@ -36,6 +37,11 @@ const Pay = () => {
 
   
   const { apiUrl } = useConfig();
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   const handleChangeContentClick = () => {
     setShowContent(false);
   };

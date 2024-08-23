@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
@@ -9,6 +9,7 @@ import styles from "./SearchResults.module.css"
 import colorMap from "./colorMap";
 import Navbar from "./Navbar";
 import { useConfig } from "../context/ConfigContext";
+import { logPageView } from "../../analytics";
 const SearchResults = () => {
   const { query } = useParams();
   const [searchResults, setSearchResults] = useState([]);
@@ -40,7 +41,11 @@ const SearchResults = () => {
   const [filteredProducts, setFilteredProducts] = useState(originalProducts);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const { apiUrl } = useConfig();
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   useEffect(() => {
     setColors(Object.keys(colorMap)); // Lista de todas as cores do colorMap
   }, []);

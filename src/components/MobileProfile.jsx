@@ -3,10 +3,11 @@ import { useAuth } from "../context/AuthContext";
 import Header from "./Header";
 import LoginForm from "./LoginForm";
 import styles from "./MobileProfile.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import { logPageView } from "../../analytics";
 const MobileProfile = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const [showButton, setShowButton] = useState(false);
@@ -17,7 +18,11 @@ const MobileProfile = () => {
       setShowButton(false);
     }
   });
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   return (
     <div>
       <Header> </Header>

@@ -6,6 +6,8 @@ import styles from "./RegisterLink.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useConfig } from "../context/ConfigContext";
+import { useLocation } from "react-router-dom";
+import { logPageView } from "../../analytics";
 const RegisterLink = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +29,11 @@ const RegisterLink = () => {
       setError(err.response.data.message);
     }
   };
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   return (
     <>
       <Header />

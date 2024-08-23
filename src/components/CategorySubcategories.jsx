@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import CustomPagination from "./CustomPagination";
 
 import Header from "./Header";
@@ -15,6 +15,7 @@ import ProductList from "./ProductList";
 import NewArrivals from "./NewArrivals";
 import CategorySubcategoriesSkeleton from "./CategorySubcategoriesSkeleton";
 import { useConfig } from "../context/ConfigContext";
+import { logPageView } from "../../analytics";
 const CategorySubcategories = () => {
   const { category } = useParams();
   const [subcategories, setSubcategories] = useState([]);
@@ -42,7 +43,11 @@ const CategorySubcategories = () => {
   const [hideProducts, setHideProducts] = useState(false); // Alterar para índice
   const [priceRange, setPriceRange] = useState([]);
   const { apiUrl } = useConfig();
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   const handleSelectBorder = (index) => {
     setDoubleBorder(index);
   };

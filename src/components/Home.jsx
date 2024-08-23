@@ -8,11 +8,17 @@ import DiscountImageCarousel from "./DiscountImageCarousel ";
 import NewArrivals from "./NewArrivals";
 import Slider from "../components/Slider";
 import Footer from "./Footer";
+import { useLocation } from "react-router-dom";
+import { logPageView } from "../../analytics";
 
 
 
 const Home = () => {
- 
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   
   return (
     <div>

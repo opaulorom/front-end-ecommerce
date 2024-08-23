@@ -8,7 +8,7 @@ import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import Typography from "@mui/joy/Typography";
 import { useCart } from "../context/CartContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import SearchIcon from "@mui/icons-material/Search";
@@ -20,6 +20,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 import { useConfig } from "../context/ConfigContext";
 import CircularIndeterminate from "./CircularIndeterminate";
+import { logPageView } from "../../analytics";
 
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
@@ -48,6 +49,11 @@ const Cart = () => {
   const [totalQuantity, setTotalQuantity] = useState([]);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const { apiUrl } = useConfig();
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   const [isRadioButtonEnabled, setIsRadioButtonEnabled] = useState(false);
   useEffect(() => {
     // Atualiza o estado do botão baseado nas condições

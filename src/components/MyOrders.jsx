@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Header from "./Header";
 import Navbar from "./Navbar";
 import { useAuth } from "../context/AuthContext";
@@ -9,6 +9,7 @@ import CircularIndeterminate from "./CircularIndeterminate";
 import { Pagination, Stack } from "@mui/material";
 import styles from "./MyOrders.module.css";
 import { useConfig } from "../context/ConfigContext";
+import { logPageView } from "../../analytics";
 const MyOrders = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
@@ -24,7 +25,11 @@ const MyOrders = () => {
   const [expanded, setExpanded] = useState({});
   const [loading, setLoading] = useState(true);
   const { apiUrl } = useConfig();
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded((prevExpanded) => ({
       ...prevExpanded,
