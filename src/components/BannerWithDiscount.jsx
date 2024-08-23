@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Importe o Link do react-router-dom
+import { Link, useLocation } from 'react-router-dom'; // Importe o Link do react-router-dom
 import { useConfig } from '../context/ConfigContext';
+import { logPageView } from '../../analytics';
 
 const BannerWithDiscount = () => {
   const [banner, setBanner] = useState([]);
@@ -15,7 +16,11 @@ const BannerWithDiscount = () => {
 
     fetchBanner();
   }, []);
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   return (
     <div>
       {banner.length > 0 && (

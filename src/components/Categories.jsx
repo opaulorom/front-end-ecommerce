@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ImageGallery from './ImageGallery';
 import styles from "./Categories.module.css"
 import { useConfig } from '../context/ConfigContext';
+import { logPageView } from '../../analytics';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const { apiUrl } = useConfig();
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   useEffect(() => {
     const fetchData = async () => {
       try {

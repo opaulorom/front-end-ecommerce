@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from "./CategoriesList.module.css"
 import CategoriesDesktop from './CategoriesDesktop';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useConfig } from '../context/ConfigContext';
+import { logPageView } from '../../analytics';
 
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
@@ -11,7 +12,11 @@ const CategoriesList = () => {
   const [categoriesHovered, setCategoriesHovered] = useState(false);
   const modalRef = useRef(null);
   const { apiUrl } = useConfig();
+ const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   useEffect(() => {
     const fetchData = async () => {
       try {

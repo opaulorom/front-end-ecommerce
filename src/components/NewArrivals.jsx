@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useAuth } from "../context/AuthContext";
@@ -11,6 +11,7 @@ import "./NewArrivals.css";
 import NewArrivalsSkeleton from "./NewArrivalsSkeleton";
 import zIndex from "@mui/material/styles/zIndex";
 import { useConfig } from "../context/ConfigContext";
+import { logPageView } from "../../analytics";
 
 const NewArrivals = ({ onNewArrivalsUpdate }) => {
   const [newArrivals, setNewArrivals] = useState([]);
@@ -21,7 +22,11 @@ const NewArrivals = ({ onNewArrivalsUpdate }) => {
 
   const [hoveredIndex, setHoveredIndex] = useState(-1); // -1 indica que nenhuma imagem está sendo hoverada
   const { apiUrl } = useConfig();
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {

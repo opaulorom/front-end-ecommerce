@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { logPageView } from "../../analytics";
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState(null);
 
@@ -14,7 +15,11 @@ const Navbar = () => {
   const isActive = (index) => {
     return index === activeLink ? "active" : "";
   };
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
 
   return (
     <div className="hide">

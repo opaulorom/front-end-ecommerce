@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom"; // Importe o Link do React Router
+import { Link, useLocation, useParams } from "react-router-dom"; // Importe o Link do React Router
 import Header from "./Header";
 import Navbar from "./Navbar";
 import { useAuth } from "../context/AuthContext";
@@ -10,6 +10,7 @@ import ImageComponent from "./ImageComponent";
 import CircularIndeterminate from "./CircularIndeterminate";
 import styles from "./AllOrderDetails.module.css"
 import { useConfig } from "../context/ConfigContext";
+import { logPageView } from "../../analytics";
 const AllOrderDetails = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
@@ -94,6 +95,12 @@ const AllOrderDetails = () => {
     }
     return name;
   };
+
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   return (
     <>
       <Header />

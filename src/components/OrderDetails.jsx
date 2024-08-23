@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Importe o Link do React Router
 import Header from "./Header";
@@ -8,6 +8,7 @@ import { useAuth } from "../context/AuthContext";
 import Cookies from "js-cookie";
 import axios from "axios";
 import CircularIndeterminate from "./CircularIndeterminate";
+import { logPageView } from "../../analytics";
 
 const OrderDetails = () => {
   const { id } = useParams(); // Certifique-se de que o parâmetro corresponde ao nome na URL
@@ -15,7 +16,11 @@ const OrderDetails = () => {
   const { logout, loggedIn } = useAuth();
   const [boleto, setBoleto] = useState(""); // Usando useState para um único boleto
   const { apiUrl } = useConfig();
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   useEffect(() => {
     if (loggedIn) {
       axios
