@@ -10,7 +10,6 @@ function App() {
   useEffect(() => {
     logPageView();
   }, [location]);
-
   return (
     <>
                 <Home></Home>
