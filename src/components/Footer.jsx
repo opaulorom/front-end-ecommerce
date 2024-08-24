@@ -12,7 +12,7 @@ export default function Footer() {
         </div>
         <div className="footerSection">
           <h3 className="footerH3">Contato</h3>
-          <p className="footer__p">Email: contato@exemplo.com</p>
+          <p className="footer__p">Email: suporte@mediewal.com.br</p>
           <p className="footer__p">Telefone: (00) 1234-5678</p>
           <p className="footer__p">CNPJ: 56.171.368/0001-77</p>
         </div>
