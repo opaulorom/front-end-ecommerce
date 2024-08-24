@@ -12,6 +12,8 @@ function App() {
   }, [location]);
   return (
     <>
+
+    
                 <Home></Home>
 
 
