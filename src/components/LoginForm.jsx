@@ -8,6 +8,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { logPageView } from '../../analytics';
 import Header from './Header';
+import Navbar from './Navbar';
 const LoginForm = () => {
   const { loggedIn, isCustomer, login, remainingAttempts } = useAuth();
   const [email, setEmail] = useState('');
@@ -139,7 +140,7 @@ const [hideMessage, setHideMessage] = useState(false)
       </div>
 
 
-
+<Navbar />
 
     </>
   );

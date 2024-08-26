@@ -31,14 +31,11 @@ const Pay = () => {
   const [pixLoading, setPixLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
   const [creditCardLoading, setCreditCardLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
   const [boletoLoading, setBoletoLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
-  const [creditCardWithPaymentLinkLoading, setCreditCardWithPaymentLinkLoading] = useState(false); // Estado para controlar o carregamento do pagamento PIX
 
-  
   const { clearCart } = useCart(); // Use a função removeFromCart do contexto do carrinho
   const { quantity, shippingFee, totalPrice } = useParams();
 
-  const [creditCardWithPaymentLink, setCreditCardWithPaymentLink] = useState(null);
-
+  
   const { apiUrl } = useConfig();
   const location = useLocation();
 
@@ -143,36 +140,7 @@ const Pay = () => {
 
 
 
-  // pagar carto por link de pagamento
-  const handleCreditCardPaymentLink = async () => {
-    setCreditCardWithPaymentLink(true);
-
-    try {
-      const response = await fetch(
-        `${apiUrl}/api/boleto/${userId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      setCreditCardWithPaymentLinkLoading(false);
-      console.log(data);
-      creditCardWithPaymentLink(data);
-      // // Redirecionar para a URL de pagamento PIX
-      window.location.href = data.bankSlipUrl;
-
-      // Atualiza o estado com a URL do cartao
-      await clearCart();
-    } catch (error) {
-      setBoletoLoading(false);
-      console.error(error);
-    }
-  };
-
+  
 
 
 
@@ -428,14 +396,6 @@ const Pay = () => {
                         </button>
                       )}
                       {paymentMethod === "boleto" && (
-                        <button
-                          onClick={handleBoletoPayment}
-                          className={styles.ButtonDataCustomer}
-                        >
-                          Pagar com Boleto
-                        </button>
-                      )}
-   {paymentMethod === "boleto" && (
                         <button
                           onClick={handleBoletoPayment}
                           className={styles.ButtonDataCustomer}
