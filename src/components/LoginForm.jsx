@@ -55,8 +55,9 @@ const [hideMessage, setHideMessage] = useState(false)
   }, [location]);
   return (
     <>
+       <Header/>
       <div className="container">
-        <Header/>
+     
         <div className='loginStyle'>
           <h1 className="Login">Login</h1>
        
