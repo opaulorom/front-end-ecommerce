@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { logPageView } from '../../analytics';
+import Header from './Header';
 const LoginForm = () => {
   const { loggedIn, isCustomer, login, remainingAttempts } = useAuth();
   const [email, setEmail] = useState('');
@@ -55,6 +56,7 @@ const [hideMessage, setHideMessage] = useState(false)
   return (
     <>
       <div className="container">
+        <Header/>
         <div className='loginStyle'>
           <h1 className="Login">Login</h1>
        
