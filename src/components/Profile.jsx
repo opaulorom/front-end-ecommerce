@@ -8,20 +8,20 @@ import LoginForm from './LoginForm';
 
 
 const Profile = () => {
-  const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
-  
+  const { logout, loggedIn } = useAuth(); // UseAuth hook deve ser chamado antes de qualquer retorno condicional
+
+  if (!loggedIn) {
+    return <LoginForm />;
+  }
+
   return (
     <div>
-      <Header> </Header>
-      <div style={{marginTop:"10rem"}}>
-      <LoginForm/>
-      {loggedIn === true &&  <Protected></Protected>
-      }
-     
+      <Header />
+      <div style={{ marginTop: "10rem" }}>
+        <Protected isLoggedIn={loggedIn} />
       </div>
-  
-      </div>
-  )
+    </div>
+  );
 }
 
 export default Profile
