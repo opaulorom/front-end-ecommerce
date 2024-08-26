@@ -19,6 +19,7 @@ const Profile = () => {
       <Header />
       <div style={{ marginTop: "10rem" }}>
         <Protected isLoggedIn={loggedIn} />
+        
       </div>
     </div>
   );
