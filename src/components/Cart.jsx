@@ -277,19 +277,19 @@ const Cart = () => {
     <div className={styles.cartContainer}>
       <Header />
       <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          style={{ marginTop: "8rem" }}
-        />
-  
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{ marginTop: "8rem" }}
+      />
+
       <Navbar />
       {loading ? ( // Se estiver carregando, exibimos o CircularProgress
         <div className={styles.loading}>
@@ -676,110 +676,125 @@ const Cart = () => {
                               }}
                               style={{ cursor: "pointer" }}
                             />
-                         <span
-  type="number"
-  value={item.quantity}
-  onChange={(e) => {
-    const newQuantity = parseInt(e.target.value);
-    if (newQuantity <= 0) {
-      // Se a quantidade for inválida, não faz nada
-      return;
-    }
+                            <span
+                              type="number"
+                              value={item.quantity}
+                              onChange={(e) => {
+                                const newQuantity = parseInt(e.target.value);
+                                if (newQuantity <= 0) {
+                                  // Se a quantidade for inválida, não faz nada
+                                  return;
+                                }
 
-    const availableQuantity = getAvailableQuantity(item);
+                                const availableQuantity =
+                                  getAvailableQuantity(item);
 
-    if (newQuantity > availableQuantity) {
-      alert("A quantidade desejada excede a quantidade disponível no estoque.");
-      return;
-    }
+                                if (newQuantity > availableQuantity) {
+                                  alert(
+                                    "A quantidade desejada excede a quantidade disponível no estoque."
+                                  );
+                                  return;
+                                }
 
-    const newCart = [...getCart];
-    newCart[index].quantity = newQuantity;
-    setGetCart(newCart);
-    handleQuantityChange(item.productId._id, newQuantity);
-  }}
-  className={styles.inputContainer}
->
-  {item.quantity}
-</span>
-<AddIcon
-  onClick={() => {
-    const newQuantity = item.quantity + 1;
-    const availableQuantity = getAvailableQuantity(item);
+                                const newCart = [...getCart];
+                                newCart[index].quantity = newQuantity;
+                                setGetCart(newCart);
+                                handleQuantityChange(
+                                  item.productId._id,
+                                  newQuantity
+                                );
+                              }}
+                              className={styles.inputContainer}
+                            >
+                              {item.quantity}
+                            </span>
+                            <AddIcon
+                              onClick={() => {
+                                const newQuantity = item.quantity + 1;
+                                const availableQuantity =
+                                  getAvailableQuantity(item);
 
-    if (newQuantity > availableQuantity) {
-      toast.success("A quantidade desejada excede a quantidade disponível no estoque.");
-      return;
-    }
+                                if (newQuantity > availableQuantity) {
+                                  toast.success(
+                                    "A quantidade desejada excede a quantidade disponível no estoque."
+                                  );
+                                  return;
+                                }
 
-    const productId = item.productId._id;
-    const color = item.color;
-    const size = item.size;
+                                const productId = item.productId._id;
+                                const color = item.color;
+                                const size = item.size;
 
-    const token = Cookies.get("token");
+                                const token = Cookies.get("token");
 
-    axios
-      .put(
-        `${apiUrl}/api/update-quantity/${userId}/${productId}/${color}/${size}`,
-        { quantity: newQuantity },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        const products = response.data.cart.products;
+                                axios
+                                  .put(
+                                    `${apiUrl}/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+                                    { quantity: newQuantity },
+                                    {
+                                      headers: {
+                                        Authorization: `Bearer ${token}`,
+                                      },
+                                    }
+                                  )
+                                  .then((response) => {
+                                    const products =
+                                      response.data.cart.products;
 
-        setGetCart((prevCart) => {
-          const newCart = [...prevCart];
-          const productIndex = newCart.findIndex(
-            (product) =>
-              product.productId._id === productId &&
-              product.color === color &&
-              product.size === size
-          );
-          if (productIndex !== -1) {
-            newCart[productIndex].quantity = newQuantity;
-          }
-          return newCart;
-        });
+                                    setGetCart((prevCart) => {
+                                      const newCart = [...prevCart];
+                                      const productIndex = newCart.findIndex(
+                                        (product) =>
+                                          product.productId._id === productId &&
+                                          product.color === color &&
+                                          product.size === size
+                                      );
+                                      if (productIndex !== -1) {
+                                        newCart[productIndex].quantity =
+                                          newQuantity;
+                                      }
+                                      return newCart;
+                                    });
 
-        axios
-          .get(`${apiUrl}/api/cart/${userId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((response) => {
-            setGetCart(response.data.cart.products);
-            setGetTotal(response.data.cart);
-            setTotalQuantity(response.data.cart.TotalQuantity);
-            setLoading(false);
-          })
-          .catch((error) => {
-            setLoading(false);
-            console.log("Erro ao visualizar frete.", error);
-          });
-      })
-      .catch((error) => {
-        console.log(
-          "Erro ao atualizar quantidade do produto no carrinho.",
-          error
-        );
-      });
-    setUpdatedQuantity(newQuantity);
-    console.log("quantidade", newQuantity);
-  }}
-  style={{
-    cursor: "pointer",
-    color:
-      item.quantity === getAvailableQuantity(item)
-        ? "rgb(189, 189, 189)"
-        : "rgb(33, 33, 33)",
-  }}
-/>
-
+                                    axios
+                                      .get(`${apiUrl}/api/cart/${userId}`, {
+                                        headers: {
+                                          Authorization: `Bearer ${token}`,
+                                        },
+                                      })
+                                      .then((response) => {
+                                        setGetCart(response.data.cart.products);
+                                        setGetTotal(response.data.cart);
+                                        setTotalQuantity(
+                                          response.data.cart.TotalQuantity
+                                        );
+                                        setLoading(false);
+                                      })
+                                      .catch((error) => {
+                                        setLoading(false);
+                                        console.log(
+                                          "Erro ao visualizar frete.",
+                                          error
+                                        );
+                                      });
+                                  })
+                                  .catch((error) => {
+                                    console.log(
+                                      "Erro ao atualizar quantidade do produto no carrinho.",
+                                      error
+                                    );
+                                  });
+                                setUpdatedQuantity(newQuantity);
+                                console.log("quantidade", newQuantity);
+                              }}
+                              style={{
+                                cursor: "pointer",
+                                color:
+                                  item.quantity === getAvailableQuantity(item)
+                                    ? "rgb(189, 189, 189)"
+                                    : "rgb(33, 33, 33)",
+                              }}
+                            />
                           </div>
                         </div>
                       </div>
