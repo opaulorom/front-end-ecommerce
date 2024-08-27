@@ -21,7 +21,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useConfig } from "../context/ConfigContext";
 import CircularIndeterminate from "./CircularIndeterminate";
 import { logPageView } from "../../analytics";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
   const [handleDeleteProduct, setHandleDeleteProduct] = useState(false);
@@ -275,7 +276,20 @@ const Cart = () => {
   return (
     <div className={styles.cartContainer}>
       <Header />
-
+      <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          style={{ marginTop: "8rem" }}
+        />
+  
       <Navbar />
       {loading ? ( // Se estiver carregando, exibimos o CircularProgress
         <div className={styles.loading}>
@@ -662,158 +676,110 @@ const Cart = () => {
                               }}
                               style={{ cursor: "pointer" }}
                             />
-                            <span
-                              type="number"
-                              value={item.quantity}
-                              onChange={(e) => {
-                                const newQuantity = parseInt(e.target.value);
-                                const newCart = [...getCart];
-                                newCart[index].quantity = newQuantity;
-                                setGetCart(newCart);
-                                handleQuantityChange(
-                                  item.productId._id,
-                                  newQuantity
-                                );
-                              }}
-                              style={{}}
-                              className={styles.inputContainer}
-                            >
-                              {" "}
-                              {item.quantity}
-                            </span>
-                            <AddIcon
-                              onClick={() => {
-                                const newQuantity = item.quantity + 1;
-                                const productId = item.productId._id;
-                                const color = item.color; // Certifique-se de estar obtendo o variationId corretamente
-                                const size = item.size; // Certifique-se de estar obtendo o variationId corretamente
+                         <span
+  type="number"
+  value={item.quantity}
+  onChange={(e) => {
+    const newQuantity = parseInt(e.target.value);
+    if (newQuantity <= 0) {
+      // Se a quantidade for inválida, não faz nada
+      return;
+    }
 
-                                const token = Cookies.get("token");
+    const availableQuantity = getAvailableQuantity(item);
 
-                                axios
-                                  .put(
-                                    `${apiUrl}/api/update-quantity/${userId}/${productId}/${color}/${size}`,
-                                    { quantity: newQuantity },
-                                    {
-                                      headers: {
-                                        Authorization: `Bearer ${token}`,
-                                      },
-                                    }
-                                  )
-                                  .then((response) => {
-                                    const products =
-                                      response.data.cart.products;
+    if (newQuantity > availableQuantity) {
+      alert("A quantidade desejada excede a quantidade disponível no estoque.");
+      return;
+    }
 
-                                    console.log(
-                                      "Produtos no carrinho:",
-                                      products
-                                    );
+    const newCart = [...getCart];
+    newCart[index].quantity = newQuantity;
+    setGetCart(newCart);
+    handleQuantityChange(item.productId._id, newQuantity);
+  }}
+  className={styles.inputContainer}
+>
+  {item.quantity}
+</span>
+<AddIcon
+  onClick={() => {
+    const newQuantity = item.quantity + 1;
+    const availableQuantity = getAvailableQuantity(item);
 
-                                    // Verifica se a quantidade de algum produto excede a disponibilidade
-                                    const exceedAvailability = products.some(
-                                      (product) => {
-                                        console.log(
-                                          "Excede disponibilidade?",
-                                          product.availableQuantity
-                                        );
-                                        setExceedAvailability(
-                                          product.exceedAvailability
-                                        );
+    if (newQuantity > availableQuantity) {
+      toast.success("A quantidade desejada excede a quantidade disponível no estoque.");
+      return;
+    }
 
-                                        console.log(
-                                          "Verificando produto:",
-                                          product.productId
-                                        );
-                                        return (
-                                          product.quantity >
-                                          product.availableQuantity
-                                        );
-                                      }
-                                    );
+    const productId = item.productId._id;
+    const color = item.color;
+    const size = item.size;
 
-                                    console.log(
-                                      "Excede disponibilidade?",
-                                      exceedAvailability
-                                    );
+    const token = Cookies.get("token");
 
-                                    if (exceedAvailability) {
-                                      console.log(
-                                        "A quantidade no carrinho excede a disponibilidade de algum produto. Botão desabilitado."
-                                      );
-                                      // Não continua com a atualização do carrinho
-                                      return;
-                                    }
+    axios
+      .put(
+        `${apiUrl}/api/update-quantity/${userId}/${productId}/${color}/${size}`,
+        { quantity: newQuantity },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        const products = response.data.cart.products;
 
-                                    console.log(
-                                      "Excede disponibilidade?",
-                                      exceedAvailability
-                                    );
+        setGetCart((prevCart) => {
+          const newCart = [...prevCart];
+          const productIndex = newCart.findIndex(
+            (product) =>
+              product.productId._id === productId &&
+              product.color === color &&
+              product.size === size
+          );
+          if (productIndex !== -1) {
+            newCart[productIndex].quantity = newQuantity;
+          }
+          return newCart;
+        });
 
-                                    if (exceedAvailability) {
-                                      return; // Não continua com a atualização do carrinho
-                                    }
+        axios
+          .get(`${apiUrl}/api/cart/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            setGetCart(response.data.cart.products);
+            setGetTotal(response.data.cart);
+            setTotalQuantity(response.data.cart.TotalQuantity);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+            console.log("Erro ao visualizar frete.", error);
+          });
+      })
+      .catch((error) => {
+        console.log(
+          "Erro ao atualizar quantidade do produto no carrinho.",
+          error
+        );
+      });
+    setUpdatedQuantity(newQuantity);
+    console.log("quantidade", newQuantity);
+  }}
+  style={{
+    cursor: "pointer",
+    color:
+      item.quantity === getAvailableQuantity(item)
+        ? "rgb(189, 189, 189)"
+        : "rgb(33, 33, 33)",
+  }}
+/>
 
-                                    if (exceedAvailability) {
-                                      return; // Não continua com a atualização do carrinho
-                                    }
-
-                                    // Atualiza o estado apenas se a quantidade for válida
-                                    setGetCart((prevCart) => {
-                                      const newCart = [...prevCart];
-
-                                      const productIndex = newCart.findIndex(
-                                        (product) =>
-                                          product.productId._id === productId &&
-                                          product.color === color &&
-                                          product.size === size
-                                      ); // Certifique-se de verificar também o variationId
-                                      if (productIndex !== -1) {
-                                        newCart[productIndex].quantity =
-                                          newQuantity;
-                                      }
-                                      return newCart;
-                                    });
-
-                                    axios
-                                      .get(`${apiUrl}/api/cart/${userId}`, {
-                                        headers: {
-                                          Authorization: `Bearer ${token}`,
-                                        },
-                                      })
-                                      .then((response) => {
-                                        setGetCart(response.data.cart.products); // Define os produtos do carrinho
-                                        setGetTotal(response.data.cart); // Define o total do carrinho
-                                        setTotalQuantity(
-                                          response.data.cart.TotalQuantity
-                                        );
-                                        setLoading(false); // Define o estado de carregamento como falso
-                                      })
-                                      .catch((error) => {
-                                        setLoading(false); // Define o estado de carregamento como falso
-
-                                        console.log(
-                                          "Erro ao visualizar frete.",
-                                          error
-                                        );
-                                      });
-                                  })
-                                  .catch((error) => {
-                                    console.log(
-                                      "Erro ao atualizar quantidade do produto no carrinho.",
-                                      error
-                                    );
-                                  });
-                                setUpdatedQuantity(newQuantity);
-                                console.log("quantidade", newQuantity);
-                              }}
-                              style={{
-                                cursor: "pointer",
-                                color:
-                                  item.quantity === getAvailableQuantity(item)
-                                    ? "rgb(189, 189, 189)"
-                                    : "rgb(33, 33, 33)",
-                              }}
-                            />
                           </div>
                         </div>
                       </div>
