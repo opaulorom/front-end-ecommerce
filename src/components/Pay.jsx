@@ -146,7 +146,7 @@ const Pay = () => {
     setCreditCardWithPaymentLinkLoading(true);
   
     try {
-      const response = await fetch(`${apiUrl}/api/creditCard/${userId}`, {
+      const response = await fetch(`${apiUrl}/api/crediCardWithPaymentLink/${userId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
