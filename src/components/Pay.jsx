@@ -142,37 +142,35 @@ const Pay = () => {
   
 
 
-
-  // pagar carto por link de pagamento
   const handleCreditCardPaymentLink = async () => {
-    setCreditCardWithPaymentLink(true);
-
+    setCreditCardWithPaymentLinkLoading(true);
+  
     try {
-      const response = await fetch(
-        `${apiUrl}/api/boleto/${userId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/creditCard/${userId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await response.json();
       setCreditCardWithPaymentLinkLoading(false);
       console.log(data);
-      creditCardWithPaymentLink(data);
-      // // Redirecionar para a URL de pagamento PIX
-      window.location.href = data.bankSlipUrl;
-
-      // Atualiza o estado com a URL do cartao
+  
+      // Update the state with the response data
+      setCreditCardWithPaymentLink(data);
+  
+      // Redirect to the payment link
+      window.location.href = data.invoiceUrl;
+  
+      // Clear the cart
       await clearCart();
     } catch (error) {
-      setBoletoLoading(false);
+      setCreditCardWithPaymentLinkLoading(false);
       console.error(error);
     }
   };
-
+  
 
 
 
@@ -435,20 +433,13 @@ const Pay = () => {
                           Pagar com Boleto
                         </button>
                       )}
-   {paymentMethod === "boleto" && (
-                        <button
-                          onClick={handleBoletoPayment}
-                          className={styles.ButtonDataCustomer}
-                        >
-                          Pagar com Boleto
-                        </button>
-                      )}
+ 
 
                       <div>
                         {" "}
                         {paymentMethod === "cartao" && (
                           <>
-                            <form
+                            {/* <form
                               onSubmit={handleSubmit}
                               style={{
                                 display: "flex",
@@ -620,7 +611,14 @@ const Pay = () => {
                               >
                                 Finalisar Compra
                               </button>
-                            </form>
+                            </form> */}
+
+<button
+                          onClick={handleCreditCardPaymentLink}
+                          className={styles.ButtonDataCustomer}
+                        >
+                          Pagar com Cartão de credito
+                        </button>
                           </>
                         )}
                       </div>
@@ -681,7 +679,6 @@ const Pay = () => {
                   </p>
                 )}
 
-                {paymentMethod === "boleto" && <p>Boleto</p>}
               </div>
             </p>
           </div>

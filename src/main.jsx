@@ -83,7 +83,7 @@ const Root = () => (
       element={<DiscountProducts />}
     />
     <Route path="/produtos/vestidos" element={<DiscountedProductsPage />} />
-    <Route path="/perfil" element={<Profile />} />
+
     <Route
       path="/products/discount/:discount/category/:category"
       element={<DiscountProductsByCategoryAndPorcentage />}
