@@ -162,7 +162,7 @@ const Pay = () => {
   
       // Redirect to the payment link
       window.location.href = data.invoiceUrl;
-  
+      
       // Clear the cart
       await clearCart();
     } catch (error) {
