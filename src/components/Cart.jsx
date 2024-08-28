@@ -434,7 +434,7 @@ const Cart = () => {
               </div>
             </>
           )}
-          {getCart.length > 0 && (
+          { getTotal.totalAmount >= 300 ? "" : <>         {getCart.length > 0 && (
             <div className={styles.shippingFeeContainer}>
               <form
                 style={{ display: "flex", alignItems: "center", gap: "1rem" }}
@@ -539,7 +539,8 @@ const Cart = () => {
                 </>
               )}
             </div>
-          )}
+          )}</>}
+ 
           {getCart.length === 0 && loggedIn === true ? (
             <div
               style={{
