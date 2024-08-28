@@ -1,5 +1,6 @@
 // ConfigContext.js
 import React, { createContext, useState } from 'react';
+const localhost = 'http://localhost:3001'
 
 export const ConfigContext = createContext();
 
