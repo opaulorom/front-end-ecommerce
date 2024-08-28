@@ -357,39 +357,36 @@ const Cart = () => {
                 </p>
               )}
 
-              <Link
-                to={
-                 frete?.length > 0 && selectedFreteIndex !== null || getTotal.totalAmount >= 300
-                    ? `/payment/${totalQuantity}/${
-                        shippingFee.toFixed(2) == 0
-                          ? "0"
-                          : shippingFee.toFixed(2)
-                      }/${getTotal.totalAmount.toFixed(2)}`
-                    : "#"
-                }
-                className={styles.LinkContainer}
-              >
-                <button
-                  onClick={handleAddShippingFee}
-                  style={{
-                    pointerEvents:
-                    frete?.length > 0  &&  selectedFreteIndex !== null || getTotal.totalAmount >= 300
-                        ? "auto"
-                        : "none",
-                    opacity:
-                    frete?.length > 0 &&  selectedFreteIndex !== null || getTotal.totalAmount >= 300 
-                        ? 1
-                        : 0.5,
-                  }}
-                  disabled={
-                    frete?.length > 0 ||   selectedFreteIndex === null && getTotal.totalAmount < 300
-                  }
-                  className={styles.LinkContainer__button}
-                >
-                  Fazer Pedido
-                </button>
-    
-              </Link>
+<Link
+      to={
+        (frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
+          ? `/payment/${totalQuantity}/${
+              shippingFee.toFixed(2) == 0 ? "0" : shippingFee.toFixed(2)
+            }/${getTotal.totalAmount.toFixed(2)}`
+          : "#"
+      }
+      className={styles.LinkContainer}
+    >
+      <button
+        onClick={handleAddShippingFee}
+        style={{
+          pointerEvents:
+            (frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
+              ? "auto"
+              : "none",
+          opacity:
+            (frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
+              ? 1
+              : 0.5,
+        }}
+        disabled={
+          frete?.length === 0 || (selectedFreteIndex === null && getTotal.totalAmount < 300)
+        }
+        className={styles.LinkContainer__button}
+      >
+        Fazer Pedido
+      </button>
+    </Link>
             </>
           )}
 
