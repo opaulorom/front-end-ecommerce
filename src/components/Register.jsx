@@ -46,7 +46,7 @@ function RegisterUser() {
     setPassword(newPassword);
 
     // Verifica se há algum caractere especial na senha
-    const specialCharacterPattern = /[\^!@#$%^&*(),.?":{}|<>\\]/;
+    const specialCharacterPattern = /[\\;?-^.!'{:@#$%^&"_(¨¨||/+,.=)_£0}*|<>`]/;
     setContainsSpecialCharacter(specialCharacterPattern.test(newPassword));
 
     const OneNumber = /[0-9]/;
