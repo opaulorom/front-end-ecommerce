@@ -69,6 +69,7 @@ const RegisterLink = () => {
             theme="light"
             style={{ marginTop: "8rem" }}
           />
+          
           <label className={styles.formContainer__label}>Email:</label>
           <div className={styles.formContainer__div}>
             <input
