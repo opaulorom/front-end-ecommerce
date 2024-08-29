@@ -9,6 +9,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import styles from './Register.module.css';
 import { useConfig } from '../context/ConfigContext';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { logPageView } from '../../analytics';
 
 function RegisterUser() {
@@ -24,10 +26,7 @@ function RegisterUser() {
   const [containsLowerCase, setContainsLowerCase] = useState(false);
   const [isAddButtonDisabled, setIsAddButtonDisabled] = useState(true);
   const { apiUrl } = useConfig();
-  const location = useLocation();
-  useEffect(() => {
-    logPageView();
-  }, [location]);
+
   useEffect(() => {
     // O token agora está disponível aqui, você pode usá-lo como desejar
     console.log(token);
@@ -67,15 +66,34 @@ function RegisterUser() {
     try {
       const response = await axios.post(`${apiUrl}/register/${token}`, { email, password, role });
       setMessage(response.data.message);
+      toast.success("Usuário registrado com sucesso.");
+
     } catch (error) {
       setError(error.response.data.error);
     }
   };
+  const location = useLocation();
 
+  useEffect(() => {
+    logPageView();
+  }, [location]);
   return (
     <>
       <Header />
       <Navbar />
+      <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          style={{ marginTop: "8rem" }}
+        />
       <div className={styles.container}>
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           <h2 className={styles.h2}>Cadastro</h2>
