@@ -56,14 +56,7 @@ const NewArrivals = ({ onNewArrivalsUpdate }) => {
 
   return (
     <div>
-      <div style={{
-        
-        zIndex:"3",
-        position:"absolute"
-      }}>
-      <Header  />
-
-      </div>
+    
       <Navbar />
       {loading ? (
         <NewArrivalsSkeleton /> // Exibir carregamento enquanto os dados não são carregados
