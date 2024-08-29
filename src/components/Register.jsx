@@ -117,7 +117,7 @@ function RegisterUser() {
           <div className={styles.specs}>
             <h4  className={styles.label}>Sua senha precisa conter:</h4>
             <span style={{ color: containsSpecialCharacter ? 'green' : 'black' }} className={styles.span}>
-              {containsSpecialCharacter ? <CheckIcon /> : <CloseIcon style={{ color: "#ee0d1f" }} />} 1 caractere especial
+              {containsSpecialCharacter ? <CheckIcon /> : <CloseIcon style={{ color: "#ee0d1f" }} />} 1 caractere especial (\^!@#$%^&*(),.?":{}|)
             </span>
             <span style={{ color: containsCapitalLetter ? 'green' : 'black' }} className={styles.span}>
               {containsCapitalLetter ? <CheckIcon /> : <CloseIcon style={{ color: "#ee0d1f" }} />} 1 letra maiúscula
