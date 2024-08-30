@@ -426,8 +426,9 @@ const AllOrderDetails = () => {
                   <span className={styles.span}>Status</span>
                 </div>
                 <div className={styles.justifyContent}>
-                  <span className={styles.span}>{order.billingType}</span>
-                  {order.shippingFeeData.shippingFeePrice ? <span className={styles.span}>R$ {order.shippingFeeData.shippingFeePrice}</span> : ""}
+                  
+                <span className={styles.span}>{order.billingType === "CREDIT_CARD" && "Cartão de Credito"}</span>
+                {order.shippingFeeData.shippingFeePrice ? <span className={styles.span}>R$ {order.shippingFeeData.shippingFeePrice}</span> : ""}
 
                   <span className={styles.value}>R$ {order.value}</span>
 
