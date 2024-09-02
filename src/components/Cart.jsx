@@ -847,33 +847,20 @@ const Cart = () => {
                 <span className={styles.Close} onClick={handleClickCloseModal}>
                   <CloseIcon />
                 </span>
-                <h1 style={{ fontSize: "1.5rem" }}>
-                  Essa ação e irreversível você quer Excluir essa Cor e todos os
-                  tamanhos?
+                <h1 style={{ fontSize: "1.5rem" }} className={styles.ModalContent__p}>
+                  Essa ação e irreversível você quer Excluir esse produto do carrinho?
                 </h1>
                 <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: "1.5rem",
-                    marginTop: "3rem",
-                  }}
+                                   className={styles.buttonContainer}
+
                 >
                   <button
                     onClick={() => {
                       handleDelete(deleteProductId);
                       handleClickCloseModal();
                     }}
-                    style={{
-                      backgroundColor: "#14337c",
-                      color: "white",
-                      border: "none",
-                      cursor: "pointer",
-                      width: "11vw",
-                      padding: "1rem",
-                      borderRadius: "5px",
-                      fontSize: "1.2rem",
-                    }}
+                    className={styles.confirmButton}
+
                   >
                     SIM
                   </button>
@@ -881,16 +868,8 @@ const Cart = () => {
                   <button
                     type="button"
                     onClick={handleClickCloseModal}
-                    style={{
-                      backgroundColor: "#14337c",
-                      color: "white",
-                      border: "none",
-                      cursor: "pointer",
-                      width: "11vw",
-                      padding: "1rem",
-                      borderRadius: "5px",
-                      fontSize: "1.2rem",
-                    }}
+                    className={styles.cancel}
+
                   >
                     NÃO
                   </button>

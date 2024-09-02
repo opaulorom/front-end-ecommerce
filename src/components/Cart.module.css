@@ -66,6 +66,7 @@ margin-bottom: 2rem;
 
   gap: 1rem;
   padding: 1rem;
+  margin-bottom: 5rem;
 }
 
 .span {
@@ -137,6 +138,7 @@ input[type="number"]::-webkit-outer-spin-button {
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
+
 }
 
 .ModalContent {
@@ -144,8 +146,42 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 50vw;
+  width: 80vw;
   height: 40vh;
+  border-radius: 10px;
+  
+}
+.ModalContent__p{
+  font-family: 'poppins', sans-serif;
+  font-weight: 500;
+}
+
+
+.buttonContainer{
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.cancel{
+  background-color: #14337c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 40vw;
+  padding: 1rem;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+.confirmButton{
+  background-color: #14337c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 40vw;
+  padding: 1rem;
+  border-radius: 5px;
+  font-size: 1.2rem;
 }
 
 .Close {
@@ -441,6 +477,19 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   .image{
     width: 5vw;
+    
+  }
+  .cancel{
+    width: 20vw;
+    padding: .8rem;
+  }
+  .confirmButton{
+    width: 20vw;
+    padding: .8rem;
+  }
+ 
+  .confirmButton:hover{
+    background-color: red;
     
   }
 
