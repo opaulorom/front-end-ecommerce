@@ -356,7 +356,8 @@ const Cart = () => {
                   Por favor, selecione um frete antes de prosseguir.
                 </p>
               )}
-{shippingFee  && <Link
+
+<Link
       to={
         (frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
           ? `/payment/${totalQuantity}/${
@@ -370,23 +371,22 @@ const Cart = () => {
         onClick={handleAddShippingFee}
         style={{
           pointerEvents:
-            (frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
+            (shippingFee && frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
               ? "auto"
               : "none",
           opacity:
-            (frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
+            (shippingFee && frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
               ? 1
               : 0.5,
         }}
         disabled={
-          frete?.length === 0 || (selectedFreteIndex === null && getTotal.totalAmount < 300)
+          shippingFee && frete?.length === 0 || (selectedFreteIndex === null && getTotal.totalAmount < 300)
         }
         className={styles.LinkContainer__button}
       >
         Fazer Pedido
       </button>
-    </Link>}
-
+    </Link>
             </>
           )}
 
