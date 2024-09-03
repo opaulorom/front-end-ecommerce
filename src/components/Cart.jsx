@@ -356,8 +356,7 @@ const Cart = () => {
                   Por favor, selecione um frete antes de prosseguir.
                 </p>
               )}
-
-<Link
+{shippingFee  && <Link
       to={
         (frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
           ? `/payment/${totalQuantity}/${
@@ -386,7 +385,8 @@ const Cart = () => {
       >
         Fazer Pedido
       </button>
-    </Link>
+    </Link>}
+
             </>
           )}
 
