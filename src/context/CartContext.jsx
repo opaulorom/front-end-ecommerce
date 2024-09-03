@@ -28,7 +28,7 @@ export const CartProvider = ({ children }) => {
 
 
   const clearCart = () => {
-    setCartItemCount(0);
+    setCartItemCount([]);
     localStorage.removeItem("cartItemCount");
   };
   return (
