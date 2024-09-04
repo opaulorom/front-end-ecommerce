@@ -272,8 +272,6 @@ const Cart = () => {
   };
 
   const charLimit = 24;
-
-  
   useEffect(() => {
     if (getTotal.totalAmount >= 300) {
       setShippingFee(0); // Configura o frete para grátis se o total for igual ou maior que 300
@@ -282,8 +280,6 @@ const Cart = () => {
     }
   }, [getTotal.totalAmount, selectedFreteIndex, frete]);
   
-
-
   return (
     <div className={styles.cartContainer}>
       <Header />
