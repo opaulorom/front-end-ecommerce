@@ -62,7 +62,7 @@ const NewArrivals = ({ onNewArrivalsUpdate }) => {
         <NewArrivalsSkeleton /> // Exibir carregamento enquanto os dados não são carregados
       ) : (
         <div style={{ marginTop: "2rem" }}>
-                <h1 style={{ marginBottom: "1rem", marginRight:"3ren", fontFamily:"poppins, sans serif", fontSize: "1.2rem " }}>Novidades</h1>
+                <h1 style={{ marginBottom: "1rem",fontFamily:"poppins, sans serif", fontSize: "1.2rem ",  marginLeft:"1rem",  }}>Novidades</h1>
 
           <ul className="ulContainer">
             {newArrivals.map((product, index) => (
