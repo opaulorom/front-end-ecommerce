@@ -319,7 +319,7 @@ const Pay = () => {
                           }}
                         >
                           <img
-                            src="https://i.ibb.co/dfvK4s0/icons8-foto-48.png"
+                            src="https://i.imgur.com/MXgEf5F.png"
                             alt=""
                             style={{
                               maxWidth: "14vw",
@@ -355,7 +355,7 @@ const Pay = () => {
                           }}
                         >
                           <img
-                            src="https://i.ibb.co/LNrSsZt/icons8-boleto-bankario-48.png"
+                            src="https://i.imgur.com/m9N1n50.png"
                             alt=""
                             style={{ maxWidth: "14vw" }}
                           />{" "}
@@ -391,7 +391,7 @@ const Pay = () => {
                         >
                           {" "}
                           <img
-                            src="https://i.ibb.co/HtWhHR0/icons8-emoji-de-cart-o-de-cr-dito-48.png"
+                            src="https://i.imgur.com/8irAIsv.png"
                             alt=""
                           />{" "}
                           Cartão de Crédito
