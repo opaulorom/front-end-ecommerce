@@ -6,7 +6,7 @@ export const ConfigContext = createContext();
 
 export const ConfigProvider = ({ children }) => {
   const [config, setConfig] = useState({
-    apiUrl: localhost,
+    apiUrl: prodURL,
   });
 
   return (
