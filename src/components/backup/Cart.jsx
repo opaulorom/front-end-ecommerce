@@ -51,7 +51,7 @@ const Cart = () => {
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const { apiUrl } = useConfig();
   const location = useLocation();
-
+  const [cepViaCep,  setCepViaCep]= useState('')
   useEffect(() => {
     logPageView();
   }, [location]);
@@ -273,16 +273,45 @@ const Cart = () => {
 
   const charLimit = 24;
 
-  
+  const handleViaCepData = async () => {
+    try{
+const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+setCepViaCep(response.data)
+console.log('handleViaCepData', response.data)
+    }catch(error){
+
+    }
+  }
   useEffect(() => {
-    if (getTotal.totalAmount >= 300) {
-      setShippingFee(0); // Configura o frete para grátis se o total for igual ou maior que 300
+    handleViaCepData(); // Atualiza cepViaCep
+  
+    if (getTotal.totalAmount >= 300 || cepViaCep.localidade === 'Fortaleza') {
+      setShippingFee(0); // Frete grátis
     } else if (selectedFreteIndex !== null && frete && frete[selectedFreteIndex]) {
       setShippingFee(frete[selectedFreteIndex].valorFrete);
     }
-  }, [getTotal.totalAmount, selectedFreteIndex, frete]);
+  }, [getTotal.totalAmount, selectedFreteIndex, frete, cep]); // Dependências do useEffect
   
+function handleMessage(){
+  let message
+  switch(true){
+    case getTotal.totalAmount >= 300:
+      message = "Para compras acima de 300 reais, o frete é grátis";
+    break;
+    case cepViaCep.localidade === 'Fortaleza':
+      message = "Para compras em Fortaleza o frete é grátis";
+      break 
+    default:
+      message = (
+        <span className={styles.green}>
+                        Escolha uma opção de frete para prosseguir.
+                      </span>
+      )
+      break
+  }
+  return message; // Retorne a mensagem
 
+}
 
   return (
     <div className={styles.cartContainer}>
@@ -338,15 +367,10 @@ const Cart = () => {
                       {getTotal.totalAmount && getTotal.totalAmount.toFixed(2)}
                     </span>
                   </div>
+                
                   <span className={styles.promo}>
-                    {" "}
-                    {getTotal.totalAmount >= 300 ? (
-                      "Para compras acima de 300 reais, o frete é grátis"
-                    ) : (
-                      <span className={styles.green}>
-                        Escolha uma opção de frete para prosseguir.
-                      </span>
-                    )}
+                  {handleMessage()}
+
                   </span>
                 </div>
               </div>
@@ -367,37 +391,31 @@ const Cart = () => {
                   Por favor, selecione um frete antes de prosseguir.
                 </p>
               )}
-
 <Link
-      to={
-        (frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
-          ? `/payment/${totalQuantity}/${
-              shippingFee.toFixed(2) == 0 ? "0" : shippingFee.toFixed(2)
-            }/${getTotal.totalAmount.toFixed(2)}`
-          : "#"
-      }
-      className={styles.LinkContainer}
-    >
-      <button
-        onClick={handleAddShippingFee}
-        style={{
-          pointerEvents:
-            (shippingFee && frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
-              ? "auto"
-              : "none",
-          opacity:
-            (shippingFee && frete?.length > 0 && selectedFreteIndex !== null) || getTotal.totalAmount >= 300
-              ? 1
-              : 0.5,
-        }}
-        disabled={
-          shippingFee && frete?.length === 0 || (selectedFreteIndex === null && getTotal.totalAmount < 300)
-        }
-        className={styles.LinkContainer__button}
-      >
-        Fazer Pedido
-      </button>
-    </Link>
+  to={
+    (getTotal.totalAmount >= 300 || cepViaCep.localidade === 'Fortaleza' || (frete?.length > 0 && selectedFreteIndex !== null))
+      ? `/payment/${totalQuantity}/${shippingFee.toFixed(2) === '0' ? '0' : shippingFee.toFixed(2)}/${getTotal.totalAmount.toFixed(2)}`
+      : "#"
+  }
+  className={styles.LinkContainer}
+>
+  <button
+    onClick={handleAddShippingFee}
+    style={{
+      pointerEvents: (getTotal.totalAmount >= 300 || cepViaCep.localidade === 'Fortaleza' || (shippingFee && frete?.length > 0 && selectedFreteIndex !== null))
+        ? 'auto'
+        : 'none',
+        opacity: isButtonEnabled || cepViaCep.localidade === 'Fortaleza' ? 1 : 0.5,
+
+    }}
+    disabled={
+      !((getTotal.totalAmount >= 300 || cepViaCep.localidade === 'Fortaleza') || (shippingFee && frete?.length > 0 && selectedFreteIndex !== null))
+    }
+    className={styles.LinkContainer__button}
+  >
+    Fazer Pedido
+  </button>
+</Link>
             </>
           )}
 
