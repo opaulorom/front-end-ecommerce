@@ -222,7 +222,7 @@ const Pay = () => {
           },
         }
       );
-      console.log();
+
       setCreditCardLoading(false);
       handleChangeContentClick();
 
