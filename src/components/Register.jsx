@@ -29,7 +29,7 @@ function RegisterUser() {
 
   useEffect(() => {
     // O token agora está disponível aqui, você pode usá-lo como desejar
-    console.log(token);
+
   }, [token]);
 
   useEffect(() => {

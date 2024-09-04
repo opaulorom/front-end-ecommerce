@@ -95,7 +95,7 @@ const Pay = () => {
       // Redirecionar para a URL de pagamento PIX
       setEncodedImage(data.encodedImage);
       setPixCode(data.payload);
-      console.log("pixQRcodeStatico", data);
+
       await clearCart();
     } catch (error) {
       setPixLoading(false); // Certifique-se de desativar o loader em caso de erro
