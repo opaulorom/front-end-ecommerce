@@ -5,10 +5,12 @@ import Navbar from './Navbar';
 import { useAuth } from '../context/AuthContext';
 import styles from "./UpdateForm.module.css"
 import { useConfig } from '../context/ConfigContext';
+import CircularIndeterminate from './CircularIndeterminate';
 const UpdateForm = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const token = Cookies.get('token'); // Obtenha o token do cookie
   const userId = Cookies.get('userId'); // Obtenha o token do cookie
+  const [loading, setLoading] = useState(true)
   const [formData, setFormData] = useState({
     userId: userId,
     name: '',
@@ -27,7 +29,7 @@ const UpdateForm = () => {
   const { apiUrl } = useConfig();
 
   useEffect(() => {
-
+    setLoading(true)
     const fetchUserData = async () => {
       try {
 
@@ -57,8 +59,11 @@ const UpdateForm = () => {
           state: userData.state || '',
         }));
 
+        setLoading(false)
 
       } catch (error) {
+        setLoading(false)
+
         console.error('Erro ao buscar informações do usuário:', error);
       }
     };
@@ -130,7 +135,16 @@ const UpdateForm = () => {
 
 
 
-      {loggedIn === true &&
+      {loading ? (
+        <div style={{
+          display:"flex",
+          justifyContent:"center",
+          marginTop:'20rem'
+        }}>
+          <CircularIndeterminate />
+
+        </div>
+) : (
 
         <form onSubmit={handleSubmit} className={styles.formContainer}>
 
@@ -246,7 +260,7 @@ const UpdateForm = () => {
           </div>
 
 
-        </form>}
+        </form>)}
 
     </>
   );
