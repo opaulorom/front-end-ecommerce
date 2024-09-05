@@ -188,7 +188,7 @@ const AllOrderDetails = () => {
                 <div className={styles.boletoContainer__buttonContainer}>
                   <Link to={order.bankSlipUrl} style={{ textDecoration: "none" }}>
                     {" "}
-                    <button className={styles.boletoContainer__button}>Ver boleto</button>{" "}
+                    <button className={styles.boletoContainer__button}>Pagar boleto</button>{" "}
                   </Link>
                   <div className={styles.boletoContainer__span}>
                     <WatchLaterOutlinedIcon />
