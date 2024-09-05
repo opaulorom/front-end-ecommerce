@@ -37,6 +37,7 @@
   color: #d3d3d3;
   margin-top: 0.5rem;
   font-family: "poppins", sans-serif;
+  width: 80vw;
 }
 
 .footer__social {
@@ -68,5 +69,8 @@
   .footerSection {
     margin-bottom: 0;
     text-align: left;
+  }
+  .footer__p{
+    width: 24vw;
   }
 }

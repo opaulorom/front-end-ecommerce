@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="footerContent">
         <div className="footerSection">
           <h3 className="footerH3">Sobre Nós</h3>
-          <p className="footer__p">Informações sobre a empresa.</p>
+          <p className="footer__p">Somos a Mediewal, uma marca de roupas masculinas e femininas criada para quem quer se vestir bem e reinar no estilo. Inspirada no conceito de elegância e confiança, a Mediewal oferece peças que combinam qualidade, conforto e personalidade, para que cada pessoa possa se sentir como a verdadeira protagonista do seu próprio reino.</p>
         </div>
         <div className="footerSection">
           <h3 className="footerH3">Contato</h3>
