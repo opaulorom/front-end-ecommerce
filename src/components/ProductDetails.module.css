@@ -221,8 +221,9 @@
 }
 .name {
   font-family: "poppins", sans-serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin-bottom: 2rem;
+  font-weight: 600;
 }
 
 .color {
@@ -288,6 +289,7 @@
   }
   .name {
     width: 35vw;
+    font-size: 1.1rem;
   }
   .containerImage {
     display: flex;
@@ -334,6 +336,9 @@
   }
   .name {
     width: 80vw;
+    font-size: 1.1rem;
+    font-weight: 600;
+
   }
   .DesktopCarrosel {
     display: none;
@@ -361,6 +366,10 @@
   .ProductDetailsContainer {
     margin-top: 7rem;
   }
+  .name{
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
 }
 @media (min-width: 1559px) {
   .ProductDetailsContainer {
@@ -373,10 +382,18 @@
   .cartModalContent__button {
     width: 30vw;
   }
+  .name{
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
 }
 @media (min-width: 1643px) {
   .ProductDetailsContainer {
     margin-top: 10rem;
+  }
+  .name{
+    font-size: 1.1rem;
+    font-weight: 600;
   }
 }
 
@@ -387,5 +404,9 @@
   }
   .cartModalContent__button {
     width: 30vw;
+  }
+  .name{
+    font-size: 1.1rem;
+    font-weight: 600;
   }
 }
