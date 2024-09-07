@@ -18,6 +18,7 @@ import { useConfig } from "../context/ConfigContext";
 import { logPageView } from "../../analytics";
 const CategorySubcategories = () => {
   const { category } = useParams();
+  
   const [subcategories, setSubcategories] = useState([]);
   const [subcategoriesData, setSubcategoriesData] = useState([]);
   const [hoveredIndex, setHoveredIndex] = useState(-1); // -1 indica que nenhuma imagem está sendo hoverada
@@ -420,19 +421,15 @@ const CategorySubcategories = () => {
               <div className={styles.ProductsDesktopContainer}>
                 {mixedProducts.length === 0 && (
                   <div
-                    style={{
-                      position: "absolute",
-                      display: "flex",
-                      flexDirection: "column",
-                      top: "15rem",
-                      left: "35rem",
-                    }}
+             
+                    className={styles.OutOfStock}
                   >
                     <img
-                      src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
+                      src="https://i.imgur.com/ocoLP28.png"
                       alt=""
+                      className={styles.OutOfStockIMG}
                     />
-                    <span>
+                    <span  className={styles.OutOfStockSpan}>
                       O Produto que Você Procura Não Está Disponível no momento.
                     </span>
                   </div>
