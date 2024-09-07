@@ -105,14 +105,7 @@ const NewArrivals = ({ onNewArrivalsUpdate }) => {
                       R$ {product.variations[0].sizes[0].price}
                     </span>
                     <span
-                      style={{
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        width: "15vw",
-                        color: "rgb(114, 114, 114)",
-                        fontSize: ".8rem",
-                      }}
+                      className="ulContainer__name"
                     >
                       {product.name}
                     </span>
