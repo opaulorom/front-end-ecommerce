@@ -32,7 +32,7 @@ const DiscountProducts = () => {
           <h2>{product.name}</h2>
           <p>{product.description}</p>
           <p>Desconto: {product.discountPercentage}%</p>
-          <p>Preço: R${product.price.toFixed(2)}</p>
+          <p>R${product.price.toFixed(2)}</p>
           <p>Preço anterior: <span style={{ textDecoration: 'line-through', color: '#8c8c8c' }}>{formatPrice(product.previousPrice)}</span></p>
           <img src={product.variations[0].urls[0]} alt={product.name} />
         </div>

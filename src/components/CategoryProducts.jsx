@@ -39,7 +39,7 @@ const CategoryProducts = () => {
             <li className={styles.CategoryProducts__productcard} >
  
                         <img src={product.variations[0].urls[0]} alt={product.name} className={styles.CategoryProducts__image} />
-                        <p className={styles.CategoryProducts__price}>Preço: R${product.variations[0].sizes[0].price.toFixed(2)}</p>
+                        <p className={styles.CategoryProducts__price}> R${product.variations[0].sizes[0].price.toFixed(2)}</p>
 
                         <h3 className={styles.CategoryProducts__productName}>{product.name}</h3>
                         {/* Renderização adicional conforme necessário */}

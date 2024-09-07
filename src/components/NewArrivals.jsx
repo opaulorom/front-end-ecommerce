@@ -97,10 +97,11 @@ const NewArrivals = ({ onNewArrivalsUpdate }) => {
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <span
                       style={{
-                        fontSize: "1rem",
+                        fontSize: "1.1rem",
                         fontWeight: "700",
                         fontFamily: "poppins, sans-serif",
                       }}
+                      
                     >
                       R$ {product.variations[0].sizes[0].price}
                     </span>

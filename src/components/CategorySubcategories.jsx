@@ -623,7 +623,7 @@ const CategorySubcategories = () => {
                           className={styles.subcategoriesDataContainer__image}
                         />
                         <p className={styles.subcategoriesDataContainer__price}>
-                          Preço: R$
+                           R$
                           {product.variations[0].sizes[0].price.toFixed(2)}
                         </p>
                         <p
@@ -660,7 +660,7 @@ const CategorySubcategories = () => {
                             className={styles.priceContainer__image}
                           />
                           <p className={styles.priceContainer__price}>
-                            Preço: R$
+                            R$
                             {product.variations[0].sizes[0].price.toFixed(2)}
                           </p>
 

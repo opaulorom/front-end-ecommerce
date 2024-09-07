@@ -766,7 +766,7 @@ const ProductDetails = () => {
 
                     <span className={styles.price}>
                       {" "}
-                      Preço:<strong> R$ {selectedPrice}</strong>
+                     <strong> R$ {selectedPrice}</strong>
                     </span>
                   </div>
                   <div className={styles.sizeContainer}>

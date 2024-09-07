@@ -195,7 +195,7 @@ const CartB = () => {
                             size.size === item.size && (
                               <div key={size.size}>
                                 <span className={styles.spanPrice}>
-                                  Preço: R${size.price && size.price.toFixed(2)}
+                                 R${size.price && size.price.toFixed(2)}
                                 </span>
                               </div>
                             )

@@ -44,7 +44,7 @@ const DiscountProductsByCategoryAndPorcentage = () => {
             </Link>
             <p>{product.description}</p>
               <p>Desconto: {product.discountPercentage}%</p>
-              <p>Preço: R${product.price.toFixed(2)}</p>
+              <p> R${product.price.toFixed(2)}</p>
               <p style={{ textDecoration: 'line-through', color: '#8c8c8c' }}>Preço anterior: {formatPrice(product.previousPrice.toFixed(2))}</p>
           </div>
         ))}
