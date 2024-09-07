@@ -72,7 +72,7 @@ const ImageGallery = () => {
                 <Link to={`/categories/${encodeURIComponent(category.name)}`}>
                   <img src={image.imageUrl} alt={`Image ${image._id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "50%", aspectRatio: "1/1" }} />
                 </Link>
-                <span style={{ marginTop: '5px', fontFamily:"poppins", fontWeight:"400", fontSize:".9rem", color:"#666" }}>{category.name}</span>
+                <span style={{ marginTop: '5px', fontFamily:"poppins", fontWeight:"400", fontSize:"1rem", color:"#666" }}>{category.name}</span>
               </div>
             ))
           ))}

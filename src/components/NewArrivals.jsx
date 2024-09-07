@@ -105,6 +105,7 @@ const NewArrivals = ({ onNewArrivalsUpdate }) => {
                       R$ {product.variations[0].sizes[0].price}
                     </span>
                     <span
+                    
                       className="ulContainer__name"
                     >
                       {product.name}
