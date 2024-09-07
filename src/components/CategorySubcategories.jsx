@@ -545,7 +545,8 @@ const CategorySubcategories = () => {
                                   whiteSpace: "nowrap",
                                   width: "15vw",
                                   color: "rgb(114, 114, 114)",
-                                  fontSize: ".8rem",
+                                  fontSize: ".9rem",
+                                  fontFamily: 'Poppins, sans-serif'
                                 }}
                               >
                                 {product.name}
