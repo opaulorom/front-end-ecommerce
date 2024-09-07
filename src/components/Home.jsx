@@ -26,6 +26,7 @@ const Home = () => {
 
       <Slider />
       <Categories />
+      
       <CategoryCarousel />
       
       <Header />
