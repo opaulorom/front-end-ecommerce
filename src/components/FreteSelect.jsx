@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import styles from "./FreteSelect.module.css";
 import { useConfig } from "../context/ConfigContext";
 import CircularIndeterminate from "./CircularIndeterminate";
+import { useAuth } from "../context/AuthContext";
 
 const FreteSelect = () => {
   const [cep, setCep] = useState(localStorage.getItem("cep") || "");
@@ -16,6 +17,7 @@ const FreteSelect = () => {
   const token = Cookies.get("token");
   const userId = Cookies.get("userId");
   const { apiUrl } = useConfig();
+  const { loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
 
   useEffect(() => {
     localStorage.setItem("cep", cep);
@@ -24,14 +26,11 @@ const FreteSelect = () => {
   useEffect(() => {
     const fetchFrete = async () => {
       try {
-        const responseGet = await axios.get(
-          `${apiUrl}/api/frete/${userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const responseGet = await axios.get(`${apiUrl}/api/frete/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setFrete(responseGet.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -65,15 +64,12 @@ const FreteSelect = () => {
         }
       );
 
-      const responseGet = await axios.get(
-        `${apiUrl}/api/frete/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("log", userId);
+      const responseGet = await axios.get(`${apiUrl}/api/frete/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       setFrete(responseGet.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -84,68 +80,72 @@ const FreteSelect = () => {
 
   return (
     <div>
-      <form className={styles.formContainer}>
-        <input
-          type="text"
-          value={cep}
-          onChange={(event) => setCep(event.target.value)}
-          placeholder="Digite pra pesquisar um cep."
-          className={styles.formContainer__input}
-        />
+      {loggedIn === true && (
+        <>
+          {" "}
+          <form className={styles.formContainer}>
+            <input
+              type="text"
+              value={cep}
+              onChange={(event) => setCep(event.target.value)}
+              placeholder="Digite pra pesquisar um cep."
+              className={styles.formContainer__input}
+            />
 
-        <button
-          type="submit"
-          className={styles.formContainer__button}
-          onClick={handleSubmit}
-        >
-          <SearchIcon /> Buscar
-        </button>
-      </form>
+            <button
+              type="submit"
+              className={styles.formContainer__button}
+              onClick={handleSubmit}
+            >
+              <SearchIcon /> Buscar
+            </button>
+          </form>
+          {isLoading ? (
+            <div className={styles.CircularIndeterminate}>
+              <CircularIndeterminate />
+              <p>Carregando...</p>
+            </div>
+          ) : (
+            frete && (
+              <div className={styles.div}>
+                {frete.map((item, index) => (
+                  <div key={index} className={styles.freteItemContainer}>
+                    <div className={styles.interContainer}>
+                      <img
+                        src={item.logo}
+                        alt="logo das transportadoras"
+                        className={
+                          item.nomeTransportadora === "Jadlog"
+                            ? styles.Jadlog
+                            : styles.image
+                        }
+                      />
+                      <p className={styles.p}>{item.nomeTransportadora}</p>
+                    </div>
 
-      {isLoading ? ( 
-        <div className={styles.CircularIndeterminate}>
-        <CircularIndeterminate />
-        <p>Carregando...</p> 
-        </div>
-      ) : (
-        frete && (
-          <div>
-            {frete.map((item, index) => (
-              <div key={index} className={styles.freteItemContainer}>
-                <div className={styles.interContainer}>
-                  <img
-                    src={item.logo}
-                    alt="logo das transportadoras"
-                    className={
-                      item.nomeTransportadora === "Jadlog"
-                        ? styles.Jadlog
-                        : styles.image
-                    }
-                  />
-                  <p className={styles.p}>{item.nomeTransportadora}</p>
-                </div>
+                    <div className={styles.interContainer}>
+                      <span className={styles.p}>Data de entrega</span>
+                      <p className={styles.p}>
+                        {item.dataPrevistaEntrega
+                          .split("T")[0]
+                          .split("-")
+                          .reverse()
+                          .join("/")}{" "}
+                        ({item.prazoEntrega} dias)
+                      </p>
+                    </div>
 
-                <div className={styles.interContainer}>
-                  <span className={styles.p}>Data de entrega</span>
-                  <p className={styles.p}>
-                    {item.dataPrevistaEntrega
-                      .split("T")[0]
-                      .split("-")
-                      .reverse()
-                      .join("/")}{" "}
-                    ({item.prazoEntrega} dias)
-                  </p>
-                </div>
-
-                <div className={styles.interContainer}>
-                  <span className={styles.p}>valor do frete: </span>
-                  <p className={styles.price}>R$ {item.valorFrete}</p>
-                </div>
-                <div></div>
+                    <div className={styles.interContainer}>
+                      <span className={styles.p}>valor do frete: </span>
+                      <p className={styles.price}>R$ {item.valorFrete}</p>
+                    </div>
+                    <div></div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        )
+            )
+          )}
+        </>
       )}
     </div>
   );

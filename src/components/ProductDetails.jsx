@@ -838,7 +838,7 @@ const ProductDetails = () => {
                         {" "}
                         {product.description}
                       </span>
-                    </div>
+                    </div >
                       <FreteSelect />
                     </div>
 

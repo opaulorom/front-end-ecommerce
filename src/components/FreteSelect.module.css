@@ -1,4 +1,7 @@
 /* FreteSelect.module.css */
+.div{
+  margin-bottom: 8rem;
+}
 .formContainer {
     display: flex;
     justify-content: center;
@@ -44,6 +47,7 @@
     width: 90vw;
     margin: 0 auto;
     margin-top: 1rem;
+    margin-bottom: 2rem;
     
 
   }
