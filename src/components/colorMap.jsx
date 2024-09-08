@@ -3,7 +3,6 @@ const colorMap = {
     azul: "#0000FF",
     verde: "#008000",
     vermelho: "#FF0000",
-    vermelha: "red",
     amarelo: "#FFFF00",
     laranja: "#FFA500",
     roxo: "#800080",
