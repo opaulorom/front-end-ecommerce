@@ -115,7 +115,7 @@ const CategoryCarousel = () => {
             width: `${categories.length * 100}%`,
             transform: `translateX(-${(100 / categories.length) * currentIndex}%)`,
             transition: 'transform 0.3s ease', // Tempo de transição reduzido para resposta mais rápida
-            marginLeft: "40rem",
+            marginLeft: "-20rem",
             gap: "2rem"
           }}
         >
