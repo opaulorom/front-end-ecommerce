@@ -10,7 +10,7 @@ const colorMap = {
     marrom: "#A52A2A",
     cinza: "#808080",
     preto: "#000000",
-    preta: "#000000",
+
     branco: "#FFFFFF",
     "azul turquesa": "#40E0D0",
     violeta: "#EE82EE",
