@@ -24,7 +24,7 @@ export default function Footer() {
             <a href="https://www.facebook.com/profile.php?id=100078800343826&locale=pt_BR">
               <FacebookOutlinedIcon style={{ width: '35px', height: '35px' }} />
             </a>
-            <a href="https://www.instagram.com/mediewalrevenda/">
+            <a href="https://www.instagram.com/lojamediewal/">
               <InstagramIcon style={{ width: '35px', height: '35px' }} />
             </a>
           </div>
