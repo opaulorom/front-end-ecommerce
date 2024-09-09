@@ -18,7 +18,6 @@ const CategoryCarousel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await new Promise(resolve => setTimeout(resolve, 20000));
 
         const response = await axios.get(`${apiUrl}/api/categories`);
         console.log('Categories Response:', response.data);
