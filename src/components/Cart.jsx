@@ -44,6 +44,7 @@ const Cart = () => {
   const [exceedAvailability, setExceedAvailability] = useState(1);
   const [deleteProductId, setDeleteProductId] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // Estado para o loading
+  const [isLoadingValueCart, setIsLoadingValueCart] = useState(false); // Estado para o loading
 
   const [openModal, setOpenModal] = useState(false);
   const modalRef = useRef(null);
@@ -652,6 +653,7 @@ function handleMessage(){
                                   const color = item.color;
                                   const size = item.size;
                                   const token = Cookies.get("token");
+                                  setIsLoadingValueCart(true); // Inicia o loading
 
                                   axios
                                     .put(
@@ -693,8 +695,12 @@ function handleMessage(){
                                             error
                                           );
                                         });
+                                        setIsLoadingValueCart(false); // Finaliza o loading
+
                                     })
                                     .catch((error) => {
+                                      setIsLoadingValueCart(false); // Finaliza o loading
+
                                       console.log(
                                         "Erro ao atualizar quantidade do produto no carrinho.",
                                         error
@@ -704,40 +710,46 @@ function handleMessage(){
                               }}
                               style={{ cursor: "pointer" }}
                             />
-                            <span
-                              type="number"
-                              value={item.quantity}
-                              onChange={(e) => {
-                                const newQuantity = parseInt(e.target.value);
-                                if (newQuantity <= 0) {
-                                  // Se a quantidade for inválida, não faz nada
-                                  return;
-                                }
 
-                                const availableQuantity =
-                                  getAvailableQuantity(item);
+{isLoadingValueCart ? (
+    <CircularProgress size={24} /> // Exibe o loading enquanto o estado isLoading for true
+  ) : (   <span
+    type="number"
+    value={item.quantity}
+    onChange={(e) => {
+      const newQuantity = parseInt(e.target.value);
+      if (newQuantity <= 0) {
+        // Se a quantidade for inválida, não faz nada
+        return;
+      }
 
-                                if (newQuantity > availableQuantity) {
-                                  alert(
-                                    "A quantidade desejada excede a quantidade disponível no estoque."
-                                  );
-                                  return;
-                                }
+      const availableQuantity =
+        getAvailableQuantity(item);
 
-                                const newCart = [...getCart];
-                                newCart[index].quantity = newQuantity;
-                                setGetCart(newCart);
-                                handleQuantityChange(
-                                  item.productId._id,
-                                  newQuantity
-                                );
-                              }}
-                              className={styles.inputContainer}
-                            >
-                              {item.quantity}
-                            </span>
+      if (newQuantity > availableQuantity) {
+        alert(
+          "A quantidade desejada excede a quantidade disponível no estoque."
+        );
+        return;
+      }
+
+      const newCart = [...getCart];
+      newCart[index].quantity = newQuantity;
+      setGetCart(newCart);
+      handleQuantityChange(
+        item.productId._id,
+        newQuantity
+      );
+    }}
+    className={styles.inputContainer}
+  >
+    {item.quantity}
+  </span>)}
+                         
                             <AddIcon
                               onClick={() => {
+                                setIsLoadingValueCart(true); // Inicia o loading
+
                                 const newQuantity = item.quantity + 1;
                                 const availableQuantity =
                                   getAvailableQuantity(item);
@@ -807,10 +819,15 @@ function handleMessage(){
                                       });
                                   })
                                   .catch((error) => {
+                                    setIsLoadingValueCart(false);
+
                                     console.log(
                                       "Erro ao atualizar quantidade do produto no carrinho.",
                                       error
                                     );
+                                  })
+                                  .finally(() => {
+                                    setIsLoadingValueCart(false); // Sempre finalizar o loading
                                   });
                                 setUpdatedQuantity(newQuantity);
                                 console.log("quantidade", newQuantity);
