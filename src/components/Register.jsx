@@ -97,12 +97,11 @@ function RegisterUser() {
       <div className={styles.container}>
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           <h2 className={styles.h2}>Cadastro</h2>
-          {message && <p>{message}</p>}
           <div className={styles.specs}>
             <label className={styles.label}>Email:</label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className={styles.input} />
           </div>
-          {error && <p>{error}</p>}
+        
           <div>
             <label  className={styles.label}>Password:</label>
             <div style={{ position: "relative" }}>
