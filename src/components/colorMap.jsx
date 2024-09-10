@@ -1,5 +1,6 @@
 // colorMap.js
 const colorMap = {
+   "bege claro": '#DCD6C6',
     azul: "#0000FF",
     verde: "#008000",
     vermelho: "#FF0000",
