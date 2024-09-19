@@ -143,6 +143,7 @@ const Header = () => {
                 <Link to={"/home"}>
                   <img
                     src="https://i.ibb.co/B3xYDzG/Logo-mediewal-1.png"
+                    alt="Logo da Mediewal"
                     className={styles.MediewalLogo}
                   />
                 </Link>
@@ -371,6 +372,7 @@ const Header = () => {
                 <Link to={"/home"}>
                   <img
                     src="https://i.ibb.co/B3xYDzG/Logo-mediewal-1.png"
+                    alt="Logo da Mediewal"
                     className={styles.MediewalLogoMobile}
                   />
                 </Link>

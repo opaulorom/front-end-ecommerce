@@ -3,6 +3,7 @@ import "./App.css";
 import Home from "./components/Home";
 import { useLocation } from 'react-router-dom';
 import { logPageView } from "../analytics";
+import { Helmet } from "react-helmet";
 
 function App() {
   const location = useLocation();
@@ -12,7 +13,10 @@ function App() {
   }, [location]);
   return (
     <>
-
+     <Helmet>
+        <title>Home - Loja Mediewal</title>
+        <meta name="description" content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos." />
+      </Helmet>
     
                 <Home></Home>
 

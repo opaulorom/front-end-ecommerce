@@ -12,6 +12,7 @@ import NewArrivalsSkeleton from "./NewArrivalsSkeleton";
 import zIndex from "@mui/material/styles/zIndex";
 import { useConfig } from "../context/ConfigContext";
 import { logPageView } from "../../analytics";
+import { Helmet } from "react-helmet";
 
 const NewArrivals = ({ onNewArrivalsUpdate }) => {
   const [newArrivals, setNewArrivals] = useState([]);
@@ -56,7 +57,10 @@ const NewArrivals = ({ onNewArrivalsUpdate }) => {
 
   return (
     <div>
-    
+     <Helmet>
+        <title>Novidades - Loja Mediewal</title>
+        <meta name="description" content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos." />
+      </Helmet>
       <Navbar />
       {loading ? (
         <NewArrivalsSkeleton /> // Exibir carregamento enquanto os dados não são carregados
