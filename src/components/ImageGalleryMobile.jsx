@@ -36,7 +36,7 @@ const ImageGalleryMobile = () => {
   return (
     <div style={{ position: "relative" }}>
       <Helmet>
-        <title>Categorias - Loja Mediewal</title>
+        <title>Home - Loja Mediewal</title>
         <meta
           name="description"
           content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
