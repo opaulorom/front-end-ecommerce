@@ -122,7 +122,7 @@ const CartB = () => {
         >
           <img
             src="https://i.ibb.co/x765V9y/bag-4.png"
-            alt=""
+            alt="icone do carrinho"
             style={{ width: "15vw" }}
           />
           <p>O carrinho está vazio.</p>

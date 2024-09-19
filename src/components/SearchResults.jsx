@@ -219,7 +219,7 @@ const SearchResults = () => {
 
     const fetchOriginalProducts = async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
 
         // Alteração na chamada de API para obter produtos misturados específicos
         const response = await fetch(
@@ -369,8 +369,8 @@ const SearchResults = () => {
                       }}
                     >
                       <img
-                        src="https://i.ibb.co/hVLGSpN/commerce-and-shopping-1.png"
-                        alt=""
+                        src="https://i.imgur.com/ocoLP28.png"
+                        alt="icone de produto indisponivel"
                       />
                       <span>
                         O Produto que Você Procura Não Está Disponível no
@@ -396,7 +396,7 @@ const SearchResults = () => {
                         </div>
                         <img
                           src={product.variations[0].urls[0]}
-                          alt=""
+                          alt={product.name}
                       
                           className={styles.SearchResultsCotainer__image}
                         />

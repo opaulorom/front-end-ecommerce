@@ -47,7 +47,7 @@ const Heart = () => {
             <Link to={`/products/${favorite._id}`} className={styles.HeartLink}>
               <img
                 src={favorite.variations[0].urls[0]}
-                alt=""
+                alt="icone dos fovoritos"
                 className={styles.HeartIMG}
               />
               <li className={styles.Name}>

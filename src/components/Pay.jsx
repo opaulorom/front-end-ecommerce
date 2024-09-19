@@ -320,7 +320,7 @@ const Pay = () => {
                         >
                           <img
                             src="https://i.imgur.com/MXgEf5F.png"
-                            alt=""
+                            alt="icone do pix"
                             style={{
                               maxWidth: "14vw",
                             }}
@@ -356,7 +356,7 @@ const Pay = () => {
                         >
                           <img
                             src="https://i.imgur.com/m9N1n50.png"
-                            alt=""
+                            alt="icone do boleto"
                             style={{ maxWidth: "14vw" }}
                           />{" "}
                           Boleto
@@ -392,7 +392,7 @@ const Pay = () => {
                           {" "}
                           <img
                             src="https://i.imgur.com/8irAIsv.png"
-                            alt=""
+                            alt="icone do Cartão de Crédito"
                           />{" "}
                           Cartão de Crédito
                         </label>
@@ -642,7 +642,7 @@ const Pay = () => {
                       <a href="https://imgbb.com/">
                         <img
                           src="https://i.ibb.co/Zcn8dp8/verified.png"
-                          alt="verified"
+                          alt="icone de verificado"
                           border="0"
                         />
                       </a>{" "}

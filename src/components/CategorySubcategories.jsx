@@ -426,7 +426,7 @@ const CategorySubcategories = () => {
                   >
                     <img
                       src="https://i.imgur.com/ocoLP28.png"
-                      alt=""
+                      alt="icone de carrinho vazio"
                       className={styles.OutOfStockIMG}
                     />
                     <span  className={styles.OutOfStockSpan}>

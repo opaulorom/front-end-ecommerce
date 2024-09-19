@@ -82,7 +82,7 @@ const NewArrivals = ({ onNewArrivalsUpdate }) => {
                               : product.variations[0].urls[0]
                             : product.variations[0].urls[0]
                         }
-                        alt=""
+                        alt={product.name}
                         className="IMGContainer"
                         onMouseEnter={() =>
                           product.variations[0].urls.length > 1 &&

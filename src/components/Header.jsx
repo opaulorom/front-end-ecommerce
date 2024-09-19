@@ -265,7 +265,7 @@ const Header = () => {
                       >
                         <img
                           src="https://i.ibb.co/98L4Hny/bell-6.png"
-                          alt=""
+                          alt="icone de sino de notificações"
                           style={{ fontSize: "14rem", cursor: "pointer" }}
                           onClick={handleOpenBellModal}
                         />
@@ -299,7 +299,7 @@ const Header = () => {
                   {" "}
                   <img
                     src="https://i.ibb.co/L1tX6LY/user-2.png"
-                    alt=""
+                    alt="icone de perfil do usuario"
                     onClick={handleOpenModalAccount}
                   />
                 </Link>
@@ -317,7 +317,7 @@ const Header = () => {
                 >
                   <img
                     src="https://i.ibb.co/FwNpdzD/shopping-bag-1.png"
-                    alt=""
+                    alt="icone do carrinho de compras"
                   />
                   <span
                     style={{
