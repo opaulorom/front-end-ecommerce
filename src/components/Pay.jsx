@@ -10,6 +10,7 @@ import { useCart } from "../context/CartContext";
 import Header from "./Header";
 import { useConfig } from "../context/ConfigContext";
 import { logPageView } from "../../analytics";
+import { Helmet } from "react-helmet";
 
 const Pay = () => {
   const [paymentMethod, setPaymentMethod] = useState("pix");
@@ -262,7 +263,13 @@ const Pay = () => {
       <Header />
 
       <Navbar />
-
+      <Helmet>
+        <title>Página de Pagamento - Loja Mediewal</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
       <div style={{ textAlign: "center", marginTop: "10rem" }}>
         {showContent ? (
           <div>

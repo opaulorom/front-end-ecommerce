@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import styles from "./UpdateForm.module.css";
 import { useConfig } from "../context/ConfigContext";
 import CircularIndeterminate from "./CircularIndeterminate";
+import { Helmet } from "react-helmet";
 const UpdateForm = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const token = Cookies.get("token"); // Obtenha o token do cookie
@@ -127,7 +128,11 @@ const UpdateForm = () => {
   return (
     <>
       <Navbar />
-
+      <Helmet>
+        <title>Dados do usuário - Loja Mediewal</title>
+        <meta name="description" content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos." />
+      </Helmet>
+    
       {loading ? (
         <div
           style={{

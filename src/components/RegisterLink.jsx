@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useConfig } from "../context/ConfigContext";
 import { useLocation } from "react-router-dom";
 import { logPageView } from "../../analytics";
+import { Helmet } from "react-helmet";
 
 const RegisterLink = () => {
   const [email, setEmail] = useState("");
@@ -50,7 +51,10 @@ const RegisterLink = () => {
     <>
       <Header />
       <Navbar />
-
+      <Helmet>
+        <title>Cadastro de usuário  - Loja Mediewal</title>
+        <meta name="description" content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos." />
+      </Helmet>
       <div className={styles.formContainer}>
         <h1 className={styles.formContainer__h1}>Digite seu email</h1>
 

@@ -1,29 +1,29 @@
-import React, { useEffect } from "react";
-import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
-import BannerWithDiscount from "./BannerWithDiscount";
-import DiscountImageLinkPerPercentageAndCategory from "./DiscountImageLinkPerPercentageAndCategory";
-import Header from "./Header";
-import Navbar from "./Navbar";
+// import React, { useEffect } from "react";
+// import DiscountImageLinkPerPercentage from "./DiscountImageLinkPerPercentage";
+// import BannerWithDiscount from "./BannerWithDiscount";
+// import DiscountImageLinkPerPercentageAndCategory from "./DiscountImageLinkPerPercentageAndCategory";
+// import Header from "./Header";
+// import Navbar from "./Navbar";
 
 
-const WhatsNew = () => {
+// const WhatsNew = () => {
   
 
 
-  return (
-    <div>
-      <Header />
-      <Navbar />
-      <h1 style={{ marginTop: "10rem" }}>Promoções</h1>
-      <div style={{ display: "flex", marginTop: "5rem" }}>
-        <DiscountImageLinkPerPercentage />
-      </div>
-      <BannerWithDiscount />
-      <DiscountImageLinkPerPercentageAndCategory />
+//   return (
+//     <div>
+//       <Header />
+//       <Navbar />
+//       <h1 style={{ marginTop: "10rem" }}>Promoções</h1>
+//       <div style={{ display: "flex", marginTop: "5rem" }}>
+//         <DiscountImageLinkPerPercentage />
+//       </div>
+//       <BannerWithDiscount />
+//       <DiscountImageLinkPerPercentageAndCategory />
 
      
-    </div>
-  );
-};
+//     </div>
+//   );
+// };
 
-export default WhatsNew;
+// export default WhatsNew;

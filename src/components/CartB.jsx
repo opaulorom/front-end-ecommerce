@@ -8,6 +8,7 @@ import styles from "./CartB.module.css";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useConfig } from "../context/ConfigContext";
+import { Helmet } from "react-helmet";
 
 const CartB = () => {
   const [getCart, setGetCart] = useState([]);
@@ -78,6 +79,13 @@ const CartB = () => {
               marginTop: "15rem",
             }}
           >
+            <Helmet>
+              <title>Carrinho de Compras - Loja Mediewal</title>
+              <meta
+                name="description"
+                content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+              />
+            </Helmet>
             <div
               style={{
                 marginTop: "5rem",
@@ -195,7 +203,7 @@ const CartB = () => {
                             size.size === item.size && (
                               <div key={size.size}>
                                 <span className={styles.spanPrice}>
-                                 R${size.price && size.price.toFixed(2)}
+                                  R${size.price && size.price.toFixed(2)}
                                 </span>
                               </div>
                             )

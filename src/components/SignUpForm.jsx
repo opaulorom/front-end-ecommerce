@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import styles from "./SignUpForm.module.css"
 import { useConfig } from "../context/ConfigContext";
+import { Helmet } from "react-helmet";
 
 
 
@@ -216,6 +217,10 @@ const SignUpForm = () => {
     <>
       <Header />
       <Navbar />
+      <Helmet>
+        <title>Formulário de cadastro - Loja Mediewal</title>
+        <meta name="description" content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos." />
+      </Helmet>
       <ToastContainer
         position="top-center"
         autoClose={5000}

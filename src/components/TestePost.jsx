@@ -1,11 +1,11 @@
-import React from 'react'
+// import React from 'react'
 
-const TestePost = (encodedImage) => {
-  return (
-    <div>
+// const TestePost = (encodedImage) => {
+//   return (
+//     <div>
    
-    </div>
-  )
-}
+//     </div>
+//   )
+// }
 
-export default TestePost
+// export default TestePost

@@ -10,6 +10,7 @@ import colorMap from "./colorMap";
 import Navbar from "./Navbar";
 import { useConfig } from "../context/ConfigContext";
 import { logPageView } from "../../analytics";
+import { Helmet } from "react-helmet";
 const SearchResults = () => {
   const { query } = useParams();
   const [searchResults, setSearchResults] = useState([]);
@@ -351,7 +352,10 @@ const SearchResults = () => {
       <Header />
 
 
-
+      <Helmet>
+        <title>Pesquisa de produtos - Loja Mediewal</title>
+        <meta name="description" content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos." />
+      </Helmet>
 
               <div className={styles.SearchResultsCotainer}>
                 <ul

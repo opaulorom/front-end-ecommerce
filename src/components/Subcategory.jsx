@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import IconToggle from './IconToggle';
 import Header from './Header';
 import { useConfig } from '../context/ConfigContext';
+import { Helmet } from 'react-helmet';
 const Subcategory = () => {
   const { category, subcategory } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,7 +51,10 @@ const Subcategory = () => {
   return (
     <div>
       <Header/>
-
+      <Helmet>
+        <title>Categorias - Loja Mediewal</title>
+        <meta name="description" content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos." />
+      </Helmet>
       <h1>{subcategory} Products</h1>
       <ul
         style={{

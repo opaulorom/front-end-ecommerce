@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import ImageGalleryDesktop from './ImageGalleryDesktop';
-import styles from "./CategoriesMobile.module.css"
-import Navbar from './Navbar';
-import { useConfig } from '../context/ConfigContext';
-import { logPageView } from '../../analytics';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import ImageGalleryDesktop from "./ImageGalleryDesktop";
+import styles from "./CategoriesMobile.module.css";
+import Navbar from "./Navbar";
+import { useConfig } from "../context/ConfigContext";
+import { logPageView } from "../../analytics";
+import { Helmet } from "react-helmet";
 
 const CategoriesDesktop = () => {
   const [categories, setCategories] = useState([]);
@@ -20,15 +21,20 @@ const CategoriesDesktop = () => {
         const response = await fetch(`${apiUrl}/api/allCategories`);
         const data = await response.json();
 
-        setCategories(prevCategories => {
+        setCategories((prevCategories) => {
           // Use um conjunto temporário para armazenar categorias únicas
-          const uniqueCategoriesSet = new Set([...prevCategories.map(c => c.category), ...data.map(c => c.category)]);
-          const uniqueCategories = Array.from(uniqueCategoriesSet).map(category => ({ category }));
+          const uniqueCategoriesSet = new Set([
+            ...prevCategories.map((c) => c.category),
+            ...data.map((c) => c.category),
+          ]);
+          const uniqueCategories = Array.from(uniqueCategoriesSet).map(
+            (category) => ({ category })
+          );
 
           return uniqueCategories;
         });
       } catch (error) {
-        console.error('Erro ao obter categorias:', error);
+        console.error("Erro ao obter categorias:", error);
       }
     };
 
@@ -36,17 +42,23 @@ const CategoriesDesktop = () => {
   }, []);
 
   return (
-    <div style={{
-      marginTop:"2rem",
-      marginBottom:"10rem",
-    
+    <div
+      style={{
+        marginTop: "2rem",
+        marginBottom: "10rem",
+      }}
+      className={styles.ImageGalleryDesktop}
+    >
+      <Helmet>
+        <title>Categorias - Loja Mediewal</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
+      <ImageGalleryDesktop />
 
-    }} className={styles.ImageGalleryDesktop}>
-            <ImageGalleryDesktop />
-          
-
-    <Navbar/>
-
+      <Navbar />
     </div>
   );
 };

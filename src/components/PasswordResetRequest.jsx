@@ -6,6 +6,7 @@ import styles from './PasswordResetRequest.module.css';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useConfig } from '../context/ConfigContext';
+import { Helmet } from 'react-helmet';
 const PasswordResetRequest = () => {
   const [email, setEmail] = useState('');
   const { apiUrl } = useConfig();
@@ -30,6 +31,13 @@ const PasswordResetRequest = () => {
     <>
       <Header />
       <Navbar />
+      <Helmet>
+        <title>Mudar Senha- Loja Mediewal</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
       <div className={styles.formContainer}>
         <h1 className={styles.formContainer__h1}>Redefinir Senha</h1>
      

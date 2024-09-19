@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 import Header from "./Header";
 import styles from "./Heart.module.css"; // Importa o módulo CSS
 import { useConfig } from "../context/ConfigContext";
+import { Helmet } from "react-helmet";
 
 const Heart = () => {
   const [favorites, setFavorites] = useState([]);
@@ -41,6 +42,13 @@ const Heart = () => {
     <div className={styles.HeartContainer}>
       <Header />
       <Navbar />
+      <Helmet>
+        <title>Página de Favoritos - Loja Mediewal</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
       <ul className={styles.HeartUL}>
         {favorites.map((favorite) => (
           <div key={favorite._id} className={styles.Heartfavorite}>

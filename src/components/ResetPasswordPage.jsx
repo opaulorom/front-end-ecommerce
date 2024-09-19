@@ -6,6 +6,7 @@ import style from "./ResetPasswordPage.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useConfig } from '../context/ConfigContext';
+import { Helmet } from 'react-helmet';
 const ResetPasswordPage = () => {
   const { token } = useParams(); // Extrai o token da URL
 
@@ -48,6 +49,10 @@ const ResetPasswordPage = () => {
   return (
     <div>
       <Header />
+      <Helmet>
+        <title>Mudar Senha - Loja Mediewal</title>
+        <meta name="description" content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos." />
+      </Helmet>
       <div className={style.formContainer}>
       <ToastContainer
           position="top-center"

@@ -37,7 +37,7 @@ import ResetPasswordPage from "./components/ResetPasswordPage";
 import RegisterLink from "./components/RegisterLink";
 
 import NewArrivals from "./components/NewArrivals";
-import WhatsNew from "./components/WhatsNew";
+// import WhatsNew from "./components/WhatsNew";
 import SignUpForm from "./components/SignUpForm";
 import MyOrders from "./components/MyOrders";
 import OrderDetails from "./components/OrderDetails";
@@ -102,7 +102,7 @@ const Root = () => (
     <Route path="/forgotPassword" element={<PasswordResetRequest/>} />
     <Route path="/reset-password/:token" element={<ResetPasswordPage/>} />
 
-    <Route path="/whatsNew" element={<WhatsNew/>} />
+    {/* <Route path="/whatsNew" element={<WhatsNew/>} /> */}
     <Route path="/newArrivals" element={<NewArrivals/>} />
     <Route path="/signUp" element={<SignUpForm/>} />
 

@@ -10,8 +10,7 @@ import Slider from "../components/Slider";
 import Footer from "./Footer";
 import { useLocation } from "react-router-dom";
 import { logPageView } from "../../analytics";
-
-
+import { Helmet } from "react-helmet";
 
 const Home = () => {
   const location = useLocation();
@@ -19,28 +18,30 @@ const Home = () => {
   useEffect(() => {
     logPageView();
   }, [location]);
-  
+
   return (
     <div>
-  
-
+      <Helmet>
+        <title>Home - Loja Mediewal</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
       <Slider />
       <Categories />
-      
+
       <CategoryCarousel />
-      
+
       <Header />
-   
+
       <div
         style={{ display: "flex", marginTop: "3rem", flexDirection: "column" }}
       >
-        <NewArrivals  />{" "}
+        <NewArrivals />{" "}
       </div>
       <Navbar></Navbar>
-     <Footer/>
-
- 
-
+      <Footer />
     </div>
   );
 };

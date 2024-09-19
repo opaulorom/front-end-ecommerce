@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import CircularIndeterminate from "./CircularIndeterminate";
 import { logPageView } from "../../analytics";
+import { Helmet } from "react-helmet";
 
 const OrderDetails = () => {
   const { id } = useParams(); // Certifique-se de que o parâmetro corresponde ao nome na URL
@@ -43,6 +44,13 @@ const OrderDetails = () => {
     <>
       <Header />
       <Navbar />
+      <Helmet>
+        <title>Histórico de Compras - Loja Mediewal</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
       {boleto ? (
         <div style={{ marginTop: "15rem" }}>
           <span>{boleto.billingType}</span>

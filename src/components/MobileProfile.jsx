@@ -8,6 +8,7 @@ import Navbar from "./Navbar";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import { logPageView } from "../../analytics";
+import { Helmet } from "react-helmet";
 const MobileProfile = () => {
   const { logout, loggedIn } = useAuth(); // Obtendo o userId do contexto de autenticação
   const [showButton, setShowButton] = useState(false);
@@ -26,6 +27,13 @@ const MobileProfile = () => {
   return (
     <div>
       <Header> </Header>
+      <Helmet>
+        <title>Perfil - Loja Mediewal</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
       <div style={{ marginTop: "10rem" }}>
         {loggedIn === true ? (
           <>

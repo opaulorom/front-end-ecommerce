@@ -11,6 +11,7 @@ import CircularIndeterminate from "./CircularIndeterminate";
 import styles from "./AllOrderDetails.module.css"
 import { useConfig } from "../context/ConfigContext";
 import { logPageView } from "../../analytics";
+import { Helmet } from "react-helmet";
 const AllOrderDetails = () => {
   const userId = Cookies.get("userId");
   const { logout, loggedIn } = useAuth();
@@ -105,6 +106,13 @@ const AllOrderDetails = () => {
     <>
       <Header />
       <Navbar />
+      <Helmet>
+        <title>Histórico de Compras - Loja Mediewal</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
       {loading ? (
         <div
           style={{

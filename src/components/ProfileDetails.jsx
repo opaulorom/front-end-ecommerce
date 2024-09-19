@@ -4,6 +4,7 @@ import Protected from './Protected'
 import Header from './Header'
 import { useLocation } from 'react-router-dom'
 import { logPageView } from '../../analytics'
+import { Helmet } from 'react-helmet'
 
 const ProfileDetails = () => {
   const location = useLocation();
@@ -12,6 +13,13 @@ const ProfileDetails = () => {
   }, [location]);
   return (
     <div>
+        <Helmet>
+        <title>Perfil - Loja Mediewal</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
         <Header></Header>
     </div>
   )

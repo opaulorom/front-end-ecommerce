@@ -23,6 +23,7 @@ import CircularIndeterminate from "./CircularIndeterminate";
 import { logPageView } from "../../analytics";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet";
 const Cart = () => {
   const [getCart, setGetCart] = useState([]);
   const [handleDeleteProduct, setHandleDeleteProduct] = useState(false);
@@ -332,6 +333,13 @@ function handleMessage(){
       />
 
       <Navbar />
+      <Helmet>
+        <title>Carrinho de Compras - Loja Mediewal</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
       {loading ? ( // Se estiver carregando, exibimos o CircularProgress
         <div className={styles.loading}>
           <CircularProgress />

@@ -24,6 +24,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import FreteSelect from "./FreteSelect";
 import { useConfig } from "../context/ConfigContext";
 import { logPageView } from "../../analytics";
+import { Helmet } from "react-helmet";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState({ variations: [] });
@@ -110,7 +111,7 @@ const ProductDetails = () => {
         } else {
           setShowCartButton(false);
         }
-        console.log("cus",response.data)
+        console.log("cus", response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -120,14 +121,11 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(
-          `${apiUrl}/api/product/${productId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${apiUrl}/api/product/${productId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (response.data.product) {
           const productData = response.data.product;
@@ -539,6 +537,13 @@ const ProductDetails = () => {
           theme="light"
           style={{ marginTop: "8rem" }}
         />
+        <Helmet>
+          <title>Detalhes do Produto - Loja Mediewal</title>
+          <meta
+            name="description"
+            content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+          />
+        </Helmet>
         <div style={{ position: "absolute", zIndex: "2" }}>
           <Header />
           {openSecondCartModal && (
@@ -766,7 +771,7 @@ const ProductDetails = () => {
 
                     <span className={styles.price}>
                       {" "}
-                     <strong> R$ {selectedPrice}</strong>
+                      <strong> R$ {selectedPrice}</strong>
                     </span>
                   </div>
                   <div className={styles.sizeContainer}>
@@ -812,7 +817,7 @@ const ProductDetails = () => {
                           )
                         )}
                     </div>
-                 
+
                     <div className={styles.buttonsContainer}>
                       {!showCartButton && (
                         <button
@@ -832,17 +837,15 @@ const ProductDetails = () => {
                           COMPRAR
                         </button>
                       )}
-   <div className={styles.descriptionContainer}>
-                      <h1 className={styles.h1}>Descrição</h1>
-                      <span className={styles.description}>
-                        {" "}
-                        {product.description}
-                      </span>
-                    </div >
+                      <div className={styles.descriptionContainer}>
+                        <h1 className={styles.h1}>Descrição</h1>
+                        <span className={styles.description}>
+                          {" "}
+                          {product.description}
+                        </span>
+                      </div>
                       <FreteSelect />
                     </div>
-
-                    
                   </div>
                 </div>
               </div>
@@ -856,22 +859,21 @@ const ProductDetails = () => {
                     onClick={handleClickCloseModal}
                   />
                   <div className={styles.cartModalContent__div}>
-                  <p className={styles.cartModalContent__p}>
-                    Você ainda não possui cadastro. Para fazer compras, por
-                    favor, cadastre-se.
-                  </p>
-                  <Link
-                    to={"/signUp"}
-                    style={{
-                      textDecoration: "none",
-                    }}
-                  >
-                    <button className={styles.cartModalContent__button}>
-                      cadastre-se
-                    </button>
-                  </Link>
+                    <p className={styles.cartModalContent__p}>
+                      Você ainda não possui cadastro. Para fazer compras, por
+                      favor, cadastre-se.
+                    </p>
+                    <Link
+                      to={"/signUp"}
+                      style={{
+                        textDecoration: "none",
+                      }}
+                    >
+                      <button className={styles.cartModalContent__button}>
+                        cadastre-se
+                      </button>
+                    </Link>
                   </div>
-                 
                 </div>
               </div>
             )}

@@ -1,7 +1,16 @@
 import React from 'react';
 import styles from "./ProductList.module.css"
+import { Helmet } from 'react-helmet';
 export default function ProductList({ products }) {
   return (
+    <>
+      <Helmet>
+        <title>Produtos - Loja Mediewal</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
     <ul className={styles.productListContainer}>
       {products.map(product => (
         <li key={product.id} className={styles.productListContainer__productcard}>
@@ -13,5 +22,7 @@ export default function ProductList({ products }) {
         </li>
       ))}
     </ul>
+    
+    </>
   );
 }

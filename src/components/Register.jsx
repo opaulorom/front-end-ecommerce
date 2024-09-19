@@ -12,6 +12,7 @@ import { useConfig } from '../context/ConfigContext';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logPageView } from '../../analytics';
+import { Helmet } from 'react-helmet';
 
 function RegisterUser() {
   const [email, setEmail] = useState('');
@@ -81,6 +82,10 @@ function RegisterUser() {
     <>
       <Header />
       <Navbar />
+      <Helmet>
+        <title>Cadastro de usuário  - Loja Mediewal</title>
+        <meta name="description" content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos." />
+      </Helmet>
       <ToastContainer
           position="top-center"
           autoClose={5000}
