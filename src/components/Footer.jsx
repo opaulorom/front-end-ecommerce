@@ -8,9 +8,11 @@ export default function Footer() {
       <div className="footerContent">
         <div className="footerSection">
           <h3 className="footerH3">Sobre Nós</h3>
-          <p className="footer__p">Somos a Mediewal, uma marca de roupas masculinas e femininas criada para
- quem quer se vestir bem e reinar no estilo. Inspirada no conceito de elegância
- e confiança.</p>
+          <p className="footer__p">
+            Somos a Mediewal, uma marca de roupas masculinas criada para quem
+            quer se vestir bem e reinar no estilo. Inspirada no conceito de
+            elegância  e confiança.
+          </p>
         </div>
         <div className="footerSection">
           <h3 className="footerH3">Contato</h3>
@@ -22,10 +24,10 @@ export default function Footer() {
           <h3 className="footerH3">Saiba mais nas nossas redes</h3>
           <div className="footer__social">
             <a href="https://www.facebook.com/profile.php?id=100078800343826&locale=pt_BR">
-              <FacebookOutlinedIcon style={{ width: '35px', height: '35px' }} />
+              <FacebookOutlinedIcon style={{ width: "35px", height: "35px" }} />
             </a>
             <a href="https://www.instagram.com/lojamediewal/">
-              <InstagramIcon style={{ width: '35px', height: '35px' }} />
+              <InstagramIcon style={{ width: "35px", height: "35px" }} />
             </a>
           </div>
         </div>
