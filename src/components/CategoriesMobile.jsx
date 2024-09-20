@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ImageGalleryMobile from "./ImageGalleryMobile";
 import styles from "./CategoriesMobile.module.css";
 import Navbar from "./Navbar";
@@ -9,6 +9,7 @@ import { Helmet } from "react-helmet";
 const CategoriesMobile = () => {
   const [categories, setCategories] = useState([]);
   const { apiUrl } = useConfig();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,13 +45,17 @@ const CategoriesMobile = () => {
       }}
       className={styles.ImageGalleryMobile}
     >
-      <Helmet>
-        <title>Home - Loja Mediewal</title>
-        <meta
-          name="description"
-          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
-        />
-      </Helmet>
+    {location.pathname === "/categorias" && (
+        <Helmet>
+          <title>Categorias - Loja Mediewal</title>
+          <meta
+            name="description"
+            content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+          />
+        </Helmet>
+      )}
+
+
       <ImageGalleryMobile />
       <Navbar />
     </div>

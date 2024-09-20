@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import IconToggle from './IconToggle';
@@ -14,6 +14,10 @@ const Subcategory = () => {
 
   const ITEMS_PER_PAGE = 10; // Número de produtos por página
   const { apiUrl } = useConfig();
+
+  
+
+  const location = useLocation();
 
   const fetchProducts = async () => {
     try {
@@ -51,10 +55,17 @@ const Subcategory = () => {
   return (
     <div>
       <Header/>
-      <Helmet>
-        <title>Home - Loja Mediewal</title>
-        <meta name="description" content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos." />
-      </Helmet>
+      {location.pathname === "/categorias" && (
+        <Helmet>
+          <title>Categorias - Loja Mediewal</title>
+          <meta
+            name="description"
+            content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+          />
+        </Helmet>
+      )}
+
+
       <h1>{subcategory} Products</h1>
       <ul
         style={{
