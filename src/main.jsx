@@ -47,7 +47,7 @@ const Root = () => (
   <Suspense fallback={<div style={{
     display:"flex",
     justifyContent:"center",
-    marginTop:"10rem"
+    marginTop:"15rem"
 
   }}>
     <CircularIndeterminate />
