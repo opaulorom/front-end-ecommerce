@@ -8,6 +8,7 @@ import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import { UnreadProvider } from "./context/UnreadContext";
 import { ConfigProvider } from './context/ConfigContext';
+import CircularIndeterminate from "./components/CircularIndeterminate";
 
 // Lazy load components
 const App = React.lazy(() => import("./App"));
@@ -43,7 +44,14 @@ const AllOrderDetails = React.lazy(() => import("./components/AllOrderDetails"))
 const MobileProfile = React.lazy(() => import("./components/MobileProfile"));
 
 const Root = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={<div style={{
+    display:"flex",
+    justifyContent:"center",
+    marginTop:"10rem"
+
+  }}>
+    <CircularIndeterminate />
+    </div>}>
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/home" element={<Home />} />
