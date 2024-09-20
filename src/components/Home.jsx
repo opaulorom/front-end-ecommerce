@@ -13,35 +13,23 @@ import { logPageView } from "../../analytics";
 import { Helmet } from "react-helmet";
 
 const Home = () => {
-  const [pageTitle, setPageTitle] = useState("Loja Mediewal");
-
   const location = useLocation();
-
-  // useEffect(() => {
-  //   logPageView();
-  // }, [location]);
 
   useEffect(() => {
     logPageView();
-
-    // Condição para ajustar o título da página
-    if (location.pathname === "/home") {
-      setPageTitle("Home - Loja Mediewal");
-    } else if (location.pathname === "/categorias") {
-      setPageTitle("Categorias - Loja Mediewal");
-    }  else {
-      setPageTitle("Loja Mediewal");
-    }
   }, [location]);
+
   return (
     <div>
-     <Helmet>
-        <title>{pageTitle}</title>
-        <meta
-          name="description"
-          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
-        />
-      </Helmet>
+      {location.pathname === "/home" && (
+             <Helmet>
+             <title>Home - Loja Mediewal</title>
+             <meta
+               name="description"
+               content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+             />
+           </Helmet>
+      )}
 
       <Slider />
       <Categories />
