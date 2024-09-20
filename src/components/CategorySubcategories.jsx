@@ -430,6 +430,7 @@ const CategorySubcategories = () => {
                       alt="icone de carrinho vazio"
                       className={styles.OutOfStockIMG}
                       loading="lazy" // Adiciona lazy loading
+                      
 
                     />
                     <span  className={styles.OutOfStockSpan}>
