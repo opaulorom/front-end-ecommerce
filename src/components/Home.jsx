@@ -13,6 +13,8 @@ import { logPageView } from "../../analytics";
 import { Helmet } from "react-helmet";
 
 const Home = () => {
+  const [pageTitle, setPageTitle] = useState("Loja Mediewal");
+
   const location = useLocation();
 
   // useEffect(() => {
