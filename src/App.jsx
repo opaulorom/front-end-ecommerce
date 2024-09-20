@@ -13,10 +13,7 @@ function App() {
   }, [location]);
   return (
     <>
-     <Helmet>
-        <title>Home - Loja Mediewal</title>
-        <meta name="description" content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos." />
-      </Helmet>
+  
     
                 <Home></Home>
 
