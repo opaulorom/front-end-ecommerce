@@ -21,13 +21,16 @@ const Home = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>Home - Loja Mediewal</title>
-        <meta
-          name="description"
-          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
-        />
-      </Helmet>
+      {location.pathname === "/home" && (
+             <Helmet>
+             <title>Home - Loja Mediewal</title>
+             <meta
+               name="description"
+               content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+             />
+           </Helmet>
+      )}
+
       <Slider />
       <Categories />
 
