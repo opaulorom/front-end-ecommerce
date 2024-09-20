@@ -16,6 +16,7 @@ import NewArrivals from "./NewArrivals";
 import CategorySubcategoriesSkeleton from "./CategorySubcategoriesSkeleton";
 import { useConfig } from "../context/ConfigContext";
 import { logPageView } from "../../analytics";
+import { Helmet } from "react-helmet";
 const CategorySubcategories = () => {
   const { category } = useParams();
   
@@ -694,6 +695,13 @@ const CategorySubcategories = () => {
         <Header />
       </div>
 
+      <Helmet>
+          <title>Categorias - Loja Mediewal</title>
+          <meta
+            name="description"
+            content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+          />
+        </Helmet>
       {loading ? (
         <div
           style={{
