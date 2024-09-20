@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useConfig } from "../context/ConfigContext";
 import { Helmet } from "react-helmet";
 
@@ -9,6 +9,7 @@ const ImageGalleryDesktop = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { apiUrl } = useConfig();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,13 +36,15 @@ const ImageGalleryDesktop = () => {
 
   return (
     <div style={{ position: "relative", marginTop: "-3rem" }}>
-      <Helmet>
-        <title>Home - Loja Mediewal</title>
-        <meta
-          name="description"
-          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
-        />
-      </Helmet>
+       {location.pathname === "/categorias" && (
+        <Helmet>
+          <title>Categorias - Loja Mediewal</title>
+          <meta
+            name="description"
+            content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+          />
+        </Helmet>
+      )}
       <div
         style={{
           display: "grid",
