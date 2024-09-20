@@ -67,7 +67,7 @@ const Root = () => (
       element={<Subcategory />}
     />
     <Route path="/search/product/:query" element={<SearchResults />} />
-    <Route path="/" element={<SearchBar />} />
+    <Route path="/search" element={<SearchBar />} />
     // Adicione a rota
     <Route
       path="/categories/:category/subcategories"
@@ -89,7 +89,7 @@ const Root = () => (
     />
     <Route path="*" element={<NoMatch />} />
     <Route path="/protected" element={<Protected />} />
-    <Route path="/" element={<Layout />}>
+    <Route path="/layout" element={<Layout />}>
       <Route index element={<App />} />
     </Route>
     <Route path="/cart" element={<Cart />} />
