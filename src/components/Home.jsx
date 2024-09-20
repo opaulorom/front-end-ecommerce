@@ -15,21 +15,31 @@ import { Helmet } from "react-helmet";
 const Home = () => {
   const location = useLocation();
 
+  // useEffect(() => {
+  //   logPageView();
+  // }, [location]);
+
   useEffect(() => {
     logPageView();
-  }, [location]);
 
+    // Condição para ajustar o título da página
+    if (location.pathname === "/home") {
+      setPageTitle("Home - Loja Mediewal");
+    } else if (location.pathname === "/categorias") {
+      setPageTitle("Categorias - Loja Mediewal");
+    }  else {
+      setPageTitle("Loja Mediewal");
+    }
+  }, [location]);
   return (
     <div>
-      {location.pathname === "/home" && (
-             <Helmet>
-             <title>Home - Loja Mediewal</title>
-             <meta
-               name="description"
-               content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
-             />
-           </Helmet>
-      )}
+     <Helmet>
+        <title>{pageTitle}</title>
+        <meta
+          name="description"
+          content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+        />
+      </Helmet>
 
       <Slider />
       <Categories />
