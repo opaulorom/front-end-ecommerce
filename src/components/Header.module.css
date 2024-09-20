@@ -56,6 +56,8 @@
 /* Adjust MediewalLogoMobile size */
 .MediewalLogoMobile {
   width: 34vw;
+  height: auto; /* mantém a proporção da imagem */
+
   
 }
 /* .HeaderModal{
@@ -393,6 +395,8 @@
   }
   .MediewalLogoMobile {
     width: 20vw;
+    height: auto; /* mantém a proporção da imagem */
+
   }
   .MobileHeader__Container{
     gap: 22rem;
