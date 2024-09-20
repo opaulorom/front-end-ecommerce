@@ -54,22 +54,6 @@ const NewArrivals = ({ onNewArrivalsUpdate }) => {
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
   };
-  // Pré-carregar as imagens
-  useEffect(() => {
-    if (newArrivals.length > 0) {
-      newArrivals.forEach(product => {
-        if (product.variations && product.variations[0] && product.variations[0].urls) {
-          const img = new Image();
-          img.src = product.variations[0].urls[0];
-
-          if (product.variations[0].urls.length > 1) {
-            const imgHover = new Image();
-            imgHover.src = product.variations[0].urls[1];
-          }
-        }
-      });
-    }
-  }, [newArrivals]);
 
   return (
     <div>

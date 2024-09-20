@@ -429,6 +429,8 @@ const CategorySubcategories = () => {
                       src="https://i.imgur.com/ocoLP28.png"
                       alt="icone de carrinho vazio"
                       className={styles.OutOfStockIMG}
+                      loading="lazy" // Adiciona lazy loading
+
                     />
                     <span  className={styles.OutOfStockSpan}>
                       O Produto que Você Procura Não Está Disponível no momento.
@@ -514,6 +516,8 @@ const CategorySubcategories = () => {
                                 selectedColorVariation.urls.length > 1 &&
                                 setHoveredIndex(-1)
                               }
+                              loading="lazy" // Adiciona lazy loading
+
                             />
                             <div
                               style={{
@@ -623,6 +627,8 @@ const CategorySubcategories = () => {
                           src={product.variations[0].urls[0]}
                           alt={product.name}
                           className={styles.subcategoriesDataContainer__image}
+                          loading="lazy" // Adiciona lazy loading
+
                         />
                         <p className={styles.subcategoriesDataContainer__price}>
                            R$
@@ -660,6 +666,8 @@ const CategorySubcategories = () => {
                             src={product.variations[0].urls[0]}
                             alt={product.name}
                             className={styles.priceContainer__image}
+                            loading="lazy" // Adiciona lazy loading
+
                           />
                           <p className={styles.priceContainer__price}>
                             R$

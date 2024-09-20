@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Home from "./components/Home";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import { logPageView } from "../analytics";
 import { Helmet } from "react-helmet";
 
@@ -13,19 +13,16 @@ function App() {
   }, [location]);
   return (
     <>
-  
-  {location.pathname === "/" && (
-             <Helmet>
-             <title>Home - Loja Mediewal</title>
-             <meta
-               name="description"
-               content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
-             />
-           </Helmet>
+      {location.pathname === "/" && (
+        <Helmet>
+          <title>Home - Loja Mediewal</title>
+          <meta
+            name="description"
+            content="Veja as últimas novidades em nossa loja, com uma seleção de produtos novos."
+          />
+        </Helmet>
       )}
-                <Home></Home>
-
-
+      <Home></Home>
     </>
   );
 }
